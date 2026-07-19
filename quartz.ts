@@ -9,7 +9,7 @@ import { RecentNotes as configureRecentNotes } from "./.quartz/plugins"
 configureRecentNotes({
   filter: (file: { slug?: string }) => {
     const slug = file.slug ?? ""
-    return slug.startsWith("notes/") && slug !== "notes/index" && !slug.endsWith("/")
+    return (slug.startsWith("notes/") || slug.startsWith("projects/")) && !slug.endsWith("/index")
   },
 })
 const config = await loadQuartzConfig()
