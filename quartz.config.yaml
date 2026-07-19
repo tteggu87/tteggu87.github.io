@@ -237,11 +237,11 @@ plugins:
       title: 최근 업데이트
       limit: 4
       linkToMore: false
-      showTags: true
+      showTags: false
       hideFolderPages: true
     layout:
       position: left
-      priority: 25
+      priority: 100
       condition: index
   - source: github:quartz-community/spacer
     enabled: true
