@@ -1,3 +1,114 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+html {
+  scroll-behavior: smooth;
+}
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--tertiary);
+  outline-offset: 3px;
+}
+body {
+  background: var(--light);
+  letter-spacing: -0.012em;
+}
+.page > #quartz-body {
+  column-gap: clamp(1rem, 2vw, 2rem);
+}
+.page-title {
+  font-size: 1.55rem;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.page-title a {
+  color: var(--secondary);
+}
+
+body[data-slug="index"] .popover-hint > :not(.home-hero) {
+  display: none;
+}
+
+body:not([data-slug="index"]) #quartz-body > main.center {
+  justify-self: center;
+  max-width: 760px;
+  min-width: 0;
+  width: 100%;
+}
+body:not([data-slug="index"]) .article-title {
+  margin-top: 2.2rem;
+  color: var(--dark);
+  font-size: clamp(2.2rem, 3.5vw, 2.5rem);
+  line-height: 1.22;
+  letter-spacing: -0.05em;
+}
+body:not([data-slug="index"]) article {
+  color: var(--darkgray);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+body:not([data-slug="index"]) article :is(p, li) {
+  line-height: 1.8;
+}
+body:not([data-slug="index"]) article h2 {
+  margin-top: 2.8rem;
+  color: var(--dark);
+  font-size: 1.65rem;
+  line-height: 1.35;
+}
+body:not([data-slug="index"]) article h3 {
+  margin-top: 2.2rem;
+  color: var(--dark);
+  font-size: 1.24rem;
+}
+
+.sidebar.left {
+  border-right: 1px solid color-mix(in srgb, var(--lightgray) 72%, transparent);
+}
+.sidebar.right .graph-outer {
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--light) 95%, var(--secondary));
+}
+.recent-notes {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--lightgray);
+}
+.recent-notes .recent-ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.recent-notes .recent-li {
+  padding: 1.2rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--light) 97%, var(--secondary));
+  box-shadow: 0 12px 30px rgb(21 32 51 / 5%);
+}
+
+@media (max-width: 800px) {
+  .page > #quartz-body {
+    padding-inline: 1.1rem;
+  }
+  .sidebar.left .recent-notes {
+    display: none;
+  }
+  .sidebar.left {
+    border-right: 0;
+  }
+  body:not([data-slug="index"]) .article-title {
+    margin-top: 1.5rem;
+    font-size: clamp(2rem, 9vw, 2.55rem);
+  }
+  body:not([data-slug="index"]) article {
+    font-size: 1.04rem;
+  }
+  .recent-notes .recent-ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

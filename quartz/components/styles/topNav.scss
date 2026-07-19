@@ -1,0 +1,33 @@
+.top-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  border-bottom: 1px solid var(--lightgray);
+
+  > a.internal {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.7rem 0.45rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--darkgray);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  > a.internal:hover,
+  > a.internal[aria-current="page"] {
+    border-bottom-color: var(--secondary);
+    color: var(--secondary);
+  }
+}
+
+@media (max-width: 800px) {
+  .top-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
