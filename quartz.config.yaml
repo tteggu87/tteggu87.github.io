@@ -6,7 +6,9 @@ configuration:
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
-  analytics: null
+  analytics:
+    provider: google
+    tagId: G-6PLC5TQ5E2
   locale: ko-KR
   baseUrl: tteggu87.github.io
   ignorePatterns:
