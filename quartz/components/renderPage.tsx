@@ -32,7 +32,7 @@ export function pageResources(
   const resources: StaticResources = {
     css: [
       {
-        content: joinSegments(baseDir, "index.css"),
+        content: `${joinSegments(baseDir, "index.css")}?v=20260719-reader-layout`,
       },
       ...staticResources.css,
     ],
