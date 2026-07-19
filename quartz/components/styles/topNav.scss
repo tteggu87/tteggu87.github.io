@@ -3,38 +3,25 @@
   flex-wrap: wrap;
   gap: 0.55rem;
   align-items: center;
-  padding-bottom: 0.9rem;
   border-bottom: 1px solid var(--lightgray);
 
-  & > a.internal {
+  > a.internal {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.7rem 0.45rem;
     border: 0;
     border-bottom: 2px solid transparent;
-    border-radius: 0;
     background: transparent;
     color: var(--darkgray);
     font-size: 0.9rem;
     font-weight: 600;
-    line-height: 1;
-    min-height: 42px;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.7rem 0.45rem;
-    transition:
-      border-color 0.2s,
-      color 0.2s,
-      transform 0.2s;
-
-    &:hover {
-      border-bottom-color: color-mix(in srgb, var(--secondary) 42%, transparent);
-      color: var(--secondary);
-    }
-
-    &[aria-current="page"] {
-      border-bottom-color: var(--secondary);
-      background: transparent;
-      color: var(--secondary);
-    }
+    white-space: nowrap;
+  }
+  > a.internal:hover,
+  > a.internal[aria-current="page"] {
+    border-bottom-color: var(--secondary);
+    color: var(--secondary);
   }
 }
 
@@ -42,10 +29,5 @@
   .top-nav {
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 0.8rem;
-
-    & > a.internal {
-      white-space: nowrap;
-    }
   }
 }

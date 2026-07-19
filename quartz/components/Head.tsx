@@ -4,7 +4,7 @@ import { CSSResourceToStyleElement, JSResourceToScriptElement } from "../util/re
 import { googleFontHref, googleFontSubsetHref } from "../util/theme"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { unescapeHTML } from "../util/escape"
-import { CustomOgImagesEmitterName } from "../plugins/emitters/ogImage"
+import { CustomOgImagesEmitterName } from "../../.quartz/plugins"
 export default (() => {
   const Head: QuartzComponent = ({
     cfg,
@@ -13,8 +13,8 @@ export default (() => {
     ctx,
   }: QuartzComponentProps) => {
     const titleSuffix = cfg.pageTitleSuffix ?? ""
-    const baseTitle = fileData.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title
-    const title = baseTitle === cfg.pageTitle ? baseTitle : baseTitle + titleSuffix
+    const title =
+      (fileData.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title) + titleSuffix
     const description =
       fileData.frontmatter?.socialDescription ??
       fileData.frontmatter?.description ??
@@ -29,19 +29,26 @@ export default (() => {
 
     // Url of current page
     const socialUrl =
-      fileData.slug === "404" || fileData.slug === "index"
-        ? url.toString()
-        : joinSegments(url.toString(), fileData.slug!)
+      fileData.slug === "404" ? url.toString() : joinSegments(url.toString(), fileData.slug!)
 
     const usesCustomOgImage = ctx.cfg.plugins.emitters.some(
       (e) => e.name === CustomOgImagesEmitterName,
     )
     const ogImageDefaultPath = `https://${cfg.baseUrl}/static/og-image.png`
 
+    const coreStylesheet = css[0]?.content
+    const coreScript = js.find(
+      (r) => r.loadTime === "beforeDOMReady" && r.contentType === "external",
+    )
+
     return (
       <head>
         <title>{title}</title>
         <meta charSet="utf-8" />
+        {coreStylesheet && <link rel="preload" href={coreStylesheet} as="style" />}
+        {coreScript && coreScript.contentType === "external" && (
+          <link rel="preload" href={coreScript.src} as="script" />
+        )}
         {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (
           <>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,7 +61,6 @@ export default (() => {
         )}
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="canonical" href={socialUrl} />
 
         <meta name="og:site_name" content={cfg.pageTitle}></meta>
         <meta property="og:title" content={title} />
@@ -72,7 +78,7 @@ export default (() => {
             <meta name="twitter:image" content={ogImageDefaultPath} />
             <meta
               property="og:image:type"
-              content={`image/${(getFileExtension(ogImageDefaultPath) ?? "png").replace(/^\./, "")}`}
+              content={`image/${getFileExtension(ogImageDefaultPath) ?? "png"}`}
             />
           </>
         )}

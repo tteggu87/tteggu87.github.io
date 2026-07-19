@@ -12,8 +12,8 @@ tags:
 
 ![정적 명세에서 런타임 제약, 에이전트 메모리, 검증과 거버넌스로 확장되는 온톨로지의 역할](../attachments/ontology-in-the-agentic-era/ontology-in-the-agentic-era-infographic.png)
 
-기준일: 2026-07-19  
-연구 모드: direct research  
+기준일: 2026-07-19<br>
+연구 모드: direct research<br>
 핵심 근거: arXiv 프리프린트 8편, 동료심사 학회 논문 5편, W3C 표준 2건, 고전 논문 1편
 
 ## 결론부터

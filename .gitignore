@@ -2,6 +2,7 @@
 .gitignore
 node_modules
 public
+content/_drafts/
 prof
 tsconfig.tsbuildinfo
 .obsidian
@@ -9,3 +10,5 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+.quartz/
+quartz/cli/tui/dist/

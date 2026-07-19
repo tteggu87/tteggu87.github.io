@@ -1,32 +1,21 @@
 let isReaderMode = false
 
-const emitReaderModeChangeEvent = (mode: "on" | "off") => {
-  const event: CustomEventMap["readermodechange"] = new CustomEvent("readermodechange", {
-    detail: { mode },
-  })
-  document.dispatchEvent(event)
-}
-
-const setReaderMode = (mode: "on" | "off") => {
+const applyReaderMode = (mode: "on" | "off") => {
   document.documentElement.setAttribute("reader-mode", mode)
-  for (const readerModeButton of document.getElementsByClassName("readermode")) {
-    readerModeButton.setAttribute("aria-pressed", String(mode === "on"))
+  for (const button of document.getElementsByClassName("readermode")) {
+    button.setAttribute("aria-pressed", String(mode === "on"))
   }
+  document.dispatchEvent(new CustomEvent("readermodechange", { detail: { mode } }))
 }
 
 document.addEventListener("nav", () => {
-  const switchReaderMode = () => {
+  const toggle = () => {
     isReaderMode = !isReaderMode
-    const newMode = isReaderMode ? "on" : "off"
-    setReaderMode(newMode)
-    emitReaderModeChangeEvent(newMode)
+    applyReaderMode(isReaderMode ? "on" : "off")
   }
-
-  for (const readerModeButton of document.getElementsByClassName("readermode")) {
-    readerModeButton.addEventListener("click", switchReaderMode)
-    window.addCleanup(() => readerModeButton.removeEventListener("click", switchReaderMode))
+  for (const button of document.getElementsByClassName("readermode")) {
+    button.addEventListener("click", toggle)
+    window.addCleanup(() => button.removeEventListener("click", toggle))
   }
-
-  // Set initial state
-  setReaderMode(isReaderMode ? "on" : "off")
+  applyReaderMode(isReaderMode ? "on" : "off")
 })
