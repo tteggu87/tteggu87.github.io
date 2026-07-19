@@ -37,7 +37,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-plugins-
       - name: Install Quartz plugins
-        run: npx quartz plugin install --from-config
+        run: npx quartz plugin install
       - name: Check types and formatting
         run: npm run check
       - name: Run tests
