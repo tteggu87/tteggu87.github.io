@@ -24,10 +24,29 @@ function toggleExplorer(this: HTMLElement) {
   const nearestExplorer = this.closest(".explorer") as HTMLElement
   if (!nearestExplorer) return
   const explorerCollapsed = nearestExplorer.classList.toggle("collapsed")
-  nearestExplorer.setAttribute(
-    "aria-expanded",
-    nearestExplorer.getAttribute("aria-expanded") === "true" ? "false" : "true",
-  )
+  const expanded = !explorerCollapsed
+  nearestExplorer.setAttribute("aria-expanded", String(expanded))
+  nearestExplorer
+    .querySelector(".explorer-content")
+    ?.setAttribute("aria-expanded", String(expanded))
+  nearestExplorer
+    .querySelectorAll(".explorer-toggle")
+    .forEach((button) => button.setAttribute("aria-expanded", String(expanded)))
+
+  const isMobileTrigger = this.dataset.mobile === "true"
+  if (isMobileTrigger) {
+    this.setAttribute("aria-label", expanded ? "지식 탐색 닫기" : "지식 탐색 열기")
+    document.querySelectorAll(".center, .right").forEach((element) => {
+      if (expanded) element.setAttribute("inert", "")
+      else element.removeAttribute("inert")
+    })
+    if (expanded) {
+      const firstInteractive = nearestExplorer.querySelector(
+        ".explorer-content a, .explorer-content button",
+      ) as HTMLElement | null
+      firstInteractive?.focus()
+    }
+  }
 
   if (!explorerCollapsed) {
     // Stop <html> from being scrollable when mobile explorer is open
@@ -237,6 +256,23 @@ async function setupExplorer(currentSlug: FullSlug) {
       window.addCleanup(() => button.removeEventListener("click", toggleExplorer))
     }
 
+    const mobileButton = explorer.querySelector(".mobile-explorer") as HTMLElement | null
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || explorer.classList.contains("collapsed")) return
+      explorer.classList.add("collapsed")
+      explorer.setAttribute("aria-expanded", "false")
+      explorer.querySelector(".explorer-content")?.setAttribute("aria-expanded", "false")
+      mobileButton?.setAttribute("aria-expanded", "false")
+      mobileButton?.setAttribute("aria-label", "지식 탐색 열기")
+      document.documentElement.classList.remove("mobile-no-scroll")
+      document
+        .querySelectorAll(".center, .right")
+        .forEach((element) => element.removeAttribute("inert"))
+      mobileButton?.focus()
+    }
+    document.addEventListener("keydown", closeOnEscape)
+    window.addCleanup(() => document.removeEventListener("keydown", closeOnEscape))
+
     // Set up folder click handlers
     if (opts.folderClickBehavior === "collapse") {
       const folderButtons = explorer.getElementsByClassName(
@@ -277,6 +313,11 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     if (mobileExplorer.checkVisibility()) {
       explorer.classList.add("collapsed")
       explorer.setAttribute("aria-expanded", "false")
+      explorer.querySelector(".explorer-content")?.setAttribute("aria-expanded", "false")
+      mobileExplorer.setAttribute("aria-expanded", "false")
+      document
+        .querySelectorAll(".center, .right")
+        .forEach((element) => element.removeAttribute("inert"))
 
       // Allow <html> to be scrollable when mobile explorer is collapsed
       document.documentElement.classList.remove("mobile-no-scroll")

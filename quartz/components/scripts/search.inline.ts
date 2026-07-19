@@ -254,18 +254,18 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
       }
     } else if (e.key === "ArrowDown" || e.key === "Tab") {
       e.preventDefault()
-      // The results should already been focused, so we need to find the next one.
-      // The activeElement is the search bar, so we need to find the first result and focus it.
-      if (document.activeElement === searchBar || currentHover !== null) {
-        const firstResult = currentHover
-          ? currentHover
-          : (document.getElementsByClassName("result-card")[0] as HTMLInputElement | null)
-        const secondResult = firstResult?.nextElementSibling as HTMLInputElement | null
-        firstResult?.classList.remove("focus")
-        secondResult?.focus()
-        if (secondResult) currentHover = secondResult
-        await displayPreview(secondResult)
-      }
+      const firstResult = document.getElementsByClassName(
+        "result-card",
+      )[0] as HTMLInputElement | null
+      const target =
+        document.activeElement === searchBar
+          ? firstResult
+          : ((currentHover ?? document.activeElement)
+              ?.nextElementSibling as HTMLInputElement | null)
+      currentHover?.classList.remove("focus")
+      target?.focus()
+      if (target) currentHover = target
+      await displayPreview(target)
     }
   }
 

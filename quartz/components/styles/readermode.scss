@@ -4,8 +4,8 @@
   position: relative;
   background: none;
   border: none;
-  width: 20px;
-  height: 20px;
+  width: 44px;
+  height: 44px;
   margin: 0;
   text-align: inherit;
   flex-shrink: 0;
@@ -15,6 +15,7 @@
     width: 20px;
     height: 20px;
     top: calc(50% - 10px);
+    left: calc(50% - 10px);
     fill: var(--darkgray);
     stroke: var(--darkgray);
     transition: opacity 0.1s ease;

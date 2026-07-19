@@ -4,6 +4,32 @@ html {
   scroll-behavior: smooth;
 }
 
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--tertiary);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: 0.75rem;
+  left: 0.75rem;
+  border-radius: 6px;
+  background: var(--dark);
+  color: var(--light);
+  padding: 0.65rem 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 body {
   letter-spacing: -0.012em;
 }
@@ -58,5 +84,19 @@ article > blockquote:first-of-type {
 @media (max-width: 800px) {
   .recent-notes .recent-ul {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .explorer-content,
+  .folder-outer,
+  .recent-notes .recent-li,
+  .top-nav > a,
+  .navigation-progress {
+    transition: none;
   }
 }

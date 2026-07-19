@@ -13,7 +13,7 @@
     border-radius: 4px;
     font-family: inherit;
     font-size: inherit;
-    height: 2rem;
+    min-height: 44px;
     padding: 0 1rem 0 0;
     display: flex;
     align-items: center;
@@ -24,7 +24,7 @@
 
     & > p {
       display: inline;
-      color: var(--gray);
+      color: var(--darkgray);
     }
 
     & svg {
@@ -85,8 +85,9 @@
         font-size: 1.1em;
         border: 1px solid var(--lightgray);
 
-        &:focus {
-          outline: none;
+        &:focus-visible {
+          outline: 3px solid var(--tertiary);
+          outline-offset: 2px;
         }
       }
 

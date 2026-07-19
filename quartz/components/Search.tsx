@@ -29,7 +29,7 @@ export default ((userOpts?: Partial<SearchOptions>) => {
           </svg>
           <p>{i18n(cfg.locale).components.search.title}</p>
         </button>
-        <div class="search-container">
+        <div class="search-container" role="dialog" aria-modal="true" aria-label="사이트 검색">
           <div class="search-space">
             <input
               autocomplete="off"

@@ -3,7 +3,7 @@ title: 이 정원에 관하여
 date: 2026-07-19
 tags:
   - 안내
-description: 나의 지식 정원을 운영하는 목적과 원칙입니다.
+description: tteggu의 지식창고를 운영하는 목적과 원칙입니다.
 ---
 
 # 이 정원에 관하여
