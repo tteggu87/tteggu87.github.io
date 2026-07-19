@@ -1,3 +1,62 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  letter-spacing: -0.012em;
+}
+
+.page > #quartz-body {
+  gap: 0.5rem;
+}
+
+.page-title a {
+  color: var(--secondary);
+}
+
+article h1 {
+  letter-spacing: -0.035em;
+}
+
+article > blockquote:first-of-type {
+  border: 1px solid var(--lightgray);
+  border-left: 4px solid var(--secondary);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--light) 94%, var(--secondary));
+  margin: 1.5rem 0 2rem;
+  padding: 0.9rem 1.15rem;
+}
+
+.recent-notes {
+  border-top: 1px solid var(--lightgray);
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+}
+
+.recent-notes .recent-ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.recent-notes .recent-li {
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  padding: 0.9rem;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.recent-notes .recent-li:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 800px) {
+  .recent-notes .recent-ul {
+    grid-template-columns: 1fr;
+  }
+}

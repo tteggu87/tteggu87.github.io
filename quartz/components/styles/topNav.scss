@@ -1,0 +1,41 @@
+.top-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--lightgray);
+
+  & > a.internal {
+    border: 1px solid var(--lightgray);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--light) 90%, var(--secondary));
+    color: var(--dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.55rem 0.8rem;
+    transition:
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s;
+
+    &:hover {
+      border-color: var(--secondary);
+      color: var(--secondary);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .top-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.8rem;
+
+    & > a.internal {
+      white-space: nowrap;
+    }
+  }
+}

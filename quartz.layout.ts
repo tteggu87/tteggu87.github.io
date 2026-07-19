@@ -4,12 +4,24 @@ import * as Component from "./quartz/components"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [],
-  afterBody: [],
+  header: [Component.TopNav()],
+  afterBody: [
+    Component.ConditionalRender({
+      component: Component.RecentNotes({
+        title: "최근에 심은 노트",
+        limit: 4,
+        linkToMore: false,
+        showTags: true,
+        filter: (file) => !["index", "about", "start-here"].includes(file.slug ?? ""),
+      }),
+      condition: (page) => page.fileData.slug === "index",
+    }),
+  ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      소개: "/about",
+      "처음 오셨나요?": "/start-here",
+      GitHub: "https://github.com/tteggu87",
     },
   }),
 }
