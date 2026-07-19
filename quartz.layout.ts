@@ -12,6 +12,7 @@ export const sharedPageComponents: SharedLayout = {
         limit: 4,
         linkToMore: false,
         showTags: true,
+        showDescription: true,
         filter: (file) => !["index", "about", "start-here"].includes(file.slug ?? ""),
       }),
       condition: (page) => page.fileData.slug === "index",

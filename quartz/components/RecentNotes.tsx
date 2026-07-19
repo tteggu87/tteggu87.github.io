@@ -13,6 +13,7 @@ interface Options {
   limit: number
   linkToMore: SimpleSlug | false
   showTags: boolean
+  showDescription: boolean
   filter: (f: QuartzPluginData) => boolean
   sort: (f1: QuartzPluginData, f2: QuartzPluginData) => number
 }
@@ -21,6 +22,7 @@ const defaultOptions = (cfg: GlobalConfiguration): Options => ({
   limit: 3,
   linkToMore: false,
   showTags: true,
+  showDescription: false,
   filter: () => true,
   sort: byDateAndAlphabetical(cfg),
 })
@@ -41,6 +43,7 @@ export default ((userOpts?: Partial<Options>) => {
         <ul class="recent-ul">
           {pages.slice(0, opts.limit).map((page) => {
             const title = page.frontmatter?.title ?? i18n(cfg.locale).propertyDefaults.title
+            const description = page.frontmatter?.description ?? page.description
             const tags = page.frontmatter?.tags ?? []
 
             return (
@@ -52,6 +55,9 @@ export default ((userOpts?: Partial<Options>) => {
                         {title}
                       </a>
                     </h3>
+                    {opts.showDescription && description && (
+                      <p class="description">{description}</p>
+                    )}
                   </div>
                   {page.dates && (
                     <p class="meta">

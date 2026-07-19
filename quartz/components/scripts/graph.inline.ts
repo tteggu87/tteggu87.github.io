@@ -16,7 +16,7 @@ import {
 } from "d3"
 import { Text, Graphics, Application, Container, Circle } from "pixi.js"
 import { Group as TweenGroup, Tween as Tweened } from "@tweenjs/tween.js"
-import { registerEscapeHandler, removeAllChildren } from "./util"
+import { removeAllChildren } from "./util"
 import { FullSlug, SimpleSlug, getFullSlug, resolveRelative, simplifySlug } from "../../util/path"
 import { D3Config } from "../Graph"
 
@@ -595,49 +595,74 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     document.removeEventListener("themechange", handleThemeChange)
   })
 
-  const containers = [...document.getElementsByClassName("global-graph-outer")] as HTMLElement[]
+  const containers = [
+    ...document.getElementsByClassName("global-graph-outer"),
+  ] as HTMLDialogElement[]
+  const containerIcons = [...document.getElementsByClassName("global-graph-icon")] as HTMLElement[]
+  let lastGraphTrigger: HTMLElement | null = null
   async function renderGlobalGraph() {
+    lastGraphTrigger ??= document.activeElement as HTMLElement | null
     const slug = getFullSlug(window)
     for (const container of containers) {
-      container.classList.add("active")
+      if (!container.open) container.showModal()
+      container.setAttribute("aria-hidden", "false")
       const sidebar = container.closest(".sidebar") as HTMLElement
       if (sidebar) {
         sidebar.style.zIndex = "1"
       }
 
       const graphContainer = container.querySelector(".global-graph-container") as HTMLElement
-      registerEscapeHandler(container, hideGlobalGraph)
       if (graphContainer) {
         globalGraphCleanups.push(await renderGraph(graphContainer, slug))
       }
     }
+    containerIcons.forEach((icon) => icon.setAttribute("aria-expanded", "true"))
   }
 
   function hideGlobalGraph() {
     cleanupGlobalGraphs()
     for (const container of containers) {
-      container.classList.remove("active")
+      container.setAttribute("aria-hidden", "true")
+      if (container.open) container.close()
       const sidebar = container.closest(".sidebar") as HTMLElement
       if (sidebar) {
         sidebar.style.zIndex = ""
       }
     }
+    containerIcons.forEach((icon) => icon.setAttribute("aria-expanded", "false"))
+    lastGraphTrigger?.focus()
+    lastGraphTrigger = null
   }
 
   async function shortcutHandler(e: HTMLElementEventMap["keydown"]) {
     if (e.key === "g" && (e.ctrlKey || e.metaKey) && !e.shiftKey) {
       e.preventDefault()
-      const anyGlobalGraphOpen = containers.some((container) =>
-        container.classList.contains("active"),
-      )
+      const anyGlobalGraphOpen = containers.some((container) => container.open)
       anyGlobalGraphOpen ? hideGlobalGraph() : renderGlobalGraph()
     }
   }
 
-  const containerIcons = document.getElementsByClassName("global-graph-icon")
-  Array.from(containerIcons).forEach((icon) => {
-    icon.addEventListener("click", renderGlobalGraph)
-    window.addCleanup(() => icon.removeEventListener("click", renderGlobalGraph))
+  const handleGraphButtonClick = (event: Event) => {
+    lastGraphTrigger = event.currentTarget as HTMLElement
+    void renderGlobalGraph()
+  }
+  containerIcons.forEach((icon) => {
+    icon.addEventListener("click", handleGraphButtonClick)
+    window.addCleanup(() => icon.removeEventListener("click", handleGraphButtonClick))
+  })
+
+  const handleGraphClose = () => hideGlobalGraph()
+  const handleGraphCancel = (event: Event) => {
+    event.preventDefault()
+    hideGlobalGraph()
+  }
+  containers.forEach((container) => {
+    container.querySelector(".global-graph-close")?.addEventListener("click", handleGraphClose)
+    container.addEventListener("cancel", handleGraphCancel)
+    window.addCleanup(() => {
+      container.querySelector(".global-graph-close")?.removeEventListener("click", handleGraphClose)
+      container.removeEventListener("cancel", handleGraphCancel)
+    })
   })
 
   document.addEventListener("keydown", shortcutHandler)

@@ -67,9 +67,24 @@ export default ((opts?: Partial<GraphOptions>) => {
       <div class={classNames(displayClass, "graph")}>
         <h3>{i18n(cfg.locale).components.graph.title}</h3>
         <div class="graph-outer">
-          <div class="graph-container" data-cfg={JSON.stringify(localGraph)}></div>
-          <button class="global-graph-icon" aria-label="Global Graph">
+          <div
+            class="graph-container"
+            data-cfg={JSON.stringify(localGraph)}
+            role="img"
+            aria-label="현재 문서와 연결된 지식 그래프"
+          ></div>
+          <button
+            type="button"
+            class="global-graph-icon"
+            aria-label="전체 지식 그래프 열기"
+            aria-controls="global-graph-dialog"
+            aria-expanded="false"
+            aria-haspopup="dialog"
+            title="전체 지식 그래프 열기"
+          >
             <svg
+              aria-hidden="true"
+              focusable="false"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -95,9 +110,17 @@ export default ((opts?: Partial<GraphOptions>) => {
             </svg>
           </button>
         </div>
-        <div class="global-graph-outer">
+        <dialog
+          id="global-graph-dialog"
+          class="global-graph-outer"
+          aria-label="전체 지식 그래프"
+          aria-hidden="true"
+        >
+          <button type="button" class="global-graph-close" aria-label="전체 지식 그래프 닫기">
+            닫기
+          </button>
           <div class="global-graph-container" data-cfg={JSON.stringify(globalGraph)}></div>
-        </div>
+        </dialog>
       </div>
     )
   }

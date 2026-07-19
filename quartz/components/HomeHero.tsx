@@ -23,18 +23,13 @@ const HomeHero: QuartzComponent = () => {
       </div>
       <ul class="home-hero-topics" aria-label="주요 주제">
         <li>
-          <a class="internal" href="./notes/ai-agents">
-            AI 에이전트
+          <a class="internal" href="./notes/ontology-agent-guide">
+            1. 온톨로지 에이전트
           </a>
         </li>
         <li>
-          <a class="internal" href="./notes/ontology-agents">
-            온톨로지
-          </a>
-        </li>
-        <li>
-          <a class="internal" href="./notes/research-systems">
-            리서치 시스템
+          <a class="internal" href="./notes/ontology-in-the-agentic-era">
+            2. 에이전트 시대 온톨로지
           </a>
         </li>
       </ul>
