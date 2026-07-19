@@ -23,15 +23,18 @@ body {
   color: var(--secondary);
 }
 
-body[data-slug="index"] .popover-hint > :not(.home-hero) {
+body[data-slug="index"] #quartz-body > .center > article {
   display: none;
 }
 
-body:not([data-slug="index"]) #quartz-body > main.center {
+body:not([data-slug="index"]) #quartz-body > .center {
   justify-self: center;
   max-width: 760px;
   min-width: 0;
   width: 100%;
+}
+:root[reader-mode="on"] body:not([data-slug="index"]) #quartz-body > .center {
+  max-width: 1080px;
 }
 body:not([data-slug="index"]) .article-title {
   margin-top: 2.2rem;
@@ -74,7 +77,7 @@ body:not([data-slug="index"]) article h3 {
 }
 .recent-notes .recent-ul {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 }
 .recent-notes .recent-li {
@@ -85,7 +88,7 @@ body:not([data-slug="index"]) article h3 {
   box-shadow: 0 12px 30px rgb(21 32 51 / 5%);
 }
 
-@media (max-width: 800px) {
+@media all and ($mobile) {
   .page > #quartz-body {
     padding-inline: 1.1rem;
   }
@@ -95,6 +98,16 @@ body:not([data-slug="index"]) article h3 {
   .sidebar.left {
     border-right: 0;
   }
+  .explorer .explorer-content {
+    position: fixed;
+    inset-inline: 0;
+    width: auto;
+    max-width: none;
+  }
+  .explorer-content :is(a, .folder-title) {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   body:not([data-slug="index"]) .article-title {
     margin-top: 1.5rem;
     font-size: clamp(2rem, 9vw, 2.55rem);
@@ -102,8 +115,18 @@ body:not([data-slug="index"]) article h3 {
   body:not([data-slug="index"]) article {
     font-size: 1.04rem;
   }
-  .recent-notes .recent-ul {
-    grid-template-columns: 1fr;
+}
+
+// Prevent the center track from retaining its intrinsic content width at the
+// mobile/tablet boundary. Without minmax(0, 1fr), 801px-wide viewports can
+// overflow even though the same layout fits correctly at wider tablet sizes.
+@media all and ($tablet) {
+  .page > #quartz-body {
+    grid-template-columns: $sidePanelWidth minmax(0, 1fr);
+  }
+
+  .page > #quartz-body > :is(.center, .sidebar.right, footer) {
+    min-width: 0;
   }
 }
 
