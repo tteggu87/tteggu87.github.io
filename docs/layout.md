@@ -126,6 +126,7 @@ Available conditions:
 
 | Condition   | Effect                                               |
 | ----------- | ---------------------------------------------------- |
+| `index`     | Only shown on the root index page                    |
 | `not-index` | Hidden on the root index page, shown everywhere else |
 | `has-tags`  | Only shown on pages that have tags in frontmatter    |
 

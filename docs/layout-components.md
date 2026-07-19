@@ -167,6 +167,7 @@ Available built-in conditions:
 
 | Condition       | Description                                           |
 | --------------- | ----------------------------------------------------- |
+| `index`         | Only render on the root `index.md` page               |
 | `not-index`     | Only render when the page is not the root `index.md`  |
 | `has-tags`      | Only render when the page has tags in its frontmatter |
 | `has-backlinks` | Only render when the page has backlinks               |
