@@ -4,7 +4,15 @@ import * as Component from "./quartz/components"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [Component.TopNav()],
+  header: [
+    Component.Flex({
+      components: [
+        { Component: Component.TopNav(), grow: true },
+        { Component: Component.ReaderMode() },
+      ],
+      gap: "0.5rem",
+    }),
+  ],
   afterBody: [
     Component.ConditionalRender({
       component: Component.RecentNotes({
@@ -61,7 +69,6 @@ export const defaultContentPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
       ],
     }),
     Component.Explorer({

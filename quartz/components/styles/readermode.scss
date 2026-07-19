@@ -23,13 +23,37 @@
 }
 
 :root[reader-mode="on"] {
+  & .readermode {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    border: 1px solid var(--lightgray);
+    border-radius: 999px;
+    background: var(--light);
+    box-shadow: 0 8px 24px rgba(21, 32, 51, 0.12);
+  }
+
   & .sidebar.left,
   & .sidebar.right {
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    display: none !important;
+  }
 
-    &:hover {
-      opacity: 1;
-    }
+  & .page > #quartz-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "grid-center"
+      "grid-footer";
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+
+  & .page > #quartz-body > main.center {
+    grid-area: grid-center;
+    justify-self: center;
+    width: min(100%, 860px);
+    min-width: 0;
+    max-width: 860px;
+    margin-inline: auto;
   }
 }
