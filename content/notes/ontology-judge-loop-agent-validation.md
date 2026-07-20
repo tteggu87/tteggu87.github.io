@@ -9,7 +9,7 @@ tags:
   - LLM평가
 ---
 
-![판정 계약에서 결정적 검사와 전문 판정, 반증과 사람 승급을 거쳐 감사 계보로 이어지는 위험기반 Judge Loop](../attachments/ontology-judge-loop-agent-validation/ontology-judge-loop-agent-validation-infographic.png)
+![결정적 검사와 언어모델의 안전 결과는 자동 진행으로 합류하고 경고·불확실 결과만 인간 검토와 반증·수정으로 분기되는 감사 가능한 에이전트 검증 루프](../attachments/ontology-judge-loop-agent-validation/ontology-judge-loop-agent-validation-infographic-v6.png)
 
 ## 한 문장 결론
 
