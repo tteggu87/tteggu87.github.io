@@ -74,6 +74,20 @@ tags:
 
 `v1 실행 → 후보 실행물 적용 → 새 프로세스에서 후보 재로드 → v1 실행물 재로드`
 
+실험군과 관찰 결과의 관계를 한눈에 보면 다음과 같다.
+
+```mermaid
+flowchart LR
+    P["정책 v2<br/>근거 감사 + 독립 반론"] --> R["C_rule<br/>JSON 규칙"]
+    P --> L["C_lexical_card<br/>검색 카드 + requirements"]
+    P --> S["T_shacl<br/>SHACL shape"]
+    R --> G["10/10 일치<br/>false pass 0"]
+    L --> G
+    S --> G
+    N["새 조건을 실행하지 않음"] --> B["C_static · C_metadata_only<br/>7/10 · false pass 3"]
+    D["C_redundant_shape"] --> T["PASS/FAIL은 7/10 유지<br/>validation trace만 증가"]
+```
+
 사례별 최종 판정, 판정 근거, 실행물 SHA-256, 기대 판정 일치 수, 새 조건 관련 false pass를 저장했다. 에이전트 평가에서 대화 기록과 실제 환경 결과를 구분해야 한다는 원칙에 맞춰 최종 판정과 추적 정보를 따로 기록했다.[src_014](#src-014)[src_015](#src-015)
 
 > [!info] 실행 환경
