@@ -39,6 +39,7 @@
       body {
         margin: 0;
         min-width: 0;
+        overflow: hidden;
         background: transparent;
         color: var(--fg);
         font-family: var(--font);
@@ -205,6 +206,7 @@
       }
 
       .bar-fill {
+        display: block;
         height: 100%;
         width: 0;
         border-radius: inherit;
@@ -684,6 +686,32 @@
         const root = document.getElementById("ontology-runtime-explorer")
         if (!root) return
 
+        const resizeMessageType = "ontology-runtime-explorer:resize"
+        const measureMessageType = "ontology-runtime-explorer:measure"
+        let resizeFrameRequest = 0
+
+        const reportHeight = () => {
+          cancelAnimationFrame(resizeFrameRequest)
+          resizeFrameRequest = requestAnimationFrame(() => {
+            const bodyStyle = getComputedStyle(document.body)
+            const paddingTop = Number.parseFloat(bodyStyle.paddingTop) || 0
+            const paddingBottom = Number.parseFloat(bodyStyle.paddingBottom) || 0
+            const height = Math.ceil(root.scrollHeight + paddingTop + paddingBottom)
+            window.parent.postMessage({ type: resizeMessageType, height }, "*")
+          })
+        }
+
+        if (typeof ResizeObserver === "function") {
+          new ResizeObserver(reportHeight).observe(root)
+        }
+        window.addEventListener("resize", reportHeight)
+        window.addEventListener("load", reportHeight, { once: true })
+        window.addEventListener("message", (event) => {
+          if (event.source === window.parent && event.data?.type === measureMessageType) {
+            reportHeight()
+          }
+        })
+
         const shifts = [
           {
             id: "control",
@@ -775,6 +803,7 @@
         function activateTab(id) {
           tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.tab === id)))
           panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id))
+          reportHeight()
         }
 
         tabs.forEach((tab) => tab.addEventListener("click", () => activateTab(tab.dataset.tab)))
@@ -798,6 +827,7 @@
             row.setAttribute("aria-label", `${label} 관련도 ${barLabels[value]}`)
             shiftBars.appendChild(row)
           })
+          reportHeight()
         }
 
         shifts.forEach((item, index) => {
@@ -825,6 +855,7 @@
               <dt>적합한 시작점</dt><dd>${item.fit}</dd>
             </dl>
           `
+          reportHeight()
         }
 
         levels.forEach((item, index) => {
@@ -899,6 +930,7 @@
           }
 
           recommendation.innerHTML = `<strong>권장 최소 시작점: ${level}</strong><p>${reason}<br />운영 방어선: ${guard}</p>`
+          reportHeight()
         }
 
         ;[relationRange, riskRange, auditRange, changeRange, writeToggle].forEach((control) => {
