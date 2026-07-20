@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>에이전트 시대의 의미 계층 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: light-dark(rgb(255 255 255), rgb(24 24 24));
+        --fg: light-dark(rgb(27 29 33), rgb(245 247 250));
+        --muted: light-dark(rgb(92 99 111), rgb(174 181 192));
+        --panel: light-dark(rgb(247 248 250), rgb(34 36 41));
+        --panel-strong: light-dark(rgb(239 242 246), rgb(42 45 52));
+        --border: light-dark(rgb(27 29 33 / 14%), rgb(255 255 255 / 14%));
+        --accent: light-dark(rgb(30 111 207), rgb(127 183 255));
+        --accent-fg: light-dark(rgb(255 255 255), rgb(15 20 27));
+        --accent-soft: light-dark(rgb(30 111 207 / 11%), rgb(127 183 255 / 14%));
+        --series-1: light-dark(rgb(35 115 207), rgb(123 181 255));
+        --series-2: light-dark(rgb(190 105 35), rgb(237 157 91));
+        --series-3: light-dark(rgb(47 139 91), rgb(106 205 153));
+        --series-4: light-dark(rgb(143 88 189), rgb(190 145 232));
+        --series-5: light-dark(rgb(181 69 100), rgb(235 125 157));
+        --danger: light-dark(rgb(177 52 52), rgb(255 125 125));
+        --radius: 14px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-width: 0;
+        background: transparent;
+        color: var(--fg);
+        font-family: var(--font);
+      }
+
+      body {
+        padding: 10px;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      .explorer {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .note {
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--accent-soft);
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+
+      .tab,
+      .choice,
+      .shift-button {
+        appearance: none;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: transparent;
+        padding: 9px 10px;
+        cursor: pointer;
+      }
+
+      .tab:hover,
+      .choice:hover,
+      .shift-button:hover {
+        background: var(--panel);
+      }
+
+      .tab[aria-selected="true"],
+      .choice[aria-pressed="true"],
+      .shift-button[aria-pressed="true"] {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--accent-fg);
+      }
+
+      .tab:focus-visible,
+      .choice:focus-visible,
+      .shift-button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid var(--accent-soft);
+        outline-offset: 2px;
+      }
+
+      .panel {
+        display: none;
+      }
+
+      .panel.is-active {
+        display: block;
+      }
+
+      .section-heading {
+        margin: 0 0 4px;
+        font-size: 1.08rem;
+        font-weight: 600;
+      }
+
+      .section-copy {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      .shift-buttons {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .shift-button {
+        min-height: 52px;
+        padding: 7px 5px;
+        font-size: 0.82rem;
+        line-height: 1.25;
+      }
+
+      .transition {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 46px minmax(0, 1fr);
+        align-items: stretch;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .transition-block {
+        min-width: 0;
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--panel);
+      }
+
+      .transition-block strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .transition-block span {
+        display: block;
+        line-height: 1.45;
+      }
+
+      .arrow {
+        display: grid;
+        place-items: center;
+        color: var(--accent);
+        font-size: 1.5rem;
+      }
+
+      .bars {
+        display: grid;
+        gap: 8px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 74px minmax(0, 1fr) 42px;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.86rem;
+      }
+
+      .bar-track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--panel-strong);
+      }
+
+      .bar-fill {
+        height: 100%;
+        width: 0;
+        border-radius: inherit;
+        background: var(--series-1);
+        transition: width 220ms ease;
+      }
+
+      .bar-value {
+        color: var(--muted);
+        text-align: end;
+      }
+
+      .continuum {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 230px;
+        gap: 14px;
+        align-items: start;
+      }
+
+      .heatmap-wrap {
+        overflow-x: auto;
+      }
+
+      .heatmap {
+        width: 100%;
+        min-width: 520px;
+        border-collapse: collapse;
+      }
+
+      .heatmap th,
+      .heatmap td {
+        padding: 8px 7px;
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+        font-size: 0.84rem;
+      }
+
+      .heatmap th:first-child,
+      .heatmap td:first-child {
+        text-align: start;
+      }
+
+      .heatmap tbody tr.is-selected {
+        background: var(--accent-soft);
+      }
+
+      .continuum-choice {
+        width: 100%;
+        border: 0;
+        padding: 5px 6px;
+        background: transparent;
+        text-align: start;
+      }
+
+      .level {
+        display: inline-grid;
+        min-width: 42px;
+        place-items: center;
+        padding: 4px 7px;
+        border-radius: 999px;
+        color: var(--fg);
+      }
+
+      .level-1 {
+        background: color-mix(in srgb, var(--series-1) 12%, transparent);
+      }
+
+      .level-2 {
+        background: color-mix(in srgb, var(--series-1) 23%, transparent);
+      }
+
+      .level-3 {
+        background: color-mix(in srgb, var(--series-1) 36%, transparent);
+      }
+
+      .level-4 {
+        background: color-mix(in srgb, var(--series-1) 52%, transparent);
+      }
+
+      .level-5 {
+        background: color-mix(in srgb, var(--series-1) 70%, transparent);
+        color: var(--accent-fg);
+      }
+
+      .detail {
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--panel);
+      }
+
+      .detail h3 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+
+      .detail dl {
+        margin: 0;
+      }
+
+      .detail dt {
+        margin-top: 9px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .detail dd {
+        margin: 3px 0 0;
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .scenario-layout {
+        display: grid;
+        grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.3fr);
+        gap: 14px;
+        align-items: start;
+      }
+
+      .controls {
+        display: grid;
+        gap: 12px;
+      }
+
+      .range-label {
+        display: grid;
+        gap: 6px;
+      }
+
+      .range-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 0.86rem;
+      }
+
+      .range-value {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent);
+      }
+
+      .switch-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.86rem;
+      }
+
+      .scenario-visual {
+        display: grid;
+        gap: 10px;
+      }
+
+      .plot {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .plot text {
+        fill: var(--muted);
+        font-family: var(--font);
+        font-size: 12px;
+      }
+
+      .plot .axis,
+      .plot .gridline {
+        stroke: var(--border);
+        stroke-width: 1;
+      }
+
+      .plot .zone-a {
+        fill: color-mix(in srgb, var(--series-1) 8%, transparent);
+      }
+
+      .plot .zone-b {
+        fill: color-mix(in srgb, var(--series-2) 10%, transparent);
+      }
+
+      .plot .zone-c {
+        fill: color-mix(in srgb, var(--series-3) 11%, transparent);
+      }
+
+      .plot .zone-d {
+        fill: color-mix(in srgb, var(--series-4) 12%, transparent);
+      }
+
+      .plot .point {
+        fill: var(--accent);
+        stroke: var(--accent-fg);
+        stroke-width: 2;
+        transition:
+          cx 220ms ease,
+          cy 220ms ease;
+      }
+
+      .recommendation {
+        padding: 12px 13px;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--accent-soft);
+      }
+
+      .recommendation strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .recommendation p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.45;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .swatch {
+        width: 11px;
+        height: 11px;
+        border-radius: 3px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 7px;
+        }
+
+        .tabs {
+          grid-template-columns: 1fr;
+        }
+
+        .shift-buttons {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .transition {
+          grid-template-columns: 1fr;
+        }
+
+        .arrow {
+          transform: rotate(90deg);
+        }
+
+        .continuum,
+        .scenario-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: 64px minmax(0, 1fr) 38px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .bar-fill,
+        .plot .point {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="ontology-runtime-explorer" class="explorer">
+      <p class="note">
+        이 도구의 단계와 관련도는 본문의 질적 구분을 비교하기 위한 설명용 상대값이다. 논문 성능
+        수치나 산업별 권고 임계값이 아니다.
+      </p>
+
+      <div class="tabs" role="tablist" aria-label="의미 계층 탐색 방식">
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="shift-panel"
+          data-tab="shift-panel"
+        >
+          다섯 가지 이동
+        </button>
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="continuum-panel"
+          data-tab="continuum-panel"
+        >
+          형식성 비교
+        </button>
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="scenario-panel"
+          data-tab="scenario-panel"
+        >
+          도입 시나리오
+        </button>
+      </div>
+
+      <section id="shift-panel" class="panel is-active" role="tabpanel">
+        <h2 class="section-heading">정적 명세가 런타임 의미 계층으로 이동하는 다섯 경로</h2>
+        <p class="section-copy">
+          항목을 선택하면 ‘무엇에서 무엇으로 이동하는가’와 검색·메모리·계획·검증·거버넌스의 상대적
+          관련 범위를 볼 수 있다.
+        </p>
+
+        <div id="shift-buttons" class="shift-buttons" aria-label="다섯 가지 이동 선택"></div>
+
+        <div class="transition" aria-live="polite">
+          <div class="transition-block">
+            <strong>이전 배치</strong>
+            <span id="shift-before"></span>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="transition-block">
+            <strong>에이전트 시대의 배치</strong>
+            <span id="shift-after"></span>
+          </div>
+        </div>
+
+        <div
+          id="shift-bars"
+          class="bars"
+          aria-label="선택한 이동과 런타임 면의 상대적 관련도"
+        ></div>
+      </section>
+
+      <section id="continuum-panel" class="panel" role="tabpanel">
+        <h2 class="section-heading">의미 구조 수준별 표현력과 운영 부담</h2>
+        <p class="section-copy">
+          행을 선택하면 해당 구조의 강점과 경계를 확인할 수 있다. 셀의 단계는 낮음·중간·높음의
+          상대적 비교다.
+        </p>
+
+        <div class="continuum">
+          <div class="heatmap-wrap">
+            <table class="heatmap" aria-label="의미 구조 수준 비교표">
+              <thead>
+                <tr>
+                  <th scope="col">의미 구조</th>
+                  <th scope="col">관계 표현</th>
+                  <th scope="col">자동 검증</th>
+                  <th scope="col">실행 통제</th>
+                  <th scope="col">운영 부담</th>
+                </tr>
+              </thead>
+              <tbody id="continuum-body"></tbody>
+            </table>
+          </div>
+          <aside id="continuum-detail" class="detail" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section id="scenario-panel" class="panel" role="tabpanel">
+        <h2 class="section-heading">업무 조건에 맞는 최소 의미 구조 찾기</h2>
+        <p class="section-copy">
+          관계 복잡도와 행동 위험을 중심으로 조절하되, 결과는 시작점을 고르는 설명용 규칙이다. 실제
+          도입은 기준선 실험과 사람 검토가 필요하다.
+        </p>
+
+        <div class="scenario-layout">
+          <div class="controls">
+            <label class="range-label" for="relation-range">
+              <span class="range-head"
+                ><span>관계 탐색 복잡도</span
+                ><span id="relation-value" class="range-value">중간</span></span
+              >
+              <input id="relation-range" type="range" min="1" max="5" value="3" />
+            </label>
+            <label class="range-label" for="risk-range">
+              <span class="range-head"
+                ><span>잘못된 행동의 위험</span
+                ><span id="risk-value" class="range-value">중간</span></span
+              >
+              <input id="risk-range" type="range" min="1" max="5" value="3" />
+            </label>
+            <label class="range-label" for="audit-range">
+              <span class="range-head"
+                ><span>근거·감사 요구</span
+                ><span id="audit-value" class="range-value">중간</span></span
+              >
+              <input id="audit-range" type="range" min="1" max="5" value="3" />
+            </label>
+            <label class="range-label" for="change-range">
+              <span class="range-head"
+                ><span>도메인 변화 속도</span
+                ><span id="change-value" class="range-value">중간</span></span
+              >
+              <input id="change-range" type="range" min="1" max="5" value="3" />
+            </label>
+            <label class="switch-row" for="write-toggle">
+              <input id="write-toggle" type="checkbox" />
+              <span>에이전트가 그래프·정책 변경을 제안하거나 쓴다</span>
+            </label>
+          </div>
+
+          <div class="scenario-visual">
+            <svg
+              class="plot"
+              viewBox="0 0 460 280"
+              role="img"
+              aria-labelledby="plot-title plot-desc"
+            >
+              <title id="plot-title">관계 복잡도와 행동 위험에 따른 의미 구조 선택 지도</title>
+              <desc id="plot-desc">
+                가로축은 관계 탐색 복잡도, 세로축은 잘못된 행동의 위험이다. 입력값에 따라 점과 권장
+                최소 의미 구조가 바뀐다.
+              </desc>
+              <rect class="zone-a" x="54" y="144" width="176" height="92" rx="8"></rect>
+              <rect class="zone-b" x="230" y="144" width="176" height="92" rx="8"></rect>
+              <rect class="zone-c" x="54" y="52" width="176" height="92" rx="8"></rect>
+              <rect class="zone-d" x="230" y="52" width="176" height="92" rx="8"></rect>
+              <line class="axis" x1="54" y1="236" x2="406" y2="236"></line>
+              <line class="axis" x1="54" y1="236" x2="54" y2="52"></line>
+              <line class="gridline" x1="230" y1="52" x2="230" y2="236"></line>
+              <line class="gridline" x1="54" y1="144" x2="406" y2="144"></line>
+              <text x="112" y="210">용어집·타입</text>
+              <text x="279" y="210">타입·제약 그래프</text>
+              <text x="105" y="84">제약·정책</text>
+              <text x="267" y="84">형식·프로세스 온톨로지</text>
+              <text x="184" y="267">관계 탐색 복잡도 →</text>
+              <text transform="translate(17 190) rotate(-90)">잘못된 행동의 위험 →</text>
+              <circle id="scenario-point" class="point" cx="230" cy="144" r="9"></circle>
+            </svg>
+
+            <div id="scenario-recommendation" class="recommendation" aria-live="polite"></div>
+            <div class="legend" aria-hidden="true">
+              <span
+                ><i class="swatch" style="background: var(--series-1)"></i>가벼운 의미 구조</span
+              >
+              <span><i class="swatch" style="background: var(--series-2)"></i>관계·제약 강화</span>
+              <span><i class="swatch" style="background: var(--series-3)"></i>행동 전 검증</span>
+              <span
+                ><i class="swatch" style="background: var(--series-4)"></i>형식 의미·정책 통제</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      ;(() => {
+        const root = document.getElementById("ontology-runtime-explorer")
+        if (!root) return
+
+        const shifts = [
+          {
+            id: "control",
+            label: "저장소 → 통제면",
+            before: "질의와 데이터 통합을 위한 백오피스 지식 저장소",
+            after: "도구 호출과 행동 전에 의미·정책·제약을 검사하는 런타임 통제면",
+            bars: { 검색: 2, 메모리: 2, 계획: 5, 검증: 5, 거버넌스: 4 },
+          },
+          {
+            id: "memory",
+            label: "문서 → 의미 메모리",
+            before: "유사한 과거 문장을 다시 찾는 문서·벡터 검색",
+            after: "시간·출처·상태 변화·관계 방향을 가진 구조화된 장기 메모리",
+            bars: { 검색: 4, 메모리: 5, 계획: 3, 검증: 3, 거버넌스: 4 },
+          },
+          {
+            id: "living",
+            label: "완성품 → 살아 있는 명세",
+            before: "전문가가 설계하고 버전 단위로 배포하는 비교적 정적인 완성품",
+            after: "LLM이 후보를 제안하고 형식 검사·사람 승인·관찰·롤백으로 관리하는 명세",
+            bars: { 검색: 2, 메모리: 3, 계획: 3, 검증: 5, 거버넌스: 5 },
+          },
+          {
+            id: "space",
+            label: "스키마 → 탐색 공간",
+            before: "애플리케이션이 질의할 데이터 구조와 스키마",
+            after: "에이전트가 엔티티와 관계를 단계적으로 선택하며 행동하는 탐색 환경",
+            bars: { 검색: 5, 메모리: 3, 계획: 4, 검증: 2, 거버넌스: 2 },
+          },
+          {
+            id: "contract",
+            label: "공통어 → 실행 계약",
+            before: "데이터베이스와 애플리케이션 사이의 의미 상호운용 공통어",
+            after: "사람 목표·에이전트 계획·도구 입력·정책·근거·결과를 잇는 실행 계약",
+            bars: { 검색: 3, 메모리: 4, 계획: 5, 검증: 5, 거버넌스: 5 },
+          },
+        ]
+
+        const levels = [
+          {
+            name: "용어집·분류체계",
+            values: [1, 1, 1, 1],
+            strength: "승인된 이름과 상하위 분류를 빠르게 공유한다.",
+            caution: "관계 경로, 제약 검사, 행동 통제는 약하다.",
+            fit: "검색어 정규화와 단순 추천",
+          },
+          {
+            name: "타입 그래프",
+            values: [3, 1, 1, 2],
+            strength: "엔티티·관계·시간·출처를 연결해 탐색과 메모리에 실용적이다.",
+            caution: "의미가 구현 관례에 의존하며 자동 검증 범위가 제한된다.",
+            fit: "그래프 검색과 시간 인식 메모리",
+          },
+          {
+            name: "제약 그래프",
+            values: [3, 4, 3, 3],
+            strength: "입력·출력·도구 인자를 실행 전에 검사하기 좋다.",
+            caution: "제약 적합성이 사실성이나 과업 성공을 자동으로 보장하지 않는다.",
+            fit: "SHACL 기반 검증과 정책 게이트",
+          },
+          {
+            name: "형식 온톨로지",
+            values: [5, 4, 2, 5],
+            strength: "클래스·공리·형식 의미론으로 명시적 의미와 일관성 추론을 제공한다.",
+            caution: "모델링·계산·디버깅·변경 관리 비용이 크다.",
+            fit: "논리적 모순과 의미 정렬이 중요한 도메인",
+          },
+          {
+            name: "프로세스·정책 온톨로지",
+            values: [4, 5, 5, 5],
+            strength: "상태·행동·권한·전제조건을 계획과 실행 통제에 직접 연결한다.",
+            caution: "현실 예외와 권한 변경을 잘못 모델링하면 실행 위험이 커진다.",
+            fit: "고위험 도구 실행과 다중 에이전트 계약",
+          },
+        ]
+
+        const levelLabels = ["", "낮음", "낮음+", "중간", "높음", "매우 높음"]
+        const barLabels = ["", "낮음", "낮음", "중간", "높음", "매우 높음"]
+        const scenarioLabels = ["", "매우 낮음", "낮음", "중간", "높음", "매우 높음"]
+        const tabs = Array.from(root.querySelectorAll(".tab"))
+        const panels = Array.from(root.querySelectorAll(".panel"))
+        const shiftButtons = root.querySelector("#shift-buttons")
+        const shiftBefore = root.querySelector("#shift-before")
+        const shiftAfter = root.querySelector("#shift-after")
+        const shiftBars = root.querySelector("#shift-bars")
+        const continuumBody = root.querySelector("#continuum-body")
+        const continuumDetail = root.querySelector("#continuum-detail")
+
+        function activateTab(id) {
+          tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.tab === id)))
+          panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id))
+        }
+
+        tabs.forEach((tab) => tab.addEventListener("click", () => activateTab(tab.dataset.tab)))
+
+        function renderShift(index) {
+          const item = shifts[index]
+          Array.from(shiftButtons.children).forEach((button, buttonIndex) => {
+            button.setAttribute("aria-pressed", String(buttonIndex === index))
+          })
+          shiftBefore.textContent = item.before
+          shiftAfter.textContent = item.after
+          shiftBars.innerHTML = ""
+          Object.entries(item.bars).forEach(([label, value]) => {
+            const row = document.createElement("div")
+            row.className = "bar-row"
+            row.innerHTML = `
+              <span>${label}</span>
+              <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="width:${value * 20}%"></span></span>
+              <span class="bar-value">${barLabels[value]}</span>
+            `
+            row.setAttribute("aria-label", `${label} 관련도 ${barLabels[value]}`)
+            shiftBars.appendChild(row)
+          })
+        }
+
+        shifts.forEach((item, index) => {
+          const button = document.createElement("button")
+          button.type = "button"
+          button.className = "shift-button"
+          button.textContent = item.label
+          button.setAttribute("aria-pressed", String(index === 0))
+          button.addEventListener("click", () => renderShift(index))
+          shiftButtons.appendChild(button)
+        })
+
+        function renderContinuumDetail(index) {
+          const item = levels[index]
+          Array.from(continuumBody.children).forEach((row, rowIndex) => {
+            row.classList.toggle("is-selected", rowIndex === index)
+            const button = row.querySelector("button")
+            if (button) button.setAttribute("aria-pressed", String(rowIndex === index))
+          })
+          continuumDetail.innerHTML = `
+            <h3>${item.name}</h3>
+            <dl>
+              <dt>강점</dt><dd>${item.strength}</dd>
+              <dt>주의</dt><dd>${item.caution}</dd>
+              <dt>적합한 시작점</dt><dd>${item.fit}</dd>
+            </dl>
+          `
+        }
+
+        levels.forEach((item, index) => {
+          const row = document.createElement("tr")
+          row.innerHTML = `<th scope="row"><button type="button" class="choice continuum-choice" aria-pressed="${String(index === 0)}">${item.name}</button></th>${item.values
+            .map(
+              (value) => `<td><span class="level level-${value}">${levelLabels[value]}</span></td>`,
+            )
+            .join("")}`
+          row.querySelector("button").addEventListener("click", () => renderContinuumDetail(index))
+          continuumBody.appendChild(row)
+        })
+
+        renderShift(0)
+        renderContinuumDetail(0)
+
+        const relationRange = root.querySelector("#relation-range")
+        const riskRange = root.querySelector("#risk-range")
+        const auditRange = root.querySelector("#audit-range")
+        const changeRange = root.querySelector("#change-range")
+        const writeToggle = root.querySelector("#write-toggle")
+        const point = root.querySelector("#scenario-point")
+        const recommendation = root.querySelector("#scenario-recommendation")
+        const relationValue = root.querySelector("#relation-value")
+        const riskValue = root.querySelector("#risk-value")
+        const auditValue = root.querySelector("#audit-value")
+        const changeValue = root.querySelector("#change-value")
+
+        function recommend() {
+          const relation = Number(relationRange.value)
+          const risk = Number(riskRange.value)
+          const audit = Number(auditRange.value)
+          const change = Number(changeRange.value)
+          const writes = writeToggle.checked
+
+          relationValue.textContent = scenarioLabels[relation]
+          riskValue.textContent = scenarioLabels[risk]
+          auditValue.textContent = scenarioLabels[audit]
+          changeValue.textContent = scenarioLabels[change]
+
+          const x = 54 + ((relation - 1) / 4) * 352
+          const y = 236 - ((risk - 1) / 4) * 184
+          point.setAttribute("cx", x.toFixed(1))
+          point.setAttribute("cy", y.toFixed(1))
+
+          let level = "용어집·타입 그래프"
+          let reason = "표현을 정규화하고 관계를 연결하는 가벼운 구조부터 시작한다."
+          let guard = "정답 기준선과 출처 메타데이터를 먼저 만든다."
+
+          if (risk >= 4 || audit >= 4) {
+            level = "제약 그래프"
+            reason = "행동 전 필수값·권한·금지 조건과 근거 완전성을 검사할 필요가 크다."
+            guard =
+              "제약 통과를 사실성·안전성 보증으로 해석하지 말고 사람 검토와 실제 집행점을 둔다."
+          }
+
+          if ((relation >= 4 && audit >= 4) || (relation >= 4 && risk >= 4)) {
+            level = "형식 온톨로지 + 제약 그래프"
+            reason = "다단계 관계 의미와 모순·제약을 함께 관리해야 한다."
+            guard = "표현 범위를 좁히고 역량 질문 회귀 테스트와 계산 비용을 측정한다."
+          }
+
+          if (writes || (risk >= 5 && relation >= 4)) {
+            level = "프로세스·정책 온톨로지"
+            reason = "에이전트의 쓰기·행동이 상태·권한·전제조건과 직접 연결된다."
+            guard = "후보 저장소와 운영 저장소를 분리하고 승인·카나리·롤백·불변 계보를 필수로 둔다."
+          }
+
+          if (change >= 5 && level.includes("형식")) {
+            guard +=
+              " 변화가 매우 빠르므로 전체 도메인을 모델링하지 말고 안정된 핵심 개념만 형식화한다."
+          }
+
+          recommendation.innerHTML = `<strong>권장 최소 시작점: ${level}</strong><p>${reason}<br />운영 방어선: ${guard}</p>`
+        }
+
+        ;[relationRange, riskRange, auditRange, changeRange, writeToggle].forEach((control) => {
+          control.addEventListener("input", recommend)
+          control.addEventListener("change", recommend)
+        })
+
+        recommend()
+      })()
+    </script>
+  </body>
+</html>
