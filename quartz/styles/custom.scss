@@ -66,6 +66,21 @@ body:not([data-slug="index"]) article h3 {
 .sidebar.left {
   border-right: 1px solid color-mix(in srgb, var(--lightgray) 72%, transparent);
 }
+
+// Keep the file explorer from being compressed to its title when a tall
+// component (such as Recent Notes on the home page) shares the fixed sidebar.
+// Let the sidebar scroll instead so every explorer item remains reachable.
+@media all and not ($mobile) {
+  .sidebar.left {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .sidebar.left > .explorer {
+    flex-shrink: 0;
+  }
+}
+
 .sidebar.right .graph-outer {
   border-radius: 14px;
   background: color-mix(in srgb, var(--light) 95%, var(--secondary));
