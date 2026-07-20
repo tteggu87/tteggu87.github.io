@@ -686,9 +686,8 @@
         const root = document.getElementById("ontology-runtime-explorer")
         if (!root) return
 
-        const resizeMessageType = "ontology-runtime-explorer:resize"
-        const measureMessageType = "ontology-runtime-explorer:measure"
         let resizeFrameRequest = 0
+        let lastFrameHeight = 0
 
         const reportHeight = () => {
           cancelAnimationFrame(resizeFrameRequest)
@@ -696,21 +695,19 @@
             const bodyStyle = getComputedStyle(document.body)
             const paddingTop = Number.parseFloat(bodyStyle.paddingTop) || 0
             const paddingBottom = Number.parseFloat(bodyStyle.paddingBottom) || 0
-            const height = Math.ceil(root.scrollHeight + paddingTop + paddingBottom)
-            window.parent.postMessage({ type: resizeMessageType, height }, "*")
+            const contentHeight = root.getBoundingClientRect().height
+            const height = Math.max(1, Math.ceil(contentHeight + paddingTop + paddingBottom + 2))
+            const frame = window.frameElement
+
+            if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+              lastFrameHeight = height
+              frame.style.height = `${height}px`
+            }
           })
         }
 
-        if (typeof ResizeObserver === "function") {
-          new ResizeObserver(reportHeight).observe(root)
-        }
-        window.addEventListener("resize", reportHeight)
-        window.addEventListener("load", reportHeight, { once: true })
-        window.addEventListener("message", (event) => {
-          if (event.source === window.parent && event.data?.type === measureMessageType) {
-            reportHeight()
-          }
-        })
+        window.setTimeout(reportHeight, 0)
+        window.setTimeout(reportHeight, 250)
 
         const shifts = [
           {
@@ -804,6 +801,7 @@
           tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.tab === id)))
           panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id))
           reportHeight()
+          window.setTimeout(reportHeight, 50)
         }
 
         tabs.forEach((tab) => tab.addEventListener("click", () => activateTab(tab.dataset.tab)))
