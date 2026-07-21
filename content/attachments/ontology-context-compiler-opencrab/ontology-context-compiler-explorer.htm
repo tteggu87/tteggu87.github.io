@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>온톨로지 구조 비교 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f7f8fa;
+        --panel: #ffffff;
+        --panel-soft: #f1f4f7;
+        --text: #18212b;
+        --muted: #5f6b78;
+        --border: #d8dee6;
+        --accent: #2563eb;
+        --accent-soft: #e8f0ff;
+        --good: #166534;
+        --good-soft: #dcfce7;
+        --warn: #92400e;
+        --warn-soft: #fef3c7;
+        --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #11151a;
+          --panel: #171c22;
+          --panel-soft: #20262e;
+          --text: #edf2f7;
+          --muted: #aeb8c4;
+          --border: #343c47;
+          --accent: #7aa2ff;
+          --accent-soft: #202f55;
+          --good: #86efac;
+          --good-soft: #173821;
+          --warn: #fcd34d;
+          --warn-soft: #44320e;
+          --shadow: none;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--text);
+      }
+      body {
+        overflow: hidden;
+        font-family:
+          Pretendard,
+          "Noto Sans KR",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.58;
+      }
+
+      button,
+      select {
+        font: inherit;
+      }
+      button:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+        outline-offset: 2px;
+      }
+
+      #explorer {
+        width: 100%;
+        padding: 18px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+      }
+
+      .eyebrow {
+        margin: 0 0 5px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 750;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.25rem, 3vw, 1.7rem);
+        line-height: 1.28;
+      }
+      .lede {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin: 18px 0;
+      }
+
+      .tab {
+        min-height: 46px;
+        padding: 9px 10px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--panel);
+        color: var(--text);
+        cursor: pointer;
+        font-weight: 650;
+      }
+
+      .tab[aria-selected="true"] {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 14px;
+        align-items: start;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: var(--shadow);
+      }
+
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 12px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: var(--panel-soft);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .badge.primary {
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+      }
+      .panel h2 {
+        margin: 0 0 6px;
+        font-size: 1.05rem;
+      }
+      .panel p {
+        margin: 0;
+      }
+      .description {
+        color: var(--muted);
+      }
+
+      .pipeline {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 7px;
+        margin-top: 14px;
+        align-items: stretch;
+      }
+
+      .step {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 78px;
+        padding: 9px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--panel-soft);
+        text-align: center;
+        font-size: 0.82rem;
+        font-weight: 650;
+      }
+
+      .step:not(:last-child)::after {
+        content: "→";
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        z-index: 2;
+        transform: translateY(-50%);
+        width: 14px;
+        color: var(--accent);
+        font-size: 1rem;
+        background: var(--panel);
+      }
+
+      .why-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+        margin-top: 14px;
+      }
+
+      .why-item {
+        padding: 11px;
+        border-left: 3px solid var(--accent);
+        border-radius: 8px;
+        background: var(--panel-soft);
+      }
+
+      .why-item strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.82rem;
+        color: var(--accent);
+      }
+      .why-item span {
+        font-size: 0.86rem;
+      }
+
+      .bars {
+        display: grid;
+        gap: 12px;
+      }
+      .bar-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+      }
+      .bar-label {
+        font-size: 0.88rem;
+        font-weight: 650;
+      }
+      .bar-value {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+      .track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--panel-soft);
+        border: 1px solid var(--border);
+      }
+      .fill {
+        display: block;
+        height: 100%;
+        width: 0;
+        border-radius: inherit;
+        background: var(--accent);
+        transition: width 220ms ease;
+      }
+
+      .verdict {
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 11px;
+        background: var(--good-soft);
+        color: var(--good);
+        font-size: 0.88rem;
+        font-weight: 650;
+      }
+
+      .caution {
+        margin-top: 10px;
+        padding: 11px;
+        border-radius: 11px;
+        background: var(--warn-soft);
+        color: var(--warn);
+        font-size: 0.82rem;
+      }
+
+      .legend {
+        margin: 13px 2px 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      @media (max-width: 720px) {
+        #explorer {
+          padding: 14px;
+          border-radius: 13px;
+        }
+        .tabs {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+        .pipeline {
+          grid-template-columns: 1fr;
+        }
+        .step {
+          min-height: 54px;
+        }
+        .step:not(:last-child)::after {
+          content: "↓";
+          top: auto;
+          right: 50%;
+          bottom: -14px;
+          transform: translateX(50%);
+          background: var(--panel);
+        }
+      }
+
+      @media (max-width: 430px) {
+        .why-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="explorer">
+      <p class="eyebrow">구조 비교 탐색기</p>
+      <h1>같은 ‘지식 활용’ 목표를 네 가지 방식은 어떻게 풀까요?</h1>
+      <p class="lede">
+        탭을 눌러 추론 주체, 입력 방식, 근거 구조와 OpenCrab의 현재 위치를 비교해 보세요.
+      </p>
+
+      <div class="tabs" role="tablist" aria-label="온톨로지 접근 방식">
+        <button
+          class="tab"
+          id="tab-classic"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="view-panel"
+          data-view="classic"
+        >
+          고전 온톨로지
+        </button>
+        <button
+          class="tab"
+          id="tab-rag"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-panel"
+          data-view="rag"
+        >
+          일반 RAG
+        </button>
+        <button
+          class="tab"
+          id="tab-compiler"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-panel"
+          data-view="compiler"
+        >
+          목표 문맥 컴파일러
+        </button>
+        <button
+          class="tab"
+          id="tab-opencrab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="view-panel"
+          data-view="opencrab"
+        >
+          현재 OpenCrab
+        </button>
+      </div>
+
+      <section id="view-panel" role="tabpanel" aria-live="polite" aria-labelledby="tab-classic">
+        <div class="summary-grid">
+          <div class="panel">
+            <div class="status-row" id="badges"></div>
+            <h2 id="view-title"></h2>
+            <p class="description" id="view-description"></p>
+            <div class="pipeline" id="pipeline" aria-label="처리 흐름"></div>
+            <div class="why-grid" id="why-grid"></div>
+          </div>
+
+          <aside class="panel">
+            <h2>구조적 특징</h2>
+            <div class="bars" id="bars"></div>
+            <div class="verdict" id="verdict"></div>
+            <div class="caution" id="caution"></div>
+          </aside>
+        </div>
+      </section>
+
+      <p class="legend">
+        막대는 논문이나 실험에서 측정한 성능 수치가 아니라, 글의 구조적 비교를 돕기 위한 설명용
+        상대값입니다.
+      </p>
+    </main>
+
+    <script>
+      const views = {
+        classic: {
+          title: "TBox·ABox·Reasoner 중심의 형식 온톨로지",
+          description:
+            "사람이 개념과 공리를 명시하고, 형식 Reasoner가 함의와 모순을 결정론적으로 계산합니다.",
+          badges: ["형식 의미론", "결정론적 추론", "일관성 검사"],
+          pipeline: [
+            "TBox\n개념·공리",
+            "ABox\n개체·사실",
+            "형식\nReasoner",
+            "함의·모순\n검사",
+            "결정론적\n결론",
+          ],
+          why: {
+            무엇: "명시된 개념·사실·공리에서 반드시 따라오는 결론을 계산합니다.",
+            어떻게: "Description Logic과 형식 의미론을 이용해 클래스 분류와 일관성을 검사합니다.",
+            왜: "자연어 이해 없이도 시스템끼리 같은 의미와 결과를 공유하기 위해서입니다.",
+            의미: "유연한 설명보다 재현 가능한 보장에 강합니다.",
+          },
+          bars: [92, 28, 88, 40, 46],
+          verdict: "감사·규제·논리적 보장이 중요한 문제에서는 여전히 가장 강한 기반입니다.",
+          caution: "현실 문서와 예외를 모두 공리로 옮기고 유지하는 비용이 큽니다.",
+        },
+        rag: {
+          title: "질문과 비슷한 문서를 찾아 LLM에 넣는 일반 RAG",
+          description:
+            "Vector나 keyword 검색으로 관련 Chunk를 찾고, LLM이 제공된 문맥을 종합해 답합니다.",
+          badges: ["비정형 문서", "빠른 적용", "LLM 종합"],
+          pipeline: [
+            "자연어\n질문",
+            "Vector·Keyword\n검색",
+            "상위\nChunk",
+            "LLM\n종합",
+            "자연어\n답변",
+          ],
+          why: {
+            무엇: "모델이 학습하지 않은 최신·비공개 지식을 검색해 제공합니다.",
+            어떻게: "질문과 문서의 유사도 또는 keyword 점수로 후보를 고릅니다.",
+            왜: "모델을 다시 학습하지 않고 외부 지식을 빠르게 교체하기 위해서입니다.",
+            의미: "실용적이지만 근거·주장·정책의 역할은 LLM이 스스로 구분해야 합니다.",
+          },
+          bars: [30, 90, 58, 66, 86],
+          verdict: "문서 검색과 최신 지식 공급에는 빠르고 유연한 기본값입니다.",
+          caution: "많은 Chunk가 좋은 문맥을 뜻하지 않으며, 충돌·출처·관계를 놓칠 수 있습니다.",
+        },
+        compiler: {
+          title: "질문을 근거 구조로 바꾸는 Semantic Context Compiler",
+          description:
+            "질문을 QueryPlan으로 변환한 뒤 역할별 지식을 찾고, Evidence·Claim·Policy·Path를 AnswerBundle로 조립합니다.",
+          badges: ["QueryPlan", "Evidence lineage", "AnswerBundle", "Validator"],
+          pipeline: [
+            "자연어\n질문",
+            "9-Space\nQueryPlan",
+            "역할·경로별\n검색",
+            "검증된\nAnswerBundle",
+            "LLM +\nValidator",
+          ],
+          why: {
+            무엇: "LLM이 답할 때 필요한 최소한의 근거·관계·불확실성을 편성합니다.",
+            어떻게: "질문 유형, 역할, 필수 경로와 수용 조건을 먼저 정한 뒤 검색합니다.",
+            왜: "검색량이 아니라 문맥의 정확성과 감사 가능성을 높이기 위해서입니다.",
+            의미: "LLM은 soft reasoner가 되고, 권한·인용·규칙은 결정론적으로 검사합니다.",
+          },
+          bars: [78, 88, 96, 96, 86],
+          verdict: "형식 보장과 LLM의 유연성을 역할 분담하는 목표 구조입니다.",
+          caution:
+            "QueryPlan, lineage, hydration, 검증을 모두 구현해야 하므로 설계 난도가 높습니다.",
+        },
+        opencrab: {
+          title: "현재 OpenCrab: 온톨로지 유도 Hybrid Retriever",
+          description:
+            "MCP를 단일 진입점으로 두고 Vector·BM25·Graph를 결합하며, 9-Space와 Pack으로 외부 지식을 구조화하려 합니다.",
+          badges: ["MCP", "9-Space", "Vector+BM25+Graph", "Pack"],
+          pipeline: [
+            "Agent\n질문",
+            "MCP\nontology_query",
+            "Hybrid\n검색",
+            "QueryResult\n목록",
+            "Agent\n해석",
+          ],
+          why: {
+            무엇: "문서와 Graph에서 Agent가 사용할 관련 지식 후보를 찾습니다.",
+            어떻게: "검색 분기와 RRF를 결합하고 일부 ReBAC 필터를 적용합니다.",
+            왜: "모델과 저장소를 분리하고 여러 Agent에 같은 지식 도구를 제공하기 위해서입니다.",
+            의미: "방향은 문맥 컴파일러에 가깝지만 현재 결과는 아직 평평한 retrieval 목록입니다.",
+          },
+          bars: [48, 82, 72, 62, 84],
+          verdict: "로컬 Agent·사내 문서 탐색·MCP 실험에서는 단점보다 장점이 큽니다.",
+          caution:
+            "9-Space QueryPlan, 강한 Evidence lineage, AnswerBundle과 답변 검증이 다음 과제입니다.",
+        },
+      }
+
+      const barLabels = [
+        "결정론적 보장",
+        "비정형 문서 적응",
+        "근거·출처 구조",
+        "질문별 문맥 편성",
+        "운영 유연성",
+      ]
+
+      const tabs = [...document.querySelectorAll(".tab")]
+      const panel = document.getElementById("view-panel")
+      const title = document.getElementById("view-title")
+      const description = document.getElementById("view-description")
+      const badges = document.getElementById("badges")
+      const pipeline = document.getElementById("pipeline")
+      const whyGrid = document.getElementById("why-grid")
+      const bars = document.getElementById("bars")
+      const verdict = document.getElementById("verdict")
+      const caution = document.getElementById("caution")
+
+      let lastFrameHeight = 0
+      let resizeFrameRequest = 0
+
+      function reportHeight() {
+        cancelAnimationFrame(resizeFrameRequest)
+        resizeFrameRequest = requestAnimationFrame(() => {
+          const root = document.getElementById("explorer")
+          const bodyStyle = getComputedStyle(document.body)
+          const padding =
+            (parseFloat(bodyStyle.paddingTop) || 0) + (parseFloat(bodyStyle.paddingBottom) || 0)
+          const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+          const frame = window.frameElement
+          if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+            lastFrameHeight = height
+            frame.style.height = `${height}px`
+          }
+        })
+      }
+
+      function render(viewName) {
+        const view = views[viewName]
+        title.textContent = view.title
+        description.textContent = view.description
+        panel.setAttribute("aria-labelledby", `tab-${viewName}`)
+
+        badges.replaceChildren(
+          ...view.badges.map((label, index) => {
+            const item = document.createElement("span")
+            item.className = `badge${index === 0 ? " primary" : ""}`
+            item.textContent = label
+            return item
+          }),
+        )
+
+        pipeline.replaceChildren(
+          ...view.pipeline.map((label) => {
+            const item = document.createElement("div")
+            item.className = "step"
+            item.innerHTML = label.replace("\n", "<br>")
+            return item
+          }),
+        )
+
+        whyGrid.replaceChildren(
+          ...Object.entries(view.why).map(([key, value]) => {
+            const item = document.createElement("div")
+            item.className = "why-item"
+            const heading = document.createElement("strong")
+            heading.textContent = key
+            const text = document.createElement("span")
+            text.textContent = value
+            item.append(heading, text)
+            return item
+          }),
+        )
+
+        bars.replaceChildren(
+          ...view.bars.map((value, index) => {
+            const group = document.createElement("div")
+            const head = document.createElement("div")
+            head.className = "bar-head"
+            const label = document.createElement("span")
+            label.className = "bar-label"
+            label.textContent = barLabels[index]
+            const valueText = document.createElement("span")
+            valueText.className = "bar-value"
+            valueText.textContent = value >= 80 ? "높음" : value >= 55 ? "중간" : "낮음"
+            head.append(label, valueText)
+            const track = document.createElement("div")
+            track.className = "track"
+            const fill = document.createElement("span")
+            fill.className = "fill"
+            fill.style.width = `${value}%`
+            track.append(fill)
+            group.append(head, track)
+            return group
+          }),
+        )
+
+        verdict.textContent = view.verdict
+        caution.textContent = view.caution
+
+        tabs.forEach((tab) =>
+          tab.setAttribute("aria-selected", String(tab.dataset.view === viewName)),
+        )
+        reportHeight()
+        setTimeout(reportHeight, 60)
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => render(tab.dataset.view))
+        tab.addEventListener("keydown", (event) => {
+          if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return
+          event.preventDefault()
+          const current = tabs.indexOf(tab)
+          const delta = event.key === "ArrowRight" ? 1 : -1
+          const next = tabs[(current + delta + tabs.length) % tabs.length]
+          next.focus()
+          render(next.dataset.view)
+        })
+      })
+
+      render("classic")
+      setTimeout(reportHeight, 0)
+      setTimeout(reportHeight, 250)
+      window.addEventListener("load", reportHeight)
+      window.addEventListener("resize", reportHeight)
+    </script>
+  </body>
+</html>
