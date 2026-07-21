@@ -61,11 +61,12 @@ flowchart LR
 아래 시각화에서 콘텐츠 투자 슬라이더, 주제 셀, 발행 단계 버튼을 직접 조작할 수 있다. 지도는 예시 국가 값을 색의 농도로 표시한다.
 
 <iframe
+  class="interactive-visualization-frame"
   src="/attachments/visualize-capability-showcase/visualize-capability-atlas.htm"
   title="Visualize 지원 시각화 기능 지도"
   loading="lazy"
   sandbox="allow-scripts"
-  style="display:block;width:100%;height:78vh;min-height:720px;border:1px solid currentColor;border-radius:12px;background:transparent"
+  style="height:78vh;min-height:720px"
 ></iframe>
 
 [시각화를 새 화면에서 크게 열기](/attachments/visualize-capability-showcase/visualize-capability-atlas.htm)
@@ -96,12 +97,16 @@ flowchart LR
 ```html
 <iframe
   id="interactive-frame"
+  class="interactive-visualization-frame"
   src="/attachments/example/explorer.htm"
   scrolling="no"
   sandbox="allow-scripts allow-same-origin"
-  style="display:block;width:100%;height:920px;overflow:hidden"
+  style="height:920px"
 ></iframe>
 ```
+
+> [!important] 본문 레이아웃도 함께 검수한다
+> `width: 100%`인 iframe에 테두리를 붙이면서 `content-box`를 그대로 두면 실제 외곽 폭이 본문보다 2px 커진다. 모든 본문형 시각화는 공통 `interactive-visualization-frame` 클래스의 `box-sizing: border-box`를 사용하고, iframe 내부뿐 아니라 호스트 글의 좌우 여백·본문 정렬·가로 넘침도 모바일 실브라우저에서 확인한다.
 
 `allow-same-origin`은 블로그가 직접 관리하는 동일 출처 문서가 부모의 iframe 요소에 접근하기 위해 사용한다. 외부에서 받은 HTML이나 신뢰하지 않는 콘텐츠에는 `allow-scripts allow-same-origin` 조합을 적용하면 안 된다.
 

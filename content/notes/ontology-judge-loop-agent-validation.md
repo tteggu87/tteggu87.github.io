@@ -111,12 +111,13 @@ JSON Schema, 타입, 해시, 단위 테스트와 속성 기반 테스트, 샌드
 결정적 검사 결과, 행동 위험, 기준별 판정 불일치와 반증 결과를 바꾸면 `PASS`, `FAIL`, `UNCERTAIN`, `ABSTAIN` 가운데 어떤 경로로 이동하는지 확인할 수 있다. 이 도구는 글의 참조 구조를 설명하기 위한 것이며 실제 자동 승인 임계값은 아니다.
 
 <iframe
+  class="interactive-visualization-frame"
   src="/attachments/ontology-judge-loop-agent-validation/judge-loop-verdict-simulator.htm"
   title="Judge Loop 판정 경로 시뮬레이터"
   loading="lazy"
   scrolling="no"
   sandbox="allow-scripts allow-same-origin"
-  style="display:block;width:100%;height:920px;overflow:hidden;border:1px solid currentColor;border-radius:12px;background:transparent"
+  style="height:920px"
 ></iframe>
 
 ### 8. 수정본과 종료 조건을 별도 기록한다

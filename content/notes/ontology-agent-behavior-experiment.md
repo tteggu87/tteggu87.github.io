@@ -120,12 +120,13 @@ flowchart LR
 기준선 `C_static`과 다른 실험군을 선택해 기대값 일치 수, 새 조건 false pass, 최종 판정 변화와 판정 근거 변화를 나란히 볼 수 있다. `최종 PASS/FAIL`과 `판정 근거·trace`를 바꾸면 중복 shape처럼 판정은 같지만 추적 정보가 달라진 사례가 분리된다.
 
 <iframe
+  class="interactive-visualization-frame"
   src="/attachments/ontology-agent-behavior-experiment/ontology-policy-experiment-explorer.htm"
   title="정책 실행 방식 비교 실험 탐색기"
   loading="lazy"
   scrolling="no"
   sandbox="allow-scripts allow-same-origin"
-  style="display:block;width:100%;height:920px;overflow:hidden;border:1px solid currentColor;border-radius:12px;background:transparent"
+  style="height:920px"
 ></iframe>
 
 ### 2.1 실제 요구조건을 실행한 세 방식만 10/10에 도달한다

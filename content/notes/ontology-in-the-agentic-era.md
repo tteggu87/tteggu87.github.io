@@ -62,12 +62,13 @@ Gruber의 고전적 정의에서 온톨로지는 개념화에 대한 명시적 �
 
 <iframe
   id="ontology-runtime-meaning-explorer-frame"
+  class="interactive-visualization-frame"
   src="/attachments/ontology-in-the-agentic-era/ontology-runtime-meaning-explorer.htm"
   title="에이전트 시대의 의미 계층 인터랙티브 탐색기"
   loading="lazy"
   scrolling="no"
   sandbox="allow-scripts allow-same-origin"
-  style="display:block;width:100%;height:920px;overflow:hidden;border:1px solid currentColor;border-radius:12px;background:transparent"
+  style="height:920px"
 ></iframe>
 
 ### 2.1 지식 저장소에서 런타임 통제면으로
