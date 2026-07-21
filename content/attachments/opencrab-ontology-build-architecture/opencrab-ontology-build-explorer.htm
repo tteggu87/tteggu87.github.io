@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>OpenCrab 온톨로지 빌드 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: light-dark(rgb(255 255 255), rgb(24 24 24));
+        --fg: light-dark(rgb(29 31 35), rgb(244 246 249));
+        --muted: light-dark(rgb(91 98 109), rgb(173 180 190));
+        --panel: light-dark(rgb(247 248 250), rgb(35 37 42));
+        --panel-strong: light-dark(rgb(238 241 245), rgb(44 47 54));
+        --border: light-dark(rgb(29 31 35 / 15%), rgb(255 255 255 / 15%));
+        --accent: light-dark(rgb(31 111 204), rgb(126 183 255));
+        --accent-fg: light-dark(rgb(255 255 255), rgb(15 20 27));
+        --accent-soft: light-dark(rgb(31 111 204 / 11%), rgb(126 183 255 / 14%));
+        --good: light-dark(rgb(40 132 84), rgb(101 204 151));
+        --warn: light-dark(rgb(177 103 32), rgb(238 163 92));
+        --weak: light-dark(rgb(172 63 76), rgb(238 124 139));
+        --radius: 14px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-width: 0;
+        overflow: hidden;
+        background: transparent;
+        color: var(--fg);
+        font-family: var(--font);
+      }
+
+      body {
+        padding: 10px;
+      }
+
+      button {
+        font: inherit;
+        color: inherit;
+      }
+
+      .explorer {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .notice {
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--accent-soft);
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        margin-bottom: 14px;
+      }
+
+      .tab,
+      .selector {
+        appearance: none;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: transparent;
+        padding: 9px 10px;
+        cursor: pointer;
+      }
+
+      .tab:hover,
+      .selector:hover {
+        background: var(--panel);
+      }
+
+      .tab[aria-selected="true"],
+      .selector[aria-pressed="true"] {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--accent-fg);
+      }
+
+      .tab:focus-visible,
+      .selector:focus-visible {
+        outline: 3px solid var(--accent-soft);
+        outline-offset: 2px;
+      }
+
+      .panel {
+        display: none;
+      }
+
+      .panel.is-active {
+        display: block;
+      }
+
+      .section-title {
+        margin: 0 0 5px;
+        font-size: 1.08rem;
+        font-weight: 650;
+      }
+
+      .section-copy {
+        margin: 0 0 13px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      .space-layout,
+      .ssot-layout,
+      .build-layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.35fr);
+        gap: 13px;
+        align-items: start;
+      }
+
+      .space-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .selector {
+        min-height: 58px;
+        padding: 8px 6px;
+        font-size: 0.84rem;
+        line-height: 1.25;
+      }
+
+      .selector small {
+        display: block;
+        margin-top: 3px;
+        color: inherit;
+        opacity: 0.72;
+        font-size: 0.72rem;
+      }
+
+      .detail {
+        min-width: 0;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--panel);
+      }
+
+      .detail h3 {
+        margin: 0 0 10px;
+        font-size: 1.02rem;
+      }
+
+      .detail dl {
+        margin: 0;
+      }
+
+      .detail dt {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .detail dt:first-child {
+        margin-top: 0;
+      }
+
+      .detail dd {
+        margin: 3px 0 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: var(--panel-strong);
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .status::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--status-color, var(--warn));
+        content: "";
+      }
+
+      .status.good {
+        --status-color: var(--good);
+      }
+
+      .status.partial {
+        --status-color: var(--warn);
+      }
+
+      .status.weak {
+        --status-color: var(--weak);
+      }
+
+      .selector-list {
+        display: grid;
+        gap: 7px;
+      }
+
+      .selector-list .selector {
+        min-height: 0;
+        text-align: left;
+        padding: 10px 11px;
+      }
+
+      .flow {
+        display: grid;
+        gap: 7px;
+      }
+
+      .flow-step {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 9px;
+        align-items: start;
+        padding: 10px 11px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--panel);
+      }
+
+      .flow-step.is-selected {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .flow-step button {
+        appearance: none;
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg);
+        cursor: pointer;
+      }
+
+      .flow-step strong {
+        display: block;
+        margin: 2px 0 3px;
+        font-size: 0.9rem;
+      }
+
+      .flow-step span {
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
+      .contrast {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 11px;
+      }
+
+      .contrast div {
+        padding: 10px;
+        border-radius: 10px;
+        background: var(--panel-strong);
+      }
+
+      .contrast strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .contrast span {
+        font-size: 0.86rem;
+        line-height: 1.45;
+      }
+
+      @media (max-width: 680px) {
+        body {
+          padding: 7px;
+        }
+
+        .space-layout,
+        .ssot-layout,
+        .build-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .tabs {
+          grid-template-columns: 1fr;
+        }
+
+        .space-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 420px) {
+        .space-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .contrast {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="explorer" class="explorer">
+      <p class="notice">
+        아래 분류는 OpenCrab 코드와 문서의 역할을 설명하기 위한 질적 분석이다. 상태 표시는 성능
+        점수나 공식 로드맵 진척률이 아니다.
+      </p>
+
+      <nav class="tabs" role="tablist" aria-label="OpenCrab 온톨로지 빌드 탐색 주제">
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-spaces"
+          data-tab="panel-spaces"
+        >
+          9-Space 의미 구조
+        </button>
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-ssot"
+          data-tab="panel-ssot"
+        >
+          MCP와 SSOT
+        </button>
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-build"
+          data-tab="panel-build"
+        >
+          빌드 파이프라인
+        </button>
+      </nav>
+
+      <section id="panel-spaces" class="panel is-active" role="tabpanel">
+        <h2 class="section-title">9-Space는 존재 분류보다 운영 역할 분류에 가깝다</h2>
+        <p class="section-copy">
+          공간을 선택하면 어떤 이론적 개념과 닮았고, 실제 코드에서 어디까지 작동하는지 볼 수 있다.
+        </p>
+        <div class="space-layout">
+          <div id="space-grid" class="space-grid" aria-label="9-Space 선택"></div>
+          <article id="space-detail" class="detail" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section id="panel-ssot" class="panel" role="tabpanel">
+        <h2 class="section-title">MCP는 저장소가 아니라 의미 조작의 공식 표면이다</h2>
+        <p class="section-copy">
+          OpenCrab에는 의미, 타입, 도구, 데이터, 발행의 기준점이 서로 다른 위치에 있다.
+        </p>
+        <div class="ssot-layout">
+          <div id="ssot-list" class="selector-list" aria-label="SSOT 계층 선택"></div>
+          <article id="ssot-detail" class="detail" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section id="panel-build" class="panel" role="tabpanel">
+        <h2 class="section-title">설계상 컴파일러, 구현상 동적 인터프리터</h2>
+        <p class="section-copy">
+          단계를 누르면 의도한 계약과 현재 기본 경로의 차이를 비교할 수 있다.
+        </p>
+        <div class="build-layout">
+          <div id="build-flow" class="flow" aria-label="온톨로지 빌드 단계"></div>
+          <article id="build-detail" class="detail" aria-live="polite"></article>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const spaces = [
+        {
+          id: "subject",
+          label: "Subject",
+          subtitle: "행동 주체",
+          match: "Agent ontology · IAM · Actor Model",
+          role: "User, Team, Org, Agent를 별도 공간에 두어 책임, 권한, 도구 사용 주체를 표현한다.",
+          runtime:
+            "Subject→Resource 권한 edge와 ReBAC에 사용된다. 다만 Subject→Subject 관계가 없어 조직 소속 모델은 어색하다.",
+          value: "지식그래프를 읽기 전용 사전이 아니라 에이전트 실행 환경으로 확장한다.",
+          gap: "User→Team→Org 같은 자연스러운 소속 경로가 strict grammar와 맞지 않는다.",
+          status: "partial",
+          statusText: "핵심 개념은 구현, 조직 관계 문법은 불완전",
+        },
+        {
+          id: "resource",
+          label: "Resource",
+          subtitle: "자산·능력",
+          match: "Asset model · Capability registry",
+          role: "문서, 데이터셋뿐 아니라 Tool과 API를 같은 자원 공간에 둔다.",
+          runtime: "권한, 수집 결과, 도구 실행 대상을 연결하는 중심 공간이다.",
+          value: "에이전트가 아는 것과 사용할 수 있는 것을 같은 의미 계층에서 다룰 수 있다.",
+          gap: "문서 자산과 실행 capability가 같은 관계 집합을 공유해 의미가 거칠어질 수 있다.",
+          status: "good",
+          statusText: "9-Space 중 가장 실용적으로 연결된 공간",
+        },
+        {
+          id: "evidence",
+          label: "Evidence",
+          subtitle: "관찰·근거",
+          match: "PROV-O · Evidence graph · Event sourcing",
+          role: "TextUnit, LogEntry, Evidence를 통해 원문 관찰과 주장·개념을 분리한다.",
+          runtime:
+            "문법에는 Evidence→Concept, Evidence→Claim 관계가 있지만 기본 LLM extractor는 exact span과 evidence ID를 강제하지 않는다.",
+          value: "구조화된 사실을 다시 원문과 변환 경로로 추적하려는 기반이다.",
+          gap: "문서의 강한 evidence-first 약속과 기본 추출 경로 사이의 간극이 크다.",
+          status: "partial",
+          statusText: "문법·Pack 설계는 강함, 기본 빌드는 약함",
+        },
+        {
+          id: "concept",
+          label: "Concept",
+          subtitle: "의미 어휘",
+          match: "SKOS · Lightweight ontology · Business glossary",
+          role: "Entity, Concept, Topic, Class를 하나의 검색 가능한 의미 공간에 넣는다.",
+          runtime:
+            "related_to, subclass_of, part_of, influences, depends_on edge로 그래프 탐색에 사용한다.",
+          value: "LLM이 생성하기 쉽고 property graph와 검색 UI에 잘 맞는다.",
+          gap: "Class와 instance가 섞이고 subclass_of에도 논리적 closure가 없다.",
+          status: "good",
+          statusText: "경량 의미 그래프로는 유용, 형식 온톨로지는 아님",
+        },
+        {
+          id: "claim",
+          label: "Claim",
+          subtitle: "검증 가능한 명제",
+          match: "Epistemic KG · Nanopublication",
+          role: "관찰과 구분되는 주장, confidence와 candidate→validated→promoted 상태를 표현한다.",
+          runtime:
+            "PromotionEngine이 status를 속성으로 다시 쓰지만 query는 promoted 상태를 강제 필터링하지 않는다.",
+          value: "모델이 만든 해석을 곧바로 사실로 취급하지 않을 개념적 자리를 제공한다.",
+          gap: "Claim→Concept, Claim→Outcome, Claim→Claim 관계가 없어 명제가 의미 세계와 충분히 연결되지 않는다.",
+          status: "weak",
+          statusText: "좋은 모델링 의도에 비해 런타임 강제력이 약함",
+        },
+        {
+          id: "community",
+          label: "Community",
+          subtitle: "군집·전역 요약",
+          match: "GraphRAG · Leiden/Louvain clustering",
+          role: "관련 개념 묶음과 CommunityReport를 통해 전역 질문에 대응하려 한다.",
+          runtime:
+            "문법과 seed 데이터에는 있으나 실제 community detection·report builder는 보이지 않는다.",
+          value: "개별 노드 검색과 도메인 전체 요약을 같은 그래프에서 제공할 수 있다.",
+          gap: "현재는 미래 기능을 위한 schema slot에 가깝다.",
+          status: "weak",
+          statusText: "개념은 정의됐지만 생성 엔진은 미구현",
+        },
+        {
+          id: "outcome",
+          label: "Outcome",
+          subtitle: "KPI·위험",
+          match: "Decision intelligence · KPI tree",
+          role: "개념을 성능 지표, 목표, 위험과 연결해 지식에서 의사결정으로 이동한다.",
+          runtime:
+            "ImpactEngine과 Lever simulation이 주변 관계를 읽지만 로컬 모드의 Cypher 부재로 기능이 제한된다.",
+          value: "검색 결과를 실제 운영 결과와 연결하는 OpenCrab 특유의 공간이다.",
+          gap: "효과 크기, 시간 지연, 단위와 불확실성 모델이 없어 실제 예측 엔진은 아니다.",
+          status: "partial",
+          statusText: "결정 그래프의 틀은 있으나 계산 모델은 초기 단계",
+        },
+        {
+          id: "lever",
+          label: "Lever",
+          subtitle: "조정 변수",
+          match: "Control theory · Intervention graph",
+          role: "사람이나 Agent가 조정할 수 있는 파라미터를 Outcome·Concept와 연결한다.",
+          runtime:
+            "raises, lowers, stabilizes, optimizes 관계와 단순 부호·magnitude 휴리스틱으로 결과를 표시한다.",
+          value: "온톨로지를 설명용 그래프에서 행동 후보를 찾는 그래프로 확장한다.",
+          gap: "현재 confidence와 predicted delta는 근거 기반 인과 추정이 아니다.",
+          status: "partial",
+          statusText: "구조적 영향 탐색에는 유용, 수치 시뮬레이션에는 부적합",
+        },
+        {
+          id: "policy",
+          label: "Policy",
+          subtitle: "거버넌스",
+          match: "Policy-as-code · ReBAC · Capability security",
+          role: "Sensitivity, ApprovalRule, Policy를 Subject와 Resource에 연결하려 한다.",
+          runtime:
+            "실제 ReBAC 판정은 SQL policy와 Subject→Resource edge를 사용하며 Policy node는 직접 소비하지 않는다.",
+          value: "의미 그래프를 접근 통제와 승인 흐름으로 확장할 수 있는 자리다.",
+          gap: "정책 그래프가 실행 규칙으로 compile되지 않아 표현 계층과 집행 계층이 분리돼 있다.",
+          status: "weak",
+          statusText: "표현용 그래프와 실제 권한 엔진이 분리",
+        },
+      ]
+
+      const ssotLayers = [
+        {
+          id: "semantic",
+          label: "Semantic SSOT",
+          source: "opencrab/grammar/manifest.py",
+          meaning:
+            "9개 Space, 허용 node type, space 간 relation, 영향 범주와 ReBAC vocabulary의 기준이다.",
+          mcp: "ontology_manifest는 이 기준을 에이전트에게 노출하는 introspection 도구다.",
+          issue: "고정 manifest와 설치형 schema pack의 확장 규칙이 연결되지 않는다.",
+          verdict: "MCP가 SSOT라기보다 manifest가 의미 SSOT이고 MCP는 공식 노출면이다.",
+          status: "good",
+          statusText: "의미 계약의 중심점은 비교적 명확",
+        },
+        {
+          id: "type",
+          label: "Type Schema SSOT",
+          source: "opencrab/schemas/types/*.yaml",
+          meaning: "일부 node type의 required와 enum 속성을 검증한다.",
+          mcp: "builder가 node write 전에 schema loader를 통해 확인한다.",
+          issue:
+            "schema가 없으면 통과하며, 생성형 schema pack은 grammar의 허용 node type을 실제로 늘리지 못한다.",
+          verdict: "필수 정본이라기보다 선택적 schema registry에 가깝다.",
+          status: "partial",
+          statusText: "검증 범위와 확장 계약이 제한적",
+        },
+        {
+          id: "tool",
+          label: "Tool SSOT",
+          source: "opencrab/mcp/tools.py",
+          meaning: "stdio MCP의 tool schema, 함수, dispatcher를 한곳에서 관리한다.",
+          mcp: "Agent가 manifest를 읽고 동일 registry의 도구를 호출하는 구조를 지향한다.",
+          issue:
+            "HTTP MCP, REST, CLI, Python API가 별도 write path를 가져 같은 이름의 동작이 drift한다.",
+          verdict: "의도된 semantic control plane이지만 아직 유일한 command surface는 아니다.",
+          status: "partial",
+          statusText: "로컬 MCP는 일관적, 전체 제품 표면은 분산",
+        },
+        {
+          id: "data",
+          label: "Data SSOT",
+          source: "graph.db · docs JSON · opencrab.db · Chroma",
+          meaning: "그래프, 문서, 운영 메타데이터, 벡터가 각 저장소에 나뉜다.",
+          mcp: "OntologyBuilder가 여러 store로 best-effort fan-out한다.",
+          issue:
+            "한 store 실패가 전체를 중단하지 않아 동일 node·edge의 상태가 서로 달라질 수 있다.",
+          verdict: "현재 단일 data SSOT는 없다. 가용성을 얻는 대신 일관성과 복구 책임이 커진다.",
+          status: "weak",
+          statusText: "가장 큰 구조적 부채",
+        },
+        {
+          id: "publication",
+          label: "Publication SSOT",
+          source: "OpenCrab Pack v1",
+          meaning:
+            "manifest, graph JSONL, evidence index, quality report, hash와 Neo4j 검증 snapshot을 묶는다.",
+          mcp: "장기적으로 로컬 공장과 SaaS가 내부 구현이 아니라 안정된 artifact로 통신하게 한다.",
+          issue:
+            "현재 pack 모듈에는 Neo4j exporter 중심 구현만 있고 완전한 compiler·validator는 보이지 않는다.",
+          verdict: "철학적으로 가장 적절한 정본이지만 아직 목표 아키텍처에 가깝다.",
+          status: "partial",
+          statusText: "계약은 강하지만 통합 구현은 미완성",
+        },
+      ]
+
+      const buildStages = [
+        {
+          id: "source",
+          label: "Mission·Evidence 수집",
+          intended:
+            "질문, 범위, 필수 근거와 성공 조건을 먼저 고정한 뒤 원문·실패 로그·OCR·이미지를 evidence artifact로 보존한다.",
+          actual:
+            "CrabHarness가 mission과 worker plugin을 제공하지만 semantic fallback은 일부 도메인 단어에 의존한다.",
+          issue: "수집 검증 결과와 최종 MetaOntology grammar 사이의 통합 정합성이 약하다.",
+          analogy: "컴파일러의 source acquisition과 reproducible build input",
+        },
+        {
+          id: "extract",
+          label: "LLM 추출·IR 생성",
+          intended: "자연어를 9-Space typed node·edge 후보로 바꾼다.",
+          actual:
+            "약 3,000자 chunk별 Claude JSON 추출, exact node_id 중복 제거 후 builder로 직접 쓴다.",
+          issue:
+            "exact span, chunk hash, evidence ID, stable identity를 강제하지 않으며 candidate 격리를 우회한다.",
+          analogy: "parser·compiler frontend와 intermediate representation 생성",
+        },
+        {
+          id: "validate",
+          label: "문법·Schema 검증",
+          intended: "허용 Space, node type, relation과 type schema를 중앙에서 검사한다.",
+          actual: "space/type와 space-pair/relation, 일부 required·enum만 검사한다.",
+          issue:
+            "OWL 공리, SHACL 수준 교차 제약, endpoint 존재와 evidence 완전성은 기본 builder에서 강제하지 않는다.",
+          analogy: "type checker이지만 형식 reasoner는 아님",
+        },
+        {
+          id: "identity",
+          label: "Identity·Canonicalization",
+          intended: "중복 후보를 검토하고 canonical ID로 링크해 그래프를 안정화한다.",
+          actual:
+            "alias table과 사람 검토 queue는 있지만 merge는 실제 edge rewiring·property 병합을 수행하지 않는다.",
+          issue: "HybridQuery도 canonical resolution을 자동 적용하지 않는다.",
+          analogy: "symbol table·linker의 초기 골격",
+        },
+        {
+          id: "promotion",
+          label: "Validation·Promotion",
+          intended:
+            "candidate→validated→promoted 상태 전이와 evidence link, 승인, receipt를 거친다.",
+          actual:
+            "status property를 덮어쓰며 현재 상태와 허용 transition을 확인하지 않는다. query도 promoted만 보도록 제한하지 않는다.",
+          issue: "직접 add_node·extract 경로가 lifecycle을 우회할 수 있다.",
+          analogy: "release gate를 지향하지만 현재는 선택적 tagging workflow",
+        },
+        {
+          id: "pack",
+          label: "Pack 검증·배포",
+          intended:
+            "검증된 graph·evidence·quality report·hash를 immutable Pack으로 만들어 SaaS와 공유한다.",
+          actual:
+            "Pack v1 문서는 상세하지만 코드상 완전한 ZIP compiler와 evidence quality gate는 미완성이다.",
+          issue:
+            "운영 store의 mutable 상태와 배포 artifact 사이를 하나의 원자적 publication으로 묶지 못한다.",
+          analogy: "compiled package·release artifact",
+        },
+      ]
+
+      const tabButtons = [...document.querySelectorAll(".tab")]
+      const panels = [...document.querySelectorAll(".panel")]
+      const spaceGrid = document.getElementById("space-grid")
+      const spaceDetail = document.getElementById("space-detail")
+      const ssotList = document.getElementById("ssot-list")
+      const ssotDetail = document.getElementById("ssot-detail")
+      const buildFlow = document.getElementById("build-flow")
+      const buildDetail = document.getElementById("build-detail")
+
+      let selectedSpace = spaces[0].id
+      let selectedSsot = ssotLayers[0].id
+      let selectedBuild = buildStages[0].id
+      let lastFrameHeight = 0
+      let resizeFrameRequest = 0
+
+      function statusClass(value) {
+        return value === "good" ? "good" : value === "weak" ? "weak" : "partial"
+      }
+
+      function renderSpaces() {
+        spaceGrid.replaceChildren(
+          ...spaces.map((space) => {
+            const button = document.createElement("button")
+            button.type = "button"
+            button.className = "selector"
+            button.dataset.id = space.id
+            button.setAttribute("aria-pressed", String(space.id === selectedSpace))
+            button.innerHTML = `${space.label}<small>${space.subtitle}</small>`
+            button.addEventListener("click", () => {
+              selectedSpace = space.id
+              renderSpaces()
+            })
+            return button
+          }),
+        )
+
+        const space = spaces.find((item) => item.id === selectedSpace)
+        spaceDetail.innerHTML = `
+          <h3>${space.label} · ${space.subtitle}</h3>
+          <dl>
+            <dt>가장 가까운 개념</dt><dd>${space.match}</dd>
+            <dt>9-Space에서 맡는 역할</dt><dd>${space.role}</dd>
+            <dt>현재 코드에서의 작동</dt><dd>${space.runtime}</dd>
+            <dt>실용적 효용</dt><dd>${space.value}</dd>
+            <dt>핵심 빈틈</dt><dd>${space.gap}</dd>
+          </dl>
+          <span class="status ${statusClass(space.status)}">${space.statusText}</span>
+        `
+        reportHeight()
+      }
+
+      function renderSsot() {
+        ssotList.replaceChildren(
+          ...ssotLayers.map((layer) => {
+            const button = document.createElement("button")
+            button.type = "button"
+            button.className = "selector"
+            button.dataset.id = layer.id
+            button.setAttribute("aria-pressed", String(layer.id === selectedSsot))
+            button.textContent = layer.label
+            button.addEventListener("click", () => {
+              selectedSsot = layer.id
+              renderSsot()
+            })
+            return button
+          }),
+        )
+
+        const layer = ssotLayers.find((item) => item.id === selectedSsot)
+        ssotDetail.innerHTML = `
+          <h3>${layer.label}</h3>
+          <dl>
+            <dt>현재 기준점</dt><dd><code>${layer.source}</code></dd>
+            <dt>역할</dt><dd>${layer.meaning}</dd>
+            <dt>MCP와의 관계</dt><dd>${layer.mcp}</dd>
+            <dt>현재 문제</dt><dd>${layer.issue}</dd>
+            <dt>판정</dt><dd>${layer.verdict}</dd>
+          </dl>
+          <span class="status ${statusClass(layer.status)}">${layer.statusText}</span>
+        `
+        reportHeight()
+      }
+
+      function renderBuild() {
+        buildFlow.replaceChildren(
+          ...buildStages.map((stage, index) => {
+            const row = document.createElement("div")
+            row.className = `flow-step${stage.id === selectedBuild ? " is-selected" : ""}`
+            const button = document.createElement("button")
+            button.type = "button"
+            button.setAttribute("aria-label", `${stage.label} 단계 보기`)
+            button.textContent = String(index + 1)
+            button.addEventListener("click", () => {
+              selectedBuild = stage.id
+              renderBuild()
+            })
+            const copy = document.createElement("div")
+            copy.innerHTML = `<strong>${stage.label}</strong><span>${stage.analogy}</span>`
+            row.append(button, copy)
+            return row
+          }),
+        )
+
+        const stage = buildStages.find((item) => item.id === selectedBuild)
+        buildDetail.innerHTML = `
+          <h3>${stage.label}</h3>
+          <dl><dt>개념 대응</dt><dd>${stage.analogy}</dd></dl>
+          <div class="contrast">
+            <div><strong>설계가 약속하는 것</strong><span>${stage.intended}</span></div>
+            <div><strong>현재 기본 구현</strong><span>${stage.actual}</span></div>
+          </div>
+          <dl><dt>판단할 때 주의할 점</dt><dd>${stage.issue}</dd></dl>
+        `
+        reportHeight()
+      }
+
+      function activateTab(id) {
+        tabButtons.forEach((button) =>
+          button.setAttribute("aria-selected", String(button.dataset.tab === id)),
+        )
+        panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id))
+        reportHeight()
+        setTimeout(reportHeight, 60)
+      }
+
+      function reportHeight() {
+        cancelAnimationFrame(resizeFrameRequest)
+        resizeFrameRequest = requestAnimationFrame(() => {
+          const root = document.getElementById("explorer")
+          const bodyStyle = getComputedStyle(document.body)
+          const padding =
+            (Number.parseFloat(bodyStyle.paddingTop) || 0) +
+            (Number.parseFloat(bodyStyle.paddingBottom) || 0)
+          const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+          const frame = window.frameElement
+          if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+            lastFrameHeight = height
+            frame.style.height = `${height}px`
+          }
+        })
+      }
+
+      tabButtons.forEach((button) =>
+        button.addEventListener("click", () => activateTab(button.dataset.tab)),
+      )
+      window.addEventListener("resize", reportHeight)
+
+      renderSpaces()
+      renderSsot()
+      renderBuild()
+      setTimeout(reportHeight, 0)
+      setTimeout(reportHeight, 250)
+    </script>
+  </body>
+</html>
