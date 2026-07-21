@@ -85,12 +85,13 @@ flowchart TD
 같은 에이전트라도 질문이 단순 요약인지, 여러 관계를 따라야 하는지, 권한 검사가 필요한지에 따라 사용해야 할 계층이 달라진다. 아래 탐색기에서 질문을 바꾸면 문서 검색·개체 연결·그래프 탐색·정책 검증·LLM 설명 가운데 실제로 필요한 경로가 표시된다.
 
 <iframe
+  class="interactive-visualization-frame"
   src="/attachments/ontology-agent-guide/ontology-agent-query-router.htm"
   title="질문 유형별 온톨로지 에이전트 처리 경로 탐색기"
   loading="lazy"
   scrolling="no"
   sandbox="allow-scripts allow-same-origin"
-  style="display:block;width:100%;height:920px;overflow:hidden;border:1px solid currentColor;border-radius:12px;background:transparent"
+  style="height:920px"
 ></iframe>
 
 ## 주요 특징
@@ -236,12 +237,13 @@ SPARQL은 RDF 그래프 질의의 표준이며, SHACL은 그래프 제약 검증
 아래 도구는 위 조건을 선택해 다음에 무엇을 검증해야 하는지 정리한다. 선택 개수로 도입을 승인하는 점수표가 아니라, 더 단순한 기준선을 유지할지 작은 읽기 전용 그래프 실험을 검토할지 사고를 돕는 질적 안내다.
 
 <iframe
+  class="interactive-visualization-frame"
   src="/attachments/ontology-agent-guide/ontology-agent-pilot-readiness.htm"
   title="온톨로지 에이전트 파일럿 준비도 탐색기"
   loading="lazy"
   scrolling="no"
   sandbox="allow-scripts allow-same-origin"
-  style="display:block;width:100%;height:920px;overflow:hidden;border:1px solid currentColor;border-radius:12px;background:transparent"
+  style="height:920px"
 ></iframe>
 
 관계와 출처가 중요한 설비 정비, 공급망 영향 분석, 데이터 카탈로그, IT 구성·장애 분석, 조직 권한·정책 질의는 탐색 후보가 될 수 있다. 임상·과학 지식 탐색과 규제 준수도 구조적으로는 후보지만, 이번 조사는 해당 분야의 안전성·법적 적합성·현장 성과를 평가하지 않았다. 따라서 고위험 분야에서는 별도의 도메인 전문가 검증, 규제 검토, 데이터 보호와 실패 대응 설계 없이는 적용 권고로 읽어서는 안 된다.
