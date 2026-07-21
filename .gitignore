@@ -3,6 +3,8 @@
 node_modules
 public
 content/_drafts/
+content/operations/
+content/attachments/visualize-capability-showcase/
 prof
 tsconfig.tsbuildinfo
 .obsidian
