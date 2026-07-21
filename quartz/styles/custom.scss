@@ -149,8 +149,10 @@ body:not([data-slug="index"]) article h3 {
 
 // Quartz hides folder-listing tags on narrow phones. Collapse the matching
 // third grid track at the same breakpoint so titles use the released space.
-// Keep phone article copy close to the denser Quartz 4 reading baseline;
-// start alignment avoids the uneven Latin spacing caused by justification.
+// Keep phone article copy close to the denser Quartz 4 reading baseline.
+// Safari 26 evaluates every line for `pretty`, which can make adjacent Korean
+// paragraphs appear to use different column widths. Use normal first-fit
+// wrapping for phone body paragraphs while preserving start alignment.
 @media all and (max-width: 600px) {
   .page > #quartz-body {
     padding-inline: 1rem;
@@ -166,6 +168,10 @@ body:not([data-slug="index"]) article h3 {
 
   body:not([data-slug="index"]) article :is(p, li) {
     line-height: 1.65;
+  }
+
+  body:not([data-slug="index"]) article p {
+    text-wrap: wrap;
   }
 }
 

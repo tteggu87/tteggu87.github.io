@@ -23,5 +23,6 @@ test("phone article typography keeps natural spacing at the denser baseline", ()
     css,
     /body:not\(\[data-slug="index"\]\) article :is\(p, li\)\s*\{\s*line-height:\s*1\.65/,
   )
+  assert.match(css, /body:not\(\[data-slug="index"\]\) article p\s*\{\s*text-wrap:\s*wrap/)
   assert.doesNotMatch(css, /text-align:\s*justify/)
 })
