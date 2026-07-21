@@ -268,7 +268,8 @@
   <body>
     <main id="ontology-json-explorer" class="explorer">
       <p class="note">
-        이 도구는 문헌과 표준의 역할 차이를 숫자로 압축한 <strong>가설 시뮬레이터</strong>다. 표시되는 지수와 임계값은 실제 벤치마크 결과가 아니며, 아래 연구 설계로 검증해야 한다.
+        이 도구는 문헌과 표준의 역할 차이를 숫자로 압축한 <strong>가설 시뮬레이터</strong>다.
+        표시되는 지수와 임계값은 실제 벤치마크 결과가 아니며, 아래 연구 설계로 검증해야 한다.
       </p>
 
       <div class="grid">
@@ -313,9 +314,15 @@
               <span id="semantic-value" class="control-value">2종</span>
             </div>
             <div class="checks">
-              <label class="check"><input type="checkbox" data-semantic="transitive" checked />전이 관계</label>
-              <label class="check"><input type="checkbox" data-semantic="inverse" checked />역관계</label>
-              <label class="check"><input type="checkbox" data-semantic="subclass" />서브클래스</label>
+              <label class="check"
+                ><input type="checkbox" data-semantic="transitive" checked />전이 관계</label
+              >
+              <label class="check"
+                ><input type="checkbox" data-semantic="inverse" checked />역관계</label
+              >
+              <label class="check"
+                ><input type="checkbox" data-semantic="subclass" />서브클래스</label
+              >
               <label class="check"><input type="checkbox" data-semantic="identity" />동일성</label>
             </div>
           </div>
@@ -324,8 +331,12 @@
         <section class="panel" aria-live="polite">
           <h3>예상 운영 부담 지수</h3>
           <div class="metrics">
-            <div class="metric"><span>관계 복잡도</span><strong id="relationship-score">0</strong></div>
-            <div class="metric"><span>변경 전파 위험</span><strong id="change-score">0</strong></div>
+            <div class="metric">
+              <span>관계 복잡도</span><strong id="relationship-score">0</strong>
+            </div>
+            <div class="metric">
+              <span>변경 전파 위험</span><strong id="change-score">0</strong>
+            </div>
             <div class="metric"><span>감사 요구</span><strong id="audit-score">0</strong></div>
           </div>
 
@@ -345,7 +356,10 @@
             <span id="hybrid-value" class="bar-value">0</span>
           </div>
 
-          <p class="legend">낮을수록 유리한 가설 지수다. 초기 도입비, 중복 규칙, 변경 전파, 설명 패킷 작성 부담을 단순화해 합산했다.</p>
+          <p class="legend">
+            낮을수록 유리한 가설 지수다. 초기 도입비, 중복 규칙, 변경 전파, 설명 패킷 작성 부담을
+            단순화해 합산했다.
+          </p>
         </section>
       </div>
 
@@ -427,13 +441,23 @@
           const auditScore = auditLevel * 18 + hops * 3 + semantics * 4
 
           const jsonBurden = Math.round(
-            12 + hops * hops * 2.2 + semantics * 12 + duplicates * 7 + changeRate * 8 + auditLevel * 7,
+            12 +
+              hops * hops * 2.2 +
+              semantics * 12 +
+              duplicates * 7 +
+              changeRate * 8 +
+              auditLevel * 7,
           )
           const ontologyBurden = Math.round(
             34 + hops * 3.2 + semantics * 3 + duplicates * 2.2 + changeRate * 4 + auditLevel * 2.5,
           )
           const hybridBurden = Math.round(
-            25 + hops * 3.8 + semantics * 4 + duplicates * 3.2 + changeRate * 4.8 + auditLevel * 3.2,
+            25 +
+              hops * 3.8 +
+              semantics * 4 +
+              duplicates * 3.2 +
+              changeRate * 4.8 +
+              auditLevel * 3.2,
           )
 
           const maxBurden = Math.max(jsonBurden, ontologyBurden, hybridBurden, 100)
@@ -457,19 +481,31 @@
           els.auditScore.textContent = String(auditScore)
 
           let recommendation = "hybrid"
-          if (hops <= 1 && semantics <= 1 && duplicates <= 2 && auditLevel <= 2 && changeRate <= 2) {
+          if (
+            hops <= 1 &&
+            semantics <= 1 &&
+            duplicates <= 2 &&
+            auditLevel <= 2 &&
+            changeRate <= 2
+          ) {
             recommendation = "json"
           } else if (hops >= 3 && semantics >= 2 && (duplicates >= 4 || auditLevel >= 4)) {
             recommendation = "ontology"
           }
 
           const reasons = []
-          if (hops >= 3) reasons.push("3홉 이상 탐색에서는 관계를 코드로 반복 전개하는 비용이 빠르게 커진다.")
-          if (semantics >= 2) reasons.push("전이성·역관계·서브클래스·동일성 중 여러 의미론을 재사용해야 한다.")
-          if (duplicates >= 4) reasons.push("같은 의미가 여러 규칙·서비스·매핑에 중복돼 변경 전파 범위가 넓다.")
-          if (auditLevel >= 4) reasons.push("판정뿐 아니라 근거 경로와 재현 가능한 설명 패킷이 중요하다.")
-          if (hops <= 1 && semantics <= 1) reasons.push("입력 한 건의 구조 검증과 얕은 조건 판정은 JSON 스택이 더 단순하다.")
-          if (reasons.length === 0) reasons.push("두 접근의 장점이 겹치는 중간 구간이므로 계층을 분리하는 편이 안전하다.")
+          if (hops >= 3)
+            reasons.push("3홉 이상 탐색에서는 관계를 코드로 반복 전개하는 비용이 빠르게 커진다.")
+          if (semantics >= 2)
+            reasons.push("전이성·역관계·서브클래스·동일성 중 여러 의미론을 재사용해야 한다.")
+          if (duplicates >= 4)
+            reasons.push("같은 의미가 여러 규칙·서비스·매핑에 중복돼 변경 전파 범위가 넓다.")
+          if (auditLevel >= 4)
+            reasons.push("판정뿐 아니라 근거 경로와 재현 가능한 설명 패킷이 중요하다.")
+          if (hops <= 1 && semantics <= 1)
+            reasons.push("입력 한 건의 구조 검증과 얕은 조건 판정은 JSON 스택이 더 단순하다.")
+          if (reasons.length === 0)
+            reasons.push("두 접근의 장점이 겹치는 중간 구간이므로 계층을 분리하는 편이 안전하다.")
 
           if (recommendation === "json") {
             els.badge.textContent = "JSON 규칙 권장"
@@ -482,7 +518,10 @@
             els.title.textContent = "얕은 검증은 JSON, 관계 의미와 감사는 온톨로지로 분리한다"
           }
 
-          els.reasons.innerHTML = reasons.slice(0, 4).map((reason) => `<li>${reason}</li>`).join("")
+          els.reasons.innerHTML = reasons
+            .slice(0, 4)
+            .map((reason) => `<li>${reason}</li>`)
+            .join("")
           reportHeight()
         }
 
