@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>온톨로지와 JSON 규칙 승부선 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --fg: light-dark(rgb(29 32 37), rgb(245 247 250));
+        --muted: light-dark(rgb(91 99 111), rgb(175 182 192));
+        --panel: light-dark(rgb(247 248 250), rgb(35 37 42));
+        --panel-strong: light-dark(rgb(236 239 244), rgb(45 48 55));
+        --border: light-dark(rgb(27 29 33 / 16%), rgb(255 255 255 / 15%));
+        --accent: light-dark(rgb(32 111 205), rgb(132 184 255));
+        --accent-fg: light-dark(rgb(255 255 255), rgb(14 20 28));
+        --accent-soft: light-dark(rgb(32 111 205 / 11%), rgb(132 184 255 / 15%));
+        --series-2: light-dark(rgb(188 112 35), rgb(238 161 92));
+        --series-3: light-dark(rgb(57 142 93), rgb(105 211 148));
+        --radius: 14px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-width: 0;
+        overflow: hidden;
+        background: transparent;
+        color: var(--fg);
+        font-family: var(--font);
+      }
+
+      body {
+        padding: 8px;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .explorer {
+        width: 100%;
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      .note,
+      .result-callout {
+        border-left: 3px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--accent-soft);
+      }
+
+      .note {
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .panel {
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .panel h3,
+      .result-callout h3 {
+        margin: 0 0 10px;
+        font-size: 1rem;
+      }
+
+      .control + .control {
+        margin-top: 14px;
+      }
+
+      .control-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+
+      .control-header label {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .control-value {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent);
+      }
+
+      .checks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .check {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 9px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 0.86rem;
+      }
+
+      .check input {
+        margin: 0;
+        accent-color: var(--accent);
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .metric {
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--panel);
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 1.25rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 128px minmax(0, 1fr) 48px;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .bar-row + .bar-row {
+        margin-top: 10px;
+      }
+
+      .bar-label,
+      .bar-value {
+        font-size: 0.84rem;
+      }
+
+      .bar-value {
+        color: var(--muted);
+        text-align: right;
+      }
+
+      .track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--panel-strong);
+      }
+
+      .fill {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        transition: width 180ms ease;
+      }
+
+      .fill.json {
+        background: var(--series-2);
+      }
+
+      .fill.ontology {
+        background: var(--accent);
+      }
+
+      .fill.hybrid {
+        background: var(--series-3);
+      }
+
+      .result-callout {
+        margin-top: 12px;
+        padding: 13px 14px;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-bottom: 7px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--accent-fg);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .reason-list {
+        margin: 8px 0 0;
+        padding-left: 20px;
+        line-height: 1.55;
+      }
+
+      .reason-list li + li {
+        margin-top: 4px;
+      }
+
+      .legend {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.45;
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 6px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: 108px minmax(0, 1fr) 42px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .checks {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="ontology-json-explorer" class="explorer">
+      <p class="note">
+        이 도구는 문헌과 표준의 역할 차이를 숫자로 압축한 <strong>가설 시뮬레이터</strong>다. 표시되는 지수와 임계값은 실제 벤치마크 결과가 아니며, 아래 연구 설계로 검증해야 한다.
+      </p>
+
+      <div class="grid">
+        <section class="panel" aria-label="업무 조건 설정">
+          <h3>업무 조건</h3>
+
+          <div class="control">
+            <div class="control-header">
+              <label for="hop-count">필요한 관계 홉 수</label>
+              <span id="hop-value" class="control-value">3홉</span>
+            </div>
+            <input id="hop-count" type="range" min="0" max="6" value="3" />
+          </div>
+
+          <div class="control">
+            <div class="control-header">
+              <label for="duplicate-count">같은 의미가 중복된 아티팩트 수</label>
+              <span id="duplicate-value" class="control-value">4개</span>
+            </div>
+            <input id="duplicate-count" type="range" min="1" max="8" value="4" />
+          </div>
+
+          <div class="control">
+            <div class="control-header">
+              <label for="change-rate">스키마·정책 변경 빈도</label>
+              <span id="change-value" class="control-value">보통</span>
+            </div>
+            <input id="change-rate" type="range" min="0" max="5" value="3" />
+          </div>
+
+          <div class="control">
+            <div class="control-header">
+              <label for="audit-level">감사·설명 중요도</label>
+              <span id="audit-value" class="control-value">높음</span>
+            </div>
+            <input id="audit-level" type="range" min="0" max="5" value="4" />
+          </div>
+
+          <div class="control">
+            <div class="control-header">
+              <label>필요한 의미론</label>
+              <span id="semantic-value" class="control-value">2종</span>
+            </div>
+            <div class="checks">
+              <label class="check"><input type="checkbox" data-semantic="transitive" checked />전이 관계</label>
+              <label class="check"><input type="checkbox" data-semantic="inverse" checked />역관계</label>
+              <label class="check"><input type="checkbox" data-semantic="subclass" />서브클래스</label>
+              <label class="check"><input type="checkbox" data-semantic="identity" />동일성</label>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" aria-live="polite">
+          <h3>예상 운영 부담 지수</h3>
+          <div class="metrics">
+            <div class="metric"><span>관계 복잡도</span><strong id="relationship-score">0</strong></div>
+            <div class="metric"><span>변경 전파 위험</span><strong id="change-score">0</strong></div>
+            <div class="metric"><span>감사 요구</span><strong id="audit-score">0</strong></div>
+          </div>
+
+          <div class="bar-row">
+            <span class="bar-label">JSON 규칙</span>
+            <span class="track"><span id="json-fill" class="fill json"></span></span>
+            <span id="json-value" class="bar-value">0</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">온톨로지</span>
+            <span class="track"><span id="ontology-fill" class="fill ontology"></span></span>
+            <span id="ontology-value" class="bar-value">0</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">혼합형</span>
+            <span class="track"><span id="hybrid-fill" class="fill hybrid"></span></span>
+            <span id="hybrid-value" class="bar-value">0</span>
+          </div>
+
+          <p class="legend">낮을수록 유리한 가설 지수다. 초기 도입비, 중복 규칙, 변경 전파, 설명 패킷 작성 부담을 단순화해 합산했다.</p>
+        </section>
+      </div>
+
+      <section class="result-callout" aria-live="polite">
+        <span id="recommendation-badge" class="badge">혼합형 권장</span>
+        <h3 id="recommendation-title">얕은 검증은 JSON, 관계 의미와 감사는 온톨로지로 분리한다</h3>
+        <ul id="reason-list" class="reason-list"></ul>
+      </section>
+    </main>
+
+    <script>
+      ;(() => {
+        const root = document.getElementById("ontology-json-explorer")
+        if (!root) return
+
+        const hopInput = root.querySelector("#hop-count")
+        const duplicateInput = root.querySelector("#duplicate-count")
+        const changeInput = root.querySelector("#change-rate")
+        const auditInput = root.querySelector("#audit-level")
+        const semanticInputs = [...root.querySelectorAll("[data-semantic]")]
+
+        const labels = {
+          change: ["거의 없음", "매우 낮음", "낮음", "보통", "높음", "매우 높음"],
+          audit: ["불필요", "매우 낮음", "낮음", "보통", "높음", "규제 수준"],
+        }
+
+        const els = {
+          hopValue: root.querySelector("#hop-value"),
+          duplicateValue: root.querySelector("#duplicate-value"),
+          changeValue: root.querySelector("#change-value"),
+          auditValue: root.querySelector("#audit-value"),
+          semanticValue: root.querySelector("#semantic-value"),
+          relationshipScore: root.querySelector("#relationship-score"),
+          changeScore: root.querySelector("#change-score"),
+          auditScore: root.querySelector("#audit-score"),
+          jsonFill: root.querySelector("#json-fill"),
+          ontologyFill: root.querySelector("#ontology-fill"),
+          hybridFill: root.querySelector("#hybrid-fill"),
+          jsonValue: root.querySelector("#json-value"),
+          ontologyValue: root.querySelector("#ontology-value"),
+          hybridValue: root.querySelector("#hybrid-value"),
+          badge: root.querySelector("#recommendation-badge"),
+          title: root.querySelector("#recommendation-title"),
+          reasons: root.querySelector("#reason-list"),
+        }
+
+        let resizeFrameRequest = 0
+        let lastFrameHeight = 0
+
+        function reportHeight() {
+          cancelAnimationFrame(resizeFrameRequest)
+          resizeFrameRequest = requestAnimationFrame(() => {
+            const style = getComputedStyle(document.body)
+            const padding =
+              (Number.parseFloat(style.paddingTop) || 0) +
+              (Number.parseFloat(style.paddingBottom) || 0)
+            const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+            const frame = window.frameElement
+            if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+              lastFrameHeight = height
+              frame.style.height = `${height}px`
+            }
+          })
+        }
+
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value))
+        }
+
+        function render() {
+          const hops = Number(hopInput.value)
+          const duplicates = Number(duplicateInput.value)
+          const changeRate = Number(changeInput.value)
+          const auditLevel = Number(auditInput.value)
+          const semantics = semanticInputs.filter((input) => input.checked).length
+
+          const relationshipScore = hops * 12 + semantics * 14
+          const changeScore = duplicates * 9 + changeRate * 11 + semantics * 4
+          const auditScore = auditLevel * 18 + hops * 3 + semantics * 4
+
+          const jsonBurden = Math.round(
+            12 + hops * hops * 2.2 + semantics * 12 + duplicates * 7 + changeRate * 8 + auditLevel * 7,
+          )
+          const ontologyBurden = Math.round(
+            34 + hops * 3.2 + semantics * 3 + duplicates * 2.2 + changeRate * 4 + auditLevel * 2.5,
+          )
+          const hybridBurden = Math.round(
+            25 + hops * 3.8 + semantics * 4 + duplicates * 3.2 + changeRate * 4.8 + auditLevel * 3.2,
+          )
+
+          const maxBurden = Math.max(jsonBurden, ontologyBurden, hybridBurden, 100)
+          const values = [
+            [els.jsonFill, els.jsonValue, jsonBurden],
+            [els.ontologyFill, els.ontologyValue, ontologyBurden],
+            [els.hybridFill, els.hybridValue, hybridBurden],
+          ]
+          values.forEach(([fill, valueEl, value]) => {
+            fill.style.width = `${clamp((value / maxBurden) * 100, 3, 100)}%`
+            valueEl.textContent = String(value)
+          })
+
+          els.hopValue.textContent = `${hops}홉`
+          els.duplicateValue.textContent = `${duplicates}개`
+          els.changeValue.textContent = labels.change[changeRate]
+          els.auditValue.textContent = labels.audit[auditLevel]
+          els.semanticValue.textContent = `${semantics}종`
+          els.relationshipScore.textContent = String(relationshipScore)
+          els.changeScore.textContent = String(changeScore)
+          els.auditScore.textContent = String(auditScore)
+
+          let recommendation = "hybrid"
+          if (hops <= 1 && semantics <= 1 && duplicates <= 2 && auditLevel <= 2 && changeRate <= 2) {
+            recommendation = "json"
+          } else if (hops >= 3 && semantics >= 2 && (duplicates >= 4 || auditLevel >= 4)) {
+            recommendation = "ontology"
+          }
+
+          const reasons = []
+          if (hops >= 3) reasons.push("3홉 이상 탐색에서는 관계를 코드로 반복 전개하는 비용이 빠르게 커진다.")
+          if (semantics >= 2) reasons.push("전이성·역관계·서브클래스·동일성 중 여러 의미론을 재사용해야 한다.")
+          if (duplicates >= 4) reasons.push("같은 의미가 여러 규칙·서비스·매핑에 중복돼 변경 전파 범위가 넓다.")
+          if (auditLevel >= 4) reasons.push("판정뿐 아니라 근거 경로와 재현 가능한 설명 패킷이 중요하다.")
+          if (hops <= 1 && semantics <= 1) reasons.push("입력 한 건의 구조 검증과 얕은 조건 판정은 JSON 스택이 더 단순하다.")
+          if (reasons.length === 0) reasons.push("두 접근의 장점이 겹치는 중간 구간이므로 계층을 분리하는 편이 안전하다.")
+
+          if (recommendation === "json") {
+            els.badge.textContent = "JSON 규칙 권장"
+            els.title.textContent = "JSON Schema·Ajv와 작은 규칙 엔진으로 시작한다"
+          } else if (recommendation === "ontology") {
+            els.badge.textContent = "온톨로지 권장"
+            els.title.textContent = "OWL 2 RL·SHACL·SPARQL로 의미와 근거를 중앙화한다"
+          } else {
+            els.badge.textContent = "혼합형 권장"
+            els.title.textContent = "얕은 검증은 JSON, 관계 의미와 감사는 온톨로지로 분리한다"
+          }
+
+          els.reasons.innerHTML = reasons.slice(0, 4).map((reason) => `<li>${reason}</li>`).join("")
+          reportHeight()
+        }
+
+        ;[hopInput, duplicateInput, changeInput, auditInput].forEach((input) => {
+          input.addEventListener("input", render)
+        })
+        semanticInputs.forEach((input) => input.addEventListener("change", render))
+
+        render()
+        window.addEventListener("resize", reportHeight)
+        window.setTimeout(reportHeight, 250)
+        window.setTimeout(reportHeight, 750)
+      })()
+    </script>
+  </body>
+</html>
