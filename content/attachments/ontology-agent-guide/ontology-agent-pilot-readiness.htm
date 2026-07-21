@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>온톨로지 에이전트 파일럿 준비도 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --fg: light-dark(rgb(29 32 37), rgb(245 247 250));
+        --muted: light-dark(rgb(91 99 111), rgb(175 182 192));
+        --panel: light-dark(rgb(247 248 250), rgb(35 37 42));
+        --border: light-dark(rgb(27 29 33 / 16%), rgb(255 255 255 / 15%));
+        --accent: light-dark(rgb(32 111 205), rgb(132 184 255));
+        --accent-fg: light-dark(rgb(255 255 255), rgb(14 20 28));
+        --accent-soft: light-dark(rgb(32 111 205 / 11%), rgb(132 184 255 / 15%));
+        --warn-soft: light-dark(rgb(188 112 35 / 12%), rgb(238 161 92 / 14%));
+        --radius: 14px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-width: 0;
+        overflow: hidden;
+        background: transparent;
+        color: var(--fg);
+        font-family: var(--font);
+      }
+
+      body {
+        padding: 8px;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .readiness {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .note {
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--accent-soft);
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .criteria {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 13px;
+      }
+
+      .criterion {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        padding: 11px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--panel);
+        cursor: pointer;
+      }
+
+      .criterion input {
+        margin-top: 3px;
+        accent-color: var(--accent);
+      }
+
+      .criterion span {
+        line-height: 1.45;
+      }
+
+      .alternative {
+        margin-bottom: 13px;
+        padding: 11px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+      }
+
+      .alternative label {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        cursor: pointer;
+      }
+
+      .alternative input {
+        margin-top: 3px;
+        accent-color: var(--accent);
+      }
+
+      .result {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 10px;
+      }
+
+      .result-card {
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .result-card.is-accent {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .result-card.is-warn {
+        background: var(--warn-soft);
+      }
+
+      .result-card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+
+      .result-card p {
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      .selected-list {
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+
+      .selected-list li + li {
+        margin-top: 4px;
+      }
+
+      @media (max-width: 680px) {
+        body {
+          padding: 6px;
+        }
+
+        .criteria,
+        .result {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="ontology-pilot-readiness" class="readiness">
+      <p class="note">
+        아래 결과는 글의 질적 질문을 정리한 설명용 안내다. 검증된 점수표나 도입 승인 기준이 아니다.
+      </p>
+
+      <section id="criteria" class="criteria" aria-label="파일럿 후보 조건"></section>
+
+      <section class="alternative">
+        <label for="simple-alternative">
+          <input id="simple-alternative" type="checkbox" />
+          <span
+            >일반 검색·벡터 RAG·관계형 DB·규칙 엔진만으로도 현재 문제를 충분히 해결할 수 있다.</span
+          >
+        </label>
+      </section>
+
+      <section class="result" aria-live="polite">
+        <div id="recommendation-card" class="result-card is-accent">
+          <strong>권장 다음 단계</strong>
+          <p id="recommendation"></p>
+        </div>
+        <div class="result-card">
+          <strong>선택한 근거</strong>
+          <ul id="selected-reasons" class="selected-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      ;(() => {
+        const root = document.getElementById("ontology-pilot-readiness")
+        if (!root) return
+
+        let resizeFrameRequest = 0
+        let lastFrameHeight = 0
+
+        function reportHeight() {
+          cancelAnimationFrame(resizeFrameRequest)
+          resizeFrameRequest = requestAnimationFrame(() => {
+            const style = getComputedStyle(document.body)
+            const padding =
+              (Number.parseFloat(style.paddingTop) || 0) +
+              (Number.parseFloat(style.paddingBottom) || 0)
+            const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+            const frame = window.frameElement
+            if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+              lastFrameHeight = height
+              frame.style.height = `${height}px`
+            }
+          })
+        }
+
+        const items = [
+          "핵심 개념과 관계가 비교적 안정적이다.",
+          "여러 시스템이 같은 개체를 서로 다른 이름으로 부른다.",
+          "두 단계 이상의 관계를 따라야 반복 질문에 답할 수 있다.",
+          "잘못된 답이나 행동의 비용이 높다.",
+          "왜 그런 답이 나왔는지 관계 경로와 출처를 감사해야 한다.",
+          "도메인 전문가가 개념·관계·규칙을 지속적으로 검토할 수 있다.",
+          "동일한 중요 질문이 반복되고 기준선 평가를 만들 수 있다.",
+        ]
+
+        const criteria = root.querySelector("#criteria")
+        const alternative = root.querySelector("#simple-alternative")
+        const recommendation = root.querySelector("#recommendation")
+        const recommendationCard = root.querySelector("#recommendation-card")
+        const reasons = root.querySelector("#selected-reasons")
+
+        items.forEach((text, index) => {
+          const label = document.createElement("label")
+          label.className = "criterion"
+          label.setAttribute("for", `criterion-${index}`)
+          label.innerHTML = `<input id="criterion-${index}" type="checkbox" data-index="${index}" /><span>${text}</span>`
+          criteria.appendChild(label)
+        })
+
+        function render() {
+          const selected = Array.from(criteria.querySelectorAll("input:checked")).map((input) =>
+            Number(input.dataset.index),
+          )
+          const simpleEnough = alternative.checked
+          const hasRelationNeed = selected.includes(1) || selected.includes(2)
+          const hasGovernanceNeed = selected.includes(3) || selected.includes(4)
+          const hasOperator = selected.includes(5)
+          const hasEvaluation = selected.includes(6)
+
+          let message =
+            "먼저 반복 질문과 실패 비용을 정의하고, 일반 검색이나 규칙 기반 기준선을 만든다."
+          let tone = "warn"
+
+          if (simpleEnough) {
+            message =
+              "현재는 더 단순한 대안을 유지한다. 온톨로지는 관계 재사용·감사·변경 영향에서 기준선을 이기는 이득이 관찰될 때 다시 비교한다."
+          } else if (hasRelationNeed && hasOperator && hasEvaluation) {
+            message =
+              "작은 읽기 전용 파일럿을 검토할 수 있다. 소수의 역량 질문, 최소 온톨로지, 사람 작성 질의와 출처 기록부터 시작한다."
+            tone = "accent"
+          } else if (hasGovernanceNeed && !hasOperator) {
+            message =
+              "고위험·감사 요구는 있지만 운영 책임자가 부족하다. 자동 행동보다 결정론적 정책 게이트와 사람 승인 체계를 먼저 만든다."
+          } else if (hasRelationNeed) {
+            message =
+              "그래프 탐색 후보는 보이지만 아직 범위가 넓다. 실제 다중 홉 질문 몇 개를 고르고 벡터 RAG·SQL·그래프 질의를 같은 정답셋에서 비교한다."
+          }
+
+          recommendation.textContent = message
+          recommendationCard.classList.toggle("is-accent", tone === "accent")
+          recommendationCard.classList.toggle("is-warn", tone !== "accent")
+
+          reasons.innerHTML = ""
+          if (selected.length === 0 && !simpleEnough) {
+            const item = document.createElement("li")
+            item.textContent = "아직 선택된 조건이 없다."
+            reasons.appendChild(item)
+          } else {
+            selected.forEach((index) => {
+              const item = document.createElement("li")
+              item.textContent = items[index]
+              reasons.appendChild(item)
+            })
+            if (simpleEnough) {
+              const item = document.createElement("li")
+              item.textContent = "현재 문제는 더 단순한 대안으로 충분하다."
+              reasons.appendChild(item)
+            }
+          }
+
+          reportHeight()
+          window.setTimeout(reportHeight, 50)
+        }
+
+        root.querySelectorAll("input").forEach((input) => {
+          input.addEventListener("change", render)
+        })
+
+        render()
+        window.setTimeout(reportHeight, 0)
+        window.setTimeout(reportHeight, 250)
+        window.setTimeout(reportHeight, 750)
+      })()
+    </script>
+  </body>
+</html>

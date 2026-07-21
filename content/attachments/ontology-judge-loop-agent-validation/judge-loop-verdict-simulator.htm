@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Judge Loop 판정 경로 시뮬레이터</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --fg: light-dark(rgb(29 32 37), rgb(245 247 250));
+        --muted: light-dark(rgb(91 99 111), rgb(175 182 192));
+        --panel: light-dark(rgb(247 248 250), rgb(35 37 42));
+        --border: light-dark(rgb(27 29 33 / 16%), rgb(255 255 255 / 15%));
+        --accent: light-dark(rgb(32 111 205), rgb(132 184 255));
+        --accent-fg: light-dark(rgb(255 255 255), rgb(14 20 28));
+        --accent-soft: light-dark(rgb(32 111 205 / 11%), rgb(132 184 255 / 15%));
+        --fail-soft: light-dark(rgb(178 59 59 / 12%), rgb(255 126 126 / 14%));
+        --warn-soft: light-dark(rgb(188 112 35 / 12%), rgb(238 161 92 / 14%));
+        --radius: 14px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-width: 0;
+        overflow: hidden;
+        background: transparent;
+        color: var(--fg);
+        font-family: var(--font);
+      }
+
+      body {
+        padding: 8px;
+      }
+
+      button,
+      select {
+        font: inherit;
+        color: inherit;
+      }
+
+      .simulator {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .note {
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--accent-soft);
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 0.75fr));
+        gap: 9px;
+        margin-bottom: 14px;
+      }
+
+      .control {
+        min-width: 0;
+      }
+
+      .control-label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .deterministic-buttons {
+        display: grid;
+        gap: 5px;
+      }
+
+      .choice {
+        appearance: none;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: transparent;
+        padding: 8px 9px;
+        text-align: start;
+        cursor: pointer;
+      }
+
+      .choice:hover {
+        background: var(--panel);
+      }
+
+      .choice[aria-pressed="true"] {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--accent-fg);
+      }
+
+      .choice:focus-visible,
+      select:focus-visible {
+        outline: 3px solid var(--accent-soft);
+        outline-offset: 2px;
+      }
+
+      select {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: var(--panel);
+        padding: 8px 9px;
+      }
+
+      .path {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 7px;
+        margin-bottom: 13px;
+      }
+
+      .step {
+        min-width: 0;
+        padding: 11px 8px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        background: var(--panel);
+        text-align: center;
+      }
+
+      .step strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.86rem;
+      }
+
+      .step span {
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.35;
+      }
+
+      .step.is-active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .step.is-skip {
+        opacity: 0.42;
+      }
+
+      .outcome {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .verdict {
+        display: grid;
+        place-items: center;
+        min-height: 118px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--panel);
+        text-align: center;
+      }
+
+      .verdict strong {
+        display: block;
+        font-size: 1.35rem;
+      }
+
+      .verdict span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .verdict.is-pass {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .verdict.is-fail {
+        background: var(--fail-soft);
+      }
+
+      .verdict.is-review {
+        background: var(--warn-soft);
+      }
+
+      .explanation {
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .explanation strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .explanation p {
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 6px;
+        }
+
+        .controls,
+        .outcome {
+          grid-template-columns: 1fr;
+        }
+
+        .path {
+          grid-template-columns: 1fr;
+        }
+
+        .step {
+          text-align: start;
+        }
+
+        .verdict {
+          min-height: 90px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="judge-loop-simulator" class="simulator">
+      <p class="note">
+        아래 분기는 글의 참조 구조를 조작해 보는 설명용 시뮬레이터다. 실제 자동 승인 임계값이나 법적
+        판정 규칙이 아니다.
+      </p>
+
+      <section class="controls" aria-label="판정 조건">
+        <div class="control">
+          <span class="control-label">결정적 검사</span>
+          <div id="deterministic-buttons" class="deterministic-buttons"></div>
+        </div>
+        <label class="control" for="risk-select">
+          <span class="control-label">행동 위험</span>
+          <select id="risk-select">
+            <option value="low">낮음</option>
+            <option value="high">높음</option>
+          </select>
+        </label>
+        <label class="control" for="judge-select">
+          <span class="control-label">기준별 판정</span>
+          <select id="judge-select">
+            <option value="aligned">중대 불일치 없음</option>
+            <option value="disagree">판정자·증거 불일치</option>
+          </select>
+        </label>
+        <label class="control" for="counter-select">
+          <span class="control-label">반증 검사</span>
+          <select id="counter-select">
+            <option value="none">중대 반례 없음</option>
+            <option value="major">결과를 뒤집는 반례</option>
+          </select>
+        </label>
+      </section>
+
+      <section id="path" class="path" aria-label="현재 판정 경로"></section>
+
+      <section class="outcome" aria-live="polite">
+        <div id="verdict" class="verdict">
+          <div>
+            <strong id="verdict-label"></strong>
+            <span id="verdict-subtitle"></span>
+          </div>
+        </div>
+        <div class="explanation">
+          <strong>왜 이 경로인가</strong>
+          <p id="explanation"></p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      ;(() => {
+        const root = document.getElementById("judge-loop-simulator")
+        if (!root) return
+
+        let resizeFrameRequest = 0
+        let lastFrameHeight = 0
+
+        function reportHeight() {
+          cancelAnimationFrame(resizeFrameRequest)
+          resizeFrameRequest = requestAnimationFrame(() => {
+            const style = getComputedStyle(document.body)
+            const padding =
+              (Number.parseFloat(style.paddingTop) || 0) +
+              (Number.parseFloat(style.paddingBottom) || 0)
+            const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+            const frame = window.frameElement
+            if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+              lastFrameHeight = height
+              frame.style.height = `${height}px`
+            }
+          })
+        }
+
+        const deterministicOptions = [
+          ["pass", "검사 통과"],
+          ["violation", "명시적 위반"],
+          ["unavailable", "실행 불가·필수 증거 없음"],
+        ]
+
+        const steps = [
+          ["판정 계약", "기준·증거·버전 고정"],
+          ["결정적 검사", "타입·정책·실행 검사"],
+          ["LLM 판정", "기준별 의미 판단"],
+          ["반증", "변이·최소 반례"],
+          ["사람 검토", "위험·불확실성 처리"],
+        ]
+
+        let deterministic = "pass"
+        const buttons = root.querySelector("#deterministic-buttons")
+        const path = root.querySelector("#path")
+        const risk = root.querySelector("#risk-select")
+        const judge = root.querySelector("#judge-select")
+        const counter = root.querySelector("#counter-select")
+        const verdict = root.querySelector("#verdict")
+        const verdictLabel = root.querySelector("#verdict-label")
+        const verdictSubtitle = root.querySelector("#verdict-subtitle")
+        const explanation = root.querySelector("#explanation")
+
+        deterministicOptions.forEach(([value, label]) => {
+          const button = document.createElement("button")
+          button.type = "button"
+          button.className = "choice"
+          button.textContent = label
+          button.dataset.value = value
+          button.setAttribute("aria-pressed", String(value === deterministic))
+          button.addEventListener("click", () => {
+            deterministic = value
+            render()
+          })
+          buttons.appendChild(button)
+        })
+
+        steps.forEach(([title, copy]) => {
+          const node = document.createElement("div")
+          node.className = "step"
+          node.innerHTML = `<strong>${title}</strong><span>${copy}</span>`
+          path.appendChild(node)
+        })
+
+        function render() {
+          Array.from(buttons.children).forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.dataset.value === deterministic))
+          })
+
+          let label = "PASS"
+          let subtitle = "정해진 검사 범위 안의 통과"
+          let copy =
+            "결정적 검사에서 명시적 위반이 없고, 기준별 판정과 반증에서도 중대한 불일치가 없어 낮은 위험 경로로 진행한다."
+          let activeSteps = [1, 1, 1, 1, 0]
+          let className = "is-pass"
+
+          if (deterministic === "violation") {
+            label = "FAIL"
+            subtitle = "명시적 필수 조건 위반"
+            copy =
+              "기계가 확실히 검사할 수 있는 규칙에서 위반이 확인됐으므로 LLM에게 재판정을 맡기지 않고 실패로 기록한다."
+            activeSteps = [1, 1, 0, 0, 0]
+            className = "is-fail"
+          } else if (deterministic === "unavailable") {
+            label = "ABSTAIN"
+            subtitle = "평가 불가·증거 부족"
+            copy =
+              "검사를 실행할 수 없거나 필수 증거가 없어 성공으로 간주하지 않는다. 고위험이면 안전 우선 차단과 사람 검토가 필요하다."
+            activeSteps = [1, 1, 0, 0, 1]
+            className = "is-review"
+          } else if (
+            judge.value === "disagree" ||
+            counter.value === "major" ||
+            risk.value === "high"
+          ) {
+            label = "UNCERTAIN"
+            subtitle = "중대 불일치 또는 고위험"
+            copy =
+              "결정적 검사는 통과했지만 판정자 불일치, 중대 반례 또는 높은 행동 위험이 있어 자동 PASS 대신 사람이나 외부 도구 검토로 넘긴다."
+            activeSteps = [1, 1, 1, 1, 1]
+            className = "is-review"
+          }
+
+          Array.from(path.children).forEach((node, index) => {
+            const active = Boolean(activeSteps[index])
+            node.classList.toggle("is-active", active)
+            node.classList.toggle("is-skip", !active)
+          })
+
+          verdict.className = `verdict ${className}`
+          verdictLabel.textContent = label
+          verdictSubtitle.textContent = subtitle
+          explanation.textContent = copy
+          reportHeight()
+          window.setTimeout(reportHeight, 50)
+        }
+
+        ;[risk, judge, counter].forEach((control) => control.addEventListener("change", render))
+
+        render()
+        window.setTimeout(reportHeight, 0)
+        window.setTimeout(reportHeight, 250)
+        window.setTimeout(reportHeight, 750)
+      })()
+    </script>
+  </body>
+</html>

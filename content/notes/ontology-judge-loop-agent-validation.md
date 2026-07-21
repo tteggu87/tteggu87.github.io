@@ -106,6 +106,19 @@ JSON Schema, 타입, 해시, 단위 테스트와 속성 기반 테스트, 샌드
 
 고위험 행동, 낮은 보정 신뢰도, 새로운 실패 유형과 중대한 불일치는 사람 또는 외부 도구 검증으로 넘기는 것이 타당하다. 이는 특정 임계값이 실증적으로 확립됐다는 뜻이 아니라, 평가 모델의 사각지대와 자동 채점기의 전문가 대체 한계에서 도출한 위험관리 원칙이다.[src_006](#src-006)[src_013](#src-013)
 
+### 판정 조건을 바꿔 네 상태를 직접 만들어 보기
+
+결정적 검사 결과, 행동 위험, 기준별 판정 불일치와 반증 결과를 바꾸면 `PASS`, `FAIL`, `UNCERTAIN`, `ABSTAIN` 가운데 어떤 경로로 이동하는지 확인할 수 있다. 이 도구는 글의 참조 구조를 설명하기 위한 것이며 실제 자동 승인 임계값은 아니다.
+
+<iframe
+  src="/attachments/ontology-judge-loop-agent-validation/judge-loop-verdict-simulator.htm"
+  title="Judge Loop 판정 경로 시뮬레이터"
+  loading="lazy"
+  scrolling="no"
+  sandbox="allow-scripts allow-same-origin"
+  style="display:block;width:100%;height:920px;overflow:hidden;border:1px solid currentColor;border-radius:12px;background:transparent"
+></iframe>
+
 ### 8. 수정본과 종료 조건을 별도 기록한다
 
 수정본은 이전 산출물을 덮어쓰지 않고 새로운 버전으로 기록한다. 어떤 피드백을 사용했고, 어떤 판정 기준이 바뀌었으며, 새 검사 결과가 무엇인지 연결한다. 최대 반복 횟수, 비용, 시간, 같은 실패의 반복, 최소 개선량과 정책 위반을 종료 조건으로 둔다. 부분 실패를 조용히 성공으로 바꾸지 않는다.
