@@ -1,0 +1,32 @@
+{
+  "name": "@tteggu/numbered-folder-page",
+  "version": "1.0.0",
+  "description": "Folder pages with newest-first numbered sorting for tteggu notes.",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "peerDependencies": {
+    "@quartz-community/folder-page": "*"
+  },
+  "quartz": {
+    "name": "numbered-folder-page",
+    "displayName": "Numbered Folder Page",
+    "category": "pageType",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "defaultOptions": {
+      "showFolderCount": true,
+      "showSubfolders": true
+    }
+  }
+}

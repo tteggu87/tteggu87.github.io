@@ -327,6 +327,12 @@ function linkPeerDependencies(pluginDir: string): void {
 
   for (const peerName of Object.keys(peers)) {
     const peerNodeModulesPath = path.join(pluginDir, "node_modules", ...peerName.split("/"))
+    try {
+      const existingPeer = fs.lstatSync(peerNodeModulesPath)
+      if (existingPeer.isSymbolicLink() && !fs.existsSync(peerNodeModulesPath)) {
+        fs.unlinkSync(peerNodeModulesPath)
+      }
+    } catch {}
     if (fs.existsSync(peerNodeModulesPath)) continue
 
     if (peerName.startsWith("@quartz-community/")) {
@@ -336,8 +342,7 @@ function linkPeerDependencies(pluginDir: string): void {
       const scopeDir = path.join(pluginDir, "node_modules", peerName.split("/")[0])
       fs.mkdirSync(scopeDir, { recursive: true })
 
-      const target = path.relative(scopeDir, siblingPlugin)
-      trySymlink(target, peerNodeModulesPath)
+      trySymlink(siblingPlugin, peerNodeModulesPath)
       continue
     }
 
@@ -352,8 +357,7 @@ function linkPeerDependencies(pluginDir: string): void {
       fs.mkdirSync(path.join(pluginDir, "node_modules"), { recursive: true })
     }
 
-    const target = path.relative(path.dirname(peerNodeModulesPath), hostPeerPath)
-    trySymlink(target, peerNodeModulesPath)
+    trySymlink(hostPeerPath, peerNodeModulesPath)
   }
 }
 
