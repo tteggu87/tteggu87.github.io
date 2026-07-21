@@ -1,6 +1,6 @@
 ---
 title: "6. Visualize 시각화, Quartz 블로그에서 어디까지 작동할까"
-description: "Mermaid, 차트, 지도와 인터랙티브 시뮬레이션을 Quartz v5에 실제로 넣어 보고 호환 범위와 발행 방식을 정리한 테스트 기록입니다."
+description: "Mermaid, 차트, 지도와 인터랙티브 시뮬레이션을 Quartz v5에 적용하고, 모바일 iframe 자동 높이와 실서비스 검수 규칙까지 정리한 테스트 기록입니다."
 date: 2026-07-21
 tags:
   - Visualize
@@ -65,6 +65,8 @@ flowchart LR
 
 [시각화를 새 화면에서 크게 열기](/attachments/visualize-capability-showcase/visualize-capability-atlas.htm)
 
+이 기능 지도는 여러 시각화 계열을 한 화면에 모은 대형 데모라 제한된 뷰포트와 새 화면 링크를 의도적으로 유지한다. 한 글의 핵심 개념을 설명하는 소형 탐색기라면 아래에서 정리한 자동 높이 방식을 우선한다.
+
 ## 실제 발행에서 알아둘 점
 
 인터랙티브 시각화가 모든 글의 기본값이 될 필요는 없다. 관계만 설명하면 Mermaid가 더 가볍고, 검색·RSS·SNS 공유까지 고려하면 PNG나 SVG가 더 안정적이다. 독자가 조건을 바꾸면서 결과를 비교해야 할 때 비로소 독립 웹 문서가 값을 한다.
@@ -72,8 +74,117 @@ flowchart LR
 독립 문서 방식에는 몇 가지 경계도 있다.
 
 - 블로그 본문과 시각화는 서로 분리된 실행 영역이므로 블로그의 테마 전환이 즉시 동기화되지 않을 수 있다.
-- 긴 시각화는 본문 안에서 별도의 스크롤이 생길 수 있어 새 화면 링크를 함께 제공하는 편이 좋다.
 - 외부 모듈을 사용하는 지도는 네트워크가 차단된 환경에서 경계 데이터를 불러오지 못할 수 있다.
 - Codex 대화에서 사용하는 전용 표시 지시문은 Quartz 문법이 아니므로, 독립 문서나 정적 자산으로 변환해야 한다.
+- 본문 안에서 완결되는 탐색기는 내부 스크롤보다 콘텐츠 높이에 맞춘 iframe 자동 조절이 낫다. 반대로 매우 큰 지도나 대시보드는 제한된 뷰포트와 새 화면 링크를 의도적으로 사용할 수 있다.
 
-따라서 이 블로그에서는 **Mermaid를 기본값으로, PNG·SVG를 안정적인 전달 수단으로, 인터랙티브 문서를 꼭 필요한 글에만 선택적으로 사용하는 방식**이 가장 현실적이다. 이번 페이지가 정상적으로 보인다면 Visualize의 모든 주요 표현 계열을 Quartz 글 안에서 제공할 수 있다는 뜻이다.
+## 2번 글 적용에서 배운 iframe 실전 규칙
+
+[[notes/ontology-in-the-agentic-era|2번 글]]에 세 탭짜리 의미 계층 탐색기를 넣으면서 두 가지 실제 오류가 발생했다. 첫째, 모바일에서 iframe이 짧아 내부 스크롤이 생겼다. 이를 피하려고 초기 높이를 1,080~1,380px로 크게 잡자 이번에는 짧은 탭 아래에 긴 빈 공간이 남았다. 둘째, 막대 채움에 너비를 지정했지만 요소가 인라인 `span`이라 실제 막대가 보이지 않았다.
+
+이 과정에서 얻은 핵심 교훈은 **iframe 높이를 예상하지 말고 현재 활성 콘텐츠를 실제 브라우저에서 측정해야 한다**는 것이다. 최종 구현은 다음 원칙을 따른다.
+
+### 1. 큰 고정 높이를 안전장치로 쓰지 않는다
+
+`height: 1380px`처럼 가장 긴 모바일 상태를 기준으로 고정하면 잘림은 줄지만, 짧은 탭에는 그 차이만큼 빈 공간이 남는다. 초기 높이는 첫 렌더링을 버틸 정도의 보통 값만 두고, 로드 직후 실제 높이로 교체한다.
+
+```html
+<iframe
+  id="interactive-frame"
+  src="/attachments/example/explorer.htm"
+  scrolling="no"
+  sandbox="allow-scripts allow-same-origin"
+  style="display:block;width:100%;height:920px;overflow:hidden"
+></iframe>
+```
+
+`allow-same-origin`은 블로그가 직접 관리하는 동일 출처 문서가 부모의 iframe 요소에 접근하기 위해 사용한다. 외부에서 받은 HTML이나 신뢰하지 않는 콘텐츠에는 `allow-scripts allow-same-origin` 조합을 적용하면 안 된다.
+
+### 2. 동일 출처 문서는 자식이 자신의 iframe 높이를 직접 조절한다
+
+이번 Quartz 환경에서는 Markdown 본문에 넣은 부모 페이지 메시지 수신 스크립트가 SPA 이동과 실행 시점에 따라 안정적으로 재실행되지 않았다. 동일 출처의 신뢰된 문서라면 자식 문서에서 `window.frameElement`를 사용해 자신의 iframe 높이를 직접 바꾸는 편이 단순하고 안정적이었다.
+
+```js
+let lastFrameHeight = 0
+let resizeFrameRequest = 0
+
+function reportHeight() {
+  cancelAnimationFrame(resizeFrameRequest)
+  resizeFrameRequest = requestAnimationFrame(() => {
+    const root = document.getElementById("explorer")
+    const bodyStyle = getComputedStyle(document.body)
+    const padding =
+      (Number.parseFloat(bodyStyle.paddingTop) || 0) +
+      (Number.parseFloat(bodyStyle.paddingBottom) || 0)
+    const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+    const frame = window.frameElement
+
+    if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+      lastFrameHeight = height
+      frame.style.height = `${height}px`
+    }
+  })
+}
+
+setTimeout(reportHeight, 0)
+setTimeout(reportHeight, 250)
+```
+
+높이 차이가 1px보다 클 때만 갱신해 불필요한 반복을 막는다. `body`에는 기본 여백을 제거하고 `overflow: hidden`을 적용해 iframe 내부 스크롤바가 별도로 생기지 않게 한다.
+
+### 3. 탭과 동적 상태가 바뀔 때마다 다시 측정한다
+
+첫 화면만 맞으면 충분하지 않다. 탭별 콘텐츠 높이가 다르므로 활성 패널을 바꾼 직후와 레이아웃 적용이 끝난 직후에 다시 측정해야 한다.
+
+```js
+function activateTab(id) {
+  tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.tab === id)))
+  panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id))
+  reportHeight()
+  setTimeout(reportHeight, 50)
+}
+```
+
+슬라이더 결과 문구, 선택 항목의 세부 설명, 접고 펼치는 영역처럼 세로 길이를 바꾸는 모든 상호작용에도 같은 측정을 연결한다. 반대로 iframe 높이 변경 자체를 감시하는 과도한 `ResizeObserver`는 크기 변경이 다시 관찰을 일으키는 루프를 만들 수 있으므로, 상태가 바뀌는 명확한 지점에서 측정하는 방식을 우선한다.
+
+### 4. CSS 막대의 채움 요소는 블록으로 만든다
+
+인라인 `span`은 `width: 80%`가 의도대로 적용되지 않는다. 막대 채움에는 `display: block` 또는 `inline-block`을 명시한다.
+
+```css
+.bar-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  width: 80%;
+  border-radius: inherit;
+}
+```
+
+“배경 트랙이 보인다”는 사실만으로 차트가 정상이라고 판단하면 안 된다. 실제 채움 너비를 브라우저에서 픽셀로 측정해야 한다.
+
+### 5. 설명용 상대값은 측정 데이터처럼 보이지 않게 경계를 표시한다
+
+독자가 조절하는 차트에는 숫자와 단계가 들어가기 쉽다. 논문이나 실험에서 측정한 값이 아니라 글의 질적 구분을 시각화한 경우, 도구 안과 본문 양쪽에 **설명용 상대값이며 성능 수치나 권고 임계값이 아님**을 표시한다.
+
+## 다음 인터랙티브 글의 필수 검수 게이트
+
+정적 빌드 성공만으로는 모바일 시각화가 정상이라고 말할 수 없다. 다음 작업에서는 아래 검사를 모두 통과해야 발행 완료로 본다.
+
+1. **소스 검사:** HTML 파싱, JavaScript 구문, 중복 ID, `for`·`aria-controls`·스크립트 선택자의 대상 존재 여부를 확인한다.
+2. **Quartz 검사:** 게시물 검증, `npm run check`, 전체 테스트, `npx quartz build`, 빌드 후 경로 검증을 수행한다.
+3. **모바일 브라우저 검사:** 최소 390×844px 환경에서 첫 탭뿐 아니라 모든 탭을 실제로 눌러 본다.
+4. **높이 검사:** iframe 높이와 활성 콘텐츠 높이 차이가 5px 이내인지 측정한다.
+5. **스크롤·잘림 검사:** iframe 내부 세로 스크롤이 없고 활성 패널 하단이 뷰포트 안에 들어오는지 확인한다.
+6. **가로 넘침 검사:** iframe과 부모 페이지 모두 `scrollWidth > innerWidth`가 아닌지 확인한다.
+7. **차트 수치 검사:** 막대·점·선의 실제 픽셀 위치나 비율이 데이터와 일치하는지 확인한다.
+8. **실서비스 재검사:** 로컬 빌드가 아니라 정확한 병합 커밋이 배포된 공개 URL을 캐시 무효화 쿼리와 함께 다시 검사한다.
+
+2번 글의 최종 공개 페이지를 iPhone 390×844px 조건으로 검사했을 때, 다섯 가지 이동 탭은 약 922px, 형식성 비교는 806px, 도입 시나리오는 1,026px로 각각 자동 조절됐다. 모든 탭에서 내부 스크롤·잘림·가로 넘침이 없었고, 막대 비율도 `40% / 40% / 100% / 100% / 80%`로 확인했다. 이처럼 **글이 보인다**가 아니라 **모든 상태를 측정했다**가 최종 검수 기준이어야 한다.
+
+따라서 이 블로그에서는 **Mermaid를 기본값으로, PNG·SVG를 안정적인 전달 수단으로, 인터랙티브 문서를 꼭 필요한 글에만 선택적으로 사용하는 방식**이 가장 현실적이다. 인터랙티브 문서를 선택했다면 현재 탭의 실제 높이에 맞춘 자동 조절과 모바일 실서비스 검수를 발행 계약에 포함해야 한다.
