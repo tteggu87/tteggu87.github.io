@@ -63,7 +63,9 @@ Example:
 
 ### Reading alignment stays independent
 
-The iframe geometry fix does not change article typography. Direct paragraphs retain the existing start alignment and `pretty` wrapping at mobile, tablet, and desktop sizes. A future reading-mode decision must be reviewed and tested separately instead of being bundled with an embed-layout repair.
+The iframe geometry fix did not change article typography. Direct paragraphs retain start alignment and `pretty` wrapping at mobile, tablet, and desktop sizes. A later, separately reviewed phone typography change restored the denser Quartz 4 baseline (`1rem` copy with `1.65` line height below `600px`) without using full justification. The narrow layout keeps natural Korean/Latin spacing while reducing the visual dominance of ragged line endings.
+
+Folder listings use the same narrow breakpoint as Quartz's hidden tag list. When tags become `display: none`, the listing grid must also collapse from date/title/tags to date/title; otherwise the invisible third track keeps one sixth of the row empty.
 
 ### Responsive breakpoints do not overlap
 
@@ -87,6 +89,7 @@ A visualization release is incomplete until the host article and iframe are both
 6. Article alignment is unchanged from the start-aligned baseline unless a separate typography change is intentionally reviewed.
 7. Exactly one responsive layout range matches at `799px`, `800px`, `1199px`, and `1200px`.
 8. The exact deployed URL is retested after the matching merge commit succeeds.
+9. At `600px` and below, folder rows resolve to exactly two grid tracks and the tag list remains hidden.
 
 ## Do not repeat
 
