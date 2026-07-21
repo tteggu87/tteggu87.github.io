@@ -147,6 +147,28 @@ body:not([data-slug="index"]) article h3 {
   }
 }
 
+// Quartz hides folder-listing tags on narrow phones. Collapse the matching
+// third grid track at the same breakpoint so titles use the released space.
+// Keep phone article copy close to the denser Quartz 4 reading baseline;
+// start alignment avoids the uneven Latin spacing caused by justification.
+@media all and (max-width: 600px) {
+  .page > #quartz-body {
+    padding-inline: 1rem;
+  }
+
+  .page-listing li.section-li > .section {
+    grid-template-columns: fit-content(8em) minmax(0, 1fr);
+  }
+
+  body:not([data-slug="index"]) article {
+    font-size: 1rem;
+  }
+
+  body:not([data-slug="index"]) article :is(p, li) {
+    line-height: 1.65;
+  }
+}
+
 // Prevent the center track from retaining its intrinsic content width at the
 // mobile/tablet boundary. Without minmax(0, 1fr), 801px-wide viewports can
 // overflow even though the same layout fits correctly at wider tablet sizes.
