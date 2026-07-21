@@ -169,6 +169,12 @@
       "commit": "3cb40141e792a8a9ba9f99553cd436f36411bf8d",
       "installedAt": "2026-07-19T13:54:32.216Z"
     },
+    "numbered-folder-page": {
+      "source": "./local-plugins/numbered-folder-page",
+      "resolved": "local-plugins/numbered-folder-page",
+      "commit": "local",
+      "installedAt": "2026-07-22T00:00:00.000Z"
+    },
     "obsidian-flavored-markdown": {
       "source": "github:quartz-community/obsidian-flavored-markdown",
       "resolved": "https://github.com/quartz-community/obsidian-flavored-markdown.git",

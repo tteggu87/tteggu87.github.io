@@ -120,6 +120,11 @@ function needsBuild(pluginDir) {
   return !fs.existsSync(distDir)
 }
 
+function resolveLocalPluginPath(entry) {
+  const source = typeof entry.source === "string" ? entry.source : entry.source?.repo
+  return path.resolve(source && isLocalSource(source) ? source : entry.resolved)
+}
+
 /**
  * After pruning devDependencies, peerDependencies may no longer be installed
  * in the plugin's own node_modules. This function resolves them:
@@ -144,6 +149,12 @@ function linkPeerPlugins(pluginDir) {
 
   for (const peerName of Object.keys(peers)) {
     const peerNodeModulesPath = path.join(pluginDir, "node_modules", ...peerName.split("/"))
+    try {
+      const existingPeer = fs.lstatSync(peerNodeModulesPath)
+      if (existingPeer.isSymbolicLink() && !fs.existsSync(peerNodeModulesPath)) {
+        fs.unlinkSync(peerNodeModulesPath)
+      }
+    } catch {}
     if (fs.existsSync(peerNodeModulesPath)) continue
 
     if (peerName.startsWith("@quartz-community/")) {
@@ -153,8 +164,7 @@ function linkPeerPlugins(pluginDir) {
       const scopeDir = path.join(pluginDir, "node_modules", peerName.split("/")[0])
       fs.mkdirSync(scopeDir, { recursive: true })
 
-      const target = path.relative(scopeDir, siblingPlugin)
-      trySymlink(target, peerNodeModulesPath)
+      trySymlink(siblingPlugin, peerNodeModulesPath)
       continue
     }
 
@@ -169,8 +179,7 @@ function linkPeerPlugins(pluginDir) {
       fs.mkdirSync(path.join(pluginDir, "node_modules"), { recursive: true })
     }
 
-    const target = path.relative(path.dirname(peerNodeModulesPath), hostPeerPath)
-    trySymlink(target, peerNodeModulesPath)
+    trySymlink(hostPeerPath, peerNodeModulesPath)
   }
 }
 
@@ -800,13 +809,14 @@ export async function handlePluginInstallUnified({
 
       if (entry.commit === "local") {
         try {
-          if (!fs.existsSync(entry.resolved)) {
-            console.log(styleText("red", `  ✗ ${name}: local path missing: ${entry.resolved}`))
+          const localPath = resolveLocalPluginPath(entry)
+          if (!fs.existsSync(localPath)) {
+            console.log(styleText("red", `  ✗ ${name}: local path missing: ${localPath}`))
             failed++
             continue
           }
           fs.mkdirSync(path.dirname(pluginDir), { recursive: true })
-          symlinkOrCopySync(entry.resolved, pluginDir)
+          symlinkOrCopySync(localPath, pluginDir)
           console.log(styleText("green", `✓ ${name} restored (local symlink)`))
           restoredPlugins.push({ name, pluginDir })
           installed++
@@ -1025,23 +1035,32 @@ export async function handlePluginInstallUnified({
 
     if (entry.commit === "local") {
       try {
-        if (fs.existsSync(pluginDir)) {
-          const stat = fs.lstatSync(pluginDir)
-          if (stat.isSymbolicLink() && fs.readlinkSync(pluginDir) === entry.resolved) {
+        const localPath = resolveLocalPluginPath(entry)
+        let existingStat
+        try {
+          existingStat = fs.lstatSync(pluginDir)
+        } catch {}
+
+        if (existingStat) {
+          if (
+            existingStat.isSymbolicLink() &&
+            fs.existsSync(pluginDir) &&
+            fs.realpathSync(pluginDir) === localPath
+          ) {
             console.log(styleText("gray", `  ✓ ${name} (local) already linked`))
             installed++
             continue
           }
-          if (stat.isSymbolicLink()) fs.unlinkSync(pluginDir)
+          if (existingStat.isSymbolicLink()) fs.unlinkSync(pluginDir)
           else fs.rmSync(pluginDir, { recursive: true })
         }
-        if (!fs.existsSync(entry.resolved)) {
-          console.log(styleText("red", `  ✗ ${name}: local path missing: ${entry.resolved}`))
+        if (!fs.existsSync(localPath)) {
+          console.log(styleText("red", `  ✗ ${name}: local path missing: ${localPath}`))
           failed++
           continue
         }
         fs.mkdirSync(path.dirname(pluginDir), { recursive: true })
-        symlinkOrCopySync(entry.resolved, pluginDir)
+        symlinkOrCopySync(localPath, pluginDir)
         console.log(styleText("green", `  ✓ ${name} (local) linked`))
         pluginsToBuild.push({ name, pluginDir })
         installed++
