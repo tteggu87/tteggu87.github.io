@@ -183,6 +183,16 @@ function linkPeerPlugins(pluginDir) {
   }
 }
 
+function linkAllPluginPeers() {
+  if (!fs.existsSync(PLUGINS_DIR)) return
+
+  for (const name of fs.readdirSync(PLUGINS_DIR)) {
+    const pluginDir = path.join(PLUGINS_DIR, name)
+    if (!fs.statSync(pluginDir).isDirectory()) continue
+    linkPeerPlugins(pluginDir)
+  }
+}
+
 /**
  * Search installed plugins for one whose package.json "name" matches the given
  * npm package name (e.g. "@quartz-community/bases-page").
@@ -1164,6 +1174,10 @@ export async function handlePluginInstallUnified({
     }
   }
 
+  // A local plugin can be built before its remote peer has finished cloning.
+  // Re-link every plugin after the full install set exists so clean CI runs
+  // resolve peer imports the same way as warm local workspaces.
+  linkAllPluginPeers()
   await regeneratePluginIndex()
 
   console.log()
