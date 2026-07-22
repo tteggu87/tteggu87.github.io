@@ -210,24 +210,25 @@ plugins:
       priority: 5
       condition: not-index
   - source: github:quartz-community/comments
-    enabled: false
+    enabled: true
     options:
       provider: giscus
       options:
-        repo: "TODO:username/repo-name"
-        repoId: "TODO:your-repo-id"
+        repo: tteggu87/tteggu87.github.io
+        repoId: R_kgDOTc5C0Q
         category: Announcements
-        categoryId: "TODO:your-category-id"
-        mapping: url
+        categoryId: DIC_kwDOTc5C0c4DBssv
+        mapping: pathname
         strict: true
         reactionsEnabled: true
         inputPosition: bottom
         lightTheme: light
         darkTheme: dark
-        lang: en
+        lang: ko
     layout:
       position: afterBody
       priority: 10
+      condition: not-index
   - source: github:quartz-community/footer
     enabled: true
     options:
@@ -285,6 +286,8 @@ layout:
       gap: 0.5rem
   byPageType:
     "404":
+      exclude:
+        - comments
       positions:
         beforeBody: []
         left: []
@@ -293,12 +296,18 @@ layout:
     folder:
       exclude:
         - reader-mode
+        - comments
       positions:
         right: []
     tag:
       exclude:
         - reader-mode
+        - comments
       positions:
         right: []
-    canvas: {}
-    bases: {}
+    canvas:
+      exclude:
+        - comments
+    bases:
+      exclude:
+        - comments
