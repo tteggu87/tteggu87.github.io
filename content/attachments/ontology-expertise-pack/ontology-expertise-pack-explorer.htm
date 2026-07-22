@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Expertise Pack 구성 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f7f4ed;
+        --panel: #fffdf8;
+        --text: #232827;
+        --muted: #66706d;
+        --border: #cbc8be;
+        --accent: #b34b38;
+        --accent-soft: #f2ddd5;
+        --secondary: #6d7f6d;
+        --secondary-soft: #dfe7dc;
+        --quiet: #ece8de;
+        --shadow: rgba(35, 40, 39, 0.08);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #171a19;
+          --panel: #202422;
+          --text: #edf0ed;
+          --muted: #adb6b1;
+          --border: #464d49;
+          --accent: #e1846f;
+          --accent-soft: #4b302b;
+          --secondary: #a6b9a4;
+          --secondary-soft: #2d3a2e;
+          --quiet: #292e2b;
+          --shadow: rgba(0, 0, 0, 0.22);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+      }
+      body {
+        overflow: hidden;
+        font-family:
+          Pretendard,
+          "Noto Sans KR",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      #expertise-explorer {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-weight: 600;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--panel);
+        color: var(--text);
+        font: inherit;
+      }
+
+      select:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+        outline-offset: 2px;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) 36px minmax(0, 1.35fr) 36px minmax(0, 1fr);
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .stage {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--panel);
+        padding: 16px;
+        box-shadow: 0 8px 24px var(--shadow);
+        min-width: 0;
+      }
+
+      .stage h2 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .stage p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .arrow {
+        display: grid;
+        place-items: center;
+        color: var(--accent);
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .layer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .layer {
+        min-height: 72px;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--quiet);
+        transition:
+          background 160ms ease,
+          border-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .layer.is-primary {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+
+      .layer.is-support {
+        background: var(--secondary-soft);
+        border-color: var(--secondary);
+      }
+
+      .layer strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.94rem;
+      }
+
+      .layer span {
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .result-list {
+        display: grid;
+        gap: 8px;
+        margin: 12px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .result-list li {
+        padding-left: 18px;
+        position: relative;
+      }
+
+      .result-list li::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 0.65em;
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .strategy {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        border-radius: 0 10px 10px 0;
+      }
+
+      .strategy strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .strategy p {
+        margin: 0;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .swatch {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .swatch.primary {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+      }
+      .swatch.support {
+        background: var(--secondary-soft);
+        border-color: var(--secondary);
+      }
+      .swatch.quiet {
+        background: var(--quiet);
+      }
+
+      .note {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 760px) {
+        #expertise-explorer {
+          padding: 14px;
+        }
+        .flow {
+          grid-template-columns: 1fr;
+        }
+        .arrow {
+          transform: rotate(90deg);
+          min-height: 28px;
+        }
+        .layer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+        .stage {
+          padding: 14px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .layer {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="expertise-explorer">
+      <div class="controls" aria-label="탐색 조건">
+        <label for="model-level">
+          모델 자율성
+          <select id="model-level">
+            <option value="weak">약한 모델 · 절차 지원 필요</option>
+            <option value="medium">중간 모델 · 관계와 사례 지원</option>
+            <option value="strong" selected>강한 모델 · 조사 전략 위임</option>
+          </select>
+        </label>
+        <label for="task-type">
+          과제 유형
+          <select id="task-type">
+            <option value="lookup">사실 조회</option>
+            <option value="diagnosis" selected>장애 진단</option>
+            <option value="design">설계 검토</option>
+            <option value="review">위험·정책 리뷰</option>
+          </select>
+        </label>
+      </div>
+
+      <section class="flow" aria-label="질문에서 전문가적 판단까지의 구성 흐름">
+        <article class="stage">
+          <h2>1. 질문 해석</h2>
+          <p id="question-text">증상, 영향 범위와 시간 조건을 도메인 객체로 바꿉니다.</p>
+        </article>
+        <div class="arrow" aria-hidden="true">→</div>
+        <article class="stage">
+          <h2>2. 의미 작업공간</h2>
+          <p>현재 과제에 필요한 Pack 계층만 선택합니다.</p>
+          <div class="layer-grid" id="layer-grid">
+            <div class="layer" data-layer="ontology">
+              <strong>Domain Ontology</strong><span>개념 · 상태 · 관계 · 권한</span>
+            </div>
+            <div class="layer" data-layer="evidence">
+              <strong>Evidence Graph</strong><span>관찰 · 주장 · 반박 · 출처</span>
+            </div>
+            <div class="layer" data-layer="decision">
+              <strong>Decision Graph</strong><span>대안 · 선택 이유 · 재검토 조건</span>
+            </div>
+            <div class="layer" data-layer="experience">
+              <strong>Experience Memory</strong><span>사건 · 실패 · 조치 · 회귀</span>
+            </div>
+            <div class="layer" data-layer="causal">
+              <strong>Causal Model</strong><span>원인 가설 · 영향 · 조건 · 지연</span>
+            </div>
+            <div class="layer" data-layer="inquiry">
+              <strong>Inquiry Model</strong><span>진단 질문 · 반례 · 미수집 증거</span>
+            </div>
+            <div class="layer" data-layer="evaluation">
+              <strong>Evaluation Contract</strong><span>근거 · 기권 · 행동 전 검증</span>
+            </div>
+          </div>
+        </article>
+        <div class="arrow" aria-hidden="true">→</div>
+        <article class="stage">
+          <h2>3. 기대하는 판단</h2>
+          <ul class="result-list" id="result-list" aria-live="polite"></ul>
+        </article>
+      </section>
+
+      <section class="strategy" aria-live="polite">
+        <strong id="strategy-title">강한 모델: 결론보다 논쟁 가능한 근거 묶음을 제공합니다.</strong>
+        <p id="strategy-text">
+          조사 순서와 경쟁 가설의 구성은 모델에 맡기고, 직접 근거·대조 사례·모순·정책 경계는 Pack이
+          제공합니다.
+        </p>
+      </section>
+
+      <div class="legend" aria-label="계층 중요도 범례">
+        <span class="legend-item"><span class="swatch primary"></span>이번 과제의 핵심 계층</span>
+        <span class="legend-item"
+          ><span class="swatch support"></span>검증과 맥락을 보조하는 계층</span
+        >
+        <span class="legend-item"><span class="swatch quiet"></span>필요 시 조회하는 계층</span>
+      </div>
+      <p class="note">
+        이 탐색기의 구성은 설명용 질적 비교이며, 측정된 성능 수치나 자동화 권고 임계값이 아닙니다.
+      </p>
+    </main>
+
+    <script>
+      const modelSelect = document.getElementById("model-level")
+      const taskSelect = document.getElementById("task-type")
+      const questionText = document.getElementById("question-text")
+      const resultList = document.getElementById("result-list")
+      const strategyTitle = document.getElementById("strategy-title")
+      const strategyText = document.getElementById("strategy-text")
+      const layers = [...document.querySelectorAll("[data-layer]")]
+
+      const taskConfig = {
+        lookup: {
+          question: "이름, 시점과 적용 범위를 정규화해 검증 가능한 사실 질문으로 바꿉니다.",
+          primary: ["ontology", "evidence"],
+          support: ["evaluation"],
+          results: [
+            "정규화된 개체와 관계",
+            "직접 출처가 붙은 사실",
+            "정보가 없을 때의 명시적 기권",
+          ],
+        },
+        diagnosis: {
+          question: "증상, 영향 범위와 시간 조건을 도메인 객체로 바꿉니다.",
+          primary: ["evidence", "experience", "causal", "inquiry"],
+          support: ["ontology", "evaluation"],
+          results: [
+            "서로 다른 경쟁 원인 가설",
+            "유사 사례와 결정적 차이",
+            "가설을 구분할 다음 관찰",
+          ],
+        },
+        design: {
+          question: "목표, 제약, 변경 대상과 장기 영향을 설계 질문으로 바꿉니다.",
+          primary: ["decision", "causal", "ontology", "experience"],
+          support: ["evidence", "inquiry", "evaluation"],
+          results: [
+            "과거 선택의 이유와 만료 조건",
+            "대안별 영향·트레이드오프",
+            "되돌리기 어려운 의존성",
+          ],
+        },
+        review: {
+          question: "행동, 권한, 위험과 필요한 증거를 판정 가능한 계약으로 바꿉니다.",
+          primary: ["ontology", "evidence", "decision", "evaluation"],
+          support: ["experience", "inquiry"],
+          results: [
+            "허용·금지·승인 필요 조건",
+            "정책과 실제 실행의 불일치",
+            "자동 판단을 멈출 불확실성",
+          ],
+        },
+      }
+
+      const modelConfig = {
+        weak: {
+          title: "약한 모델: Pack을 절차와 제한된 질의로 컴파일합니다.",
+          text: "조회 순서, 허용 관계, 최대 탐색 범위와 출력 스키마를 명시해 이탈을 줄입니다.",
+          promote: ["evaluation"],
+        },
+        medium: {
+          title: "중간 모델: 관계와 대표 사례를 제공하고 검증 경계를 유지합니다.",
+          text: "질문 분해 일부는 모델에 맡기되, 사용 가능한 관계·사례·출처와 체크리스트를 선별합니다.",
+          promote: ["ontology", "experience"],
+        },
+        strong: {
+          title: "강한 모델: 결론보다 논쟁 가능한 근거 묶음을 제공합니다.",
+          text: "조사 순서와 경쟁 가설의 구성은 모델에 맡기고, 직접 근거·대조 사례·모순·정책 경계는 Pack이 제공합니다.",
+          promote: ["inquiry", "evidence"],
+        },
+      }
+
+      let lastFrameHeight = 0
+      let resizeFrameRequest = 0
+
+      function reportHeight() {
+        cancelAnimationFrame(resizeFrameRequest)
+        resizeFrameRequest = requestAnimationFrame(() => {
+          const root = document.getElementById("expertise-explorer")
+          const bodyStyle = getComputedStyle(document.body)
+          const padding =
+            (Number.parseFloat(bodyStyle.paddingTop) || 0) +
+            (Number.parseFloat(bodyStyle.paddingBottom) || 0)
+          const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+          const frame = window.frameElement
+          if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+            lastFrameHeight = height
+            frame.style.height = `${height}px`
+          }
+        })
+      }
+
+      function render() {
+        const task = taskConfig[taskSelect.value]
+        const model = modelConfig[modelSelect.value]
+        const primary = new Set([...task.primary, ...model.promote])
+        const support = new Set(task.support.filter((name) => !primary.has(name)))
+
+        questionText.textContent = task.question
+        strategyTitle.textContent = model.title
+        strategyText.textContent = model.text
+
+        layers.forEach((layer) => {
+          const name = layer.dataset.layer
+          layer.classList.toggle("is-primary", primary.has(name))
+          layer.classList.toggle("is-support", support.has(name))
+        })
+
+        resultList.replaceChildren(
+          ...task.results.map((text) => {
+            const item = document.createElement("li")
+            item.textContent = text
+            return item
+          }),
+        )
+
+        reportHeight()
+        setTimeout(reportHeight, 50)
+        setTimeout(reportHeight, 250)
+      }
+
+      modelSelect.addEventListener("change", render)
+      taskSelect.addEventListener("change", render)
+      window.addEventListener("resize", reportHeight)
+      window.addEventListener("load", render)
+      render()
+    </script>
+  </body>
+</html>
