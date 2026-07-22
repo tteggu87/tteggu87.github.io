@@ -3,7 +3,7 @@ import { ConditionalRender, Flex } from "./quartz/components"
 import HomeHero from "./quartz/components/HomeHero"
 import ReaderMode from "./quartz/components/ReaderMode"
 import TopNav from "./quartz/components/TopNav"
-import { PageTypes } from "./quartz/plugins"
+import { FirstImageSocialImage, PageTypes } from "./quartz/plugins"
 import { RecentNotes as configureRecentNotes } from "./.quartz/plugins"
 
 configureRecentNotes({
@@ -13,6 +13,7 @@ configureRecentNotes({
   },
 })
 const config = await loadQuartzConfig()
+config.plugins.transformers.push(FirstImageSocialImage())
 const baseLayout = await loadQuartzLayout()
 const homeHero = ConditionalRender({
   component: HomeHero(),

@@ -1,1 +1,1 @@
-export {}
+export { FirstImageSocialImage } from "./firstImageSocialImage"
