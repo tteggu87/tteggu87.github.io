@@ -44,6 +44,8 @@ jobs:
         run: npm test
       - name: Build Quartz
         run: npx quartz build
+      - name: Publish Google Search Console verification file
+        run: cp quartz/static/google0bd620449c096d39.html public/google0bd620449c096d39.html
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact
