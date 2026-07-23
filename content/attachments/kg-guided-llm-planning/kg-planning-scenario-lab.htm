@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KG Planning 시나리오 실험실</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f4f0e8;
+        --panel: #fffdf8;
+        --text: #253239;
+        --muted: #66737a;
+        --border: #c9c6bd;
+        --navy: #102436;
+        --teal: #2f7d6c;
+        --teal-soft: #ddebe6;
+        --coral: #c65c46;
+        --coral-soft: #f2ddd6;
+        --gold: #b38220;
+        --gold-soft: #f4e9c7;
+        --quiet: #ebe7dd;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #171a19;
+          --panel: #202422;
+          --text: #edf0ed;
+          --muted: #adb6b1;
+          --border: #464d49;
+          --navy: #c9e0ec;
+          --teal: #8bc7b6;
+          --teal-soft: #253c36;
+          --coral: #ee9a86;
+          --coral-soft: #4b302b;
+          --gold: #e2bd68;
+          --gold-soft: #4a3d20;
+          --quiet: #292e2b;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      body {
+        overflow: hidden;
+        font-family:
+          Pretendard,
+          "Noto Sans KR",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      #kg-planning-lab {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        margin-bottom: 16px;
+      }
+
+      .intro h2 {
+        margin: 0 0 6px;
+        font-size: 1.18rem;
+      }
+
+      .intro p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .preset-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      .preset {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: var(--panel);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .preset:hover,
+      .preset:focus-visible {
+        border-color: var(--teal);
+        outline: 3px solid color-mix(in srgb, var(--teal) 24%, transparent);
+        outline-offset: 2px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .summary {
+        min-width: 0;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: var(--panel);
+      }
+
+      .summary span {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .summary strong {
+        display: block;
+        font-size: 1.02rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(250px, 0.88fr) minmax(0, 1.35fr);
+        gap: 16px;
+        align-items: start;
+      }
+
+      .panel {
+        min-width: 0;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--panel);
+        padding: 16px;
+      }
+
+      .panel h3 {
+        margin: 0 0 12px;
+        font-size: 1rem;
+      }
+
+      .control-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .control {
+        display: grid;
+        gap: 6px;
+      }
+
+      .control-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: 650;
+      }
+
+      .control output {
+        color: var(--teal);
+        font-weight: 800;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--teal);
+      }
+
+      .switches {
+        display: grid;
+        gap: 10px;
+        margin-top: 4px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+      }
+
+      .check-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .check-row input {
+        margin-top: 4px;
+        accent-color: var(--teal);
+      }
+
+      .check-row strong {
+        display: block;
+      }
+
+      .check-row span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .hypotheses {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .hypothesis {
+        border-radius: 12px;
+        padding: 12px;
+        border: 1px solid var(--border);
+        background: var(--quiet);
+      }
+
+      .hypothesis.is-leading {
+        border-color: var(--teal);
+        background: var(--teal-soft);
+      }
+
+      .hypothesis strong,
+      .hypothesis span {
+        display: block;
+      }
+
+      .hypothesis span {
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .plan-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .plan-item {
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px;
+        background: var(--panel);
+      }
+
+      .plan-item.is-blocked {
+        background: var(--coral-soft);
+        border-color: color-mix(in srgb, var(--coral) 55%, var(--border));
+      }
+
+      .rank {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        background: var(--navy);
+        color: var(--panel);
+        font-weight: 800;
+      }
+
+      .plan-item.is-blocked .rank {
+        background: var(--coral);
+      }
+
+      .plan-title-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .plan-title-row strong {
+        font-size: 0.96rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 3px 8px;
+        background: var(--teal-soft);
+        color: var(--teal);
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+
+      .badge.blocked {
+        background: var(--coral-soft);
+        color: var(--coral);
+      }
+
+      .reason {
+        margin: 5px 0 8px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .bar-track {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--quiet);
+      }
+
+      .bar-fill {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--teal);
+        transition: width 160ms ease;
+      }
+
+      .plan-item.is-blocked .bar-fill {
+        background: var(--coral);
+      }
+
+      .validator {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-left: 4px solid var(--gold);
+        border-radius: 0 12px 12px 0;
+        background: var(--gold-soft);
+      }
+
+      .validator strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .validator p {
+        margin: 0;
+      }
+
+      .note {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      @media (max-width: 760px) {
+        #kg-planning-lab {
+          padding: 14px;
+        }
+
+        .intro,
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .preset-row {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .summary-grid,
+        .hypotheses {
+          grid-template-columns: 1fr;
+        }
+
+        .panel {
+          padding: 14px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .bar-fill {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="kg-planning-lab">
+      <section class="intro">
+        <div>
+          <h2>캐시 장애 계획 순서 실험</h2>
+          <p>근거와 제약을 바꾸면 LLM에 제공할 행동 우선순위가 어떻게 달라지는지 살펴보세요.</p>
+        </div>
+        <div class="preset-row" aria-label="시나리오 빠른 선택">
+          <button class="preset" type="button" data-preset="uncertain">근거 부족</button>
+          <button class="preset" type="button" data-preset="replica">복제 지연 강함</button>
+          <button class="preset" type="button" data-preset="cache">캐시 정책 강함</button>
+          <button class="preset" type="button" data-preset="constrained">제약 심함</button>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-live="polite">
+        <div class="summary">
+          <span>현재 우세 가설</span><strong id="dominant-hypothesis">근거가 비슷함</strong>
+        </div>
+        <div class="summary">
+          <span>첫 행동</span><strong id="first-action">시간·지역 상관 확인</strong>
+        </div>
+        <div class="summary"><span>차단된 행동</span><strong id="blocked-count">1개</strong></div>
+      </section>
+
+      <section class="layout">
+        <aside class="panel" aria-label="시나리오 조건">
+          <h3>1. 근거와 운영 조건</h3>
+          <div class="control-grid">
+            <label class="control" for="replica-evidence">
+              <span class="control-head"
+                ><span>복제 지연 가설 근거</span
+                ><output id="replica-evidence-value">68</output></span
+              >
+              <input id="replica-evidence" type="range" min="0" max="100" value="68" />
+            </label>
+            <label class="control" for="cache-evidence">
+              <span class="control-head"
+                ><span>캐시 정책 가설 근거</span><output id="cache-evidence-value">52</output></span
+              >
+              <input id="cache-evidence" type="range" min="0" max="100" value="52" />
+            </label>
+            <label class="control" for="replica-headroom">
+              <span class="control-head"
+                ><span>정상 복제본 여유 용량</span
+                ><output id="replica-headroom-value">72</output></span
+              >
+              <input id="replica-headroom" type="range" min="0" max="100" value="72" />
+            </label>
+            <label class="control" for="origin-headroom">
+              <span class="control-head"
+                ><span>원본 저장소 여유 용량</span
+                ><output id="origin-headroom-value">58</output></span
+              >
+              <input id="origin-headroom" type="range" min="0" max="100" value="58" />
+            </label>
+          </div>
+
+          <div class="switches">
+            <label class="check-row" for="contract-boundary">
+              <input id="contract-boundary" type="checkbox" checked />
+              <span
+                ><strong>TTL 계약 하한 적용</strong
+                ><span>계약 하한 아래 TTL 변경을 차단합니다.</span></span
+              >
+            </label>
+            <label class="check-row" for="approval-ready">
+              <input id="approval-ready" type="checkbox" checked />
+              <span
+                ><strong>운영 승인 확보</strong
+                ><span>트래픽 우회와 정책 롤백을 실행 후보로 허용합니다.</span></span
+              >
+            </label>
+          </div>
+        </aside>
+
+        <section class="panel" aria-label="조건부 계획 결과">
+          <h3>2. PlanningContext가 만든 조건부 계획</h3>
+          <div class="hypotheses">
+            <div class="hypothesis" id="replica-hypothesis">
+              <strong>가설 B · 복제 지연</strong
+              ><span id="replica-hypothesis-text">시간·지역 상관을 먼저 확인</span>
+            </div>
+            <div class="hypothesis" id="cache-hypothesis">
+              <strong>가설 A · 캐시 정책</strong
+              ><span id="cache-hypothesis-text">배포 변경과 오류 연결을 확인</span>
+            </div>
+          </div>
+          <ol class="plan-list" id="plan-list" aria-live="polite"></ol>
+          <div class="validator" aria-live="polite">
+            <strong>Validator 판단</strong>
+            <p id="validator-message">
+              계약 하한 아래 TTL 변경은 차단하고, 승인된 가역적 행동만 후보로 유지합니다.
+            </p>
+          </div>
+        </section>
+      </section>
+
+      <p class="note">
+        이 탐색기의 값과 우선순위는 개념 설명을 위한 상대값입니다. 측정된 장애 대응 성능, 실제 권고
+        임계값, 자동 실행 정책이 아닙니다.
+      </p>
+    </main>
+
+    <script>
+      const controls = {
+        replicaEvidence: document.getElementById("replica-evidence"),
+        cacheEvidence: document.getElementById("cache-evidence"),
+        replicaHeadroom: document.getElementById("replica-headroom"),
+        originHeadroom: document.getElementById("origin-headroom"),
+        contractBoundary: document.getElementById("contract-boundary"),
+        approvalReady: document.getElementById("approval-ready"),
+      }
+
+      const values = {
+        replicaEvidence: document.getElementById("replica-evidence-value"),
+        cacheEvidence: document.getElementById("cache-evidence-value"),
+        replicaHeadroom: document.getElementById("replica-headroom-value"),
+        originHeadroom: document.getElementById("origin-headroom-value"),
+      }
+
+      const dominantHypothesis = document.getElementById("dominant-hypothesis")
+      const firstAction = document.getElementById("first-action")
+      const blockedCount = document.getElementById("blocked-count")
+      const replicaHypothesis = document.getElementById("replica-hypothesis")
+      const cacheHypothesis = document.getElementById("cache-hypothesis")
+      const replicaHypothesisText = document.getElementById("replica-hypothesis-text")
+      const cacheHypothesisText = document.getElementById("cache-hypothesis-text")
+      const planList = document.getElementById("plan-list")
+      const validatorMessage = document.getElementById("validator-message")
+
+      const presets = {
+        uncertain: {
+          replicaEvidence: 48,
+          cacheEvidence: 46,
+          replicaHeadroom: 65,
+          originHeadroom: 55,
+          contractBoundary: true,
+          approvalReady: true,
+        },
+        replica: {
+          replicaEvidence: 88,
+          cacheEvidence: 32,
+          replicaHeadroom: 82,
+          originHeadroom: 55,
+          contractBoundary: true,
+          approvalReady: true,
+        },
+        cache: {
+          replicaEvidence: 28,
+          cacheEvidence: 86,
+          replicaHeadroom: 60,
+          originHeadroom: 78,
+          contractBoundary: true,
+          approvalReady: true,
+        },
+        constrained: {
+          replicaEvidence: 64,
+          cacheEvidence: 64,
+          replicaHeadroom: 24,
+          originHeadroom: 22,
+          contractBoundary: true,
+          approvalReady: false,
+        },
+      }
+
+      let lastFrameHeight = 0
+      let resizeFrameRequest = 0
+
+      function reportHeight() {
+        cancelAnimationFrame(resizeFrameRequest)
+        resizeFrameRequest = requestAnimationFrame(() => {
+          const root = document.getElementById("kg-planning-lab")
+          const bodyStyle = getComputedStyle(document.body)
+          const padding =
+            (Number.parseFloat(bodyStyle.paddingTop) || 0) +
+            (Number.parseFloat(bodyStyle.paddingBottom) || 0)
+          const height = Math.ceil(root.getBoundingClientRect().height + padding + 2)
+          const frame = window.frameElement
+          if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+            lastFrameHeight = height
+            frame.style.height = `${height}px`
+          }
+        })
+      }
+
+      function n(control) {
+        return Number(control.value)
+      }
+
+      function clamp(value) {
+        return Math.max(0, Math.min(100, Math.round(value)))
+      }
+
+      function render() {
+        const replicaEvidence = n(controls.replicaEvidence)
+        const cacheEvidence = n(controls.cacheEvidence)
+        const replicaHeadroom = n(controls.replicaHeadroom)
+        const originHeadroom = n(controls.originHeadroom)
+        const contractBoundary = controls.contractBoundary.checked
+        const approvalReady = controls.approvalReady.checked
+        const uncertainty = 100 - Math.abs(replicaEvidence - cacheEvidence)
+
+        values.replicaEvidence.value = replicaEvidence
+        values.cacheEvidence.value = cacheEvidence
+        values.replicaHeadroom.value = replicaHeadroom
+        values.originHeadroom.value = originHeadroom
+
+        const gap = replicaEvidence - cacheEvidence
+        const dominant =
+          Math.abs(gap) < 12 ? "근거가 비슷함" : gap > 0 ? "복제 지연 가설" : "캐시 정책 가설"
+        dominantHypothesis.textContent = dominant
+        replicaHypothesis.classList.toggle("is-leading", gap >= 12)
+        cacheHypothesis.classList.toggle("is-leading", gap <= -12)
+        replicaHypothesisText.textContent =
+          gap >= 12 ? "오류 구간과 지연 구간을 확인한 뒤 우회 검토" : "시간·지역 상관을 추가로 확인"
+        cacheHypothesisText.textContent =
+          gap <= -12
+            ? "배포 변경과 오류 연결을 확인한 뒤 롤백 검토"
+            : "배포 전후 차이를 추가로 확인"
+
+        const actions = [
+          {
+            title: "시간·지역 상관 확인",
+            score: clamp(48 + uncertainty * 0.42),
+            blocked: false,
+            badge: "관찰",
+            reason: "두 가설을 가르는 정보 가치가 높고 시스템 상태를 바꾸지 않습니다.",
+          },
+          {
+            title: "정상 복제본으로 트래픽 우회",
+            score: clamp(replicaEvidence * 0.58 + replicaHeadroom * 0.27 + 15),
+            blocked: !approvalReady || replicaHeadroom < 35,
+            badge: "가역적 개입",
+            reason: !approvalReady
+              ? "운영 승인이 없어 차단됩니다."
+              : replicaHeadroom < 35
+                ? "정상 복제본의 여유 용량이 부족합니다."
+                : "복제 지연 가설이 강할 때 오류를 줄이면서 되돌릴 수 있습니다.",
+          },
+          {
+            title: "캐시 정책 B 롤백",
+            score: clamp(cacheEvidence * 0.58 + originHeadroom * 0.27 + 15),
+            blocked: !approvalReady || originHeadroom < 35,
+            badge: "가역적 개입",
+            reason: !approvalReady
+              ? "변경 승인이 없어 차단됩니다."
+              : originHeadroom < 35
+                ? "롤백 뒤 원본 저장소 부하를 감당할 여유가 부족합니다."
+                : "캐시 정책 가설이 강할 때 이전 설정으로 안전하게 되돌립니다.",
+          },
+          {
+            title: "TTL을 계약 하한 아래로 낮춤",
+            score: clamp(32 + cacheEvidence * 0.2),
+            blocked: contractBoundary,
+            badge: "정책 확인",
+            reason: contractBoundary
+              ? "고객 데이터 최신성 계약의 하한을 위반해 차단됩니다."
+              : "계약 경계가 없더라도 부하와 데이터 최신성 영향을 별도로 검증해야 합니다.",
+          },
+        ]
+
+        actions.sort((a, b) => Number(a.blocked) - Number(b.blocked) || b.score - a.score)
+        const available = actions.filter((action) => !action.blocked)
+        firstAction.textContent = available[0]?.title ?? "추가 조사 후 보류"
+        blockedCount.textContent = `${actions.filter((action) => action.blocked).length}개`
+
+        planList.replaceChildren(
+          ...actions.map((action, index) => {
+            const li = document.createElement("li")
+            li.className = `plan-item${action.blocked ? " is-blocked" : ""}`
+
+            const rank = document.createElement("span")
+            rank.className = "rank"
+            rank.textContent = action.blocked ? "×" : String(index + 1)
+
+            const body = document.createElement("div")
+            const head = document.createElement("div")
+            head.className = "plan-title-row"
+            const title = document.createElement("strong")
+            title.textContent = action.title
+            const badge = document.createElement("span")
+            badge.className = `badge${action.blocked ? " blocked" : ""}`
+            badge.textContent = action.blocked ? "차단" : action.badge
+            head.append(title, badge)
+
+            const reason = document.createElement("p")
+            reason.className = "reason"
+            reason.textContent = action.reason
+
+            const track = document.createElement("div")
+            track.className = "bar-track"
+            track.setAttribute("aria-label", `${action.title} 설명용 우선도 ${action.score}`)
+            const fill = document.createElement("span")
+            fill.className = "bar-fill"
+            fill.style.width = `${action.score}%`
+            track.append(fill)
+
+            body.append(head, reason, track)
+            li.append(rank, body)
+            return li
+          }),
+        )
+
+        const messages = []
+        if (contractBoundary) messages.push("TTL 계약 하한 위반 차단")
+        if (!approvalReady) messages.push("승인 없는 변경 차단")
+        if (replicaHeadroom < 35) messages.push("복제본 우회 차단")
+        if (originHeadroom < 35) messages.push("캐시 롤백 차단")
+        validatorMessage.textContent = messages.length
+          ? `${messages.join(" · ")}. 실행보다 추가 관찰 또는 보류를 우선합니다.`
+          : "필수 권한과 용량 조건을 충족했습니다. 관찰 지표와 롤백을 붙인 가역적 행동만 후보로 유지합니다."
+
+        reportHeight()
+        setTimeout(reportHeight, 50)
+        setTimeout(reportHeight, 250)
+      }
+
+      Object.values(controls).forEach((control) => control.addEventListener("input", render))
+      document.querySelectorAll("[data-preset]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const preset = presets[button.dataset.preset]
+          controls.replicaEvidence.value = preset.replicaEvidence
+          controls.cacheEvidence.value = preset.cacheEvidence
+          controls.replicaHeadroom.value = preset.replicaHeadroom
+          controls.originHeadroom.value = preset.originHeadroom
+          controls.contractBoundary.checked = preset.contractBoundary
+          controls.approvalReady.checked = preset.approvalReady
+          render()
+        })
+      })
+      window.addEventListener("resize", reportHeight)
+      window.addEventListener("load", render)
+      render()
+    </script>
+  </body>
+</html>
