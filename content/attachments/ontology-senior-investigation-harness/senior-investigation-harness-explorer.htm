@@ -2,8 +2,8 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>시니어 조사 하네스 구조 탐색기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>온톨로지 기반 조사 구조 탐색기</title>
     <style>
       :root {
         --bg: #f6f3ec;
@@ -23,7 +23,6 @@
       html,
       body {
         margin: 0;
-        padding: 0;
         background: var(--bg);
         color: var(--navy);
         font-family:
@@ -73,52 +72,28 @@
       .panel.active {
         display: block;
       }
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 13px;
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
-      .dot {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        margin-right: 6px;
-      }
-      .current {
-        background: var(--soft-teal);
-        border-color: var(--teal) !important;
-      }
-      .proposed {
-        background: var(--soft-coral);
-        border-style: dashed !important;
-        border-color: var(--coral) !important;
-      }
-      .durable {
-        background: var(--soft-navy);
-        border-color: var(--navy) !important;
-      }
       .flow {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
       }
-      .node {
-        min-height: 148px;
+      .flow > *,
+      .case-grid > *,
+      .stack > * {
+        min-width: 0;
+      }
+      .card {
+        min-height: 150px;
         border: 2px solid var(--line);
         border-radius: 18px;
         padding: 15px;
         background: var(--paper);
-        position: relative;
       }
-      .node h3 {
+      .card h3 {
         margin: 0 0 9px;
         font-size: 1rem;
       }
-      .node p {
+      .card p {
         margin: 0;
         color: var(--muted);
         line-height: 1.48;
@@ -132,29 +107,17 @@
         font-size: 0.77rem;
         background: rgba(255, 255, 255, 0.72);
       }
-      .arrow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--muted);
-        font-size: 1.5rem;
+      .durable {
+        background: var(--soft-navy);
+        border-color: var(--navy);
       }
-      .contract-grid {
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 10px;
+      .question {
+        background: var(--soft-coral);
+        border-color: var(--coral);
       }
-      .contract {
-        border: 2px solid var(--line);
-        border-radius: 17px;
-        padding: 14px;
-        background: var(--paper);
-      }
-      .contract small {
-        color: var(--muted);
-        display: block;
-        margin-top: 8px;
-        line-height: 1.45;
+      .check {
+        background: var(--soft-teal);
+        border-color: var(--teal);
       }
       .case-grid {
         display: grid;
@@ -165,18 +128,11 @@
         display: grid;
         gap: 10px;
       }
-      .callout {
-        border-left: 5px solid var(--coral);
-        background: var(--paper);
-        padding: 14px 16px;
-        border-radius: 10px;
-        margin-top: 14px;
-        line-height: 1.55;
-      }
       .status-row {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
+        margin-top: 12px;
       }
       .status {
         border: 2px solid var(--line);
@@ -189,54 +145,33 @@
         display: block;
         margin-bottom: 5px;
       }
-      .note {
+      .callout {
+        border-left: 5px solid var(--coral);
+        background: var(--paper);
+        padding: 14px 16px;
+        border-radius: 10px;
         margin-top: 14px;
-        color: var(--muted);
-        font-size: 0.9rem;
-        line-height: 1.5;
-      }
-      .detail {
-        margin-top: 14px;
-        border-top: 1px solid var(--line);
-        padding-top: 14px;
-      }
-      .detail h3 {
-        margin: 0 0 8px;
-      }
-      .detail ul {
-        margin: 0.4rem 0 0;
-        padding-left: 1.2rem;
-        color: var(--muted);
         line-height: 1.55;
       }
-      @media (max-width: 760px) {
+      @media (max-width: 900px) {
+        .flow {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 720px) {
         .app {
           padding: 14px;
         }
-        .flow {
-          grid-template-columns: 1fr;
-        }
-        .arrow {
-          transform: rotate(90deg);
-          height: 22px;
-        }
-        .contract-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        .case-grid {
-          grid-template-columns: 1fr;
-        }
+        .flow,
+        .case-grid,
         .status-row {
           grid-template-columns: 1fr;
         }
-        .node {
+        .card {
           min-height: auto;
         }
       }
       @media (max-width: 430px) {
-        .contract-grid {
-          grid-template-columns: 1fr;
-        }
         .tabs button {
           flex: 1 1 calc(50% - 8px);
           padding: 9px 8px;
@@ -248,161 +183,127 @@
   <body>
     <main class="app">
       <section class="intro">
-        <strong>현재 구현과 제안 층을 분리해 살펴보세요.</strong>
+        <strong>열두 편의 결론이 하나의 조사 구조로 이어지는 과정을 살펴보세요.</strong>
         <p>
-          수치는 성능 측정값이 아니라 13번 글의 구조적 책임과 수명주기를 설명하기 위한 것입니다.
+          이 화면은 성능 점수나 구현 완료율이 아니라 각 단계가 맡는 책임과 수명주기를 설명합니다.
         </p>
       </section>
+
       <nav class="tabs" aria-label="구조 보기">
         <button type="button" data-tab="whole" aria-selected="true">전체 구조</button>
-        <button type="button" data-tab="current" aria-selected="false">현재 DuckCrab</button>
-        <button type="button" data-tab="proposed" aria-selected="false">제안 층</button>
-        <button type="button" data-tab="case" aria-selected="false">가상 캐시 조사</button>
+        <button type="button" data-tab="questions" aria-selected="false">다섯 질문</button>
+        <button type="button" data-tab="case" aria-selected="false">주문 배송 사례</button>
       </nav>
 
       <section id="whole" class="panel active">
-        <div class="legend">
-          <span><i class="dot" style="background: var(--navy)"></i>지속 지식</span
-          ><span><i class="dot" style="background: var(--teal)"></i>현재 기반</span
-          ><span><i class="dot" style="background: var(--coral)"></i>제안 층</span>
-        </div>
         <div class="flow">
-          <article class="node durable">
+          <article class="card durable">
             <span class="badge">지속</span>
             <h3>Expertise Pack</h3>
             <p>사실·근거·결정·실패·정책을 버전과 출처로 보존합니다.</p>
           </article>
-          <article class="node proposed">
+          <article class="card question">
             <span class="badge">질문별</span>
-            <h3>의미 조사 계획</h3>
-            <p>필수 근거, 경쟁 가설, 금지 행동과 종료 조건을 정합니다.</p>
+            <h3>조사 계획</h3>
+            <p>필수 자료, 경쟁 가설, 금지 행동과 종료 조건을 정합니다.</p>
           </article>
-          <article class="node current">
-            <span class="badge">현재</span>
-            <h3>검색·문맥 조립</h3>
-            <p>RetrievalPlanner와 AgentContextBundle이 근거·경로·미지·정책을 조립합니다.</p>
-          </article>
-          <article class="node proposed">
+          <article class="card question">
             <span class="badge">질문별</span>
-            <h3>조사 상태·검증·판단</h3>
-            <p>가설과 반례를 갱신하고 PROCEED·ABSTAIN·ESCALATE로 끝냅니다.</p>
+            <h3>조사 상태</h3>
+            <p>관찰·가설·반례·미지와 다음 확인을 새 자료에 따라 갱신합니다.</p>
+          </article>
+          <article class="card check">
+            <span class="badge">검사</span>
+            <h3>검증 기록</h3>
+            <p>인용, 시간, 권한, 지식 버전과 확인한 범위를 남깁니다.</p>
+          </article>
+          <article class="card">
+            <span class="badge">출력</span>
+            <h3>조건부 판단</h3>
+            <p>현재 판단, 남은 대안, 다음 확인과 가능한 행동을 함께 전달합니다.</p>
           </article>
         </div>
         <div class="callout">
-          <strong>핵심 경계</strong><br />최종 판단과 장기 지식 변경은 다른 사건입니다. LLM이 만든
-          가설은 검증·사람 검토·승격 전까지 Pack의 정본이 아닙니다.
+          <strong>핵심 경계</strong><br />이번 질문에서 나온 가설은 검증과 사람 검토 전까지 장기
+          지식의 사실이 아닙니다. 최종 답변과 지식 변경도 서로 다른 사건으로 기록합니다.
         </div>
       </section>
 
-      <section id="current" class="panel">
-        <div class="contract-grid">
-          <article class="contract current">
-            <strong>DuckDB 정본</strong
-            ><small>ontology·관계·문서·provenance·정책 상태를 소유합니다.</small>
+      <section id="questions" class="panel">
+        <div class="flow">
+          <article class="card durable">
+            <h3>무엇을 기억합니까?</h3>
+            <p>다음 질문에도 남길 사실, 근거, 결정, 실패와 정책을 정합니다.</p>
           </article>
-          <article class="contract current">
-            <strong>RetrievalPlanner</strong
-            ><small>query·retrieve 경로가 같은 랭킹 코어를 공유합니다.</small>
+          <article class="card question">
+            <h3>무엇을 확인합니까?</h3>
+            <p>이번 질문에 필요한 자료, 경쟁 가설과 종료 조건을 정합니다.</p>
           </article>
-          <article class="contract current">
-            <strong>retrieval_plan</strong
-            ><small
-              >query variant, graph/schema term, route와 bounded expansion을 명시합니다.</small
-            >
+          <article class="card question">
+            <h3>무엇이 바뀌었습니까?</h3>
+            <p>새 자료 때문에 어떤 가설이 강해지거나 약해졌는지 기록합니다.</p>
           </article>
-          <article class="contract current">
-            <strong>검색 영수증</strong
-            ><small>분기, 후보 수, 경고와 graph expansion 상태를 남깁니다.</small>
+          <article class="card check">
+            <h3>어디까지 검사했습니까?</h3>
+            <p>원문, 수치, 시간, 권한과 정책의 확인 범위를 남깁니다.</p>
           </article>
-          <article class="contract current">
-            <strong>AgentContextBundle</strong
-            ><small
-              >facts, evidence, provenance, inferred/missing links, policies와 uncertainty를
-              담습니다.</small
-            >
+          <article class="card">
+            <h3>지금 무엇을 합니까?</h3>
+            <p>진행, 보류, 사람 검토와 다음 확인을 조건부로 제안합니다.</p>
           </article>
-        </div>
-        <p class="note">
-          2026년 7월 23일 DuckCrab 커밋 <code>8ae4960</code> 기준입니다. 집중 테스트 178개가
-          프로젝트의 uv 환경에서 통과했지만, 아래 제안 층의 성능을 시험한 것은 아닙니다.
-        </p>
-      </section>
-
-      <section id="proposed" class="panel">
-        <div class="contract-grid">
-          <article class="contract proposed">
-            <strong>Semantic Plan</strong
-            ><small>검색 방법보다 상위에서 이번 질문의 조사 의무를 정합니다.</small>
-          </article>
-          <article class="contract proposed">
-            <strong>Investigation State</strong
-            ><small>관찰·주 가설·경쟁 가설·반례·미지·다음 검색을 요청 단위로 보존합니다.</small>
-          </article>
-          <article class="contract proposed">
-            <strong>반례 재검색</strong
-            ><small>같은 답을 다시 생각하지 않고 가설을 구분할 새 외부 신호를 요구합니다.</small>
-          </article>
-          <article class="contract proposed">
-            <strong>Validator</strong
-            ><small>인용, revision, 권한, 수치, 종료 조건과 수정 회귀를 검사합니다.</small>
-          </article>
-          <article class="contract proposed">
-            <strong>Judgment Packet</strong
-            ><small>조건부 판단, 배제하지 못한 대안, 다음 검사와 안전 행동을 묶습니다.</small>
-          </article>
-        </div>
-        <div class="callout">
-          <strong>구현 상태</strong><br />이 다섯 항목은 2026년 7월 24일 현재 DuckCrab의 공개 런타임
-          계약이 아니라 1~12번 글과 현재 코드에서 도출한 다음 단계입니다.
         </div>
       </section>
 
       <section id="case" class="panel">
         <div class="case-grid">
-          <article class="node durable">
+          <article class="card durable">
             <span class="badge">관찰</span>
-            <h3>배포 뒤 오래된 데이터 노출</h3>
-            <p>특정 고객 범위에서 증가했습니다. 실제 사건이 아닌 설명용 가상 사례입니다.</p>
+            <h3>결제 뒤 사흘째 상품 준비 중</h3>
+            <p>실제 주문이 아닌 설명용 가상 사례입니다.</p>
           </article>
           <div class="stack">
-            <article class="node proposed">
+            <article class="card question">
               <span class="badge">가설 1</span>
-              <h3>캐시 무효화 실패</h3>
-              <p>직접 읽기는 정상이고 무효화 이벤트가 누락되면 강해집니다.</p>
+              <h3>재고 예약 실패·재고 부족</h3>
+              <p>해당 주문의 재고 예약 기록이 없으면 강해집니다.</p>
             </article>
-            <article class="node current">
+            <article class="card check">
               <span class="badge">경쟁 가설</span>
-              <h3>복제 지연·라우팅 변화</h3>
-              <p>캐시 우회 읽기에서도 같은 현상이 보이면 배제하기 어렵습니다.</p>
+              <h3>창고 처리·상태 갱신 누락</h3>
+              <p>재고는 예약됐지만 창고 작업 기록이 없으면 강해집니다.</p>
             </article>
           </div>
-          <article class="node">
-            <span class="badge">다음 검사</span>
-            <h3>두 읽기 경로 비교</h3>
-            <p>
-              고객 SLA 때문에 TTL을 즉시 낮추지 않고, 같은 시간대의 캐시 경로와 직접 읽기 경로를
-              비교합니다.
-            </p>
+          <article class="card">
+            <span class="badge">다음 확인</span>
+            <h3>주문·재고·창고 기록 비교</h3>
+            <p>같은 주문 번호와 시간순으로 기록을 맞춰 보고, 확인 전 자동 재발송은 보류합니다.</p>
           </article>
         </div>
-        <div class="status-row" style="margin-top: 12px">
-          <div class="status current"><strong>PROCEED</strong>근거와 정책을 충족한 가역 행동</div>
-          <div class="status proposed">
-            <strong>ABSTAIN</strong>필수 근거가 없거나 가설 구분 불가
+        <div class="status-row">
+          <div class="status check"><strong>PROCEED</strong>확인된 지연 안내와 가역 행동</div>
+          <div class="status question">
+            <strong>ABSTAIN</strong>원인 단정을 보류하고 추가 기록 확인
           </div>
-          <div class="status durable"><strong>ESCALATE</strong>고위험·예외·사람 승인 필요</div>
+          <div class="status durable"><strong>ESCALATE</strong>예외 보상과 사람 승인 필요</div>
         </div>
       </section>
     </main>
+
     <script>
+      window.__qaErrors = []
+      window.addEventListener("error", (event) =>
+        window.__qaErrors.push(String(event.message || event.error)),
+      )
+      window.addEventListener("unhandledrejection", (event) =>
+        window.__qaErrors.push(String(event.reason)),
+      )
       const buttons = [...document.querySelectorAll("[data-tab]")]
       const panels = [...document.querySelectorAll(".panel")]
       function reportHeight() {
         requestAnimationFrame(() => {
           const frame = window.frameElement
-          if (frame?.tagName === "IFRAME") {
+          if (frame?.tagName === "IFRAME")
             frame.style.height = document.documentElement.scrollHeight + 4 + "px"
-          }
         })
       }
       function activate(tabId) {
@@ -421,7 +322,6 @@
       activate(new URLSearchParams(window.location.search).get("tab") ?? "whole")
       window.addEventListener("load", reportHeight)
       window.addEventListener("resize", reportHeight)
-      setTimeout(reportHeight, 120)
     </script>
   </body>
 </html>
