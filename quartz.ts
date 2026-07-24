@@ -27,6 +27,7 @@ const header = Flex({
   gap: "0.5rem",
 })
 const contentLayout = baseLayout.byPageType.content ?? {}
+const folderLayout = baseLayout.byPageType.folder ?? {}
 
 export const layout = {
   ...baseLayout,
@@ -36,6 +37,10 @@ export const layout = {
   },
   byPageType: {
     ...baseLayout.byPageType,
+    folder: {
+      ...folderLayout,
+      header: [header],
+    },
     content: {
       ...contentLayout,
       header: [header],
