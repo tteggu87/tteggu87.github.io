@@ -9,7 +9,7 @@ tags:
   - 에이전트평가
 ---
 
-![온톨로지 에이전트 시리즈의 네 발전 단계가 지속 지식, 질문별 조사 상태, 검증과 조건부 판단을 갖춘 하나의 조사 하네스로 이어지는 전체 지도](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-infographic.png)
+![온톨로지 에이전트 시리즈의 네 발전 단계가 지속 지식, 질문별 조사 상태, 검증과 조건부 판단을 갖춘 하나의 조사 하네스로 이어지는 전체 지도](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-ai-infographic.png)
 
 > [!summary] 핵심 결론
 > 앞선 열두 편이 도달한 결론은 “온톨로지를 붙이면 AI가 똑똑해진다”가 아닙니다. **조직의 말과 규칙을 같은 뜻으로 이해하게 하고, 근거와 제약을 보존하며, 질문마다 가설·반례·미지를 갱신하고, 검증되지 않은 판단과 지식 변경을 막는 작업환경이 필요하다**는 것입니다. 13번 글은 이 부품들을 하나의 조사 하네스로 연결합니다.
@@ -36,7 +36,7 @@ tags:
 | 3부. Pack과 문맥 조립 | 8~10번  | 조직의 지식을 어떤 형태로 에이전트에게 줍니까?                   | 그래프만 넘기지 말고 근거, 결정, 실패, 반례와 출처를 버전 있는 Pack으로 묶어야 합니다. |
 | 4부. 계획과 반증      | 11~12번 | 검색한 지식으로 어떻게 행동하고, 틀린 첫 판단을 어떻게 고칩니까? | 계획의 조건을 명시하고, 새 외부 근거로 가설을 갱신하며, 필요하면 보류해야 합니다.      |
 
-![온톨로지 에이전트 시리즈 1~12번이 의미·검증, 도입 경계, Pack·전문성, 계획·반증의 네 단계로 발전한 뒤 13번의 조사 하네스로 통합되는 지도](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-figure-01.png)
+![온톨로지 에이전트 시리즈 1~12번이 의미·검증, 도입 경계, Pack·전문성, 계획·반증의 네 단계로 발전한 뒤 13번의 조사 하네스로 통합되는 지도](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-ai-figure-01.png)
 
 이 네 부는 서로 독립된 주제가 아닙니다. 앞부분에서 발견한 문제가 다음 부의 질문이 됐습니다.
 
@@ -309,7 +309,7 @@ Proposal → 검증 → 사람 검토 → 승인
 
 첫 조사에서 나온 미확정 가설을 장기 지식에 바로 넣으면, 다음 질문에서 추측이 사실처럼 재사용될 수 있습니다. 반대로 모든 내용을 임시 대화에만 남기면 과거 결정의 이유와 출처를 다시 찾을 수 없습니다. 그래서 기억할 지식, 질문별 추론, 검사 기록과 지식 변경을 서로 다른 수명으로 관리해야 합니다.
 
-![지속되는 Expertise Pack, 질문별 조사 계획과 조사 상태, 출력 단계의 검증 기록과 조건부 판단을 서로 다른 수명주기로 분리한 다섯 계약](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-figure-02.png)
+![지속되는 Expertise Pack, 질문별 조사 계획과 조사 상태, 출력 단계의 검증 기록과 조건부 판단을 서로 다른 수명주기로 분리한 다섯 계약](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-ai-figure-02.png)
 
 | 쉬운 질문                                     | 계약                | 역할                                                                    |
 | --------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
@@ -341,7 +341,7 @@ Proposal → 검증 → 사람 검토 → 승인
 
 ## 주문 배송 지연 하나로 전체 구조를 따라가 봅시다
 
-![결제 뒤 상품 준비 상태가 계속되는 주문을 재고 예약 실패와 창고 처리 누락이라는 경쟁 가설로 나누고, 빠진 기록과 다음 확인을 거쳐 안내·보류·사람 검토 중 하나로 끝내는 가상 조사](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-figure-03.png)
+![결제 뒤 상품 준비 상태가 계속되는 주문을 재고 예약 실패와 창고 처리 누락이라는 경쟁 가설로 나누고, 빠진 기록과 다음 확인을 거쳐 안내·보류·사람 검토 중 하나로 끝내는 가상 조사](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-ai-figure-03.png)
 
 질문은 다음과 같습니다.
 
