@@ -61,6 +61,18 @@ Example:
 ></iframe>
 ```
 
+### Stable auto-height measurement
+
+An auto-sizing visualization measures an explicit content root such as `.app` or `#explorer`
+with `getBoundingClientRect().height`. It must not derive the next iframe height from
+`document.documentElement.scrollHeight` or `document.body.scrollHeight`: those values can track
+the iframe viewport, so writing the result back to `frameElement.style.height` creates an
+unbounded resize feedback loop.
+
+Height writes are guarded by a small difference threshold, and a `ResizeObserver` watches the
+content root rather than the document viewport. This lets tabs and responsive reflow update the
+embed while keeping an unchanged state idempotent.
+
 ### Reading alignment stays independent
 
 The iframe geometry fix did not change article typography. Direct paragraphs retain start alignment and `pretty` wrapping at mobile, tablet, and desktop sizes. A later, separately reviewed phone typography change restored the denser Quartz 4 baseline (`1rem` copy with `1.65` line height below `600px`) without using full justification. The narrow layout keeps natural Korean/Latin spacing while reducing the visual dominance of ragged line endings.
@@ -90,11 +102,13 @@ A visualization release is incomplete until the host article and iframe are both
 7. Exactly one responsive layout range matches at `799px`, `800px`, `1199px`, and `1200px`.
 8. The exact deployed URL is retested after the matching merge commit succeeds.
 9. At `600px` and below, folder rows resolve to exactly two grid tracks and the tag list remains hidden.
+10. Repeated height samples in an unchanged visualization state remain stable within 1px.
 
 ## Do not repeat
 
 - Do not duplicate full iframe geometry in Markdown inline styles.
 - Do not use `width: 100%` plus borders without `border-box`.
+- Do not size an iframe from the child document viewport's `scrollHeight`.
 - Do not validate only the iframe's internal scroll state.
 - Do not infer a host-layout regression from timing alone; compare file hashes and measured geometry with the last known-good commit.
 - Do not claim an old alignment was restored when the historical computed style was already `start`; record the distinction between the actual regression and the newly standardized reading preference.

@@ -299,13 +299,22 @@
       )
       const buttons = [...document.querySelectorAll("[data-tab]")]
       const panels = [...document.querySelectorAll(".panel")]
+      const root = document.querySelector(".app")
+      let lastFrameHeight = 0
+      let resizeRequest = 0
+
       function reportHeight() {
-        requestAnimationFrame(() => {
+        cancelAnimationFrame(resizeRequest)
+        resizeRequest = requestAnimationFrame(() => {
+          const height = Math.ceil(root.getBoundingClientRect().height + 2)
           const frame = window.frameElement
-          if (frame?.tagName === "IFRAME")
-            frame.style.height = document.documentElement.scrollHeight + 4 + "px"
+          if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+            lastFrameHeight = height
+            frame.style.height = `${height}px`
+          }
         })
       }
+
       function activate(tabId) {
         const selected = buttons.find((button) => button.dataset.tab === tabId) ?? buttons[0]
         buttons.forEach((button) =>
@@ -322,6 +331,7 @@
       activate(new URLSearchParams(window.location.search).get("tab") ?? "whole")
       window.addEventListener("load", reportHeight)
       window.addEventListener("resize", reportHeight)
+      new ResizeObserver(reportHeight).observe(root)
     </script>
   </body>
 </html>
