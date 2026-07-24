@@ -91,6 +91,12 @@ body:not([data-slug="index"]) article h3 {
     overscroll-behavior: contain;
   }
 
+  // WebKit clips the fixed, viewport-sized search overlay to a scrollable
+  // sticky ancestor. Temporarily remove the sidebar clip while search is open.
+  .sidebar.left:has(.search-container.active) {
+    overflow: visible;
+  }
+
   .sidebar.left > .explorer {
     flex-shrink: 0;
   }

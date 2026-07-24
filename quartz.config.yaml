@@ -5,7 +5,7 @@ configuration:
   pageTitle: tteggu의 지식창고
   pageTitleSuffix: ""
   enableSPA: true
-  enablePopovers: true
+  enablePopovers: false
   analytics:
     provider: google
     tagId: G-6PLC5TQ5E2
