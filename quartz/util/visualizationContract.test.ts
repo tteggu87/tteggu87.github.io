@@ -81,6 +81,11 @@ test("auto-sizing visualization documents keep their own viewport scroll-free", 
     if (!text.includes('frame?.tagName === "IFRAME"')) {
       failures.push(`${relative}: missing guarded frameElement resize`)
     }
+    if (/document\.(?:documentElement|body)\.scrollHeight/.test(text)) {
+      failures.push(
+        `${relative}: iframe height must come from a stable content root, not the viewport`,
+      )
+    }
   }
 
   assert.deepEqual(failures, [])
