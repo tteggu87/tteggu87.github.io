@@ -153,8 +153,16 @@ body:not([data-slug="index"]) article h3 {
   }
 }
 
-// Quartz hides folder-listing tags on narrow phones. Collapse the matching
-// third grid track at the same breakpoint so titles use the released space.
+// Quartz FolderPage does not expose a tag-visibility option. Hide the tag list
+// and collapse its grid track so dates and titles use the full row.
+.page-listing li.section-li > .section {
+  grid-template-columns: fit-content(8em) minmax(0, 1fr);
+}
+
+.page-listing li.section-li > .section > .tags {
+  display: none;
+}
+
 // Keep phone article copy close to the denser Quartz 4 reading baseline.
 // Safari 26 evaluates every line for `pretty`, which can make adjacent Korean
 // paragraphs appear to use different column widths. Use normal first-fit
@@ -162,10 +170,6 @@ body:not([data-slug="index"]) article h3 {
 @media all and (max-width: 600px) {
   .page > #quartz-body {
     padding-inline: 1rem;
-  }
-
-  .page-listing li.section-li > .section {
-    grid-template-columns: fit-content(8em) minmax(0, 1fr);
   }
 
   body:not([data-slug="index"]) article {
