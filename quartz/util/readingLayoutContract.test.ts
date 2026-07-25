@@ -5,14 +5,14 @@ import test from "node:test"
 
 const root = process.cwd()
 
-test("narrow folder listings release the hidden tag track", () => {
+test("folder listings hide tags and release the tag track", () => {
   const css = readFileSync(path.join(root, "quartz/styles/custom.scss"), "utf8")
 
-  assert.match(css, /@media all and \(max-width: 600px\)/)
   assert.match(
     css,
     /\.page-listing li\.section-li > \.section\s*\{\s*grid-template-columns:\s*fit-content\(8em\) minmax\(0, 1fr\)/,
   )
+  assert.match(css, /\.page-listing li\.section-li > \.section > \.tags\s*\{\s*display:\s*none/)
 })
 
 test("phone article typography keeps natural spacing at the denser baseline", () => {
