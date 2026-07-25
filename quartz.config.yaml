@@ -152,7 +152,7 @@ plugins:
     enabled: true
     layout:
       position: right
-      priority: 10
+      priority: 100
   - source: github:quartz-community/search
     enabled: true
     layout:
