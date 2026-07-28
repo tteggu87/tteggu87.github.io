@@ -1,0 +1,49 @@
+name: Verify Pages deployment
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect deployment workflow for merged commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_SHA: 287fe4e81f00d3dee5e752b07d06d8c2abb9df26
+        run: |
+          response=$(curl --fail --silent --show-error \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${TARGET_SHA}&per_page=20")
+          echo "Deployment workflow runs for ${TARGET_SHA}:"
+          echo "$response" | jq -r '.workflow_runs[] | [.id, .name, .event, .status, (.conclusion // "pending"), .html_url] | @tsv'
+          count=$(echo "$response" | jq '.total_count')
+          if [ "$count" -eq 0 ]; then
+            echo "No workflow run found for the merged commit."
+            exit 1
+          fi
+          unfinished=$(echo "$response" | jq '[.workflow_runs[] | select(.status != "completed")] | length')
+          failed=$(echo "$response" | jq '[.workflow_runs[] | select(.status == "completed" and .conclusion != "success")] | length')
+          if [ "$unfinished" -gt 0 ]; then
+            echo "A workflow run is still unfinished."
+            exit 1
+          fi
+          if [ "$failed" -gt 0 ]; then
+            echo "A workflow run did not succeed."
+            exit 1
+          fi
+      - name: Verify the public article
+        run: |
+          page=$(curl --fail --location --retry 4 --retry-delay 5 --silent --show-error \
+            "https://tteggu87.github.io/notes/context-compilation-regression")
+          echo "Downloaded public page: ${#page} bytes"
+          echo "$page" | grep -F "저장된 지식과 전달된 문맥은 다릅니다"
+          echo "$page" | grep -F "Obligation Set(필수 정보 목록)"
+          echo "$page" | grep -F "학교 실험실에서 약품 사용을 허가한다고 생각해 보겠습니다"
