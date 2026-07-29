@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GraphRAG 이후의 책임 계층 탐색기</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --card: #f9fafb;
+        --text: #172033;
+        --muted: #667085;
+        --line: #d8dde8;
+        --accent: #4f46e5;
+        --accent-soft: #eef2ff;
+        --active-text: #ffffff;
+        --retrieval: #2563eb;
+        --semantic: #7c3aed;
+        --compiler: #0f766e;
+        --validation: #b45309;
+        --promotion: #be123c;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #11151d;
+          --panel: #181d27;
+          --card: #1f2633;
+          --text: #eef2f8;
+          --muted: #a7b0c0;
+          --line: #354052;
+          --accent: #818cf8;
+          --accent-soft: #272c55;
+          --active-text: #11151d;
+          --retrieval: #60a5fa;
+          --semantic: #a78bfa;
+          --compiler: #5eead4;
+          --validation: #fbbf24;
+          --promotion: #fb7185;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Apple SD Gothic Neo",
+          "Noto Sans KR",
+          sans-serif;
+        line-height: 1.55;
+      }
+
+      button,
+      select {
+        font: inherit;
+      }
+      button:focus-visible,
+      select:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+        outline-offset: 2px;
+      }
+
+      #explorer {
+        padding: 18px;
+      }
+      .shell {
+        max-width: 980px;
+        margin: 0 auto;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+        overflow: hidden;
+      }
+      .intro {
+        padding: 22px 22px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .eyebrow {
+        margin: 0 0 6px;
+        color: var(--accent);
+        font-size: 0.82rem;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(1.35rem, 4vw, 2rem);
+        line-height: 1.25;
+      }
+      .lead {
+        margin: 10px 0 0;
+        color: var(--muted);
+      }
+
+      .controls {
+        display: grid;
+        gap: 14px;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .tab {
+        min-height: 48px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--card);
+        color: var(--text);
+        padding: 9px 11px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .tab[aria-selected="true"] {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--active-text);
+      }
+      .question-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.9fr);
+        gap: 12px;
+        align-items: end;
+      }
+      label {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--muted);
+        font-weight: 650;
+      }
+      select {
+        width: 100%;
+        margin-top: 6px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: var(--card);
+        color: var(--text);
+        padding: 10px 12px;
+      }
+      .legend-note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .content {
+        padding: 22px;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .summary,
+      .verdict {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
+        background: var(--card);
+      }
+      .summary h2,
+      .verdict h2 {
+        margin: 0 0 8px;
+        font-size: 1.05rem;
+      }
+      .summary p,
+      .verdict p {
+        margin: 0;
+      }
+      .verdict {
+        border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+        background: color-mix(in srgb, var(--accent-soft) 58%, var(--panel));
+      }
+
+      .pipeline {
+        display: grid;
+        gap: 10px;
+      }
+      .layer {
+        position: relative;
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr) 115px;
+        gap: 14px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-left: 7px solid var(--layer-color);
+        border-radius: 14px;
+        padding: 14px 15px;
+        background: var(--card);
+        opacity: 0.43;
+        transition:
+          opacity 160ms ease,
+          transform 160ms ease,
+          background 160ms ease;
+      }
+      .layer.active {
+        opacity: 1;
+        transform: translateX(2px);
+        background: color-mix(in srgb, var(--layer-color) 8%, var(--card));
+      }
+      .layer.required::after {
+        content: "필수";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--layer-color);
+        background: color-mix(in srgb, var(--layer-color) 13%, transparent);
+      }
+      .layer-name {
+        font-weight: 800;
+        color: var(--layer-color);
+      }
+      .layer-main {
+        min-width: 0;
+      }
+      .layer-main strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+      .layer-main span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .layer-output {
+        text-align: right;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 650;
+        padding-right: 42px;
+      }
+      .retrieval {
+        --layer-color: var(--retrieval);
+      }
+      .semantic {
+        --layer-color: var(--semantic);
+      }
+      .compiler {
+        --layer-color: var(--compiler);
+      }
+      .validation {
+        --layer-color: var(--validation);
+      }
+      .promotion {
+        --layer-color: var(--promotion);
+      }
+
+      .gates {
+        margin-top: 20px;
+      }
+      .gates h2 {
+        font-size: 1.05rem;
+        margin: 0 0 10px;
+      }
+      .gate-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .gate {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 11px 9px;
+        background: var(--card);
+        min-height: 100px;
+      }
+      .gate strong {
+        display: block;
+        font-size: 0.86rem;
+        margin-bottom: 5px;
+      }
+      .gate span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+      .gate.on {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      .disclaimer {
+        margin: 18px 0 0;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      @media (max-width: 720px) {
+        #explorer {
+          padding: 10px;
+        }
+        .intro,
+        .controls,
+        .content {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+        .tabs {
+          grid-template-columns: 1fr;
+        }
+        .question-row,
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+        .layer {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          padding-right: 62px;
+        }
+        .layer-output {
+          text-align: left;
+          padding-right: 0;
+        }
+        .gate-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .gate-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="explorer">
+      <section class="shell" aria-labelledby="explorer-title">
+        <header class="intro">
+          <p class="eyebrow">책임 계층 비교</p>
+          <h1 id="explorer-title">GraphRAG 이후에는 무엇이 필요한가</h1>
+          <p class="lead">
+            구조와 질문 유형을 바꾸면 각 시스템이 주로 담당하는 계층과 별도 계약이 필요한 지점이
+            표시됩니다.
+          </p>
+        </header>
+
+        <section class="controls" aria-label="탐색 조건">
+          <div class="tabs" role="tablist" aria-label="비교할 구조">
+            <button
+              class="tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-system="graphrag"
+            >
+              Microsoft GraphRAG
+            </button>
+            <button
+              class="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-system="opencrab"
+            >
+              OpenCrab 현행 기반
+            </button>
+            <button
+              class="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-system="compiler"
+            >
+              Context Compiler 목표
+            </button>
+          </div>
+          <div class="question-row">
+            <label for="question-type"
+              >질문 유형
+              <select id="question-type">
+                <option value="direct">직접 사실·정의·날짜</option>
+                <option value="relation">다중 홉·영향 경로</option>
+                <option value="global">전체 corpus의 주제·패턴</option>
+                <option value="policy">정책·권한이 포함된 판단</option>
+                <option value="learning">결과를 다음 지식으로 남기는 작업</option>
+              </select>
+            </label>
+            <p class="legend-note">
+              밝은 계층은 선택한 구조의 주력 범위, <strong>필수</strong> 표시는 질문을 안전하게
+              끝내려면 필요한 책임입니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="content" aria-live="polite">
+          <div class="summary-grid">
+            <article class="summary">
+              <h2 id="system-title">Microsoft GraphRAG</h2>
+              <p id="system-desc"></p>
+            </article>
+            <article class="verdict">
+              <h2>현재 질문의 핵심 판단</h2>
+              <p id="question-verdict"></p>
+            </article>
+          </div>
+
+          <div class="pipeline" aria-label="책임 계층">
+            <article class="layer retrieval" data-layer="retrieval">
+              <div class="layer-name">1. Retrieval</div>
+              <div class="layer-main">
+                <strong>후보 근거와 graph context를 찾습니다</strong
+                ><span>Basic·Local·Global·DRIFT, vector·BM25·graph query</span>
+              </div>
+              <div class="layer-output">Context 후보</div>
+            </article>
+            <article class="layer semantic" data-layer="semantic">
+              <div class="layer-name">2. Semantic Knowledge</div>
+              <div class="layer-main">
+                <strong>의미·근거·버전을 보존합니다</strong
+                ><span
+                  >Canonical entity, relation, Evidence·Claim, Policy, provenance, revision</span
+                >
+              </div>
+              <div class="layer-output">Typed Pack</div>
+            </article>
+            <article class="layer compiler" data-layer="compiler">
+              <div class="layer-name">3. Context Compiler</div>
+              <div class="layer-main">
+                <strong>질문별 필수 의무를 문맥으로 조립합니다</strong
+                ><span>QueryPlan, Obligation, Authorization, Conflict, Missing, AnswerBundle</span>
+              </div>
+              <div class="layer-output">검증 가능 Bundle</div>
+            </article>
+            <article class="layer validation" data-layer="validation">
+              <div class="layer-name">4. Generation & Validation</div>
+              <div class="layer-main">
+                <strong>모델이 근거를 실제로 사용했는지 검사합니다</strong
+                ><span>Faithfulness, citation, policy, abstention, action validation</span>
+              </div>
+              <div class="layer-output">답변·판정</div>
+            </article>
+            <article class="layer promotion" data-layer="promotion">
+              <div class="layer-name">5. Promotion</div>
+              <div class="layer-main">
+                <strong>작업 경험을 장기 지식으로 올릴지 결정합니다</strong
+                ><span>Candidate, review, approval, promoted revision, rollback</span>
+              </div>
+              <div class="layer-output">새 Pack revision</div>
+            </article>
+          </div>
+
+          <section class="gates">
+            <h2>서로 대체할 수 없는 다섯 게이트</h2>
+            <div class="gate-grid">
+              <div class="gate" data-gate="required">
+                <strong>Retrieved ≠ Required</strong
+                ><span>검색됐어도 답에 필수인 근거는 아닐 수 있습니다.</span>
+              </div>
+              <div class="gate" data-gate="authorized">
+                <strong>Relevant ≠ Authorized</strong
+                ><span>관련성이 높아도 현재 사용 권한은 별도입니다.</span>
+              </div>
+              <div class="gate" data-gate="trusted">
+                <strong>Stored ≠ Trusted</strong
+                ><span>저장된 graph·Claim은 검증 전 후보입니다.</span>
+              </div>
+              <div class="gate" data-gate="used">
+                <strong>Present ≠ Used</strong
+                ><span>문맥에 있어도 모델이 실제 사용하지 않을 수 있습니다.</span>
+              </div>
+              <div class="gate" data-gate="promoted">
+                <strong>Successful ≠ Promoted</strong
+                ><span>이번 성공은 장기 지식 승격의 충분조건이 아닙니다.</span>
+              </div>
+            </div>
+          </section>
+
+          <p class="disclaimer">
+            이 탐색기는 본문의 책임 경계를 설명하기 위한 질적 도구입니다. 제품의 성능 점수나 기능
+            지원을 인증하지 않으며, OpenCrab·Context Compiler의 목표 계층은 구현 완료 사실이
+            아닙니다.
+          </p>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const systems = {
+        graphrag: {
+          title: "Microsoft GraphRAG",
+          desc: "그래프 인덱싱과 Basic·Local·Global·DRIFT 질의를 통해 entity 주변과 corpus 전체에서 질문별 context를 만드는 데 주력합니다.",
+          active: ["retrieval"],
+        },
+        opencrab: {
+          title: "OpenCrab 현행 기반",
+          desc: "9-Space 의미 렌즈, Evidence·Claim, hybrid retrieval과 Pack을 통해 검색 결과에 의미 역할·근거·버전 구조를 더하는 기반입니다.",
+          active: ["retrieval", "semantic"],
+        },
+        compiler: {
+          title: "Context Compiler 목표",
+          desc: "검색 결과와 typed Pack을 받아 질문별 Obligation·권한·Conflict·Missing을 검증 가능한 AnswerBundle로 조립하려는 목표 구조입니다.",
+          active: ["retrieval", "semantic", "compiler", "validation", "promotion"],
+        },
+      }
+
+      const questions = {
+        direct: {
+          verdict:
+            "직접 사실은 가장 얇은 retrieval 경로와 정확한 원문 인용이 우선입니다. 의미·승격 계층을 자동으로 모두 켤 필요는 없습니다.",
+          required: ["retrieval", "validation"],
+          gates: ["required", "used"],
+        },
+        relation: {
+          verdict:
+            "관계 경로가 답의 일부이므로 graph retrieval과 canonical relation 의미가 중요합니다. 최종 답 기여와 lineage도 확인해야 합니다.",
+          required: ["retrieval", "semantic", "compiler", "validation"],
+          gates: ["required", "trusted", "used"],
+        },
+        global: {
+          verdict:
+            "전체 corpus의 패턴에는 Global·DRIFT가 유력합니다. community report의 중복·범위와 생성 활용률은 별도 검증 대상입니다.",
+          required: ["retrieval", "compiler", "validation"],
+          gates: ["required", "used"],
+        },
+        policy: {
+          verdict:
+            "관련 근거를 찾는 것만으로 끝낼 수 없습니다. 현재 principal의 권한, 적용 Policy, revision과 보류 조건이 문맥과 답에 남아야 합니다.",
+          required: ["retrieval", "semantic", "compiler", "validation"],
+          gates: ["required", "authorized", "trusted", "used"],
+        },
+        learning: {
+          verdict:
+            "작업 성공을 다음 지식으로 남기려면 Evidence·반례·승인·rollback이 필요합니다. promotion은 retrieval이나 생성의 자동 후속 단계가 아닙니다.",
+          required: ["retrieval", "semantic", "compiler", "validation", "promotion"],
+          gates: ["required", "authorized", "trusted", "used", "promoted"],
+        },
+      }
+
+      const tabs = [...document.querySelectorAll(".tab")]
+      const select = document.getElementById("question-type")
+      const layers = [...document.querySelectorAll(".layer")]
+      const gates = [...document.querySelectorAll(".gate")]
+      const title = document.getElementById("system-title")
+      const desc = document.getElementById("system-desc")
+      const verdict = document.getElementById("question-verdict")
+      let activeSystem = "graphrag"
+      let lastFrameHeight = 0
+      let resizeRequest = 0
+
+      function reportHeight() {
+        cancelAnimationFrame(resizeRequest)
+        resizeRequest = requestAnimationFrame(() => {
+          const root = document.getElementById("explorer")
+          const height = Math.ceil(root.getBoundingClientRect().height + 2)
+          const frame = window.frameElement
+          if (frame?.tagName === "IFRAME" && Math.abs(height - lastFrameHeight) > 1) {
+            lastFrameHeight = height
+            frame.style.height = `${height}px`
+          }
+        })
+      }
+
+      function render() {
+        const system = systems[activeSystem]
+        const question = questions[select.value]
+        title.textContent = system.title
+        desc.textContent = system.desc
+        verdict.textContent = question.verdict
+
+        layers.forEach((layer) => {
+          const id = layer.dataset.layer
+          layer.classList.toggle("active", system.active.includes(id))
+          layer.classList.toggle("required", question.required.includes(id))
+        })
+
+        gates.forEach((gate) =>
+          gate.classList.toggle("on", question.gates.includes(gate.dataset.gate)),
+        )
+        reportHeight()
+        setTimeout(reportHeight, 60)
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          activeSystem = tab.dataset.system
+          tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)))
+          render()
+        })
+      })
+
+      select.addEventListener("change", render)
+      window.addEventListener("resize", reportHeight)
+      render()
+      setTimeout(reportHeight, 0)
+      setTimeout(reportHeight, 250)
+    </script>
+  </body>
+</html>
