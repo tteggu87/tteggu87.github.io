@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1792" height="1008" viewBox="0 0 1792 1008" role="img" aria-labelledby="title desc">
+  <title id="title">검색에서 생성까지 서로 다른 네 게이트</title>
+  <desc id="desc">검색 범위, 그래프 고유 근거, 문맥 보존, 생성 활용을 네 개의 독립 게이트로 구분하고 각 단계의 실패 채널을 표시하는 도해</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0F1D30"/><stop offset="1" stop-color="#173A4A"/></linearGradient></defs>
+  <rect width="1792" height="1008" fill="url(#bg)"/>
+  <text x="84" y="102" fill="#F7F4EC" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="70" font-weight="850">검색에서 생성까지, 서로 다른 네 게이트</text>
+  <text x="88" y="160" fill="#C7DCE2" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="37">앞 단계의 성공이 다음 단계의 성공을 보장하지 않는다</text>
+
+  <g font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <g transform="translate(70 235)">
+      <rect width="390" height="510" rx="42" fill="#D7E8F5"/>
+      <text x="54" y="74" fill="#0F766E" font-size="68" font-weight="900">1</text>
+      <text x="195" y="155" text-anchor="middle" fill="#0F1D30" font-size="64" font-weight="900">검색 범위</text>
+      <text x="195" y="225" text-anchor="middle" fill="#335368" font-size="45" font-weight="750">필요한 후보를</text>
+      <text x="195" y="278" text-anchor="middle" fill="#335368" font-size="45" font-weight="750">찾았는가</text>
+      <rect x="42" y="350" width="306" height="105" rx="28" fill="#3A2330"/>
+      <text x="195" y="416" text-anchor="middle" fill="#FFDCD6" font-size="49" font-weight="900">후보 누락</text>
+    </g>
+    <g transform="translate(490 235)">
+      <rect width="390" height="510" rx="42" fill="#CDE7DF"/>
+      <text x="54" y="74" fill="#0F766E" font-size="68" font-weight="900">2</text>
+      <text x="195" y="137" text-anchor="middle" fill="#0F1D30" font-size="58" font-weight="900">그래프 고유</text>
+      <text x="195" y="196" text-anchor="middle" fill="#0F1D30" font-size="58" font-weight="900">근거</text>
+      <text x="195" y="263" text-anchor="middle" fill="#335368" font-size="43" font-weight="750">다른 경로가</text>
+      <text x="195" y="314" text-anchor="middle" fill="#335368" font-size="43" font-weight="750">놓친 근거인가</text>
+      <rect x="42" y="350" width="306" height="105" rx="28" fill="#3A2330"/>
+      <text x="195" y="416" text-anchor="middle" fill="#FFDCD6" font-size="45" font-weight="900">고유성 없음</text>
+    </g>
+    <g transform="translate(910 235)">
+      <rect width="390" height="510" rx="42" fill="#F6DFAD"/>
+      <text x="54" y="74" fill="#0F766E" font-size="68" font-weight="900">3</text>
+      <text x="195" y="155" text-anchor="middle" fill="#0F1D30" font-size="64" font-weight="900">문맥 보존</text>
+      <text x="195" y="225" text-anchor="middle" fill="#5D4A1F" font-size="44" font-weight="750">압축·정렬 뒤에도</text>
+      <text x="195" y="278" text-anchor="middle" fill="#5D4A1F" font-size="44" font-weight="750">남았는가</text>
+      <rect x="42" y="350" width="306" height="105" rx="28" fill="#3A2330"/>
+      <text x="195" y="416" text-anchor="middle" fill="#FFDCD6" font-size="49" font-weight="900">문맥 손실</text>
+    </g>
+    <g transform="translate(1330 235)">
+      <rect width="390" height="510" rx="42" fill="#F7F4EC"/>
+      <text x="54" y="74" fill="#0F766E" font-size="68" font-weight="900">4</text>
+      <text x="195" y="155" text-anchor="middle" fill="#0F1D30" font-size="64" font-weight="900">생성 활용</text>
+      <text x="195" y="225" text-anchor="middle" fill="#335368" font-size="45" font-weight="750">근거가 답·인용에</text>
+      <text x="195" y="278" text-anchor="middle" fill="#335368" font-size="45" font-weight="750">쓰였는가</text>
+      <rect x="42" y="350" width="306" height="105" rx="28" fill="#3A2330"/>
+      <text x="195" y="416" text-anchor="middle" fill="#FFDCD6" font-size="45" font-weight="900">생성 미사용</text>
+    </g>
+  </g>
+
+  <g transform="translate(150 820)" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <rect width="1492" height="125" rx="34" fill="#102B3B" stroke="#4FA3C7" stroke-width="4"/>
+    <text x="746" y="78" text-anchor="middle" fill="#F7F4EC" font-size="48" font-weight="850">1 → 2 → 3 → 4를 모두 지나야 최종 답 기여로 센다</text>
+  </g>
+</svg>

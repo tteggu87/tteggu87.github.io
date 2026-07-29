@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1792" height="1008" viewBox="0 0 1792 1008" role="img" aria-labelledby="title desc">
+  <title id="title">GraphRAG 도입 게이트</title>
+  <desc id="desc">설명 문서, 관계 증강, Hybrid GraphRAG, 질문별 그래프, Agent와 Graph를 바로 아래 기준선과 비교해 승격·보류·롤백하는 단계적 도입 게이트</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0F1D30"/><stop offset="1" stop-color="#173A4A"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10z" fill="#F2B84B"/></marker>
+  </defs>
+  <rect width="1792" height="1008" fill="url(#bg)"/>
+  <circle cx="1590" cy="120" r="260" fill="#0F766E" opacity="0.12"/>
+  <text x="84" y="102" fill="#F7F4EC" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="72" font-weight="800">GraphRAG 도입 게이트</text>
+  <text x="88" y="160" fill="#C7DCE2" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38">같은 조건에서 바로 아래 기준선을 이길 때만 올라간다</text>
+
+  <g font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <g transform="translate(80 220)">
+      <rect width="500" height="170" rx="36" fill="#F7F4EC"/>
+      <text x="46" y="64" fill="#0F766E" font-size="62" font-weight="900">1</text>
+      <text x="250" y="110" text-anchor="middle" fill="#0F1D30" font-size="64" font-weight="850">설명 문서</text>
+    </g>
+    <path d="M594 305 H622" stroke="#F2B84B" stroke-width="12" marker-end="url(#arrow)"/>
+    <g transform="translate(646 220)">
+      <rect width="500" height="170" rx="36" fill="#D7E8F5"/>
+      <text x="46" y="64" fill="#0F766E" font-size="62" font-weight="900">2</text>
+      <text x="250" y="110" text-anchor="middle" fill="#0F1D30" font-size="64" font-weight="850">관계 증강</text>
+    </g>
+    <path d="M1160 305 H1188" stroke="#F2B84B" stroke-width="12" marker-end="url(#arrow)"/>
+    <g transform="translate(1212 220)">
+      <rect width="500" height="170" rx="36" fill="#CDE7DF"/>
+      <text x="46" y="64" fill="#0F766E" font-size="62" font-weight="900">3</text>
+      <text x="250" y="104" text-anchor="middle" fill="#0F1D30" font-size="56" font-weight="850">Hybrid GraphRAG</text>
+    </g>
+
+    <path d="M1462 404 V442 H1178" fill="none" stroke="#F2B84B" stroke-width="12" marker-end="url(#arrow)"/>
+    <g transform="translate(692 458)">
+      <rect width="500" height="170" rx="36" fill="#F6DFAD"/>
+      <text x="46" y="64" fill="#0F766E" font-size="62" font-weight="900">4</text>
+      <text x="250" y="110" text-anchor="middle" fill="#0F1D30" font-size="60" font-weight="850">질문별 그래프</text>
+    </g>
+    <path d="M1206 543 H1234" stroke="#F2B84B" stroke-width="12" marker-end="url(#arrow)"/>
+    <g transform="translate(1258 458)">
+      <rect width="454" height="170" rx="36" fill="#F7F4EC"/>
+      <text x="46" y="64" fill="#0F766E" font-size="62" font-weight="900">5</text>
+      <text x="227" y="92" text-anchor="middle" fill="#0F1D30" font-size="58" font-weight="850">Agent</text>
+      <text x="227" y="145" text-anchor="middle" fill="#0F1D30" font-size="50" font-weight="850">+ Graph</text>
+    </g>
+  </g>
+
+  <g transform="translate(80 680)" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <rect width="1632" height="150" rx="34" fill="#102B3B" stroke="#4FA3C7" stroke-width="3"/>
+    <text x="816" y="50" text-anchor="middle" fill="#F7F4EC" font-size="48" font-weight="850">각 단계에서 세 가지를 확인</text>
+    <text x="270" y="112" text-anchor="middle" fill="#CDE7DF" font-size="43" font-weight="800">그래프 경로의 고유 근거</text>
+    <text x="816" y="112" text-anchor="middle" fill="#CDE7DF" font-size="43" font-weight="800">최종 답·인용의 기여</text>
+    <text x="1370" y="112" text-anchor="middle" fill="#CDE7DF" font-size="43" font-weight="800">비용·권한·revision</text>
+  </g>
+
+  <g transform="translate(160 868)" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <rect width="420" height="94" rx="30" fill="#0F766E"/><text x="210" y="61" text-anchor="middle" fill="#F7F4EC" font-size="48" font-weight="900">PROMOTE · 승격</text>
+    <rect x="526" width="420" height="94" rx="30" fill="#F2B84B"/><text x="736" y="61" text-anchor="middle" fill="#0F1D30" font-size="48" font-weight="900">HOLD · 보류</text>
+    <rect x="1052" width="420" height="94" rx="30" fill="#D96C5F"/><text x="1262" y="61" text-anchor="middle" fill="#F7F4EC" font-size="45" font-weight="900">ROLLBACK · 롤백</text>
+  </g>
+</svg>
