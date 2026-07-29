@@ -418,9 +418,9 @@
             </article>
           </div>
 
-          <div class="pipeline" aria-label="책임 계층">
+          <div class="pipeline" aria-label="책임 계층. 표시 순서는 선형 실행 순서가 아닙니다.">
             <article class="layer retrieval" data-layer="retrieval">
-              <div class="layer-name">1. Retrieval</div>
+              <div class="layer-name">Retrieval Provider</div>
               <div class="layer-main">
                 <strong>후보 근거와 graph context를 찾습니다</strong
                 ><span>Basic·Local·Global·DRIFT, vector·BM25·graph query</span>
@@ -428,7 +428,7 @@
               <div class="layer-output">Context 후보</div>
             </article>
             <article class="layer semantic" data-layer="semantic">
-              <div class="layer-name">2. Semantic Knowledge</div>
+              <div class="layer-name">Semantic Knowledge</div>
               <div class="layer-main">
                 <strong>의미·근거·버전을 보존합니다</strong
                 ><span
@@ -438,15 +438,18 @@
               <div class="layer-output">Typed Pack</div>
             </article>
             <article class="layer compiler" data-layer="compiler">
-              <div class="layer-name">3. Context Compiler</div>
+              <div class="layer-name">Context Compiler</div>
               <div class="layer-main">
-                <strong>질문별 필수 의무를 문맥으로 조립합니다</strong
-                ><span>QueryPlan, Obligation, Authorization, Conflict, Missing, AnswerBundle</span>
+                <strong>답변 의무를 먼저 정하고 검색 결과를 Bundle로 조립합니다</strong
+                ><span
+                  >QueryPlan·Obligation → route 조건, 검색 결과 →
+                  Conflict·Missing·AnswerBundle</span
+                >
               </div>
               <div class="layer-output">검증 가능 Bundle</div>
             </article>
             <article class="layer validation" data-layer="validation">
-              <div class="layer-name">4. Generation & Validation</div>
+              <div class="layer-name">Generation & Validation</div>
               <div class="layer-main">
                 <strong>모델이 근거를 실제로 사용했는지 검사합니다</strong
                 ><span>Faithfulness, citation, policy, abstention, action validation</span>
@@ -454,7 +457,7 @@
               <div class="layer-output">답변·판정</div>
             </article>
             <article class="layer promotion" data-layer="promotion">
-              <div class="layer-name">5. Promotion</div>
+              <div class="layer-name">Promotion</div>
               <div class="layer-main">
                 <strong>작업 경험을 장기 지식으로 올릴지 결정합니다</strong
                 ><span>Candidate, review, approval, promoted revision, rollback</span>
@@ -490,7 +493,9 @@
           </section>
 
           <p class="disclaimer">
-            이 탐색기는 본문의 책임 경계를 설명하기 위한 질적 도구입니다. 제품의 성능 점수나 기능
+            이 탐색기는 본문의 책임 경계를 설명하기 위한 질적 도구입니다. 표시 순서는 선형 실행
+            순서가 아닙니다. 질문별 실행에서는 Context Compiler의 QueryPlan이 retrieval route보다
+            먼저 조건을 정하고, 검색 결과는 다시 AnswerBundle로 돌아옵니다. 제품의 성능 점수나 기능
             지원을 인증하지 않으며, OpenCrab·Context Compiler의 목표 계층은 구현 완료 사실이
             아닙니다.
           </p>
@@ -512,7 +517,7 @@
         },
         compiler: {
           title: "Context Compiler 목표",
-          desc: "검색 결과와 typed Pack을 받아 질문별 Obligation·권한·Conflict·Missing을 검증 가능한 AnswerBundle로 조립하려는 목표 구조입니다.",
+          desc: "질문을 공통 Obligation과 권한·시점·버전 조건으로 먼저 정리하고, 검색 결과와 typed Pack을 받아 Conflict·Missing이 드러나는 AnswerBundle로 조립하려는 목표 구조입니다.",
           active: ["retrieval", "semantic", "compiler", "validation", "promotion"],
         },
       }

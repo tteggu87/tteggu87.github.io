@@ -232,7 +232,7 @@ GraphRAG 이후에 필요한 마지막 계층은 더 큰 graph가 아니라 **�
 
 [책임 계층 탐색기를 새 화면에서 크게 열기](/attachments/graphrag-beyond-context-compiler/graphrag-layer-explorer.htm)
 
-전체 아키텍처는 다음처럼 볼 수 있습니다.
+전체 아키텍처는 다음처럼 볼 수 있습니다. 인덱스는 질문과 무관하게 미리 만들 수 있지만, 질문별 실행 순서는 다릅니다. QueryPlan과 권한·시점·버전 조건이 먼저 검색 경로에 들어가고, 검색 결과는 다시 AnswerBundle로 돌아와 빠진 의무와 충돌을 검사받습니다.
 
 ```mermaid
 flowchart TB
@@ -243,7 +243,8 @@ flowchart TB
       C[Community·Summary·Report]
       Q[Basic·Local·Global·DRIFT]
       R[Graph·Text Context]
-      I --> C --> Q --> R
+      I --> C
+      C --> Q --> R
     end
 
     subgraph K[의미 지식 계층]
@@ -257,7 +258,7 @@ flowchart TB
       PL[QueryPlan·Obligation Set]
       AU[Authorization·Time·Revision]
       AB[AnswerBundle·Conflict·Missing]
-      PL --> AU --> AB
+      PL --> AU
     end
 
     subgraph V[생성·검증·학습]
@@ -269,8 +270,11 @@ flowchart TB
     end
 
     S --> I
-    R --> PL
     P --> PL
+    AU --> Q
+    R --> AB
+    PL -. 의무 기준 .-> AB
+    P --> AB
     AB --> L
     N -. 다음 질문의 지식 .-> P
 ```
