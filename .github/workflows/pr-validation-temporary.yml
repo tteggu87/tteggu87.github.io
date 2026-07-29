@@ -1,0 +1,83 @@
+name: Temporary article validation
+
+on:
+  push:
+    branches:
+      - agent/polish-authorization-aware-rag-20260729-1101
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache Quartz plugins
+        uses: actions/cache@v6
+        with:
+          path: .quartz/plugins
+          key: ${{ runner.os }}-plugins-${{ hashFiles('quartz.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-plugins-
+
+      - name: Install Quartz plugins
+        run: npx quartz plugin install
+
+      - name: Validate article references and assets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('content/notes/authorization-aware-rag-graph-boundary.md')
+          text = path.read_text(encoding='utf-8')
+
+          refs = set(re.findall(r'\[src_(\d+)\]\(#src-\1\)', text))
+          anchors = set(re.findall(r'<a id="src-(\d+)"></a>', text))
+          missing_anchors = sorted(refs - anchors)
+          if missing_anchors:
+              raise SystemExit(f'missing source anchors: {missing_anchors}')
+
+          for image in re.findall(r'!\[[^\]]*\]\(([^)]+)\)', text):
+              if image.startswith(('http://', 'https://')):
+                  continue
+              target = (path.parent / image).resolve()
+              if not target.exists():
+                  raise SystemExit(f'missing image: {image}')
+
+          required_notes = [
+              Path('content/notes/context-compilation-regression.md'),
+              Path('content/notes/knowledge-centric-self-improvement.md'),
+          ]
+          for note in required_notes:
+              if not note.exists():
+                  raise SystemExit(f'missing linked note: {note}')
+
+          print(f'article references OK: {len(refs)} cited source IDs, {len(anchors)} anchors')
+          PY
+
+      - name: Check types and formatting
+        run: npm run check
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build Quartz
+        run: npx quartz build
+
+      - name: Verify built route
+        run: test -f public/notes/authorization-aware-rag-graph-boundary.html || test -f public/notes/authorization-aware-rag-graph-boundary/index.html
