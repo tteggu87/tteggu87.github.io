@@ -29,6 +29,8 @@ tags:
 
 이제 작업 번호를 권한과 어떻게 묶는지부터 살펴본 뒤, 서로 다른 네 가지 시간값, 권한 회수와 취소, 완료 결과 공개, 회귀 검사 순서로 이어가겠습니다. 이 글은 **작업과 권한 맥락의 결속, 제한된 권한 임대, 보호 행동 직전 재검사, 취소 뒤 늦은 쓰기 차단, 결과 공개 재검사**라는 최소 계약에 집중합니다.
 
+분산된 권한 발급자와 실행기, 요청을 변환하는 gateway, 실행 중 대상이 바뀔 수 있는 alias·파일·URL을 함께 쓰는 환경에서는 permit 결속, canonical request, resolved target 검증 같은 추가 hardening이 필요할 수 있습니다. 다만 이것들은 이 글의 보편적 선행조건이 아니라 환경별 확장 계약입니다.
+
 ## 작업 번호와 완료 상태는 권한 증명이 아닙니다
 
 MCP Tasks는 오래 걸리는 요청의 상태를 보존하는 **지속형 상태 관리 구조(durable state machine)**입니다. 작업 생성 응답에서 최종 결과를 바로 받지 않고, 이후 `tasks/get`, `tasks/result`, `tasks/cancel` 같은 명령으로 상태 확인, 결과 조회, 취소를 처리할 수 있습니다.[src_003](#src-003)
@@ -164,6 +166,11 @@ task_authorization_lease:
   purpose: research-report
   authorization_model_id: auth-model-v4
   authorization_data_revision: rev-882
+  minimum_data_revision: rev-882
+  protected_outputs:
+    - protected_read
+    - durable_result
+    - result_disclosure
   allowed_resource_classes:
     - project_document
     - derived_report
@@ -175,11 +182,22 @@ task_authorization_lease:
   lease_valid_until: 2026-07-29T09:05:00Z
   last_invalidation_event_id: evt-1042
   cancellation_epoch: 3
+  commit_policy: recheck_before_write_or_egress
+  result_disclosure_policy: recheck_current_caller_and_parents
   next_recheck:
     - protected_read
     - side_effect
     - result_disclosure
 ```
+
+재검사 실패는 원인과 복구 가능성에 따라 다르게 처리합니다.
+
+| 판정         | 적용 예시                                              | 처리                                              |
+| ------------ | ------------------------------------------------------ | ------------------------------------------------- |
+| `deny`       | 현재 주체·조직·자원·행동 권한이 없음                   | 보호 자료 읽기, 부작용, 결과 공개를 차단          |
+| `retry`      | 임대 만료, 정책 버전 전파 대기, 일시적 판정 불가       | 새 버전으로 재검사하고 시간 예산 초과 시 중단     |
+| `cancel`     | 작업 목적·수행 에이전트 결속이 깨졌거나 작업이 취소됨  | 실행기 중단을 요청하고 늦은 쓰기를 차단           |
+| `quarantine` | 계산은 끝났지만 부모 자료의 현재 공개 권한을 증명 못함 | 일반 요청자에게 공개하지 않고 제한 저장 또는 폐기 |
 
 원문 경로, 사용자 정보와 권한 그래프 전체를 권한 판단 기록(receipt)에 복제하면 감사 자료가 새로운 민감정보 저장소가 됩니다. 실제 이름을 드러내지 않는 식별자(opaque ID), 해시, 접근통제와 보존기간을 사용하고, 재현에 필요하지 않은 세부 정보는 기록하지 않습니다.
 
