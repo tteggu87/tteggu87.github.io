@@ -61,7 +61,7 @@ graph DB·traversal·serialization 전체가 항상 필요함
 
 안정적인 관계를 문서에 펼칠 수 있다면, 이 기준선을 먼저 비교해야 합니다. 그래야 관계 데이터를 제공해서 생긴 이득과 graph runtime이 동적으로 경로를 계산해서 생긴 이득을 나눌 수 있습니다.
 
-![관계 정보의 가치와 그래프 런타임의 가치를 분리하기 위한 설명 문서, 관계 증강 문서와 그래프 경로 비교](../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-01.png)
+![RAG·GraphRAG·온톨로지의 책임과 질문 유형별 Document RAG·관계 증강·Hybrid GraphRAG·Agent 라우팅](../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-01.png)
 
 관계 증강 문서도 공짜는 아닙니다. 관계를 만들고 검증하고 문서 revision과 함께 갱신해야 합니다. 관계가 자주 바뀌거나, 질문마다 다른 방향과 깊이로 탐색해야 하거나, 문서에 관계를 펼치면서 중복과 폭증이 생긴다면 graph query의 동적 가치가 커집니다. 중요한 것은 이 비용까지 같은 비교표에 넣는 것입니다.
 
