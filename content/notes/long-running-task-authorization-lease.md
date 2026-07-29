@@ -151,7 +151,7 @@ MCP Tasks는 취소 요청 뒤 작업 상태를 `cancelled`로 전환하지만, 
 
 [[notes/authorization-aware-rag-graph-boundary|17번 글]]에서 파생 Claim·summary·answer도 별도 보호 자원으로 다뤄야 한다고 설명한 이유가 여기서 더 분명해집니다.[src_001](#src-001) 결과는 원문을 복사하지 않았더라도 여러 보호 자료의 결론과 존재를 드러낼 수 있습니다. 과거에 허용된 문맥으로 만들었다는 이유만으로 현재 공개 권한을 자동 상속시키지 않습니다.
 
-![작업 생성부터 보호 자료 읽기·부작용 커밋·취소·완료 결과 공개까지 권한을 다시 검사하는 게이트](../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-03.png)
+![Lease Receipt의 principal·scope·만료·revision·cancel epoch와 deny·retry·cancel·quarantine 결과 및 운영 지표](../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-03.png)
 
 ## 작업 권한 임대 기록에는 무엇을 남깁니까
 
