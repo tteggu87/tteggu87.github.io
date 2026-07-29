@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">연결 성공만으로는 부족합니다</title><desc id="desc">Transport, delegation, resource action proof와 catalog inspect execute 권한을 분리한 도해</desc>
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<rect x="0" y="0" width="1600" height="104" fill="#102A43"/>
+<text x="72" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700">연결 성공만으로는 부족합니다</text>
+<rect x="90" y="175" width="360" height="250" rx="24" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="118" y="230" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="29" font-weight="800" text-anchor="start">1. Transport proof</text>
+<text x="118" y="286" fill="#2BB3C0" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="start">MCP resource audience</text>
+<line x1="118" y1="315" x2="422" y2="315" stroke="#E8F2F3" stroke-width="4" stroke-linecap="round"/><text x="118" y="366" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">자격증명 대상과 pass-through 금지</text>
+<rect x="520" y="175" width="360" height="250" rx="24" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="548" y="230" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="29" font-weight="800" text-anchor="start">2. Delegation proof</text>
+<text x="548" y="286" fill="#2BB3C0" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="start">task-agent binding</text>
+<line x1="548" y1="315" x2="852" y2="315" stroke="#E8F2F3" stroke-width="4" stroke-linecap="round"/><text x="548" y="366" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">사용자·agent·task·만료 결속</text>
+<rect x="950" y="175" width="360" height="250" rx="24" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="978" y="230" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="29" font-weight="800" text-anchor="start">3. Resource/action proof</text>
+<text x="978" y="286" fill="#2BB3C0" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="start">문서·경로·행동별 권한</text>
+<line x1="978" y1="315" x2="1282" y2="315" stroke="#E8F2F3" stroke-width="4" stroke-linecap="round"/><text x="978" y="366" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">read·write·share·delete 분리</text>
+<text x="485" y="310" fill="#F2B84B" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="52" font-weight="800" text-anchor="middle">∩</text>
+<text x="915" y="310" fill="#F2B84B" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="52" font-weight="800" text-anchor="middle">∩</text>
+<text x="800" y="480" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="29" font-weight="800" text-anchor="middle">도구는 단계마다 다시 허가합니다</text>
+<rect x="110" y="530" width="300" height="128" rx="18" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="260" y="576" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800" text-anchor="middle">Catalog</text>
+<text x="260" y="620" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="500" text-anchor="middle">이름·요약 노출</text>
+<line x1="410" y1="594" x2="480" y2="594" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round"/><path d="M 468.1 601.3 L 480 594 L 468.1 586.7" fill="none" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="480" y="530" width="300" height="128" rx="18" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="630" y="576" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800" text-anchor="middle">Inspect</text>
+<text x="630" y="620" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="500" text-anchor="middle">schema·상세 문서</text>
+<line x1="780" y1="594" x2="850" y2="594" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round"/><path d="M 838.1 601.3 L 850 594 L 838.1 586.7" fill="none" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="850" y="530" width="300" height="128" rx="18" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="1000" y="576" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800" text-anchor="middle">Execute</text>
+<text x="1000" y="620" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="500" text-anchor="middle">현재 task 호출</text>
+<line x1="1150" y1="594" x2="1220" y2="594" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round"/><path d="M 1208.1 601.3 L 1220 594 L 1208.1 586.7" fill="none" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="1220" y="530" width="300" height="128" rx="18" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="1370" y="576" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800" text-anchor="middle">Broker</text>
+<text x="1370" y="620" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="500" text-anchor="middle">내부 resource·data flow</text>
+<rect x="290" y="720" width="1020" height="90" rx="18" fill="#102A43" stroke="#102A43" stroke-width="0"/>
+<text x="800" y="759" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle">Baseline read → 필요한 순간 정확한 scope로 step-up</text>
+<text x="800" y="792" fill="#CFE7EA" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="middle">한 단계의 성공이 다음 단계 권한을 상속하지 않습니다</text>
+</svg>

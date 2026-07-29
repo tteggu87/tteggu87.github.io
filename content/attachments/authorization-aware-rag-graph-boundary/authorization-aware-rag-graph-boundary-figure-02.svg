@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">파생 지식도 별도 보호 자원입니다</title><desc id="desc">부모 근거에서 파생된 Claim 요약 답변의 권한 closure와 호출 표면별 재검사를 설명하는 도해</desc>
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<rect x="0" y="0" width="1600" height="104" fill="#102A43"/>
+<text x="72" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700">파생 지식도 별도 보호 자원입니다</text>
+<rect x="80" y="175" width="280" height="96" rx="18" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="220" y="233" fill="#2BB3C0" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="middle">허용 부모 A</text>
+<rect x="80" y="310" width="280" height="96" rx="18" fill="#FFFFFF" stroke="#D95555" stroke-width="3"/>
+<text x="220" y="368" fill="#D95555" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="middle">금지·회수 부모 B</text>
+<rect x="500" y="170" width="520" height="270" rx="24" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="3"/>
+<text x="540" y="220" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="650" text-anchor="start">• provenance 완전성</text>
+<text x="540" y="265" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="650" text-anchor="start">• 현재 권한 교집합</text>
+<text x="540" y="310" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="650" text-anchor="start">• unknown은 allow 아님</text>
+<text x="540" y="355" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="650" text-anchor="start">• 검토된 declassification</text>
+<text x="540" y="400" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="650" text-anchor="start">• revocation closure</text>
+<line x1="360" y1="223" x2="500" y2="245" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round"/><path d="M 487.1 250.4 L 500 245 L 489.3 235.9" fill="none" stroke="#2BB3C0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><line x1="360" y1="358" x2="500" y2="345" stroke="#D95555" stroke-width="4" stroke-linecap="round"/><path d="M 488.8 353.4 L 500 345 L 487.4 338.8" fill="none" stroke="#D95555" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="1110" y="185" width="175" height="92" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="1197" y="241" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Derived edge</text>
+<line x1="1020" y1="305" x2="1110" y2="231" stroke="#F2B84B" stroke-width="3" stroke-linecap="round"/><path d="M 1105.4 244.2 L 1110 231 L 1096.1 232.9" fill="none" stroke="#F2B84B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1315" y="185" width="175" height="92" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="1402" y="241" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Summary</text>
+<line x1="1020" y1="305" x2="1315" y2="231" stroke="#F2B84B" stroke-width="3" stroke-linecap="round"/><path d="M 1305.2 241.0 L 1315 231 L 1301.6 226.8" fill="none" stroke="#F2B84B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1110" y="330" width="175" height="92" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="1197" y="386" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Claim</text>
+<line x1="1020" y1="305" x2="1110" y2="376" stroke="#F2B84B" stroke-width="3" stroke-linecap="round"/><path d="M 1096.1 374.4 L 1110 376 L 1105.2 362.9" fill="none" stroke="#F2B84B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1315" y="330" width="175" height="92" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="1402" y="386" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Answer</text>
+<line x1="1020" y1="305" x2="1315" y2="376" stroke="#F2B84B" stroke-width="3" stroke-linecap="round"/><path d="M 1301.7 380.3 L 1315 376 L 1305.1 366.1" fill="none" stroke="#F2B84B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="80" y="520" width="1440" height="210" rx="20" fill="#FFFFFF" stroke="#102A43" stroke-width="2"/>
+<text x="120" y="568" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800" text-anchor="start">호출 표면별로 현재 principal과 policy revision을 다시 확인합니다</text>
+<rect x="120" y="606" width="300" height="84" rx="14" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="270" y="640" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">Search POST</text>
+<text x="270" y="672" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" font-weight="500" text-anchor="middle">identity 누락 기본값</text>
+<rect x="470" y="606" width="300" height="84" rx="14" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="620" y="640" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">KB retrieve</text>
+<text x="620" y="672" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" font-weight="500" text-anchor="middle">permission ingestion</text>
+<rect x="820" y="606" width="300" height="84" rx="14" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="970" y="640" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">MCP</text>
+<text x="970" y="672" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" font-weight="500" text-anchor="middle">end-user 전달</text>
+<rect x="1170" y="606" width="300" height="84" rx="14" fill="#E8F2F3" stroke="#F2B84B" stroke-width="2"/>
+<text x="1320" y="640" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">Source open</text>
+<text x="1320" y="672" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" font-weight="500" text-anchor="middle">별도 action·짧은 URL</text>
+<rect x="245" y="770" width="1110" height="68" rx="16" fill="#102A43" stroke="#102A43" stroke-width="0"/>
+<text x="800" y="813" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="middle">허용된 문서의 조합 ≠ 자동으로 허용된 답변·citation·원문</text>
+</svg>
