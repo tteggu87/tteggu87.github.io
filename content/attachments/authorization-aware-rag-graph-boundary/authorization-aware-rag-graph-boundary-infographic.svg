@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">관련도는 권한이 아니다</title><desc id="desc">신원, 위임, 분류, 검색, 그래프, 파생 지식, 생성, 출처와 도구, 회수와 감사를 잇는 권한 수명주기</desc>
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<rect x="0" y="0" width="1600" height="104" fill="#102A43"/>
+<text x="72" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700">관련도는 권한이 아니다</text>
+<rect x="72" y="210" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="90" y="245" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">1</text>
+<text x="135" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">신원</text>
+<line x1="198" y1="269" x2="219" y2="449" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 210.3 438.0 L 219 449 L 224.9 436.3" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="219" y="390" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="237" y="425" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">2</text>
+<text x="282" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">위임</text>
+<line x1="345" y1="449" x2="366" y2="269" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 371.9 281.7 L 366 269 L 357.3 280.0" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="366" y="210" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="384" y="245" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">3</text>
+<text x="429" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">분류</text>
+<line x1="492" y1="269" x2="513" y2="449" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 504.3 438.0 L 513 449 L 518.9 436.3" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="513" y="390" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="531" y="425" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">4</text>
+<text x="576" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">문서</text>
+<line x1="639" y1="449" x2="660" y2="269" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 665.9 281.7 L 660 269 L 651.3 280.0" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="660" y="210" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="678" y="245" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">5</text>
+<text x="723" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">관련도</text>
+<line x1="786" y1="269" x2="807" y2="449" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 798.3 438.0 L 807 449 L 812.9 436.3" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="807" y="390" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="825" y="425" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">6</text>
+<text x="870" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">그래프</text>
+<line x1="933" y1="449" x2="954" y2="269" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 959.9 281.7 L 954 269 L 945.3 280.0" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="954" y="210" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="972" y="245" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">7</text>
+<text x="1017" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">파생 지식</text>
+<line x1="1080" y1="269" x2="1101" y2="449" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 1092.3 438.0 L 1101 449 L 1106.9 436.3" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1101" y="390" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="1119" y="425" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">8</text>
+<text x="1164" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">문맥·생성</text>
+<line x1="1227" y1="449" x2="1248" y2="269" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 1253.9 281.7 L 1248 269 L 1239.3 280.0" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1248" y="210" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#F2B84B" stroke-width="3"/>
+<text x="1266" y="245" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">9</text>
+<text x="1311" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">출처·도구</text>
+<line x1="1374" y1="269" x2="1395" y2="449" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 1386.3 438.0 L 1395 449 L 1400.9 436.3" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1395" y="390" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
+<text x="1413" y="425" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">10</text>
+<text x="1458" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">회수·감사</text>
+<rect x="92" y="600" width="610" height="126" rx="20" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<rect x="898" y="600" width="610" height="126" rx="20" fill="#FDECEC" stroke="#D95555" stroke-width="2"/>
+<text x="122" y="642" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="700" text-anchor="start">Tenant A — 허용된 근거 경로</text>
+<text x="122" y="686" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">현재 principal · policy revision · task에 결속</text>
+<text x="928" y="642" fill="#D95555" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="700" text-anchor="start">Tenant B — 금지된 이웃·상태·원문</text>
+<text x="928" y="686" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">graph hop · cache · source-open에서 재검사</text>
+<line x1="700" y1="663" x2="898" y2="663" stroke="#D95555" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 10"/><path d="M 886.1 670.3 L 898 663 L 886.1 655.7" fill="none" stroke="#D95555" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="752" y="625" width="94" height="76" rx="14" fill="#FFFFFF" stroke="#D95555" stroke-width="3"/>
+<text x="799" y="671" fill="#D95555" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="800" text-anchor="middle">차단</text>
+<rect x="350" y="776" width="900" height="70" rx="18" fill="#102A43" stroke="#102A43" stroke-width="0"/>
+<text x="800" y="821" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle">설계 계약 — 실제 방어 성능 벤치마크가 아닙니다</text>
+</svg>

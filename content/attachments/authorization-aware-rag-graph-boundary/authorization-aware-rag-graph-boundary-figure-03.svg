@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">A~J 계약 스모크: 빈칸을 찾는 검사</title><desc id="desc">방어 경계를 단계적으로 추가한 계약 coverage와 caller-safe response 검사를 보여 주는 도해</desc>
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<rect x="0" y="0" width="1600" height="104" fill="#102A43"/>
+<text x="72" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700">A~J 계약 스모크: 빈칸을 찾는 검사</text>
+<rect x="70" y="516" width="122" height="124" rx="10" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="131" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">A namespace</text>
+<rect x="217" y="492" width="122" height="148" rx="10" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="278" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">B metadata</text>
+<rect x="364" y="468" width="122" height="172" rx="10" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="425" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">C post-filter</text>
+<rect x="511" y="444" width="122" height="196" rx="10" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="572" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">D pre-filter</text>
+<rect x="658" y="420" width="122" height="220" rx="10" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
+<text x="719" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">E graph-hop</text>
+<rect x="805" y="396" width="122" height="244" rx="10" fill="#DDF0E6" stroke="#4C9A72" stroke-width="2"/>
+<text x="866" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">F state</text>
+<rect x="952" y="372" width="122" height="268" rx="10" fill="#DDF0E6" stroke="#4C9A72" stroke-width="2"/>
+<text x="1013" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">G source·tool</text>
+<rect x="1099" y="348" width="122" height="292" rx="10" fill="#DDF0E6" stroke="#4C9A72" stroke-width="2"/>
+<text x="1160" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">H revoke</text>
+<rect x="1246" y="324" width="122" height="316" rx="10" fill="#DDF0E6" stroke="#4C9A72" stroke-width="2"/>
+<text x="1307" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">I freshness</text>
+<rect x="1393" y="300" width="122" height="340" rx="10" fill="#DDF0E6" stroke="#4C9A72" stroke-width="2"/>
+<text x="1454" y="650" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17" font-weight="700" text-anchor="middle">J task·MCP</text>
+<text x="800" y="690" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="23" font-weight="600" text-anchor="middle">계약 필드 coverage가 늘어나는 구조 — 실제 누출률 비교가 아닙니다</text>
+<rect x="100" y="735" width="650" height="110" rx="18" fill="#FFFFFF" stroke="#D95555" stroke-width="2"/>
+<rect x="850" y="735" width="650" height="110" rx="18" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="2"/>
+<text x="130" y="775" fill="#D95555" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="start">금지됐지만 존재하는 resource</text>
+<text x="130" y="815" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="500" text-anchor="start">본문·ID·count·facet·suggestion을 숨김</text>
+<text x="880" y="775" fill="#2BB3C0" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="start">존재하지 않는 resource</text>
+<text x="880" y="815" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="500" text-anchor="start">정책이 요구하면 같은 caller-safe 응답 class</text>
+<line x1="750" y1="790" x2="850" y2="790" stroke="#F2B84B" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 8"/><path d="M 838.1 797.3 L 850 790 L 838.1 782.7" fill="none" stroke="#F2B84B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
