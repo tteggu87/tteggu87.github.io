@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-<title id="title">관련도는 권한이 아니다</title><desc id="desc">신원, 위임, 분류, 검색, 그래프, 파생 지식, 생성, 출처와 도구, 회수와 감사를 잇는 권한 수명주기</desc>
+<title id="title">관련도는 권한이 아니다</title><desc id="desc">신원, 위임, 분류, 검색, 그래프, 파생 지식, 생성, 출처와 도구, 장기 작업의 권한 lease와 회수를 잇는 권한 수명주기</desc>
 <rect width="1600" height="900" fill="#F7F3EA"/>
 <rect x="0" y="0" width="1600" height="104" fill="#102A43"/>
 <text x="72" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700">관련도는 권한이 아니다</text>
@@ -32,11 +32,11 @@
 <text x="1311" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">출처·도구</text>
 <line x1="1374" y1="269" x2="1395" y2="449" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round"/><path d="M 1386.3 438.0 L 1395 449 L 1400.9 436.3" fill="none" stroke="#2BB3C0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="1395" y="390" width="126" height="118" rx="16" fill="#FFFFFF" stroke="#2BB3C0" stroke-width="3"/>
 <text x="1413" y="425" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" text-anchor="start">10</text>
-<text x="1458" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">회수·감사</text>
+<text x="1458" y="468" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="middle">lease·회수</text>
 <rect x="92" y="600" width="610" height="126" rx="20" fill="#E8F2F3" stroke="#2BB3C0" stroke-width="2"/>
 <rect x="898" y="600" width="610" height="126" rx="20" fill="#FDECEC" stroke="#D95555" stroke-width="2"/>
 <text x="122" y="642" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="700" text-anchor="start">Tenant A — 허용된 근거 경로</text>
-<text x="122" y="686" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">현재 principal · policy revision · task에 결속</text>
+<text x="122" y="686" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">현재 principal · policy revision · task lease에 결속</text>
 <text x="928" y="642" fill="#D95555" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="700" text-anchor="start">Tenant B — 금지된 이웃·상태·원문</text>
 <text x="928" y="686" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="500" text-anchor="start">graph hop · cache · source-open에서 재검사</text>
 <line x1="700" y1="663" x2="898" y2="663" stroke="#D95555" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 10"/><path d="M 886.1 670.3 L 898 663 L 886.1 655.7" fill="none" stroke="#D95555" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="752" y="625" width="94" height="76" rx="14" fill="#FFFFFF" stroke="#D95555" stroke-width="3"/>
