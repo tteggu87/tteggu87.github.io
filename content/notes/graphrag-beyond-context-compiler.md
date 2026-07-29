@@ -18,21 +18,13 @@ tags:
 > [!summary] 핵심 결론
 > Microsoft GraphRAG는 문서의 관계 구조를 이용해 더 좋은 검색 문맥을 만드는 중요한 기반입니다. 그러나 **관련 근거를 찾는 일, 답에 반드시 필요한 근거를 구성하는 일, 그 근거를 사용할 권한을 확인하는 일, 모델이 실제로 이용했는지 검증하는 일, 결과를 장기 지식으로 승격하는 일은 서로 다른 책임**입니다. 이 글에서 Context Compiler는 그 책임들을 질문별 작업공간으로 잇기 위한 프로젝트 개념입니다.
 
-**GraphRAG 이후에는 무엇이 필요한가?**
+한 팀이 GraphRAG를 도입했다고 가정해 보겠습니다. 장애 원인을 묻자 시스템은 관련 엔티티와 관계, 커뮤니티 보고서, 원문 조각을 묶어 이전보다 풍부한 문맥을 돌려줍니다. 검색은 성공한 것처럼 보입니다.
 
-**GraphRAG는 끝이 아니다.**
+하지만 답을 내리기 직전에는 다른 질문들이 남습니다. 빠진 반례는 없는지, 이 사용자가 근거를 볼 권한이 있는지, 오래된 정책이 섞이지 않았는지, 모델이 핵심 근거를 실제로 사용했는지, 이번 답을 다음 작업의 지식으로 남겨도 되는지 확인해야 합니다.
 
-**왜 우리는 Context Compiler를 만들었는가.**
+이 글이 묻는 것은 GraphRAG의 성능 우열이 아닙니다. **좋은 검색 문맥이 안전한 판단과 지속 가능한 지식으로 이어지려면 어떤 책임이 더 필요한가**를 묻습니다. 앞선 1번부터 21번까지의 글에서 우리는 근거와 반례, 정책과 권한, 버전과 아직 모르는 부분을 질문별 작업공간으로 조립하는 방법을 추적해 왔습니다. 그 과정에서 도달한 프로젝트 개념이 **Context Compiler**입니다.
 
-이 세 문장은 사실 하나의 질문을 서로 다른 방향에서 바라본 것입니다.
-
-첫 번째 문장은 기술의 범위를 묻습니다. GraphRAG는 기존 RAG가 놓치던 관계와 문서 집합 전체의 구조를 복원했지만, 지식 시스템이 해결해야 할 모든 문제를 끝낸 것은 아닙니다.
-
-두 번째 문장은 아키텍처를 묻습니다. 문서 사이의 관계를 찾아 더 풍부한 문맥을 만들었다면, 그다음에는 무엇을 확인해야 할까요.
-
-세 번째 문장은 이 블로그가 1번부터 21번까지 쌓아 온 답을 되짚습니다. 우리는 더 많은 자료를 검색하는 데서 멈추지 않고, 질문에 필요한 근거와 반례, 정책과 권한, 버전과 미지를 하나의 작업공간으로 조립하려 했습니다. 그래서 **Context Compiler**라는 이름에 도달했습니다.
-
-Microsoft GraphRAG와 OpenCrab을 나란히 놓는 일은 중요합니다. 다만 비교를 `어느 제품이 더 발전했는가`라는 기능표로 만들면 양쪽을 모두 오해하게 됩니다. 더 좋은 질문은 다음과 같습니다.
+따라서 Microsoft GraphRAG와 OpenCrab을 `어느 제품이 더 발전했는가`라는 기능표로 비교하면 양쪽을 모두 오해하게 됩니다. 이 글의 중심 질문은 다음과 같습니다.
 
 > **Microsoft GraphRAG는 지식 시스템의 책임 사슬에서 어디까지 해결하며, 앞선 글에서 다룬 OpenCrab류 온톨로지와 Context Compiler는 어디부터 다른 책임을 맡으려 하는가?**
 
@@ -88,19 +80,13 @@ GraphRAG는 OpenCrab류 시스템이 사용할 수 있는 강력한 retrieval pr
 
 지금까지의 연재는 각각 독립된 주제를 다루는 것처럼 보였습니다. GraphRAG를 기준점으로 다시 배열하면 하나의 아키텍처가 드러납니다.
 
-| 앞선 글                                        | 당시의 질문                 | 이번 글에서 다시 보는 역할                         |
-| ---------------------------------------------- | --------------------------- | -------------------------------------------------- | --------------------------- |
-| [[notes/opencrab-ontology-build-architecture   | 8번 OpenCrab 빌드]]         | 어떤 지식 제품을 만드는가                          | Build Plane                 |
-| [[notes/ontology-context-compiler-opencrab     | 9번 Context Compiler]]      | 질문에 어떤 구조로 지식을 공급하는가               | Compile Plane               |
-| [[notes/ontology-expertise-pack                | 10번 Expertise Pack]]       | 전문가의 세계·근거·결정·실패를 어떻게 외부화하는가 | Knowledge Plane             |
-| [[notes/ontology-senior-investigation-harness  | 13번 조사 하네스]]          | Pack·계획·반증·검증을 어떻게 잇는가                | Investigation Plane         |
-| [[notes/knowledge-centric-self-improvement     | 15번 지식 중심 자기개선]]   | 작업 경험 중 무엇을 공유 지식으로 남기는가         | Promotion Plane             |
-| [[notes/context-compilation-regression         | 16번 문맥 컴파일 회귀]]     | 정본 지식이 문맥 조립 중 훼손되지 않았는가         | Context Regression Plane    |
-| [[notes/authorization-aware-rag-graph-boundary | 17번 권한 인식 RAG]]        | 관련 근거를 현재 principal이 사용할 수 있는가      | Authorization Plane         |
-| [[notes/agent-memory-poisoning-promotion-gate  | 18번 메모리 승격]]          | 저장된 경험을 신뢰 가능한 지식으로 올려도 되는가   | Trust Plane                 |
-| [[notes/generation-faithfulness-regression     | 19번 생성 충실도]]          | 모델이 주어진 근거를 실제로 사용했는가             | Generation Plane            |
-| [[notes/long-running-task-authorization-lease  | 20번 장기 작업 권한]]       | 실행 중 권한이 바뀌면 어디서 다시 검사하는가       | Runtime Authorization Plane |
-| [[notes/graphrag-adoption-gate                 | 21번 GraphRAG 도입 게이트]] | 어느 질문에서 graph 경로가 비용을 정당화하는가     | Retrieval Selection Plane   |
+이 책임 사슬은 네 묶음으로 읽을 수 있습니다. [[notes/opencrab-ontology-build-architecture|8번 OpenCrab 빌드]]는 어떤 지식 제품을 만들 것인지 정했고, [[notes/ontology-context-compiler-opencrab|9번 Context Compiler]]는 질문에 맞춰 지식을 공급하는 구조를 다뤘습니다. [[notes/ontology-expertise-pack|10번 Expertise Pack]]은 전문가의 근거·결정·실패를 재사용 가능한 지식 단위로 외부화했습니다. 각각 Build, Compile, Knowledge 책임에 해당합니다.
+
+그 지식을 실제 조사에 쓰는 과정은 [[notes/ontology-senior-investigation-harness|13번 조사 하네스]]가 Pack·계획·반증·검증의 연결로 정리했습니다. [[notes/knowledge-centric-self-improvement|15번 지식 중심 자기개선]]은 작업 경험 가운데 무엇을 공유 지식으로 남길지 물으며 Promotion 책임을 추가했습니다.
+
+이후의 글들은 실패 지점을 더 잘게 나눴습니다. [[notes/context-compilation-regression|16번 문맥 컴파일 회귀]]는 정본 지식이 작업용 문맥으로 조립될 때 손실되는 문제를, [[notes/authorization-aware-rag-graph-boundary|17번 권한 인식 RAG]]는 관련 근거를 현재 사용자가 볼 수 있는지를 다뤘습니다. [[notes/agent-memory-poisoning-promotion-gate|18번 메모리 승격]]은 저장된 경험의 신뢰를, [[notes/generation-faithfulness-regression|19번 생성 충실도]]는 모델이 주어진 근거를 실제로 사용했는지를 검사했습니다. [[notes/long-running-task-authorization-lease|20번 장기 작업 권한]]은 실행 도중 권한이 달라지는 시간 경계까지 확장했습니다.
+
+마지막으로 [[notes/graphrag-adoption-gate|21번 GraphRAG 도입 게이트]]는 어느 질문에서 graph 경로의 추가 비용이 정당화되는지 물었습니다. 이 글은 그 검색 경로가 좋은 문맥을 만든 뒤에도 남는 의미·권한·검증·승격 책임을 한 구조로 잇습니다.
 
 ![8번 OpenCrab 빌드에서 21번 GraphRAG 도입 게이트까지 이어진 블로그 연재가 Build·Compile·Investigation·Validation·Promotion 계층으로 모이는 지도](../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-02.png)
 
@@ -407,42 +393,21 @@ Promotion Gate는 이번 조사에서 얻은 것 중 무엇을 다음 지도에 
 
 어느 하나가 다른 하나를 대체하지 않습니다. 서로 다른 책임을 맡을 때 전체 시스템이 비로소 닫힙니다.
 
-## 결론: GraphRAG는 종착점이 아니라 정확한 기준점입니다
+## 결론: 좋은 문맥을 안전한 판단으로 바꾸는 순서
 
-GraphRAG는 끝이 아닙니다.
+이 글의 출발점은 GraphRAG가 부족하다는 주장이 아닙니다. Microsoft GraphRAG는 원문에서 엔티티와 관계, 주장을 추출하고, 커뮤니티 보고서와 원문 조각을 질문에 맞게 조립합니다. Local·Global·DRIFT 같은 서로 다른 검색 경로 덕분에 특정 대상의 세부 관계부터 문서 집합 전체의 패턴까지 다룰 수 있습니다. 문제는 이렇게 만든 문맥이 곧바로 안전한 답이나 조직의 장기 지식이 되지는 않는다는 데 있습니다.
 
-그렇다고 지나가는 중간 기술도 아닙니다.
+그 사이에는 책임을 나누는 과정이 필요합니다. 먼저 필요한 근거를 찾을 수 있는 가장 단순한 검색 경로를 고릅니다. 그다음 Context Compiler가 Evidence(관찰 근거)와 Counterevidence(반례), 적용할 Policy(정책), 현재의 Permission·Time·Revision(권한·시점·버전)을 답변 의무로 정리하고, 빠진 근거와 충돌을 드러내는 AnswerBundle(답변용 근거 묶음)로 조립합니다. Investigation Harness는 남은 가설과 다음 검사를 관리하고, Validator는 권한 있는 근거가 조립 과정에서 사라지지 않았는지와 모델이 그 근거를 실제로 사용했는지를 확인합니다. 이 검사를 통과한 작업 결과만 Promotion Gate에서 다음 Pack revision, 곧 공유 지식 묶음의 새 버전 후보가 됩니다. 필수 근거가 없거나 권한·정책·버전이 맞지 않으면 답을 보류하고 다시 조사해야 합니다.
 
-GraphRAG는 기존 RAG가 놓치던 관계와 전체 구조를 복원하고, 문서 집합을 질문 가능한 의미 지도로 바꾸는 중요한 기반입니다. Microsoft GraphRAG의 Basic·Local·Global·DRIFT 구분은 graph 기반 context가 어떤 질문을 위해 존재하는지 분명하게 보여 줍니다.
+이렇게 책임을 나누는 이유는 실패 지점이 서로 다르기 때문입니다. 검색된 자료가 답에 반드시 필요한 자료라는 보장은 없고, 관련성이 높아도 현재 사용 권한이 없을 수 있습니다. 저장된 주장은 아직 검증되지 않았을 수 있으며, 문맥에 들어간 근거를 모델이 무시할 수도 있습니다. 한 번 성공한 답도 같은 조건에서 반복 검증되지 않았다면 공유 지식으로 승격할 수 없습니다. 그래프를 더 크게 만들거나 검색 결과를 더 많이 넣는 것만으로는 이 문제들을 한꺼번에 해결할 수 없습니다.
 
-하지만 좋은 의미 지도를 만들었다고 조직의 판단 체계까지 자동으로 완성되지는 않습니다.
+실무에서는 GraphRAG를 지식 시스템 전체가 아니라 강력한 검색·문맥 공급 계층으로 배치하는 편이 안전합니다. 직접 사실이나 안정적인 가까운 관계는 더 단순한 RAG가 충분할 수 있고, 관계 경로나 전체 자료의 패턴이 답에 필요할 때 GraphRAG의 고유 기여를 비교합니다. 그 위의 의미·권한·검증·승격 계층도 동일한 질문과 원문, 모델, 권한, 버전과 예산을 고정한 상태에서 바로 아래 기준선을 이길 때만 추가해야 합니다. 그래야 품질이 좋아진 이유와 비용이 늘어난 이유를 구분하고, 문제가 생겼을 때 해당 계층만 되돌릴 수 있습니다.
 
-지도에 표시된 관계가 검증된 사실인지, 현재도 유효한지, 누가 사용할 수 있는지, 모델이 실제로 활용했는지, 다음 세대의 지식으로 남겨도 되는지는 별도의 문제입니다.
+아직 이 전체 구조의 우월성이 실측된 것은 아닙니다. Microsoft GraphRAG의 범위는 2026년 7월 29일 확인한 공식 문서와 원 논문을 기준으로 했고, OpenCrab의 현행 구현도 목표로 삼은 모든 책임을 닫았다고 볼 수 없습니다. Context Compiler, Obligation Set, AnswerBundle과 Promotion Gate의 결합은 프로젝트 설계 제안이며, Microsoft GraphRAG·OpenCrab·DuckCrab을 같은 자료와 예산에서 비교한 통합 benchmark도 수행하지 않았습니다. 따라서 이 글의 결론은 제품 순위가 아니라 다음 실험의 기준입니다.
 
-이 지점에서 앞선 글들이 다시 하나로 연결됩니다.
+> **어떤 질문에는 어느 검색 경로를 쓰고, 어떤 근거·권한·버전 조건을 만족한 문맥만 답에 사용하며, 어떤 검증을 통과한 결과만 다음 지식으로 남길 것인가?**
 
-OpenCrab의 9-Space와 Pack은 지식의 의미와 배포 단위를 만듭니다.
-
-Context Compiler는 질문에 필요한 근거 구조를 조립합니다.
-
-Investigation Harness는 가설과 반례, 다음 검사를 관리합니다.
-
-Generation Validator는 좋은 Context가 좋은 답으로 이어졌는지 확인합니다.
-
-Promotion Gate는 작업 경험이 검증 없이 장기 지식으로 굳는 것을 막습니다.
-
-이제 질문은 `RAG인가, GraphRAG인가, 온톨로지인가`가 아닙니다.
-
-> **어떤 질문에는 어느 검색 경로를 사용하고, 어떤 의미 계약으로 문맥을 조립하며, 어떤 검증을 통과한 결과만 답과 지식으로 남길 것인가?**
-
-GraphRAG 이후에 필요한 것은 더 화려한 이름이나 더 큰 graph가 아닙니다.
-
-**더 작은 문맥, 더 강한 근거 계약, 더 분명한 권한 경계, 그리고 되돌릴 수 있는 지식 수명주기입니다.**
-
-그것이 우리가 Context Compiler를 만든 이유입니다.
-
-> [!important] 범위와 주장 강도
-> 이 글은 Microsoft GraphRAG와 OpenCrab의 실측 성능 우열을 주장하지 않습니다. Microsoft GraphRAG의 범위는 2026년 7월 29일 확인한 공식 문서와 원 논문을 기준으로 했고, OpenCrab 관련 평가는 앞선 블로그의 코드·설계 분석을 재사용했습니다. Context Compiler, Obligation Set, AnswerBundle과 Promotion Gate의 결합은 프로젝트 설계 제안이며, Microsoft GraphRAG·OpenCrab·DuckCrab을 같은 자료와 예산에서 비교한 통합 benchmark는 아직 수행하지 않았습니다.
+GraphRAG가 관계를 읽을 수 있는 지도를 만든다면, Context Compiler와 검증·승격 계층은 그 지도에서 지금 사용해도 되는 근거를 고르고, 답으로 내보내며, 다시 지식으로 남기는 규칙을 만듭니다. 이것이 이 프로젝트에서 Context Compiler가 필요한 이유입니다.
 
 ## 출처
 
