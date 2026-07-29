@@ -29,4 +29,3 @@ AI 활용에 관심이 많은 반도체 연구원입니다.
 ## 연락
 
 - 이메일: [tteggu@gmail.com](mailto:tteggu@gmail.com)
-- 작성한 코드와 공개 프로젝트: [GitHub](https://github.com/tteggu87)
