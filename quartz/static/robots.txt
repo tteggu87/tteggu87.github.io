@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tteggu87.github.io/sitemap.xml
