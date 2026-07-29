@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1792" height="1008" viewBox="0 0 1792 1008" role="img" aria-labelledby="title desc">
+  <title id="title">관계 정보와 그래프 런타임을 분리한다</title>
+  <desc id="desc">설명 문서와 1-hop 관계 증강을 비교해 관계 정보의 가치를 보고, 관계 증강과 동적 그래프 탐색을 비교해 그래프 런타임의 순기여를 분리하는 도해</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0F1D30"/><stop offset="1" stop-color="#173A4A"/></linearGradient></defs>
+  <rect width="1792" height="1008" fill="url(#bg)"/>
+  <text x="84" y="102" fill="#F7F4EC" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="70" font-weight="850">관계 정보와 그래프 런타임을 분리한다</text>
+  <text x="88" y="160" fill="#C7DCE2" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="37">관계가 유용한가와 동적 그래프 실행이 필요한가는 다른 질문이다</text>
+
+  <g font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <g transform="translate(70 230)">
+      <rect width="500" height="330" rx="42" fill="#F7F4EC"/>
+      <text x="250" y="74" text-anchor="middle" fill="#0F1D30" font-size="62" font-weight="850">설명 문서</text>
+      <rect x="95" y="112" width="310" height="145" rx="24" fill="#D7E8F5"/>
+      <path d="M145 160 H355 M145 205 H355 M145 247 H305" stroke="#0F1D30" stroke-width="18" stroke-linecap="round"/>
+      <text x="250" y="300" text-anchor="middle" fill="#335368" font-size="44" font-weight="750">직접 사실·정의·날짜</text>
+    </g>
+    <g transform="translate(646 230)">
+      <rect width="500" height="330" rx="42" fill="#D7E8F5"/>
+      <text x="250" y="74" text-anchor="middle" fill="#0F1D30" font-size="60" font-weight="850">1-hop 관계 증강</text>
+      <circle cx="135" cy="170" r="34" fill="#0F766E"/><circle cx="365" cy="140" r="34" fill="#F2B84B"/><circle cx="310" cy="225" r="34" fill="#0F766E"/>
+      <path d="M169 165 L331 144 M164 190 L279 216" stroke="#0F1D30" stroke-width="12" stroke-linecap="round"/>
+      <text x="250" y="310" text-anchor="middle" fill="#335368" font-size="44" font-weight="750">안정적인 가까운 관계</text>
+    </g>
+    <g transform="translate(1222 230)">
+      <rect width="500" height="330" rx="42" fill="#CDE7DF"/>
+      <text x="250" y="74" text-anchor="middle" fill="#0F1D30" font-size="60" font-weight="850">동적 그래프 탐색</text>
+      <circle cx="105" cy="165" r="30" fill="#0F766E"/><circle cx="245" cy="115" r="30" fill="#F2B84B"/><circle cx="395" cy="165" r="30" fill="#0F766E"/><circle cx="185" cy="225" r="30" fill="#0F766E"/><circle cx="360" cy="230" r="30" fill="#0F766E"/>
+      <path d="M133 155 L217 125 M273 125 L367 155 M126 184 L163 207 M215 226 L330 229 M389 195 L371 204 M235 143 L199 198" stroke="#0F1D30" stroke-width="11" stroke-linecap="round"/>
+      <text x="250" y="312" text-anchor="middle" fill="#335368" font-size="42" font-weight="750">역관계·교집합·다중 홉</text>
+    </g>
+  </g>
+
+  <g font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <g transform="translate(80 640)">
+      <rect width="780" height="250" rx="38" fill="#102B3B" stroke="#4FA3C7" stroke-width="4"/>
+      <text x="390" y="76" text-anchor="middle" fill="#D7E8F5" font-size="58" font-weight="900">관계 정보의 가치</text>
+      <text x="390" y="143" text-anchor="middle" fill="#F7F4EC" font-size="47" font-weight="800">설명 문서 ↔ 관계 증강</text>
+      <text x="390" y="205" text-anchor="middle" fill="#BFD7DE" font-size="41">가까운 관계가 답에 기여했는가</text>
+    </g>
+    <g transform="translate(932 640)">
+      <rect width="780" height="250" rx="38" fill="#382F1C" stroke="#F2B84B" stroke-width="4"/>
+      <text x="390" y="76" text-anchor="middle" fill="#F6DFAD" font-size="56" font-weight="900">그래프 런타임 순기여</text>
+      <text x="390" y="143" text-anchor="middle" fill="#F7F4EC" font-size="47" font-weight="800">관계 증강 ↔ 동적 탐색</text>
+      <text x="390" y="205" text-anchor="middle" fill="#EED8A8" font-size="40">교집합·다중 홉을 추가로 풀었는가</text>
+    </g>
+  </g>
+</svg>

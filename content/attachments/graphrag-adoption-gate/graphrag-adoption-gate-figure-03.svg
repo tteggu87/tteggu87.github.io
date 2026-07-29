@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1792" height="1008" viewBox="0 0 1792 1008" role="img" aria-labelledby="title desc">
+  <title id="title">A–F 통제 비교 지도</title>
+  <desc id="desc">A부터 F까지의 실험 조건을 성숙도 순서가 아닌 세 개의 독립 비교로 묶고, 같은 질문·모델·revision·권한·예산을 고정하는 도해</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0F1D30"/><stop offset="1" stop-color="#173A4A"/></linearGradient></defs>
+  <rect width="1792" height="1008" fill="url(#bg)"/>
+  <text x="84" y="102" fill="#F7F4EC" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="72" font-weight="850">A–F 통제 비교 지도</text>
+  <text x="88" y="160" fill="#C7DCE2" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="37">성숙도 순서가 아니라 책임을 하나씩 분리하는 비교군</text>
+
+  <g font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <g transform="translate(70 215)">
+      <rect width="1652" height="190" rx="38" fill="#102B3B" stroke="#4FA3C7" stroke-width="4"/>
+      <text x="55" y="70" fill="#D7E8F5" font-size="54" font-weight="900">관계 정보의 가치</text>
+      <g transform="translate(540 28)">
+        <rect width="360" height="134" rx="30" fill="#F7F4EC"/>
+        <text x="54" y="56" fill="#0F766E" font-size="54" font-weight="900">A</text>
+        <text x="190" y="88" text-anchor="middle" fill="#0F1D30" font-size="54" font-weight="850">문서 top-k</text>
+      </g>
+      <text x="994" y="112" text-anchor="middle" fill="#F2B84B" font-size="58" font-weight="900">VS</text>
+      <g transform="translate(1080 28)">
+        <rect width="360" height="134" rx="30" fill="#D7E8F5"/>
+        <text x="54" y="56" fill="#0F766E" font-size="54" font-weight="900">B</text>
+        <text x="190" y="88" text-anchor="middle" fill="#0F1D30" font-size="54" font-weight="850">관계 증강</text>
+      </g>
+    </g>
+
+    <g transform="translate(70 435)">
+      <rect width="1652" height="190" rx="38" fill="#382F1C" stroke="#F2B84B" stroke-width="4"/>
+      <text x="55" y="70" fill="#F6DFAD" font-size="51" font-weight="900">그래프 순기여·단독 한계</text>
+      <g transform="translate(570 28)">
+        <rect width="280" height="134" rx="30" fill="#D7E8F5"/>
+        <text x="44" y="54" fill="#0F766E" font-size="50" font-weight="900">B</text>
+        <text x="150" y="88" text-anchor="middle" fill="#0F1D30" font-size="47" font-weight="850">관계 증강</text>
+      </g>
+      <text x="905" y="112" text-anchor="middle" fill="#F2B84B" font-size="54" font-weight="900">·</text>
+      <g transform="translate(950 28)">
+        <rect width="280" height="134" rx="30" fill="#F6DFAD"/>
+        <text x="44" y="54" fill="#0F766E" font-size="50" font-weight="900">C</text>
+        <text x="150" y="88" text-anchor="middle" fill="#0F1D30" font-size="48" font-weight="850">KG-only</text>
+      </g>
+      <text x="1285" y="112" text-anchor="middle" fill="#F2B84B" font-size="54" font-weight="900">·</text>
+      <g transform="translate(1330 28)">
+        <rect width="280" height="134" rx="30" fill="#CDE7DF"/>
+        <text x="44" y="54" fill="#0F766E" font-size="50" font-weight="900">D</text>
+        <text x="150" y="88" text-anchor="middle" fill="#0F1D30" font-size="50" font-weight="850">Hybrid</text>
+      </g>
+    </g>
+
+    <g transform="translate(70 655)">
+      <rect width="1652" height="190" rx="38" fill="#102B3B" stroke="#4FA3C7" stroke-width="4"/>
+      <text x="55" y="70" fill="#D7E8F5" font-size="54" font-weight="900">Agent 결합의 추가 이득</text>
+      <g transform="translate(570 28)">
+        <rect width="280" height="134" rx="30" fill="#CDE7DF"/>
+        <text x="44" y="54" fill="#0F766E" font-size="50" font-weight="900">D</text>
+        <text x="150" y="88" text-anchor="middle" fill="#0F1D30" font-size="50" font-weight="850">Hybrid</text>
+      </g>
+      <text x="905" y="112" text-anchor="middle" fill="#F2B84B" font-size="54" font-weight="900">+</text>
+      <g transform="translate(950 28)">
+        <rect width="280" height="134" rx="30" fill="#F7F4EC"/>
+        <text x="44" y="54" fill="#0F766E" font-size="50" font-weight="900">E</text>
+        <text x="150" y="88" text-anchor="middle" fill="#0F1D30" font-size="48" font-weight="850">최소 Agent</text>
+      </g>
+      <text x="1285" y="112" text-anchor="middle" fill="#F2B84B" font-size="54" font-weight="900">VS</text>
+      <g transform="translate(1330 28)">
+        <rect width="280" height="134" rx="30" fill="#D8E5F0"/>
+        <text x="44" y="54" fill="#0F766E" font-size="50" font-weight="900">F</text>
+        <text x="150" y="75" text-anchor="middle" fill="#0F1D30" font-size="44" font-weight="850">Agent</text>
+        <text x="150" y="116" text-anchor="middle" fill="#0F1D30" font-size="40" font-weight="850">+ Graph</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(115 885)" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
+    <rect width="1562" height="82" rx="28" fill="#F2B84B"/>
+    <text x="781" y="54" text-anchor="middle" fill="#0F1D30" font-size="42" font-weight="900">고정: 같은 질문·모델 · 같은 revision·권한 · 같은 예산·생성기</text>
+  </g>
+</svg>
