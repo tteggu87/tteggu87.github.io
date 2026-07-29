@@ -1,6 +1,6 @@
 ---
 title: "17. 관련도는 권한이 아니다: 멀티테넌트 RAG와 GraphRAG의 문맥 누출을 막는 법"
-description: "검색 결과가 질문에 잘 맞는다는 사실은 공개 권한을 뜻하지 않습니다. 인증·위임·문서·그래프 경로·파생 지식·MCP 도구까지 권한을 다시 증명하는 방법을 설명합니다."
+description: "검색 결과가 질문에 잘 맞는다는 사실은 공개 권한을 뜻하지 않습니다. 인증·위임·문서·그래프 경로·파생 지식·MCP 도구와 오래 실행되는 작업까지 권한을 다시 증명하는 방법을 설명합니다."
 date: 2026-07-29
 tags:
   - RAG
@@ -11,10 +11,10 @@ tags:
   - AI보안
 ---
 
-![인증된 사용자부터 검색·그래프 확장·파생 지식·도구 실행까지 권한을 단계별로 다시 증명하는 전체 수명주기](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-infographic.png)
+![인증된 사용자부터 검색·그래프 확장·파생 지식·도구 실행과 장기 작업의 권한 lease까지 단계별로 다시 증명하는 전체 수명주기](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-infographic.png)
 
 > [!summary] 핵심 결론
-> 검색 결과가 질문에 잘 맞는다는 사실은 그 자료를 보여 줘도 된다는 뜻이 아닙니다. 멀티테넌트 RAG와 GraphRAG에서는 **연결 자격증명, 작업 위임, 문서·그래프 경로·파생 지식·출처 열기·도구 행동의 현재 권한**을 각각 확인해야 합니다. 이 글의 A~J와 파생 산출물 비교 결과는 설계 계약의 빈칸을 찾는 결정론적 장난감 검사이며, 실제 시스템의 누출률이나 방어 우월성을 입증한 벤치마크가 아닙니다.
+> 검색 결과가 질문에 잘 맞는다는 사실은 그 자료를 보여 줘도 된다는 뜻이 아닙니다. 멀티테넌트 RAG와 GraphRAG에서는 **연결 자격증명, 작업 위임, 문서·그래프 경로·파생 지식·출처 열기·도구 행동의 현재 권한**을 각각 확인하고, 오래 실행되는 작업은 보호 자료를 다시 읽거나 외부로 보내고 결과를 공개할 때 권한을 재검사해야 합니다. 이 글의 A~K와 파생 산출물 비교 결과는 설계 계약의 빈칸을 찾는 결정론적 장난감 검사이며, 실제 시스템의 누출률이나 방어 우월성을 입증한 벤치마크가 아닙니다.
 
 한 회사가 여러 고객사의 규정 문서를 하나의 검색 시스템에 연결했다고 가정해 보겠습니다. 고객사 A의 사용자가 질문했고, 벡터 검색은 A가 볼 수 있는 문서를 정확히 찾았습니다. 그 문서에는 여러 회사가 함께 쓰는 제품명이 들어 있었습니다.
 
@@ -86,7 +86,7 @@ OAuth 연결 성공
 
 OpenFGA의 작업(task) 기반 패턴은 사용자의 원래 권한과, 에이전트가 이번 작업에서만 쓰는 제한된 임시 허가(grant)를 따로 검사합니다. 예를 들어 ‘이 문서를 10분 동안 읽기만 허용’처럼 필요한 도구와 자원, 만료 시간, 대화, 호출 범위와 에이전트를 한 묶음으로 제한할 수 있습니다.[src_019](#src-019) 이 경계가 없으면 사용자가 문서를 읽을 수 있다는 이유만으로 에이전트가 그 문서를 외부에 공유하거나 삭제하는 권한까지 얻을 수 있습니다.
 
-![OAuth 연결, task 위임, resource와 action 권한을 서로 대체할 수 없는 세 가지 증명으로 분리한 도해](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-01.png)
+![OAuth 연결, task 위임과 권한 lease, resource와 action 권한을 서로 대체할 수 없는 증명으로 분리한 도해](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-01.png)
 
 ### 도구 검색도 권한이 필요한 retrieval입니다
 
@@ -212,6 +212,25 @@ Amazon Bedrock의 원문 열기 API는 retrieval과 별도의 권한을 요구�
 
 새 사용자나 새 task에 이전 상태를 재사용할 때는 다시 권한을 확인합니다. 권한 문제와 메모리 신뢰 문제도 구분합니다. 같은 tenant가 만든 허용된 summary라도 외부 지시가 지속 메모리로 승격됐다면 authorization은 통과해도 trust gate에서 격리해야 합니다.[src_013](#src-013) [src_014](#src-014)
 
+### 오래 실행되는 작업은 완료 시점의 권한을 따릅니다
+
+오전 9시에 보고서 생성을 시작했지만 정오에 사용자의 문서 권한이 회수됐다고 가정해 보겠습니다. 작업이 오전 9시에 승인됐다는 이유로 정오 이후에도 새 문서를 읽고, 외부 저장소에 파일을 쓰고, 완성된 보고서를 사용자에게 보여 주면 안 됩니다.
+
+MCP Tasks 명세는 오래 걸리는 작업의 상태와 결과를 나중에 조회하는 방식을 정의합니다. 권한 정보가 제공된 작업은 그 정보에 묶어야 하며, 다른 권한 맥락에서 `tasks/get`, `tasks/result`, `tasks/cancel`을 호출하면 거부해야 합니다.[src_040](#src-040) 여기서 작업의 `TTL`은 상태와 결과를 얼마나 오래 보관할지 정하는 시간입니다. **권한 lease**는 기존 권한 판단을 언제까지 재사용할 수 있는지 정하는 더 짧은 유효 시간입니다.
+
+```text
+task accepted
+≠ 실행 전체 기간의 권한
+≠ 중간 읽기·쓰기·외부 전송 권한
+≠ 완료 결과 공개 권한
+```
+
+lease가 만료되거나 세션이 취소되고, 조직 소속이나 문서 권한 버전이 바뀌면 다음 보호 행동 전에 현재 권한을 다시 계산합니다. OpenID CAEP의 `session-revoked` 같은 지속 접근 평가 신호는 빠른 무효화에 쓸 수 있지만, 신호가 늦거나 빠질 수 있습니다.[src_041](#src-041) 따라서 **무효화 신호 + 짧은 lease + 고위험 행동 직전 권한 재검사**를 함께 둡니다. OAuth token introspection으로 token의 활성 상태와 범위, 대상, 만료 여부를 확인할 수 있어도 현재 문서 ACL이나 tenant 소속, tool action 권한까지 보장되지는 않습니다.[src_042](#src-042)
+
+취소 요청도 곧바로 실행 중단을 보장하지 않습니다. 늦게 끝난 작업 실행기(worker)가 취소 뒤에 파일을 쓰거나 외부로 전송하지 못하도록, 결과 저장을 확정하거나 전송하기 직전에 취소 세대와 현재 lease를 확인해야 합니다. 완성된 결과도 과거 권한으로 만든 파생 산출물입니다. `tasks/result`나 완료 알림(callback)에서 현재 caller·tenant·agent binding과 원본 자료의 공개 권한을 다시 검사합니다.
+
+모든 작업에 복잡한 lease가 필요한 것은 아닙니다. 읽기 전용으로 고정된 복사본(snapshot)을 계산하는 짧은 작업은 단순하게 운영할 수 있습니다. 실행 중 새 자료를 읽거나 graph와 tool을 계속 확장하는 작업, 외부 전송이나 쓰기를 수행하는 작업은 더 엄격하게 다뤄야 합니다. 이 구분은 실제 분산 작업 실행기·대기열(queue)·callback에서 검증된 표준이 아니라 프로젝트의 조건부 설계 제안입니다.
+
 MCP 도구는 목록과 실행 시점이 별도 enforcement point입니다. 연결할 때 호출 가능한 tool만 노출하고, 실제 `tool/call`에서는 현재 grant와 tool 내부 resource·action을 다시 검사합니다.[src_018](#src-018) [src_020](#src-020)
 
 ```text
@@ -261,6 +280,9 @@ authorization_receipt:
   source_open_checks: [allow]
   tool_list_checks: [allow]
   tool_call_checks: [deny]
+  authorization_lease_expires_at: 2026-07-29T07:55:00+09:00
+  task_cancellation_epoch: 3
+  result_disclosure_check: recheck_required
   internal_decision: authorization_unavailable
   external_disclosure_class: service_unavailable
   metadata_suppressed: [count, facet, source_id]
@@ -271,9 +293,9 @@ authorization_receipt:
 
 Receipt가 있다고 권한 판단이 옳다는 뜻은 아닙니다. 잘못된 policy를 꼼꼼히 기록할 수도 있습니다. 또한 denied resource와 graph path를 그대로 남기면 receipt 자체가 민감정보가 됩니다. opaque ID, hash, 최소 보존기간과 receipt 전용 접근통제가 필요합니다.
 
-## A~J 계약 스모크는 무엇을 확인했습니까
+## A~K 계약 스모크는 무엇을 확인했습니까
 
-여기서 스모크 테스트(smoke test)는 모든 공격을 증명하는 정밀 시험이 아니라, 큰 구멍이 남아 있는지 빠르게 확인하는 검사입니다. 실제 고객 조직(tenant)의 데이터와 자격증명(credential)은 사용하지 않았고, 열 가지 실패 유형을 방어 조건에 하나씩 배치한 뒤 같은 입력에 항상 같은 결과가 나오는 결정론적 스크립트를 실행했습니다.
+여기서 스모크 테스트(smoke test)는 모든 공격을 증명하는 정밀 시험이 아니라, 큰 구멍이 남아 있는지 빠르게 확인하는 검사입니다. 실제 고객 조직(tenant)의 데이터와 자격증명(credential)은 사용하지 않았습니다. A~J는 열 가지 실패 유형을 방어 조건에 하나씩 배치했고, K는 파생물·응답 표면·선행 의무와 장기 작업의 시간 경계를 별도 스크립트로 검사했습니다.
 
 | 조건 | 추가한 경계                                                | 스크립트가 정의한 미보호 실패 클래스 |
 | ---- | ---------------------------------------------------------- | -----------------------------------: |
@@ -287,8 +309,9 @@ Receipt가 있다고 권한 판단이 옳다는 뜻은 아닙니다. 잘못된 p
 | H    | revocation replay·receipt                                  |                                    4 |
 | I    | model·permission revision freshness                        |                                    3 |
 | J    | MCP audience·task binding·catalog/inspect·per-call step-up |                                    0 |
+| K    | J + 파생물·응답 표면·의무 그래프·task authorization lease  |                            별도 검사 |
 
-J에서 0이 된 이유는 J가 스크립트에 정의한 필드를 모두 구현했기 때문입니다. 최신 통합 계약에서는 J를 resource audience, task-agent binding, access-filtered catalog·inspect, per-call broker 검사, 점진적 step-up과 권한 cache invalidation까지 포함하는 조건으로 해석합니다. 이는 실제 공격을 막았다는 뜻이 아니라 **하나의 ACL filter로는 서로 다른 실패 클래스를 덮을 수 없다는 계약 coverage 확인**입니다.
+J에서 0이 된 이유는 J가 기존 스크립트에 정의한 필드를 모두 구현했기 때문입니다. K는 같은 열의 숫자를 더 낮춘 조건이 아니라, 파생 산출물과 호출자에게 보이는 응답 표면, 선행 의무 그래프, 장기 작업의 lease·취소·결과 공개 검사를 추가한 별도 확장 계약입니다. 최신 통합 스모크는 권한 의무 21개와 보호 출력 5개를 다룬 12개 assertion, 장기 작업의 context binding·lease expiry·session revoke·late commit·result disclosure를 다룬 10개 assertion을 통과했습니다. 이는 실제 공격을 막았다는 뜻이 아니라 **하나의 ACL filter로는 서로 다른 실패 클래스를 덮을 수 없다는 계약 coverage 확인**입니다.
 
 파생 산출물 toy 검사도 네 정책을 비교했습니다.
 
@@ -301,7 +324,7 @@ J에서 0이 된 이유는 J가 스크립트에 정의한 필드를 모두 구�
 
 마지막 정책의 0/0도 같은 이유로 벤치마크 성과가 아닙니다. 여섯 synthetic artifact에 대해 스크립트가 정의한 기대 계약과 일치했을 뿐입니다. 실제 효과를 주장하려면 DuckCrab·OpenFGA 또는 SpiceDB·MCP server를 연결하고 false allow·false deny·authorized recall·revocation latency·generated disclosure를 측정해야 합니다.
 
-![namespace부터 MCP task-bound authorization까지 A~J 경계를 추가했을 때 계약상 남는 실패 클래스와 실제 검증 과제를 구분한 비교 도판](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-03.png)
+![namespace부터 장기 task 권한 lease까지 A~K 경계를 추가했을 때 계약상 남는 실패 클래스와 실제 검증 과제를 구분한 비교 도판](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-03.png)
 
 ## 실제 시스템에서 먼저 측정할 지표
 
@@ -324,6 +347,9 @@ J에서 0이 된 이유는 J가 스크립트에 정의한 필드를 모두 구�
 - forbidden-vs-absent response distinguishability
 - required-source omission rate
 - receipt replay reproducibility
+- 권한 lease 만료 뒤 재검사 성공률
+- 취소·권한 회수 뒤 늦은 쓰기·외부 전송 차단률
+- 완료 결과 공개 전 재권한 검사율
 - p50·p95 authorization latency
 
 권한 실패와 검색 근거 부족도 다른 reason code로 기록해야 합니다. fail-closed 때문에 답이 부족한 경우와 관련 문서 자체가 없는 경우를 같은 “답변 불가”로 숨기면 운영자가 잘못된 계층을 고치게 됩니다.
@@ -336,6 +362,9 @@ J에서 0이 된 이유는 J가 스크립트에 정의한 필드를 모두 구�
 - 문서·chunk·node·edge·path와 파생 artifact의 현재 권한을 재현할 수 있습니다.
 - ACL grant·revoke와 permission revision 변경이 index·graph·cache에 반영됩니다.
 - `tools/list`, `tool/call`과 tool 내부 action을 각각 검사합니다.
+- 오래 실행되는 task의 상태·결과를 tenant·principal·agent·task에 결속하고, task TTL을 권한 유효 시간으로 사용하지 않습니다.
+- lease 만료·session revoke·permission revision 변경 뒤 protected read·side effect·result disclosure 전에 권한을 다시 계산합니다.
+- cancel·revoke 뒤 늦게 끝난 worker가 commit·외부 전송을 수행하지 못하며, 완료 결과 공개도 현재 권한으로 재검사합니다.
 - unclassified resource를 자동 공개하지 않고 quarantine·deny로 처리합니다.
 - catalog·inspect·execute와 programmatic runtime call을 별도 권한 지점으로 검사합니다.
 - 권한 판정 장애와 stale revision에서 부분 결과를 반환하지 않습니다.
@@ -361,6 +390,7 @@ identity
 → context assembly
 → generation
 → source·tool authorization
+→ task lease·cancel·result reauthorization
 → revocation·receipt
 ```
 
@@ -408,3 +438,6 @@ identity
 - <a id="src-037"></a> Microsoft. [Query a knowledge base using the retrieve action or MCP endpoint](https://learn.microsoft.com/en-us/azure/search/agentic-retrieval-how-to-retrieve). Updated 2026-07-22.
 - <a id="src-038"></a> Amazon Web Services. [Access Control Lists awareness enablement](https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-acl.html). Accessed 2026-07-29.
 - <a id="src-039"></a> Amazon Web Services. [Retrieve the content of documents from knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-get-document-content.html). Accessed 2026-07-29.
+- <a id="src-040"></a> Model Context Protocol. [Tasks](https://modelcontextprotocol.io/specification/2025-11-25/basic/utilities/tasks). Specification 2025-11-25.
+- <a id="src-041"></a> OpenID Foundation Shared Signals Working Group. [OpenID Continuous Access Evaluation Profile 1.0](https://openid.net/specs/openid-caep-1_0.html). Final Specification, 2025-08-29.
+- <a id="src-042"></a> IETF. [OAuth 2.0 Token Introspection](https://datatracker.ietf.org/doc/rfc7662/). RFC 7662, 2015-10.
