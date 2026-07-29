@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">오염은 저장 위치와 활성화 시점이 다릅니다</title>
+<desc id="desc">간접 프롬프트 인젝션, 검색 저장소 오염, 지속 메모리 오염, 승격 오염과 직접·조합·휴면 활성화를 비교한 도해</desc>
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<rect width="1600" height="104" fill="#102A43"/>
+<text x="70" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700" text-anchor="start">오염은 저장 위치와 활성화 시점이 다릅니다</text>
+<text x="70" y="155" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="600" text-anchor="start">같은 문장도 어디에 남고 언제 다시 켜지는지에 따라 위험이 달라집니다</text>
+<rect x="70" y="210" width="1460" height="88" rx="16" fill="#FFFFFF" stroke="#2B8A86" stroke-width="2"/>
+<text x="100" y="263" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="700" text-anchor="start">현재 입력</text>
+<text x="430" y="263" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">읽는 순간</text>
+<text x="760" y="263" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">현재 세션</text>
+<text x="1110" y="263" fill="#E5A73E" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="start">간접 인젝션</text>
+<rect x="70" y="322" width="1460" height="88" rx="16" fill="#E9F3F2" stroke="#2B8A86" stroke-width="2"/>
+<text x="100" y="375" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="700" text-anchor="start">검색 저장소</text>
+<text x="430" y="375" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">질의로 검색</text>
+<text x="760" y="375" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">항목 존속 기간</text>
+<text x="1110" y="375" fill="#E5A73E" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="start">KB·RAG 오염</text>
+<rect x="70" y="434" width="1460" height="88" rx="16" fill="#FFFFFF" stroke="#2B8A86" stroke-width="2"/>
+<text x="100" y="487" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="700" text-anchor="start">지속 기억</text>
+<text x="430" y="487" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">다음 세션 로드</text>
+<text x="760" y="487" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">세션·작업을 넘어</text>
+<text x="1110" y="487" fill="#C95050" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="start">메모리 오염</text>
+<rect x="70" y="546" width="1460" height="88" rx="16" fill="#E9F3F2" stroke="#2B8A86" stroke-width="2"/>
+<text x="100" y="599" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="700" text-anchor="start">검토 지식</text>
+<text x="430" y="599" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">다른 작업 재사용</text>
+<text x="760" y="599" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="600" text-anchor="start">Pack revision</text>
+<text x="1110" y="599" fill="#C95050" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700" text-anchor="start">승격 오염</text>
+<text x="260" y="735" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="middle">직접</text>
+<text x="800" y="735" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="middle">조합</text>
+<text x="1340" y="735" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="25" font-weight="700" text-anchor="middle">휴면</text>
+<rect x="100" y="755" width="320" height="90" rx="18" fill="#FBEAEA" stroke="#C95050" stroke-width="3"/>
+<text x="260.0" y="809" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle">한 기록에서 드러남</text>
+<text x="260.0" y="847" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="500" text-anchor="middle">쓰기 검사 후보</text>
+<rect x="640" y="755" width="320" height="90" rx="18" fill="#FFF4DF" stroke="#E5A73E" stroke-width="3"/>
+<text x="800.0" y="809" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle">여러 기록이 의미 완성</text>
+<text x="800.0" y="847" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="500" text-anchor="middle">검색 묶음 검사</text>
+<rect x="1180" y="755" width="320" height="90" rx="18" fill="#F2EBF6" stroke="#76548F" stroke-width="3"/>
+<text x="1340.0" y="809" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle">특정 조건에서만 활성</text>
+<text x="1340.0" y="847" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="500" text-anchor="middle">trigger·scope 검사</text>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">A→H: 방어를 단계적으로 추가해 비교합니다</title>
+<desc id="desc">메모리 없음 기준선부터 자동 저장, 쓰기 검사, 후보 격리, 결합 검사, 범위와 버전, 행동 전 확인, 롤백과 재현까지의 합성 실험 설계</desc>
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<rect width="1600" height="104" fill="#102A43"/>
+<text x="70" y="66" fill="#FFFFFF" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="38" font-weight="700" text-anchor="start">A→H: 방어를 단계적으로 추가해 비교합니다</text>
+<text x="70" y="155" fill="#587086" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="24" font-weight="600" text-anchor="start">동일 작업·정상 기억·모델·검색 예산·행동 권한을 고정한 synthetic workspace</text>
+<rect x="80" y="610" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#C95050" stroke-width="3"/>
+<text x="155" y="652" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">A</text>
+<text x="155" y="694" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">메모리 없음</text>
+<line x1="230" y1="670" x2="260" y2="618" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 246 609 L 260 618 L 246 627" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="265" y="558" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#C95050" stroke-width="3"/>
+<text x="340" y="600" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">B</text>
+<text x="340" y="642" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">자동 저장</text>
+<line x1="415" y1="618" x2="445" y2="566" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 431 557 L 445 566 L 431 575" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="450" y="506" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#E5A73E" stroke-width="3"/>
+<text x="525" y="548" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">C</text>
+<text x="525" y="590" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">쓰기 검사</text>
+<line x1="600" y1="566" x2="630" y2="514" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 616 505 L 630 514 L 616 523" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="635" y="454" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#E5A73E" stroke-width="3"/>
+<text x="710" y="496" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">D</text>
+<text x="710" y="538" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">후보 격리</text>
+<line x1="785" y1="514" x2="815" y2="462" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 801 453 L 815 462 L 801 471" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="820" y="402" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#76548F" stroke-width="3"/>
+<text x="895" y="444" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">E</text>
+<text x="895" y="486" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">결합 검사</text>
+<line x1="970" y1="462" x2="1000" y2="410" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 986 401 L 1000 410 L 986 419" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1005" y="350" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#76548F" stroke-width="3"/>
+<text x="1080" y="392" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">F</text>
+<text x="1080" y="434" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">범위·버전</text>
+<line x1="1155" y1="410" x2="1185" y2="358" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 1171 349 L 1185 358 L 1171 367" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1190" y="298" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#2B8A86" stroke-width="3"/>
+<text x="1265" y="340" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">G</text>
+<text x="1265" y="382" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">행동 전 확인</text>
+<line x1="1340" y1="358" x2="1370" y2="306" stroke="#2B8A86" stroke-width="5" stroke-linecap="round"/>
+<path d="M 1356 297 L 1370 306 L 1356 315" fill="none" stroke="#2B8A86" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1375" y="246" width="150" height="120" rx="16" fill="#FFFFFF" stroke="#3B806F" stroke-width="3"/>
+<text x="1450" y="288" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="28" font-weight="800" text-anchor="middle">H</text>
+<text x="1450" y="330" fill="#203647" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="19" font-weight="650" text-anchor="middle">롤백·재현</text>
+<rect x="100" y="770" width="420" height="70" rx="16" fill="#E9F3F2"/>
+<text x="310" y="814" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">보안: false accept · 무단 행동</text>
+<rect x="590" y="770" width="420" height="70" rx="16" fill="#FFF4DF"/>
+<text x="800" y="814" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">효용: 정상 기억 보존 · false reject</text>
+<rect x="1080" y="770" width="420" height="70" rx="16" fill="#F2EBF6"/>
+<text x="1290" y="814" fill="#102A43" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">재현: rollback · receipt replay</text>
+<rect x="1120" y="150" width="390" height="72" rx="16" fill="#FBEAEA" stroke="#C95050" stroke-width="2"/>
+<text x="1315" y="195" fill="#C95050" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21" font-weight="700" text-anchor="middle">실제 DuckCrab·Codex 실험 미실행</text>
+</svg>
