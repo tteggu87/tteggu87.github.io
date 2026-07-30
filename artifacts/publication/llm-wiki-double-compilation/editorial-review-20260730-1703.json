@@ -1,0 +1,102 @@
+{
+  "schema": "publication-editorial-review",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "reviewed_at": "2026-07-30T17:03:00+09:00",
+  "article": "content/notes/llm-wiki-double-compilation.md",
+  "status": "pass",
+  "trigger": {
+    "type": "new_latest_publication_and_conclusion_gap",
+    "details": "25번 글이 새로 발행됐고, 마지막 결론만 읽을 때 프로젝트 용어·공개 구현 미비교·L1 내부 스모크라는 근거 한계와 단계별 적용 순서가 충분히 드러나지 않았다."
+  },
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/operations/research-publishing-rules.md",
+    ".codex/skills/humanize-korean/SKILL.md",
+    ".codex/skills/humanize-korean/references/quick-rules.md",
+    "~/.codex/skills/publish-tteggu-blog/SKILL.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/concepts/llm-compiled-wiki.md",
+    "wiki/analyses/next-blog-topic-llm-wiki-persistent-knowledge-compiler-2026-07-30.md",
+    "wiki/playbooks/llm-wiki-implementation.md",
+    "research/llm-wiki-persistent-knowledge-compiler-20260730/README.md",
+    "research/llm-wiki-persistent-knowledge-compiler-20260730/state.json",
+    "research/llm-wiki-persistent-knowledge-compiler-20260730/outputs/01_full_report.md",
+    "research/llm-wiki-persistent-knowledge-compiler-20260730/sources/bibliography.md",
+    "research/llm-wiki-persistent-knowledge-compiler-20260730/sources/sources.jsonl",
+    "research/llm-wiki-persistent-knowledge-compiler-20260730/outputs/evidence_audit.json"
+  ],
+  "evidence_use": {
+    "reflected": [
+      "RAG와 LLM Wiki의 질문 유형별 역할 구분",
+      "1차 source-to-wiki와 2차 wiki-to-context 컴파일의 보존 의무",
+      "source truth·wiki preservation·context obligation·generation utilization의 단계 분리",
+      "읽기·patch 제안·검토·canonical 승격 권한 분리",
+      "이중 컴파일과 Receipt가 프로젝트 진단 틀이라는 범위",
+      "공개 구현 동일 조건 benchmark 미실행과 내부 스모크의 L1 주장 상한"
+    ],
+    "excluded": [
+      {
+        "material": "후속 GraphRAG path 독립성·반례 표면 감사",
+        "reason": "25번 글의 중심 질문과 직접 관련되지 않고 정본 보고서에도 아직 통합되지 않았다."
+      },
+      {
+        "material": "새 외부 수치·구현 비교",
+        "reason": "동일 조건 설치·성능·비용·보안 검증이 없어 결론에 추가하지 않았다."
+      }
+    ]
+  },
+  "central_question": "LLM Wiki와 RAG를 어떤 역할로 나누고, 원문에서 Wiki와 질문별 문맥으로 이어지는 두 축약 단계의 손실을 어떻게 검증할 것인가?",
+  "final_claim": "LLM Wiki는 RAG의 대체재가 아니라 반복 종합을 보존하는 지속 계층이며, 두 컴파일 단계와 생성 이용을 서로 다른 보존 의무·권한·Receipt로 검사해야 한다.",
+  "edits": [
+    "체크리스트형 코드 블록을 칼럼형 논증 문단으로 전환했다.",
+    "질문 유형에 따른 RAG·Wiki 선택 기준과 두 컴파일의 구체적 보존 의무를 결론에 다시 설명했다.",
+    "작은 Wiki부터 동일 예산 기준선으로 비교하는 적용 순서와 쓰기·승격 권한 경계를 추가했다.",
+    "프로젝트 용어, 공개 구현 미비교, L1 내부 스모크와 미검증 성능·비용·보안 한계를 명시했다.",
+    "마지막 문장을 지속 지식의 실제 의미로 구체화했다."
+  ],
+  "humanize_korean": {
+    "genre": "column",
+    "strength": "conservative",
+    "full_article_change_rate_percent": 4.72,
+    "self_check": "6/6 pass",
+    "claim_regression": "none",
+    "protected": [
+      "수치",
+      "날짜",
+      "고유명사",
+      "영어 약어",
+      "인용",
+      "URL",
+      "위키 링크",
+      "표",
+      "코드",
+      "출처 목록"
+    ]
+  },
+  "conclusion_independent_reading": {
+    "topic": "pass",
+    "problem": "pass",
+    "proposal": "pass",
+    "operation": "pass",
+    "rationale": "pass",
+    "meaning_and_limits": "pass"
+  },
+  "image_impact": "reuse",
+  "image_reason": "주장·수치·주요 절·시각 레이블과 커버리지 맵은 바뀌지 않았고 결론의 기존 근거를 재구성했다.",
+  "verification": {
+    "check_post": "pass",
+    "plugins": 45,
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
+    "build": "28 inputs, 324 outputs",
+    "built_post_check": "pass",
+    "route_check": "pass"
+  },
+  "remaining_uncertainty": [
+    "독립 반증 검토자가 없어 연구 반증 검토는 passed_degraded다.",
+    "공개 LLM Wiki 구현의 동일 조건 설치·보안 감사·성능·비용 benchmark는 수행하지 않았다.",
+    "내부 DuckCrab 결과는 L1 결정론 계약 스모크이며 운영 효과를 입증하지 않는다."
+  ]
+}
