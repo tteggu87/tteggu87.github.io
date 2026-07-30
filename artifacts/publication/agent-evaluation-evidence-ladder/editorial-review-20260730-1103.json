@@ -1,0 +1,87 @@
+{
+  "schema": "scheduled-editorial-review",
+  "version": 1,
+  "slug": "agent-evaluation-evidence-ladder",
+  "reviewed_at": "2026-07-30T11:03:52+09:00",
+  "status": "changed",
+  "trigger": {
+    "latest_post_new_since_previous_run": true,
+    "material_research_update_after_publication": false,
+    "standalone_conclusion_defect": true,
+    "defect": "The conclusion explained the ladder's purpose but did not independently restate that the ladder and Measurement-Validity Closure are project proposals, the measurement conditions needed to raise a claim ceiling, or the concrete L1-to-L3 next step and unexecuted validation boundary for the GraphRAG example."
+  },
+  "article": {
+    "path": "content/notes/agent-evaluation-evidence-ladder.md",
+    "title": "24. 합성 검사를 통과한 에이전트는 왜 아직 검증되지 않았는가: 계약 검사에서 운영 증거까지 잇는 평가 사다리",
+    "central_question": "합성 계약 검사를 통과한 에이전트에 대해 실제 성능·안전성·운영 준비도를 어디까지 주장할 수 있으며, 더 강한 주장을 위해 어떤 증거가 필요한가?",
+    "final_claim": "평가 증거를 L0부터 L5까지 구분하고 측정 타당성 조건을 확인해, 각 결과가 직접 관찰한 범위를 넘는 주장을 금지해야 한다."
+  },
+  "reviewed_sources_in_order": [
+    "AGENTS.md",
+    "content/operations/research-publishing-rules.md",
+    ".codex/skills/humanize-korean/SKILL.md",
+    ".codex/skills/humanize-korean/references/quick-rules.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/analyses/next-blog-topic-agent-evaluation-evidence-ladder-2026-07-30.md",
+    "wiki/sources/agent-evaluation-evidence-ladder-2026-07-30.md",
+    "wiki/concepts/evaluation-evidence-ladder-and-claim-ceiling.md",
+    "research/agent-evaluation-evidence-ladder-20260730/README.md",
+    "research/agent-evaluation-evidence-ladder-20260730/state.json",
+    "research/agent-evaluation-evidence-ladder-20260730/outputs/01_full_report.md",
+    "research/agent-evaluation-evidence-ladder-20260730/outputs/02_measurement_validity_uncertainty_and_benchmark_integrity_supplement.md",
+    "research/agent-evaluation-evidence-ladder-20260730/sources/bibliography.md",
+    "research/agent-evaluation-evidence-ladder-20260730/sources/sources.jsonl",
+    "artifacts/publication/agent-evaluation-evidence-ladder/editorial-review.json",
+    ".ai-bridge/agent-status.md"
+  ],
+  "evidence_used": [
+    "The L0-L5 ladder and claim ceiling are explicitly project proposals rather than industry standards.",
+    "Measurement validity requires a defined target, task scope, repeated trials and uncertainty where applicable, task/scorer/harness/resource integrity, and actual environment outcome or trajectory evidence.",
+    "The current GraphRAG synthetic suites are L1 evidence; equal-budget component and fixed end-to-end comparisons are the next L2-L3 steps.",
+    "The DuckCrab A-D benchmark, Korean human-judge calibration, and shadow/canary validation remain unexecuted."
+  ],
+  "not_used": [
+    {
+      "material": "New LLM Wiki landscape and implementation notes",
+      "reason": "They are a separate candidate topic and do not improve the accuracy or conclusion of this evaluation article."
+    },
+    {
+      "material": "Additional vendor-specific figures and benchmark details already covered in the body",
+      "reason": "Repeating them in the conclusion would turn the conclusion into a report recap and add no necessary context."
+    },
+    {
+      "material": "Stale publication fields in the research README and state.json",
+      "reason": "Actual publication state is authoritatively recorded by the merged commit, deployment run, live page, and publication artifacts; the stale research metadata does not change the public article's substantive claims."
+    }
+  ],
+  "changes": [
+    "Clarified in the conclusion that the evidence ladder and Measurement-Validity Closure are project decision frameworks, not established standards.",
+    "Restated the measurement conditions that determine how far a score may be generalized.",
+    "Located the nine GraphRAG synthetic suites at L1 and explained the concrete L2-L3 next step.",
+    "Restated the unexecuted DuckCrab benchmark, Korean human calibration, and shadow/canary boundary.",
+    "Kept the original final judgment and did not add new claims, numbers, citations, links, or image requirements."
+  ],
+  "humanize_korean": {
+    "loaded": true,
+    "mode": "column-conservative",
+    "application": "Targeted manual pass using the repository quick rules after evidence and structure were fixed.",
+    "whole_article_change_rate_percent": 3.3,
+    "guard_result": "pass",
+    "protected_items_preserved": true
+  },
+  "standalone_conclusion_check": {
+    "topic": "pass",
+    "problem_and_background": "pass",
+    "proposal_or_finding": "pass",
+    "operation_or_application": "pass",
+    "reasoning": "pass",
+    "meaning_and_limits": "pass"
+  },
+  "image_impact": "reuse",
+  "remaining_uncertainty": [
+    "The research adversarial review is a degraded self-review without an independent reviewer.",
+    "Twenty external sources do not have local full-text snapshots.",
+    "No equal-budget DuckCrab A-D integration benchmark, Korean human-judge calibration, shadow/canary trial, or production monitoring study has been run."
+  ]
+}
