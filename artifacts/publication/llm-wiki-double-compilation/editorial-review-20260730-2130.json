@@ -1,0 +1,75 @@
+{
+  "schema": "publication-editorial-review",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "reviewed_at": "2026-07-30T21:30:00+09:00",
+  "article": "content/notes/llm-wiki-double-compilation.md",
+  "status": "pass",
+  "trigger": {
+    "type": "core_concept_definition_precedes_comparison_gap",
+    "details": "핵심 요약과 첫 절이 LLM Wiki의 정체와 사용 방식을 충분히 설명하기 전에 RAG와의 차이부터 제시해, 처음 접하는 독자가 비교의 전제를 이해하기 어려웠다."
+  },
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/notes/llm-wiki-double-compilation.md",
+    "artifacts/publication/llm-wiki-double-compilation/editorial-review-20260730-1703.json"
+  ],
+  "evidence_use": {
+    "reflected": [
+      "LLM Wiki를 원문과 출처 경로를 보존하면서 검토된 개념·결정·반례·열린 질문을 다음 조사에 넘기는 지속 지식 공간으로 설명",
+      "출처 메모·개념 페이지·분석 페이지의 역할과 반복 조사 사례",
+      "LLM Wiki 정의와 작동 장면 뒤에 RAG 정의·비교표·연구 결과를 배치",
+      "결론에서도 두 개념을 짧게 재정의한 뒤 적용 차이를 설명"
+    ],
+    "excluded": [
+      {
+        "material": "새 외부 주장·수치·인용",
+        "reason": "이번 결함은 근거 부족이 아니라 개념 설명과 비교 순서의 구조 문제이므로 새 근거를 추가하지 않았다."
+      }
+    ]
+  },
+  "central_question": "LLM Wiki가 무엇을 저장하고 어떻게 쓰이는지를 이해한 뒤, RAG와 어떤 역할로 나누고 두 축약 단계의 손실을 어떻게 검증할 것인가?",
+  "final_claim": "LLM Wiki는 검토된 판단과 근거 경로를 다음 조사에 넘기는 지속 지식 공간이고 RAG는 질문 시점의 원문 검색이므로, 두 개념을 먼저 독립적으로 이해한 뒤 역할과 손실 경계를 비교해야 한다.",
+  "edits": [
+    "description과 핵심 요약에 LLM Wiki의 한 문장 정의를 추가했다.",
+    "도입부를 정의·구성·사용 사례·손실 위험 순서로 재작성했다.",
+    "첫 절을 LLM Wiki 설명, RAG 설명, 공통 비교 이유, 비교표 순서로 재배치했다.",
+    "상투적인 대조 표현을 줄이고 검색의 필요성을 직접 설명했다.",
+    "마지막 결론에서 LLM Wiki와 RAG를 다시 정의한 뒤 적용 기준을 제시했다."
+  ],
+  "concept_dependency_check": {
+    "summary_definition_before_comparison": "pass",
+    "llm_wiki_definition_before_rag_comparison": "pass",
+    "both_sides_independently_explained": "pass",
+    "comparison_table_after_definitions": "pass",
+    "conclusion_redefines_core_concepts": "pass"
+  },
+  "humanize_korean": {
+    "genre": "column",
+    "strength": "conservative",
+    "application": "manual rules review",
+    "claim_regression": "none",
+    "protected": ["수치", "날짜", "고유명사", "영어 약어", "인용", "URL", "표", "출처 목록"]
+  },
+  "conclusion_independent_reading": {
+    "topic": "pass",
+    "core_concept": "pass",
+    "problem": "pass",
+    "proposal": "pass",
+    "operation": "pass",
+    "rationale": "pass",
+    "meaning_and_limits": "pass"
+  },
+  "image_impact": "reuse",
+  "image_reason": "핵심 실행 구조와 시각 레이블은 바뀌지 않았고, 본문에서 개념을 설명하는 순서만 보강했다.",
+  "verification": {
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
+    "build": "28 inputs, 324 outputs",
+    "built_definition_before_comparison": "pass"
+  },
+  "remaining_uncertainty": [
+    "공개 LLM Wiki 구현의 동일 조건 성능·비용·보안 비교는 수행하지 않았다.",
+    "이번 수정은 개념 설명 순서와 독자 이해도 개선이며 운영 효과를 새로 입증하지 않는다."
+  ]
+}
