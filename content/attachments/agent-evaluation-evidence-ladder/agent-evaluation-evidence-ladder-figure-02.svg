@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">측정 타당성 폐쇄</title>
+  <desc id="desc">강한 성능 주장 전에 확인할 측정 대상, 과업 분포, 반복과 불확실성, 무결성, 동등성, 환경 결과와 궤적을 구분한 절차</desc>
+  <rect width="1600" height="900" fill="#F6F1E8"/>
+  <rect x="55" y="45" width="1490" height="810" rx="38" fill="#FFFDF8" stroke="#173B57" stroke-width="5"/>
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    <text x="800" y="122" font-size="62" font-weight="900" fill="#173B57">측정 타당성 폐쇄</text>
+    <text x="800" y="170" font-size="32" font-weight="700" fill="#2B2B2B">강한 성능 주장 전에 여섯 질문을 닫습니다</text>
+
+    <g>
+      <rect x="105" y="215" width="430" height="205" rx="28" fill="#E8EEF1" stroke="#173B57" stroke-width="5"/>
+      <circle cx="155" cy="258" r="30" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+      <text x="155" y="273" font-size="40" font-weight="900" fill="#D16A4B">1</text>
+      <text x="320" y="330" font-size="50" font-weight="900" fill="#173B57">측정 대상</text>
+      <text x="320" y="385" font-size="34" font-weight="700" fill="#2B2B2B">무엇을 개선했는가</text>
+    </g>
+    <g>
+      <rect x="585" y="215" width="430" height="205" rx="28" fill="#E8EEF1" stroke="#173B57" stroke-width="5"/>
+      <circle cx="635" cy="258" r="30" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+      <text x="635" y="273" font-size="40" font-weight="900" fill="#D16A4B">2</text>
+      <text x="800" y="330" font-size="50" font-weight="900" fill="#173B57">과업 분포</text>
+      <text x="800" y="385" font-size="34" font-weight="700" fill="#2B2B2B">어디까지 일반화하는가</text>
+    </g>
+    <g>
+      <rect x="1065" y="215" width="430" height="205" rx="28" fill="#E8EEF1" stroke="#173B57" stroke-width="5"/>
+      <circle cx="1115" cy="258" r="30" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+      <text x="1115" y="273" font-size="40" font-weight="900" fill="#D16A4B">3</text>
+      <text x="1280" y="330" font-size="48" font-weight="900" fill="#173B57">반복 · 불확실성</text>
+      <text x="1280" y="385" font-size="34" font-weight="700" fill="#2B2B2B">trial · 분산 · 실패 꼬리</text>
+    </g>
+
+    <g>
+      <rect x="105" y="475" width="430" height="205" rx="28" fill="#E9F0E9" stroke="#5B7F62" stroke-width="5"/>
+      <circle cx="155" cy="518" r="30" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+      <text x="155" y="533" font-size="40" font-weight="900" fill="#D16A4B">4</text>
+      <text x="320" y="590" font-size="44" font-weight="900" fill="#355B3C">과업 · 채점기 무결성</text>
+      <text x="320" y="645" font-size="34" font-weight="700" fill="#2B2B2B">문제 · 정답 · grader</text>
+    </g>
+    <g>
+      <rect x="585" y="475" width="430" height="205" rx="28" fill="#E9F0E9" stroke="#5B7F62" stroke-width="5"/>
+      <circle cx="635" cy="518" r="30" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+      <text x="635" y="533" font-size="40" font-weight="900" fill="#D16A4B">5</text>
+      <text x="800" y="590" font-size="44" font-weight="900" fill="#355B3C">하네스 · 인프라 동등성</text>
+      <text x="800" y="645" font-size="34" font-weight="700" fill="#2B2B2B">자원 · 도구 · 실패 처리</text>
+    </g>
+    <g>
+      <rect x="1065" y="475" width="430" height="205" rx="28" fill="#E9F0E9" stroke="#5B7F62" stroke-width="5"/>
+      <circle cx="1115" cy="518" r="30" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+      <text x="1115" y="533" font-size="40" font-weight="900" fill="#D16A4B">6</text>
+      <text x="1280" y="590" font-size="48" font-weight="900" fill="#355B3C">환경 결과 · 궤적</text>
+      <text x="1280" y="645" font-size="34" font-weight="700" fill="#2B2B2B">실제 상태 · 필수 과정</text>
+    </g>
+
+    <path d="M1280 705 C1280 805 300 805 300 705" fill="none" stroke="#D16A4B" stroke-width="9"/>
+    <polygon points="285,710 300,680 315,710" fill="#D16A4B"/>
+    <rect x="490" y="724" width="620" height="82" rx="22" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+    <text x="800" y="779" font-size="40" font-weight="900" fill="#A94F37">결함 발견 → 과거 점수 재검토</text>
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">L0부터 L5까지의 주장 상한</title>
+  <desc id="desc">각 평가 단계가 직접 관찰하는 범위와 허용되는 최대 주장을 여섯 카드로 구분한 지도</desc>
+  <rect width="1600" height="900" fill="#F6F1E8"/>
+  <rect x="55" y="45" width="1490" height="810" rx="38" fill="#FFFDF8" stroke="#173B57" stroke-width="5"/>
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    <text x="800" y="125" font-size="62" font-weight="900" fill="#173B57">직접 관찰한 범위만 주장합니다</text>
+
+    <g>
+      <rect x="105" y="185" width="430" height="250" rx="28" fill="#E8EEF1" stroke="#173B57" stroke-width="5"/>
+      <text x="320" y="260" font-size="58" font-weight="900" fill="#173B57">L0 정적 검사</text>
+      <text x="320" y="330" font-size="42" font-weight="800" fill="#2B2B2B">형식 · 스키마</text>
+      <text x="320" y="385" font-size="34" font-weight="650" fill="#2B2B2B">구조가 유효함</text>
+    </g>
+    <g>
+      <rect x="585" y="185" width="430" height="250" rx="28" fill="#E8EEF1" stroke="#173B57" stroke-width="5"/>
+      <text x="800" y="260" font-size="58" font-weight="900" fill="#173B57">L1 합성 계약</text>
+      <text x="800" y="330" font-size="42" font-weight="800" fill="#2B2B2B">분기 · 불변식</text>
+      <text x="800" y="385" font-size="34" font-weight="650" fill="#2B2B2B">예제에서 작동함</text>
+    </g>
+    <g>
+      <rect x="1065" y="185" width="430" height="250" rx="28" fill="#E9F0E9" stroke="#5B7F62" stroke-width="5"/>
+      <text x="1280" y="260" font-size="58" font-weight="900" fill="#355B3C">L2 구성요소</text>
+      <text x="1280" y="330" font-size="42" font-weight="800" fill="#2B2B2B">검색 · 생성 · 행동</text>
+      <text x="1280" y="385" font-size="34" font-weight="650" fill="#2B2B2B">정해진 자료에서 관찰</text>
+    </g>
+
+    <g>
+      <rect x="105" y="495" width="430" height="250" rx="28" fill="#E9F0E9" stroke="#5B7F62" stroke-width="5"/>
+      <text x="320" y="570" font-size="58" font-weight="900" fill="#355B3C">L3 고정 E2E</text>
+      <text x="320" y="640" font-size="42" font-weight="800" fill="#2B2B2B">모델 · 도구 · 환경</text>
+      <text x="320" y="695" font-size="34" font-weight="650" fill="#2B2B2B">고정 조건에서 재현</text>
+    </g>
+    <g>
+      <rect x="585" y="495" width="430" height="250" rx="28" fill="#F5EDE4" stroke="#D16A4B" stroke-width="5"/>
+      <text x="800" y="570" font-size="58" font-weight="900" fill="#A94F37">L4 제한 운영</text>
+      <text x="800" y="640" font-size="42" font-weight="800" fill="#2B2B2B">사람 보정 · canary</text>
+      <text x="800" y="695" font-size="34" font-weight="650" fill="#2B2B2B">제한 범위에서 관찰</text>
+    </g>
+    <g>
+      <rect x="1065" y="495" width="430" height="250" rx="28" fill="#F5EDE4" stroke="#D16A4B" stroke-width="5"/>
+      <text x="1280" y="570" font-size="58" font-weight="900" fill="#A94F37">L5 운영 관찰</text>
+      <text x="1280" y="640" font-size="42" font-weight="800" fill="#2B2B2B">drift · 중단 · 복구</text>
+      <text x="1280" y="695" font-size="34" font-weight="650" fill="#2B2B2B">관찰 기간에 작동함</text>
+    </g>
+
+    <rect x="315" y="780" width="970" height="52" rx="18" fill="#FFF1EB"/>
+    <text x="800" y="817" font-size="34" font-weight="850" fill="#A94F37">한 단계의 PASS를 더 높은 단계의 인증으로 바꾸지 않습니다</text>
+  </g>
+</svg>

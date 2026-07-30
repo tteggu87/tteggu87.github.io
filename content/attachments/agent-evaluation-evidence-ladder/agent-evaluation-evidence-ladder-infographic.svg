@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">에이전트 평가 증거 사다리</title>
+  <desc id="desc">검사 통과와 운영 검증을 구분하고 L0부터 L5까지 허용 주장과 다음 증거, 재개방 상태를 연결한 지도</desc>
+  <rect width="1600" height="900" fill="#F6F1E8"/>
+  <rect x="55" y="45" width="1490" height="810" rx="38" fill="#FFFDF8" stroke="#173B57" stroke-width="5"/>
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    <text x="800" y="125" font-size="62" font-weight="850" fill="#173B57">에이전트 평가 증거 사다리</text>
+    <rect x="285" y="165" width="1030" height="104" rx="28" fill="#FFF1EB" stroke="#D16A4B" stroke-width="5"/>
+    <text x="800" y="234" font-size="66" font-weight="900" fill="#A94F37">검사 통과 ≠ 운영 검증</text>
+
+    <rect x="95" y="320" width="440" height="220" rx="30" fill="#E8EEF1" stroke="#173B57" stroke-width="5"/>
+    <text x="315" y="395" font-size="58" font-weight="900" fill="#173B57">L0–L1</text>
+    <text x="315" y="455" font-size="40" font-weight="750" fill="#2B2B2B">형식 · 합성 계약</text>
+    <text x="315" y="505" font-size="34" font-weight="650" fill="#2B2B2B">예제 안의 작동만 확인</text>
+
+    <rect x="580" y="320" width="440" height="220" rx="30" fill="#E9F0E9" stroke="#5B7F62" stroke-width="5"/>
+    <text x="800" y="395" font-size="58" font-weight="900" fill="#355B3C">L2–L3</text>
+    <text x="800" y="455" font-size="40" font-weight="750" fill="#2B2B2B">자료 · 고정 E2E</text>
+    <text x="800" y="505" font-size="34" font-weight="650" fill="#2B2B2B">고정 조건의 관찰만 주장</text>
+
+    <rect x="1065" y="320" width="440" height="220" rx="30" fill="#F5EDE4" stroke="#D16A4B" stroke-width="5"/>
+    <text x="1285" y="395" font-size="58" font-weight="900" fill="#A94F37">L4–L5</text>
+    <text x="1285" y="455" font-size="40" font-weight="750" fill="#2B2B2B">제한 운영 · 모니터링</text>
+    <text x="1285" y="505" font-size="34" font-weight="650" fill="#2B2B2B">관찰 범위와 기간만 주장</text>
+
+    <rect x="135" y="605" width="420" height="105" rx="24" fill="#E8EEF1" stroke="#173B57" stroke-width="4"/>
+    <text x="345" y="673" font-size="44" font-weight="850" fill="#173B57">직접 관찰</text>
+    <path d="M565 657 H690" stroke="#173B57" stroke-width="10"/>
+    <polygon points="690,638 720,657 690,676" fill="#173B57"/>
+    <rect x="720" y="605" width="360" height="105" rx="24" fill="#E9F0E9" stroke="#5B7F62" stroke-width="4"/>
+    <text x="900" y="673" font-size="44" font-weight="850" fill="#355B3C">허용 주장</text>
+    <path d="M1090 657 H1185" stroke="#173B57" stroke-width="10"/>
+    <polygon points="1185,638 1215,657 1185,676" fill="#173B57"/>
+    <rect x="1215" y="605" width="250" height="105" rx="24" fill="#F5EDE4" stroke="#D16A4B" stroke-width="4"/>
+    <text x="1340" y="673" font-size="42" font-weight="850" fill="#A94F37">다음 증거</text>
+
+    <text x="455" y="790" font-size="38" font-weight="800" fill="#355B3C">승격 · 보류 · 롤백 · 관찰</text>
+    <rect x="830" y="738" width="625" height="78" rx="22" fill="#FFF1EB" stroke="#D16A4B" stroke-width="4"/>
+    <text x="1142" y="790" font-size="38" font-weight="850" fill="#A94F37">결함 발견 → 근거 게이트 재개방</text>
+  </g>
+</svg>
