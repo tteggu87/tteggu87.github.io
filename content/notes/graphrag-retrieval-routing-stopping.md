@@ -152,6 +152,8 @@ survival_ledger:
 
 NEST와 ReflectiveRAG는 nested evidence의 생존과 retrieval adaptivity를 다루지만 같은 연구진의 연속된 연구이므로 독립 근거 두 개로 세지 않는 편이 안전합니다.[src_030](#src-030)[src_031](#src-031) 또한 두 연구는 일반 text RAG를 중심으로 하므로 GraphRAG 전체에 직접 일반화하지 않습니다. 여기서는 중요한 근거가 중간 선택 단계에서 조용히 사라지지 않게 하는 설계 영감으로만 사용합니다.
 
+후보가 질문을 직접 설명하는 정도와 근거 경로를 이어 주는 가치는 같은 값이 아닙니다. 동료 평가 전 공개된 Ex-GraphRAG 연구 한 편은 특정 데이터셋과 graph encoder 설정에서 직접 설명 점수가 낮은 중간 node를 제거했을 때 여러 홉의 근거 연결이 끊길 수 있음을 보고했습니다.[src_033](#src-033) 이 결과를 보편 법칙으로 확대할 수는 없습니다. 다만 가지치기 전에 후보의 **의미 가치**와 검증된 출처 경로·반례 경로를 이어 주는 **구조 가치**를 따로 확인해야 한다는 경계는 분명해집니다. 출처가 없거나 오래됐거나 오염된 후보는 구조적으로 유일해 보여도 보류 목록이 아니라 무효 또는 격리 상태로 보내야 합니다.
+
 가지치기에는 source gate도 필요합니다. graph edge나 community summary가 관련돼 보이더라도 다음 중 하나를 충족하지 못하면 최종 답의 확정 근거로 올리지 않습니다.
 
 1. 원문 또는 검증 가능한 upstream record가 연결돼 있습니다.
@@ -249,19 +251,21 @@ stopping contribution
 
 이렇게 모듈을 하나씩 끄는 ablation이 있어야 `GraphRAG가 좋아졌다`가 아니라 `어느 책임이 어떤 질문에서 필요했다`고 말할 수 있습니다.
 
-## 일곱 합성 스위트는 성능이 아니라 분기 누락만 확인했습니다
+## 아홉 합성 스위트는 성능이 아니라 분기 누락만 확인했습니다
 
-이 글을 준비한 연구 번들에서는 실행 제어 계약을 일곱 개의 결정론적 합성 스위트로 점검했습니다.
+이 글을 준비한 연구 번들에서는 실행 제어 계약을 아홉 개의 결정론적 합성 스위트로 점검했습니다.
 
-| 합성 스위트        | 검사한 내용                           |  결과 |
-| ------------------ | ------------------------------------- | ----: |
-| route·stopping     | 질문별 초기 경로와 종결 상태          | 12/12 |
-| nested controller  | 의무·공백·행동의 중첩 제어            | 15/15 |
-| hop view           | 홉별 entity·relation·source·반례 view | 14/14 |
-| contribution       | route·adapter·pruning 기여 분리       | 14/14 |
-| gap stopping       | 근거 공백 기반 중단                   | 15/15 |
-| route-query        | 경로별 질의와 의미 등가성             | 14/14 |
-| reversible pruning | 보류 후보의 생존·복구 원장            | 15/15 |
+| 합성 스위트        | 검사한 내용                              |  결과 |
+| ------------------ | ---------------------------------------- | ----: |
+| route·stopping     | 질문별 초기 경로와 종결 상태             | 12/12 |
+| nested controller  | 의무·공백·행동의 중첩 제어               | 15/15 |
+| hop view           | 홉별 entity·relation·source·반례 view    | 14/14 |
+| contribution       | route·adapter·pruning 기여 분리          | 14/14 |
+| gap stopping       | 근거 공백 기반 중단                      | 15/15 |
+| route-query        | 경로별 질의와 의미 등가성                | 14/14 |
+| reversible pruning | 보류 후보의 생존·복구 원장               | 15/15 |
+| dual-value pruning | 직접 설명력과 근거 경로 연결 가치의 분리 | 15/15 |
+| evidence ladder    | 합성 검사와 성능 주장의 증거 단계 구분   | 12/12 |
 
 이 숫자는 작성한 분기표의 예시가 기대 상태로 이동했는지 확인한 assertion 개수입니다. 실제 질문에서의 정확도, latency, token, 비용이나 production threshold가 아닙니다. 동일 예산의 vector·full-text·graph·RRF·graph-free 비교도 아직 실행하지 않았습니다.
 
@@ -270,6 +274,8 @@ stopping contribution
 > 답변 의무, 경로별 질의, 근거 공백, 가역적 가지치기와 명시적 종결 상태를 하나의 receipt로 연결할 수 있고, 준비한 합성 시나리오에서 빠진 분기가 없었습니다.
 
 반대로 말할 수 없는 것은 `이 제어기가 특정 서비스에서 더 정확하다`, `몇 홉이나 몇 점에서 멈춰야 한다`, `GraphRAG가 graph-free 기준선보다 싸다`입니다. 이런 결론은 live corpus와 동일 예산 benchmark가 있어야 합니다.
+
+후속 읽기 전용 감사에서는 로컬 저장소에 그래프용 node·relation 묶음(graph projection)이 비어 있지 않았고, 중복 key·끊어진 endpoint·schema 연결 누락도 검사 범위에서는 없었습니다. 그러나 graph query와 graph 결과에서 원문 근거로 내려가는 경로는 실행해 보지 않았습니다. 벡터·전문 검색 색인(index)의 실제 데이터, RRF 결합과 정답 근거가 표시된 평가 자료(fixture)도 확인되지 않았습니다. 따라서 `그래프 데이터가 없다`고 말하는 것도, `경로 비교를 실행할 준비가 됐다`고 말하는 것도 모두 현재 근거를 넘어섭니다. 실제 route benchmark는 이 실행 조건이 갖춰질 때까지 차단된 상태입니다.
 
 ![raw query·고정 경로·큰 top-k·RRF·triplet retrieval 기준선과 route·adapter·pruning·stopping ablation을 비교하는 검증 매트릭스](../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-03.png)
 
@@ -329,7 +335,7 @@ GraphRAG를 운영할 때 가장 어려운 일은 질문에 답하려면 무엇�
 
 따라서 실제 시스템에서는 관계와 경로가 답의 근거가 되는 질문에만 그래프 탐색을 사용하고, 직접 인용이나 식별자 조회처럼 얇은 검색으로 충분한 질문은 더 단순한 경로로 처리합니다. 끝까지 닫히지 않은 근거 공백은 fallback이나 보류 사유로 남깁니다. 이렇게 하면 최종 답에는 검색 횟수보다 무엇을 확인했고 무엇을 확인하지 못했는지가 함께 남습니다.
 
-다만 이 글에서 확인한 것은 작성한 상태 전이가 합성 시나리오에서 빠짐없이 작동한다는 범위까지입니다. 동일한 질문·모델·자료·권한·예산으로 벡터 검색(vector)·전문 검색(FTS)·그래프 검색·여러 검색 순위를 합치는 RRF·graph-free 검색을 비교한 실제 통합 실험은 아직 없고, 질의 변환기·근거 공백 제어·가역적 가지치기의 운영 임계값도 정하지 않았습니다. DuckCrab의 현재 구현 범위도 이 제어기 전체에 이르지 않습니다. 현재 결론은 이 책임들을 분리해 기록하고 비교할 수 있다는 데 있으며, 정확도·비용·지연의 이득은 실제 문서와 같은 예산의 benchmark에서 별도로 입증해야 합니다.
+다만 이 글에서 확인한 것은 작성한 상태 전이가 합성 시나리오에서 빠짐없이 작동하고, 로컬 저장소에 검사 가능한 graph projection이 존재한다는 범위까지입니다. 그래프가 저장돼 있다는 사실은 graph query가 실행되고 원문 근거까지 추적된다는 뜻이 아닙니다. 현재 snapshot에서는 벡터·전문 검색 색인과 RRF 결합, 정답 근거를 표시한 평가 자료도 준비됐다고 볼 수 없습니다. 따라서 다음 단계는 제어 규칙을 더 늘리는 일이 아닙니다. 원문·그래프·색인이 같은 revision을 가리키게 하고, 출처로 내려갈 수 있는 graph query와 데이터가 채워진 text·vector 경로, 공통 결합 방식과 실행 영수증을 먼저 갖춰야 합니다. 그 뒤 동일한 질문·모델·자료·권한·예산으로 경로를 비교해야 정확도·비용·지연의 이득을 주장할 수 있습니다.
 
 ---
 
@@ -422,3 +428,7 @@ GraphRAG를 운영할 때 가장 어려운 일은 질문에 답하려면 무엇�
 <a id="src-032"></a>
 
 - [Defense Against Knowledge Poisoning Attack on GraphRAG](https://aclanthology.org/2026.acl-short.47/)
+
+<a id="src-033"></a>
+
+- [Ex-GraphRAG: Interpretable Evidence Routing for Graph-Augmented LLMs](https://arxiv.org/abs/2605.21994)
