@@ -1,0 +1,57 @@
+{
+  "schema": "publication-editorial-review",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "reviewed_at": "2026-07-30T16:27:33+09:00",
+  "article": "content/notes/llm-wiki-double-compilation.md",
+  "article_git_blob": "0ef8c889768159064263218edf1d7b7a762d21d1",
+  "status": "pass",
+  "structure": {
+    "frontmatter": "pass",
+    "numbered_title": 25,
+    "summary_callout": "pass",
+    "h1_duplicates": 0,
+    "reader_flow": [
+      "대체 질문의 재정의",
+      "1차 source-to-wiki compilation",
+      "2차 wiki-to-context compilation",
+      "네 독립 검증 축",
+      "lineage·progressive disclosure·write authority",
+      "단계별 receipt와 regression probes",
+      "조건별 도입 기준과 결론"
+    ],
+    "images": 4,
+    "sources": 8
+  },
+  "humanize_korean": {
+    "mode": "conservative_sectionwise",
+    "protected": [
+      "frontmatter",
+      "code blocks",
+      "tables",
+      "quoted source claims",
+      "URLs",
+      "citation anchors"
+    ],
+    "changes": "반복되는 안내형 표현을 줄이고 문장 리듬을 조정했으며 주장·수치·목차·인용은 유지했다.",
+    "claim_regression": "none"
+  },
+  "claim_review": {
+    "overclaim_scan": "pass",
+    "numeric_scope": "WiCER 53~60%, 24 papers/13 questions, and 709-page ablation are explicitly limited to author-reported tested settings.",
+    "internal_experiment_scope": "DuckCrab result is labeled an L1 deterministic contract smoke with no LLM, trained compressor, active vector index, or production claim.",
+    "security_scope": "OWASP guidance and Bad Memory are used only to justify treating persistent write paths as a review boundary, not as prevalence evidence.",
+    "rejected_claims_reintroduced": false
+  },
+  "novelty_regression": {
+    "status": "pass",
+    "difference_from_post_16": "16번의 Pack-to-Context 경계를 재설명하는 데 그치지 않고 source-to-wiki를 앞단에 추가하고 두 receipt·두 regression suite의 단계 분리를 중심 논지로 삼았다.",
+    "difference_from_post_22": "책임 사슬의 개요가 아니라 유지보수 시점과 질의 시점의 손실을 실행 가능한 보존 의무로 구체화했다.",
+    "difference_from_post_24": "평가 사다리는 주장 상한 표시에만 사용하고 글의 중심을 LLM Wiki 운영 계약에 유지했다."
+  },
+  "deterministic_check": {
+    "command": "check_post.py . content/notes/llm-wiki-double-compilation.md --require-infographic --require-report-images --editorial-warnings --require-editorial-structure",
+    "result": "pass",
+    "prettier": "applied; semantic content unchanged"
+  }
+}

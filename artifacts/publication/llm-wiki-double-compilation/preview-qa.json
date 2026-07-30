@@ -1,0 +1,85 @@
+{
+  "schema": "publication-preview-qa",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "tested_at": "2026-07-30T16:39:00+09:00",
+  "url": "http://localhost:43125/notes/llm-wiki-double-compilation",
+  "status": "pass_with_declared_surface_fallback",
+  "browser_surface": {
+    "preferred": "Browser plugin through browser-client",
+    "result": "unavailable; runtime browser list was empty after documented troubleshooting",
+    "fallback": "installed Google Chrome in headless DevTools mode",
+    "reason": "non-interactive scheduled run required viewport and pixel QA without asking the user"
+  },
+  "viewports": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "document_client_width": 390,
+      "document_scroll_width": 390,
+      "horizontal_overflow": false,
+      "table_widths": [
+        "326/326",
+        "326/326",
+        "326/326",
+        "326/326"
+      ],
+      "visual_result": "title wraps naturally, tags fit, lead infographic scales to article width, summary begins without overlap"
+    },
+    {
+      "name": "tablet",
+      "width": 834,
+      "height": 1112,
+      "document_client_width": 834,
+      "document_scroll_width": 834,
+      "horizontal_overflow": false,
+      "table_widths": [
+        "433/433",
+        "433/433",
+        "433/433",
+        "433/433"
+      ],
+      "visual_result": "article and explorer columns remain separated; prose, code blocks and callouts remain readable"
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "document_client_width": 1440,
+      "document_scroll_width": 1440,
+      "horizontal_overflow": false,
+      "table_widths": [
+        "571/571",
+        "436/436",
+        "680/680",
+        "480/480"
+      ],
+      "visual_result": "explorer, article and table of contents columns render without overlap"
+    }
+  ],
+  "assets": {
+    "expected_article_images": 4,
+    "loaded_article_images": 4,
+    "broken_images": 0,
+    "natural_dimensions": [
+      "1659x948",
+      "1672x941",
+      "1659x948",
+      "1659x948"
+    ],
+    "http_status": {
+      "lead": 200,
+      "figure_01": 200,
+      "figure_02": 200,
+      "figure_03": 200
+    }
+  },
+  "internal_links": {
+    "context_compilation_regression": 200,
+    "agent_evaluation_evidence_ladder": 200
+  },
+  "route": "/notes/llm-wiki-double-compilation",
+  "content_index": "present with exact title",
+  "result": "pass"
+}
