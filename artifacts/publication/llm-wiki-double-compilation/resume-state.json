@@ -1,0 +1,31 @@
+{
+  "schema": "publication-resume-state",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "updated_at": "2026-07-30T16:27:33+09:00",
+  "base_sha": "05f009fdf87eb5bdc51f92645c8511feebbf51f4",
+  "branch": "agent/publish-llm-wiki-double-compilation-20260730",
+  "worktree": ".worktrees/llm-wiki-double-compilation-20260730",
+  "gates": {
+    "evidence": {
+      "status": "completed",
+      "artifact": "artifacts/publication/llm-wiki-double-compilation/evidence-decision.json",
+      "input_hash": "4ce0f28527bc44fe3ddadd4ef3ee6b8b03a19cc41513b45df0563fa9ecda25b6+4f33dd7781d6a21a702423ca3006c77bdb631feff416bdce9c8146958dd79851"
+    },
+    "article": {
+      "status": "completed",
+      "article_git_blob": "0ef8c889768159064263218edf1d7b7a762d21d1",
+      "artifact": "artifacts/publication/llm-wiki-double-compilation/editorial-review.json",
+      "next_start": null
+    },
+    "images": {
+      "status": "completed",
+      "artifact": "artifacts/publication/llm-wiki-double-compilation/image-review.json",
+      "next_start": null
+    },
+    "publication_and_deployment": {
+      "status": "pending",
+      "next_start": "after article and image gates pass"
+    }
+  }
+}

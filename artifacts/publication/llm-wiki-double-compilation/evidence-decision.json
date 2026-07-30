@@ -1,0 +1,94 @@
+{
+  "schema": "publication-evidence-decision",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "decided_at": "2026-07-30T16:09:26+09:00",
+  "status": "pass",
+  "article_number": 25,
+  "working_title": "25. LLM Wiki는 RAG를 대체하는가: 저장과 검색 사이의 이중 컴파일을 검증하는 법",
+  "base": {
+    "branch": "agent/publish-llm-wiki-double-compilation-20260730",
+    "sha": "05f009fdf87eb5bdc51f92645c8511feebbf51f4",
+    "matches_origin_main": true
+  },
+  "primary_bundle": {
+    "path": "research/llm-wiki-persistent-knowledge-compiler-20260730",
+    "role": "LLM Wiki의 지속 지식 컴파일, 승격 경계, 검색 대비 적용 범위와 실패 경로",
+    "full_report_sha256": "4ce0f28527bc44fe3ddadd4ef3ee6b8b03a19cc41513b45df0563fa9ecda25b6",
+    "source_ledger_sha256": "511dcb700f4d89fd9c7bd135bd72464beaea426a47a563fba32827e8314e8656",
+    "evidence_audit_sha256": "e47435254eb53c6d5c62c52063e7a29d84b789d1991f44b7f93cd5e838defbae",
+    "audit_result": "PASS",
+    "registered_sources": 22,
+    "claims": 12,
+    "review_mode": "degraded_self_review"
+  },
+  "secondary_bundle": {
+    "path": "research/context-compilation-regression-20260728",
+    "role": "지속 위키에서 질의별 Context Bundle로 옮길 때의 의무 보존과 제한적 계약 스모크",
+    "full_report_sha256": "4f33dd7781d6a21a702423ca3006c77bdb631feff416bdce9c8146958dd79851",
+    "source_ledger_sha256": "ac864444f0aad00ce5b45ab86ed96efbe9f2dbbf1895936c11ad4567c02db5dd",
+    "evidence_audit_sha256": "4374d21afe3ee1172294f1c987209859aa117c728fa3ab6f0da0f19b3d218d6c",
+    "audit_result": "PASS",
+    "review_mode": "degraded_self_review",
+    "experiment_scope": "DuckCrab deterministic contract smoke; no LLM, trained compressor, vector benchmark, or production traffic"
+  },
+  "novelty": {
+    "public_posts_scanned": 24,
+    "next_number_check": "NEXT=25",
+    "closest_public_posts": [
+      {
+        "path": "content/notes/knowledge-centric-self-improvement.md",
+        "git_blob": "2cbf4da8821926731355a21e30152b4462d1a722",
+        "boundary": "15번은 작업 경험을 공유 지식으로 승격하는 루프를 다루며 문서 원문에서 유지되는 위키의 편집 계약은 중심이 아니다."
+      },
+      {
+        "path": "content/notes/context-compilation-regression.md",
+        "git_blob": "0321d4c2ed29ec34d037243fc7231de3f41f2a4a",
+        "boundary": "16번은 검증된 Pack에서 질의별 Context Bundle을 만드는 두 번째 컴파일 경계를 다룬다."
+      },
+      {
+        "path": "content/notes/graphrag-beyond-context-compiler.md",
+        "git_blob": "3aa56fe9e7c1fefaf9f75f6d7aa6c290d2ccd234",
+        "boundary": "22번은 GraphRAG 이후의 책임 사슬을 설명하지만 source-to-wiki와 wiki-to-context의 회귀를 하나의 검증 계약으로 묶지 않는다."
+      },
+      {
+        "path": "content/notes/agent-evaluation-evidence-ladder.md",
+        "git_blob": "2b0614b677b421426bcb7dc57613caed06065da3",
+        "boundary": "24번은 평가 증거의 L0~L5 주장 상한을 다루며 LLM Wiki의 유지보수·검색 경계를 직접 설계하지 않는다."
+      }
+    ],
+    "new_core": [
+      "원문에서 지속 위키로의 maintenance-time compilation과 지속 위키에서 질의별 Context Bundle로의 query-time compilation을 분리한다.",
+      "source truth, wiki preservation, context obligation retention, generation utilization을 서로 대체할 수 없는 네 검증 축으로 묶는다.",
+      "두 컴파일 단계마다 서로 다른 입력 hash, 보존 의무, 쓰기 권한, 회귀 fixture와 receipt를 요구하는 최소 운영 계약을 제안한다."
+    ],
+    "result": "pass"
+  },
+  "claim_ceiling": {
+    "allowed": [
+      "LLM Wiki와 RAG는 서로 다른 시간대와 산출물을 다루므로 보편적인 대체 관계로 말하기 어렵다.",
+      "작은 사전등록 비교에서는 정확한 단일 문서 조회가 RAG 쪽 기준에 더 잘 맞고, 여러 문서를 잇는 종합·인용 구조는 Wiki 쪽 기준에 더 잘 맞았으며 보편적 승자는 없었다.",
+      "WiCER는 해당 실험 조건에서 위키 메모리의 치명적 실패를 보고했으므로 지속 위키도 평가·수정 루프가 필요하다는 설계 근거가 된다.",
+      "내부 결정론적 계약 스모크에서는 제한된 두 압축 경로가 네 의무 중 위협 모델 한 항목을 누락했지만 이는 모델 품질이나 압축기 우월성을 입증하지 않는다."
+    ],
+    "rejected_or_deferred": [
+      "LLM Wiki가 RAG를 일반적으로 대체한다.",
+      "LLM Wiki가 일반적으로 토큰·비용·정확도를 개선한다.",
+      "공개 LLM Wiki 구현 세 가지의 설치 안전성 또는 운영 우위가 확인됐다.",
+      "위키 링크만으로 GraphRAG나 형식 온톨로지와 동등한 추론이 가능하다.",
+      "두 단계 회귀 게이트가 실제 조직에서 품질·비용을 개선했다.",
+      "DuckCrab 계약 스모크가 LLM·압축기·vector 경로의 성능을 검증했다."
+    ]
+  },
+  "known_limits": [
+    "외부 출처 18개는 공식 페이지·초록·저장소 문서 중심의 메타데이터 검증이며 전체 원문 스냅샷이 번들에 없다.",
+    "주요 LLM Wiki 연구는 2026년 사전 인쇄본 또는 소규모 비교이며 독립 재현이 부족하다.",
+    "공개 구현의 공통 설치·보안·성능 벤치마크는 실행하지 않았다.",
+    "지속 위키가 반복 조사 시간을 실제로 얼마나 줄이는지 측정하지 않았다.",
+    "독립 adversarial reviewer를 확보하지 못해 두 번들 모두 degraded self-review다."
+  ],
+  "gate": {
+    "decision": "proceed",
+    "reason": "감사된 주·보조 번들이 있고, 공개 24개 글과 구분되는 새 핵심 질문·책임 경계·검증 계약이 존재하며, 미검증 주장의 상한을 발행문에서 명시할 수 있다."
+  }
+}

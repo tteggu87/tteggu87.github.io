@@ -1,0 +1,67 @@
+{
+  "schema": "publication-image-review",
+  "version": 1,
+  "slug": "llm-wiki-double-compilation",
+  "reviewed_at": "2026-07-30T16:27:33+09:00",
+  "status": "pass",
+  "generation": {
+    "initial_run": "4 ok / 0 fail",
+    "initial_hard_gate": "lead, figure-02, and figure-03 were 1536x1024 and failed the 16:9 publication gate",
+    "recovery": "preserved rejected canvases under rejected-ratio and regenerated only the three failed assets once at 1792x1024",
+    "recovery_run": "3 ok / 0 fail",
+    "prompt_validation": "4/4 ok, 0 errors, 0 warnings"
+  },
+  "assets": [
+    {
+      "path": "content/attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-infographic.png",
+      "sha256": "3d4b1659770878aa248b893fb2d9580972b04b716eb7547d8d4caa2246383ef3",
+      "pixels": "1659x948",
+      "ratio_gate": "pass",
+      "message": "raw source to first compiler to persistent wiki to second compiler to question context to answer",
+      "direction": "left-to-right correct",
+      "limitations": "four independent gauges visually separate upstream truth, wiki preservation, obligation retention, and evidence use",
+      "korean_labels": "pass",
+      "mobile_readability": "pass"
+    },
+    {
+      "path": "content/attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-01.png",
+      "sha256": "ef5cdfddcd85b0da67bea0fd52c7acf4a15b49965b0f5300dd7e62d19eab7762",
+      "pixels": "1672x941",
+      "ratio_gate": "pass",
+      "message": "six source-preservation obligations surround the first compiler and a scope omission is caught before promotion",
+      "direction": "source A/B/C to compiler to reviewed wiki correct",
+      "limitations": "범위 누락 is visibly intercepted before 승격 전 검사",
+      "korean_labels": "pass",
+      "mobile_readability": "pass"
+    },
+    {
+      "path": "content/attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-02.png",
+      "sha256": "3d613879c86b9fd5ddb390fb753380ad27cfb7718ea9af0cc0d2c1bac5575941",
+      "pixels": "1659x948",
+      "ratio_gate": "pass",
+      "message": "four different objects are measured by four independent instruments",
+      "direction": "no automatic inheritance implied",
+      "limitations": "통과는 서로 대체되지 않는다 is explicit",
+      "korean_labels": "pass",
+      "mobile_readability": "pass"
+    },
+    {
+      "path": "content/attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-03.png",
+      "sha256": "ceef33aa06d96ddc22224cb65e7012603dff4136291aa9d495983c5d4c803734",
+      "pixels": "1659x948",
+      "ratio_gate": "pass",
+      "message": "two regression lanes with a locked first-stage pass and a second-stage-only retry",
+      "direction": "coral retry arrow returns only to the lower compiler",
+      "limitations": "first stage remains visibly locked and is not rerun",
+      "korean_labels": "pass",
+      "mobile_readability": "pass"
+    }
+  ],
+  "nonduplication": {
+    "lead": "complete lifecycle",
+    "figure_01": "source-to-wiki preservation contract",
+    "figure_02": "independent measurement axes",
+    "figure_03": "stage-specific rerun behavior",
+    "result": "pass"
+  }
+}
