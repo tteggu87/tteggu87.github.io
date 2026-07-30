@@ -1,0 +1,132 @@
+{
+  "schema": "tteggu-editorial-review",
+  "version": 1,
+  "recorded_at": "2026-07-30T09:25:19+09:00",
+  "article": "content/notes/graphrag-retrieval-routing-stopping.md",
+  "trigger": {
+    "type": "related_research_substantive_update",
+    "summary": "The directly related private research bundle closed a newer canonical evidence gate at 2026-07-30T09:05:51+09:00. The public article still described seven synthetic suites and did not reflect the bounded local data-plane audit or dual-value pruning boundary.",
+    "canonical_revision": "research/graphrag-retrieval-routing-stopping-20260729/artifacts/drafts/report-revision-20260730-0905.md",
+    "evidence_audit": "research/graphrag-retrieval-routing-stopping-20260729/outputs/evidence_audit-integrated-20260730-0905.json",
+    "manifest": "research/graphrag-retrieval-routing-stopping-20260729/artifacts/publication/graphrag-retrieval-routing-stopping/evidence-manifest-20260730-0905.json"
+  },
+  "inspected_materials": [
+    "AGENTS.md",
+    "content/operations/research-publishing-rules.md",
+    ".codex/skills/humanize-korean/SKILL.md",
+    ".codex/skills/humanize-korean/references/quick-rules.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/sources/graphrag-retrieval-routing-stopping-2026-07-29.md",
+    "wiki/sources/agent-evaluation-evidence-ladder-2026-07-30.md",
+    "research/graphrag-retrieval-routing-stopping-20260729/README.md",
+    "research/graphrag-retrieval-routing-stopping-20260729/artifacts/state-supplement-20260730-0905.json",
+    "research/graphrag-retrieval-routing-stopping-20260729/artifacts/drafts/report-revision-20260730-0905.md",
+    "research/graphrag-retrieval-routing-stopping-20260729/sources/sources-integrated-20260730-0905.jsonl",
+    "research/graphrag-retrieval-routing-stopping-20260729/sources/bibliography-integrated-20260730-0905.md",
+    "research/graphrag-retrieval-routing-stopping-20260729/artifacts/triangulation-integrated-20260730-0905.json",
+    "research/graphrag-retrieval-routing-stopping-20260729/artifacts/adversarial-review-integrated-20260730-0905.json",
+    "research/graphrag-retrieval-routing-stopping-20260729/outputs/evidence_audit-integrated-20260730-0905.json",
+    "research/graphrag-retrieval-routing-stopping-20260729/artifacts/publication/graphrag-retrieval-routing-stopping/evidence-manifest-20260730-0905.json",
+    "research/graphrag-retrieval-routing-stopping-20260729/outputs/09_local_data_plane_readiness_audit_supplement.md",
+    "research/graphrag-retrieval-routing-stopping-20260729/outputs/10_retrieval_data_plane_consistency_closure_supplement.md",
+    "research/graphrag-retrieval-routing-stopping-20260729/artifacts/experiments/graphrag_dual_value_pruning_smoke_results.json"
+  ],
+  "source_resolution": {
+    "latest_canonical_status": "RESEARCH_COMPLETE_EVIDENCE_GATE_PASS_DEGRADED",
+    "sources": 39,
+    "verified_claims": 29,
+    "synthetic_suites": 9,
+    "evidence_audit": "PASS",
+    "publication_gate": "closed_ready",
+    "note": "The older README and GraphRAG wiki source note still describe the 03:36 baseline of 32 sources, 24 claims, and seven suites. They were treated as historical context rather than the latest source of truth."
+  },
+  "central_question": "GraphRAG should choose, expand, prune, and stop retrieval by which evidence obligations and observable execution states?",
+  "final_claim": "A GraphRAG controller should preserve answer obligations and source-supported paths, distinguish semantic usefulness from structural bridge value, and delay performance claims until the storage, query, source-descent, fusion, evaluation, and receipt planes support an equal-budget benchmark.",
+  "reflected_evidence": [
+    {
+      "evidence": "Ex-GraphRAG bounded preprint finding and integrated claim clm_039",
+      "change": "Added a narrowly scoped explanation that direct semantic value and source-supported structural bridge value should be checked separately before permanent pruning.",
+      "boundary": "The result remains limited to one preprint, dataset, encoder family, and pruning setup; it was not presented as a universal rule."
+    },
+    {
+      "evidence": "Nine synthetic suites in the 09:05 integrated manifest",
+      "change": "Corrected the article from seven to nine suites and added dual-value pruning 15/15 and evidence-ladder 12/12.",
+      "boundary": "The suites remain L0-L1 contract checks and do not support accuracy, latency, cost, or production-readiness claims."
+    },
+    {
+      "evidence": "Read-only Retrieval Data-Plane Consistency Closure",
+      "change": "Explained that a non-empty schema-bound graph projection and checked aggregate integrity do not establish executable graph queries, source descent, populated vector/FTS routes, RRF fusion, labeled fixtures, or benchmark readiness.",
+      "boundary": "No raw document content, node labels, properties, embeddings, credentials, or sampled records were exposed."
+    }
+  ],
+  "excluded_materials": [
+    {
+      "material": "Detailed NIST, Anthropic, and OpenAI evaluation methodology",
+      "reason": "It supports claim ceilings and the future evaluation-ladder article but would expand this article beyond GraphRAG retrieval control."
+    },
+    {
+      "material": "Exact local graph, vector registry, and schema row counts",
+      "reason": "The aggregate conclusion improves the article without turning a reader-facing column into an internal inventory report."
+    },
+    {
+      "material": "Performance or production-readiness claims",
+      "reason": "The route benchmark remains blocked and no equal-budget L2 or L3 experiment was executed."
+    },
+    {
+      "material": "Stale 32-source, 24-claim, seven-suite state in README and wiki",
+      "reason": "The newer state supplement, integrated report, audit, and manifest supersede that baseline."
+    }
+  ],
+  "editorial_changes": [
+    "Added a bounded semantic-value versus structural-bridge-value explanation to the pruning section.",
+    "Updated the synthetic-suite section from seven to nine while preserving the claim ceiling.",
+    "Added a reader-facing explanation of what the local data-plane audit proves and does not prove.",
+    "Strengthened the final conclusion with the concrete readiness sequence required before an equal-budget route benchmark.",
+    "Added the Ex-GraphRAG source under the article's existing citation convention.",
+    "Reused all four existing images because the article's visual contracts and central execution flow did not change."
+  ],
+  "humanize_korean": {
+    "applied": true,
+    "mode": "column-conservative-manual-review",
+    "change_rate_percent": 4.34,
+    "checks": {
+      "facts_numbers_dates_names_quotes_preserved": true,
+      "register_preserved": true,
+      "translationese_and_parallelism_reviewed": true,
+      "over_edit_threshold_exceeded": false
+    }
+  },
+  "column_quality": {
+    "central_question_clear": true,
+    "writer_judgment_and_evidence_separated": true,
+    "sections_advance_argument": true,
+    "evidence_interpreted_in_place": true,
+    "counterarguments_and_limits_preserved": true,
+    "rhythm_and_transition_reviewed": true
+  },
+  "conclusion_independent_readability": {
+    "topic_identifiable": true,
+    "problem_identifiable": true,
+    "proposal_identifiable": true,
+    "operation_identifiable": true,
+    "rationale_identifiable": true,
+    "meaning_and_limits_identifiable": true
+  },
+  "validation": {
+    "plugin_install": "PASS_45",
+    "content_citation_link_image_check": "PASS",
+    "typescript_prettier": "PASS",
+    "tests": "PASS_122_OF_122",
+    "production_build": "PASS_26_INPUT_304_OUTPUT",
+    "built_route_check": "PASS",
+    "built_html": "PASS_H1_1_IMAGES_4_REQUIRED_TEXT_PRESENT",
+    "git_diff_check": "PASS"
+  },
+  "remaining_uncertainties": [
+    "The adversarial review remains passed_degraded because no independent reviewer was available.",
+    "Not every external source has a hashable local full-text snapshot.",
+    "The dual-value bridge finding has one direct preprint evidence family.",
+    "Graph query semantics, source descent, active vector/FTS population, RRF fusion, labeled fixtures, and equal-budget route benchmarks remain unclosed."
+  ]
+}
