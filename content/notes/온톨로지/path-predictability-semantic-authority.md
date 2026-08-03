@@ -2,6 +2,8 @@
 title: "26. 그래프가 필요하다는 말보다 먼저 물어야 할 두 질문: 경로는 정해졌는가, 의미는 공유되어야 하는가"
 description: "RAG·GraphDB·온톨로지를 한 묶음으로 도입하지 않고, 경로 예측 가능성과 의미 권위라는 두 축으로 저장·검색·의미 거버넌스의 책임을 나누는 방법을 설명합니다."
 date: 2026-07-30
+aliases:
+  - /notes/path-predictability-semantic-authority
 tags:
   - RAG
   - GraphRAG
@@ -12,7 +14,7 @@ tags:
   - LLM평가
 ---
 
-![경로 예측 가능성과 의미 권위라는 두 질문으로 RDB·GraphRAG·의미 계약·온톨로지 후보를 구분하는 의사결정 지도](../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-infographic.png)
+![경로 예측 가능성과 의미 권위라는 두 질문으로 RDB·GraphRAG·의미 계약·온톨로지 후보를 구분하는 의사결정 지도](../../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-infographic.png)
 
 > [!summary] 핵심 결론
 > 연결된 데이터가 있다는 이유만으로 GraphDB가 필요한 것은 아니며, 여러 용어를 쓴다는 이유만으로 온톨로지가 필요한 것도 아닙니다. 먼저 **답을 찾기 전에 경로를 적을 수 있는가**, 그리고 **식별자·관계·정책·변경의 의미를 여러 질문과 시스템이 함께 책임져야 하는가**를 따로 물어야 합니다. 이 두 축으로 후보를 줄인 뒤, 같은 데이터·질문·예산에서 더 단순한 기준선을 실제로 이길 때만 graph runtime과 의미 계층을 추가합니다.
@@ -58,7 +60,7 @@ retrieval coverage ≠ generation utilization
 
 ## 2. 첫 번째 질문: 답을 찾기 전에 경로를 적을 수 있습니까
 
-![사전에 정해진 제품-원재료-알레르겐 경로와 답을 찾으며 발견해야 하는 공급망 위험 경로를 대비한 도판](../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-figure-01.png)
+![사전에 정해진 제품-원재료-알레르겐 경로와 답을 찾으며 발견해야 하는 공급망 위험 경로를 대비한 도판](../../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-figure-01.png)
 
 경로 예측 가능성은 홉 수보다 먼저 볼 만한 질문입니다.
 
@@ -112,7 +114,7 @@ LDBC도 graph data management를 홉 수 하나가 아니라 interactive query, 
 
 ## 4. 두 질문을 교차하면 네 후보 영역이 보입니다
 
-![경로 예측 가능성과 의미 권위의 높고 낮음을 교차한 2×2 질문 지도와 각 영역의 최소 후보](../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-figure-02.png)
+![경로 예측 가능성과 의미 권위의 높고 낮음을 교차한 2×2 질문 지도와 각 영역의 최소 후보](../../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-figure-02.png)
 
 두 축을 교차하면 저장소 제품표가 아니라 질문 지도가 나옵니다.
 
@@ -148,7 +150,7 @@ LDBC도 graph data management를 홉 수 하나가 아니라 interactive query, 
 
 ## 6. LLM이 graph를 쓸 때 빈 결과의 뜻을 분리합니다
 
-![자연어 질문이 schema·relation·entity grounding과 실행 검증을 거쳐 지원 결과 또는 구분된 실패 상태로 가는 흐름](../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-figure-03.png)
+![자연어 질문이 schema·relation·entity grounding과 실행 검증을 거쳐 지원 결과 또는 구분된 실패 상태로 가는 흐름](../../attachments/path-predictability-semantic-authority/path-predictability-semantic-authority-figure-03.png)
 
 사람 눈에 graph가 직관적이라고 해서 LLM이 relation name, 방향과 entity identifier를 정확히 아는 것은 아닙니다. `Mind the Query`와 CypherBench는 Text2Cypher 평가에서 schema·value·runtime validation, full-scale schema와 실행 가능한 질문이 별도 난점임을 보여 줍니다.[src_014](#src-014)[src_015](#src-015) 한국 기업 KG를 다룬 KG2Cypher 저자 보고에서도 prompt-only 모델은 실행 가능한 Cypher를 만들고도 잘못된 relation, 환각된 entity ID와 literal format 때문에 틀릴 수 있었습니다.[src_016](#src-016)
 

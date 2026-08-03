@@ -2,6 +2,8 @@
 title: "25. LLM Wiki는 RAG를 대체하는가: 저장과 검색 사이의 이중 컴파일을 검증하는 법"
 description: "LLM Wiki가 무엇을 저장하고 어떻게 쓰이는 구조인지 먼저 설명한 뒤, 원문을 지속 지식으로 정리하는 단계와 이를 질문별 문맥으로 줄이는 단계에서 근거·반례·권한·버전을 보존하는 방법을 다룹니다."
 date: 2026-07-30
+aliases:
+  - /notes/llm-wiki-double-compilation
 tags:
   - LLMWiki
   - RAG
@@ -12,7 +14,7 @@ tags:
   - LLM평가
 ---
 
-![원문에서 지속 위키와 질문별 문맥을 거쳐 답변에 이르는 두 번의 컴파일과 네 검증 축](../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-infographic.png)
+![원문에서 지속 위키와 질문별 문맥을 거쳐 답변에 이르는 두 번의 컴파일과 네 검증 축](../../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-infographic.png)
 
 > [!summary] 핵심 결론
 > 이 글에서 LLM Wiki는 대규모 언어 모델(Large Language Model, LLM)이나 에이전트가 여러 원문을 읽은 뒤, 다음 조사에서 다시 쓸 개념·결정·반례·열린 질문을 출처 링크와 함께 연결된 페이지로 정리해 두는 **지속 지식 공간**을 뜻합니다. 검색 증강 생성(Retrieval-Augmented Generation, RAG)은 질문이 들어온 순간 관련 원문 조각을 찾아 답변에 넣는 방식입니다. 두 구조는 서로 다른 시간에 작동하므로, 함께 사용할 때는 **원문을 Wiki로 옮기는 과정과 Wiki를 질문별 문맥으로 줄이는 과정에서 무엇이 사라졌는지 각각 검사해야 합니다.**
@@ -78,7 +80,7 @@ LLM Wiki는 같은 조사와 판단을 반복하는 팀이 **검토를 마친 �
 
 ## 2. 첫 번째 컴파일은 원문을 지속 지식으로 바꿉니다
 
-![원문을 Wiki 페이지로 정리할 때 주장·근거·반례·적용 범위·유효 시점·출처 경로를 함께 보존하는 1차 컴파일 계약](../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-01.png)
+![원문을 Wiki 페이지로 정리할 때 주장·근거·반례·적용 범위·유효 시점·출처 경로를 함께 보존하는 1차 컴파일 계약](../../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-01.png)
 
 원문을 읽고 Wiki를 쓰는 일은 단순 복사가 아닙니다. 중복을 합치고, 여러 출처의 주장을 비교하고, 문서마다 다른 이름을 같은 개념에 연결합니다. 오래된 결론을 수정하고, 아직 확인하지 못한 질문도 남깁니다.
 
@@ -148,7 +150,7 @@ Wiki가 700쪽으로 커졌다면 매 질문마다 전부 읽힐 수는 없습�
 
 ## 4. 네 검증 축을 한 점수로 합치지 않습니다
 
-![원문 진실성·Wiki 보존·Context 의무 유지·답변 이용을 서로 대체할 수 없는 네 축으로 분리한 검증 사다리](../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-02.png)
+![원문 진실성·Wiki 보존·Context 의무 유지·답변 이용을 서로 대체할 수 없는 네 축으로 분리한 검증 사다리](../../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-02.png)
 
 최종 답이 맞았다는 이유로 앞 단계를 모두 통과 처리하면 실패 위치를 찾기 어렵습니다. 반대로 Wiki 페이지 하나의 품질이 좋다는 이유로 검색과 생성까지 안전하다고 볼 수도 없습니다.
 
@@ -303,7 +305,7 @@ Receipt는 진실 증명서가 아닙니다. 누가 검토했는지 적었다고
 
 여기서 합성 사례(fixture)는 의도한 조건과 정답을 미리 정한 시험 입력이고, 변형(mutation)은 순서·버전·반례·예산 가운데 하나만 바꿔 어느 조건에서 실패하는지 확인하는 방법입니다.
 
-![1차 Wiki 컴파일과 2차 Context 컴파일에 서로 다른 합성 사례·변형·실행 영수증을 적용하고 실패 단계만 되돌리는 회귀 실험](../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-03.png)
+![1차 Wiki 컴파일과 2차 Context 컴파일에 서로 다른 합성 사례·변형·실행 영수증을 적용하고 실패 단계만 되돌리는 회귀 실험](../../attachments/llm-wiki-double-compilation/llm-wiki-double-compilation-figure-03.png)
 
 두 단계를 한 번에 시험하면 실패 원인이 섞입니다. 먼저 원문과 Wiki revision을 고정해 1차 컴파일을 검사하고, 통과한 Wiki revision을 고정한 뒤 2차 컴파일을 검사합니다.
 
