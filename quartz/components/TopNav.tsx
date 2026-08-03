@@ -6,6 +6,7 @@ const links = [
   { label: "홈", path: "" },
   { label: "처음 읽기", path: "start-here" },
   { label: "노트", path: "notes" },
+  { label: "온톨로지", path: "notes/온톨로지" },
   { label: "소개", path: "about" },
 ]
 
