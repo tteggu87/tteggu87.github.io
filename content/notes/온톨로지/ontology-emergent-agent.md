@@ -2,6 +2,8 @@
 title: "4. 온톨로지가 행동을 바꾸는 에이전트: 창발을 설계하고 증명하는 법"
 description: "온톨로지 변경이 에이전트의 지속적인 행동 변화로 이어졌다고 말하려면 어떤 아키텍처, 인과 실험, 검증·승격·롤백 체계가 필요한지 정리합니다."
 date: 2026-07-20
+aliases:
+  - /notes/ontology-emergent-agent
 tags:
   - 온톨로지
   - AI에이전트
@@ -10,11 +12,11 @@ tags:
   - 지식그래프
 ---
 
-![격리된 온톨로지 패치가 증거·모순·정책 검증과 컴파일을 거쳐 행동을 바꾸고, 근거·해시·버전·행동 기록을 따라 이전 버전으로 복원되는 참조 아키텍처](../attachments/ontology-emergent-agent/ontology-emergent-agent-infographic-balanced.png)
+![격리된 온톨로지 패치가 증거·모순·정책 검증과 컴파일을 거쳐 행동을 바꾸고, 근거·해시·버전·행동 기록을 따라 이전 버전으로 복원되는 참조 아키텍처](../../attachments/ontology-emergent-agent/ontology-emergent-agent-infographic-balanced.png)
 
 “온톨로지가 스스로 진화하면서 에이전트의 기억과 행동까지 바꾼다면, 그것을 정말 새로운 종류의 에이전트라고 부를 수 있을까?” 이 질문에 대한 결론은 명확하다. **그래프를 검색해 답변이 달라지는 것만으로는 온톨로지 창발이 아니다. 온톨로지의 변경이 실행 규칙으로 컴파일되고, 그 결과가 재시작 후에도 지속되며, 롤백하면 이전 행동까지 돌아가야 한다.**
 
-이 글은 [[notes/ontology-in-the-agentic-era|LLM 에이전트 시대의 온톨로지]]와 [[notes/ontology-judge-loop-agent-validation|온톨로지 기반 Judge Loop]]를 이어, “의미 계층”과 “판정 계약”을 실제 자기변화 시스템의 설계 조건으로 확장한다.
+이 글은 [[notes/온톨로지/ontology-in-the-agentic-era|LLM 에이전트 시대의 온톨로지]]와 [[notes/온톨로지/ontology-judge-loop-agent-validation|온톨로지 기반 Judge Loop]]를 이어, “의미 계층”과 “판정 계약”을 실제 자기변화 시스템의 설계 조건으로 확장한다.
 
 ## 먼저 구분해야 할 세 종류의 에이전트
 
@@ -269,9 +271,9 @@ LLM은 넓게 제안하고 설명한다. 온톨로지는 의미와 적용 범위
 
 ## 함께 읽기
 
-- [[notes/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
-- [[notes/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다]]
-- [[notes/ontology-judge-loop-agent-validation|3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계]]
+- [[notes/온톨로지/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
+- [[notes/온톨로지/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다]]
+- [[notes/온톨로지/ontology-judge-loop-agent-validation|3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계]]
 
 ## 출처
 

@@ -2,6 +2,8 @@
 title: "3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계"
 description: "온톨로지·결정적 검사·기준별 LLM 판정·사람 검토를 결합해 감사 가능한 에이전트 검증 루프를 설계하는 방법과 한계를 정리합니다."
 date: 2026-07-20
+aliases:
+  - /notes/ontology-judge-loop-agent-validation
 tags:
   - 딥리서치
   - 온톨로지
@@ -9,7 +11,7 @@ tags:
   - LLM평가
 ---
 
-![결정적 검사와 언어모델의 안전 결과는 자동 진행으로 합류하고 경고·불확실 결과만 인간 검토와 반증·수정으로 분기되는 감사 가능한 에이전트 검증 루프](../attachments/ontology-judge-loop-agent-validation/ontology-judge-loop-agent-validation-infographic-v6.png)
+![결정적 검사와 언어모델의 안전 결과는 자동 진행으로 합류하고 경고·불확실 결과만 인간 검토와 반증·수정으로 분기되는 감사 가능한 에이전트 검증 루프](../../attachments/ontology-judge-loop-agent-validation/ontology-judge-loop-agent-validation-infographic-v6.png)
 
 ## 핵심 결론
 
@@ -17,7 +19,7 @@ tags:
 
 현재의 영어 중심 공개 연구와 W3C 표준을 종합하면 이런 위험 기반 참조 구조를 제안할 수 있다. 그러나 온톨로지, 결정적 검사, LLM 판정, 반증, 사람 검토를 결합한 전체 구조가 단순 규칙·타입·실행 테스트보다 더 정확하거나 안전하다는 비교 실증은 아직 부족하다. 따라서 글로벌·다국어·고위험 업무의 자동 승인 근거로 사용해서는 안 된다.[src_001](#src-001)[src_006](#src-006)[src_013](#src-013)[src_014](#src-014)
 
-이 글은 [[notes/ontology-in-the-agentic-era|LLM 에이전트 시대의 온톨로지]]에서 다룬 “실행의 의미 계층”을 “판정의 증거 계약”으로 확장한 후속 설계다.
+이 글은 [[notes/온톨로지/ontology-in-the-agentic-era|LLM 에이전트 시대의 온톨로지]]에서 다룬 “실행의 의미 계층”을 “판정의 증거 계약”으로 확장한 후속 설계다.
 
 ## 문제는 더 강한 판정자가 아니라 판정 가능한 구조다
 
@@ -202,9 +204,9 @@ JSON Schema, 타입, 해시, 단위 테스트와 속성 기반 테스트, 샌드
 
 ## 함께 읽기
 
-- [[notes/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
-- [[notes/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다]]
-- [[notes/ontology-emergent-agent|4. 온톨로지가 행동을 바꾸는 에이전트: 창발을 설계하고 증명하는 법]]
+- [[notes/온톨로지/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
+- [[notes/온톨로지/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다]]
+- [[notes/온톨로지/ontology-emergent-agent|4. 온톨로지가 행동을 바꾸는 에이전트: 창발을 설계하고 증명하는 법]]
 
 ## 출처
 

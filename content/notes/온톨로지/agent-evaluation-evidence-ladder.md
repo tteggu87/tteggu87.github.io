@@ -2,6 +2,8 @@
 title: "24. 합성 검사를 통과한 에이전트는 왜 아직 검증되지 않았는가: 계약 검사에서 운영 증거까지 잇는 평가 사다리"
 description: "합성 계약 검사의 통과를 성능·안전성·운영 준비도로 과장하지 않도록 L0부터 L5까지 증거 단계와 주장 상한을 나누는 방법을 설명합니다."
 date: 2026-07-30
+aliases:
+  - /notes/agent-evaluation-evidence-ladder
 tags:
   - AI에이전트
   - LLM평가
@@ -10,7 +12,7 @@ tags:
   - 운영모니터링
 ---
 
-![합성 계약 검사에서 오프라인·고정 E2E·제한 운영·배포 후 모니터링으로 올라가는 평가 사다리와 각 단계의 주장 상한](../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-infographic.png)
+![합성 계약 검사에서 오프라인·고정 E2E·제한 운영·배포 후 모니터링으로 올라가는 평가 사다리와 각 단계의 주장 상한](../../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-infographic.png)
 
 > [!summary] 핵심 결론
 > 합성 검사를 모두 통과했다는 사실은 작성한 규칙의 분기와 불변식이 예제 안에서 작동했다는 뜻이지, 실제 과업 성능이나 운영 안전성을 입증했다는 뜻이 아닙니다. **평가 증거를 L0 정적 검사부터 L5 배포 후 관찰까지 나누고, 각 단계에서 허용되는 주장 상한을 고정해야 합니다.**
@@ -21,7 +23,7 @@ tags:
 
 아직은 아닙니다. 합성 검사가 답한 질문은 “우리가 적은 예제에서 계약이 실행되는가?”입니다. 실제 고객 분포, 예상하지 못한 표현, 외부 서비스 지연, 평가자의 오류, 반복 실행의 변동, 배포 뒤의 복구까지는 다른 증거가 필요합니다.
 
-[[notes/graphrag-retrieval-routing-stopping|23번 글]]의 최신 공개본에는 검색 제어를 점검하는 아홉 종류의 합성 스위트가 있습니다. 각 스위트는 누락된 분기와 상태 전이를 찾는 데 유용하지만, 그 글도 실제 동일 예산 검색 성능과 운영 준비도는 미검증이라고 선을 그었습니다. 이 글은 그 경계를 평가 전체로 확장합니다.
+[[notes/온톨로지/graphrag-retrieval-routing-stopping|23번 글]]의 최신 공개본에는 검색 제어를 점검하는 아홉 종류의 합성 스위트가 있습니다. 각 스위트는 누락된 분기와 상태 전이를 찾는 데 유용하지만, 그 글도 실제 동일 예산 검색 성능과 운영 준비도는 미검증이라고 선을 그었습니다. 이 글은 그 경계를 평가 전체로 확장합니다.
 
 ## 통과한 검사와 입증한 주장을 분리합니다
 
@@ -39,7 +41,7 @@ NIST의 자동 benchmark 지침은 benchmark 선택, 실행, 분석과 보고를
 
 이 글에서는 각 증거가 허용하는 최대 주장 강도를 **주장 상한(claim ceiling)**이라고 부르겠습니다. 널리 합의된 표준 용어가 아니라, 검사 결과가 갑자기 성능·안전성·운영 준비도 주장으로 커지는 일을 막기 위한 프로젝트의 편집·승격 규칙입니다.
 
-![L0부터 L5까지 각 평가 단계에서 관찰할 수 있는 증거와 허용되는 최대 주장을 대응시킨 지도](../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-figure-01.png)
+![L0부터 L5까지 각 평가 단계에서 관찰할 수 있는 증거와 허용되는 최대 주장을 대응시킨 지도](../../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-figure-01.png)
 
 ## L0과 L1은 계약의 모양과 분기를 검사합니다
 
@@ -63,7 +65,7 @@ L1은 분기, 불변식과 실패 처리를 의도적으로 만든 사례로 흔
 - 후보 순서나 표현이 바뀌어도 핵심 판정이 유지되는가
 - 한 계층을 제거하면 어떤 의무가 다시 열리는가
 
-[[notes/ontology-agent-behavior-experiment|5번 글]]의 비교 실험에서는 JSON 규칙, 구조화 검색 카드와 SHACL이 같은 작성자 정의 Boolean 정책을 각각 10/10으로 재현했습니다. 그러나 독립 정답이 아니라 동일한 정책을 세 artifact에 옮긴 적합성 검사였으므로, 형식의 우월성이나 실제 업무 정확도를 주장하지 않았습니다.
+[[notes/온톨로지/ontology-agent-behavior-experiment|5번 글]]의 비교 실험에서는 JSON 규칙, 구조화 검색 카드와 SHACL이 같은 작성자 정의 Boolean 정책을 각각 10/10으로 재현했습니다. 그러나 독립 정답이 아니라 동일한 정책을 세 artifact에 옮긴 적합성 검사였으므로, 형식의 우월성이나 실제 업무 정확도를 주장하지 않았습니다.
 
 L1의 주장 상한도 비슷합니다. **“작성한 합성 사례에서 계약 분기와 변이가 예상대로 작동했다”**까지입니다. 시나리오를 만든 사람이 놓친 실패, 실제 입력의 긴 꼬리와 모델의 확률적 변동은 아직 밖에 있습니다.
 
@@ -98,7 +100,7 @@ L3의 주장 상한은 **“고정한 end-to-end 계약과 반복 trial에서 �
 5. **하네스·인프라 동등성:** 후보들이 같은 자원·도구·시간·실패 처리 조건에서 실행됐는가
 6. **환경 결과와 궤적:** 그럴듯한 transcript가 아니라 실제 상태 변화와 필수 과정을 확인했는가
 
-![측정 대상과 과업 분포에서 반복 trial·불확실성·과업·채점기·하네스·인프라 무결성을 거쳐 실제 환경 결과로 이어지는 측정 타당성 폐쇄](../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-figure-02.png)
+![측정 대상과 과업 분포에서 반복 trial·불확실성·과업·채점기·하네스·인프라 무결성을 거쳐 실제 환경 결과로 이어지는 측정 타당성 폐쇄](../../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-figure-02.png)
 
 LLM judge도 이 폐쇄의 일부입니다. 20개 NLP 평가 과업을 비교한 대규모 연구는 LLM judge가 사람 평가를 일관되게 대체하지 못하며 과업별 차이가 크다는 결과를 보고했습니다.[src_014](#src-014) GDPval의 grading 절차처럼 과업별 rubric과 사람 평가를 함께 두고 보정해야 하는 이유입니다.[src_007](#src-007)
 
@@ -152,7 +154,7 @@ L5에서는 품질·비용·지연뿐 아니라 다음 항목이 필요합니다
 
 L5의 주장 상한도 무제한은 아닙니다. **“관찰한 운영 범위와 기간에서 모니터링·중단·복구가 작동했다”**까지입니다. 미래의 모든 사용자와 공격에 안전하다는 보증은 아닙니다.
 
-![누적 A부터 D까지의 비교를 remove-one·ablation·factorial로 분해하고 shadow·canary·배포 후 모니터링에서 실패를 발견하면 증거 게이트를 다시 여는 운영 경로](../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-figure-03.png)
+![누적 A부터 D까지의 비교를 remove-one·ablation·factorial로 분해하고 shadow·canary·배포 후 모니터링에서 실패를 발견하면 증거 게이트를 다시 여는 운영 경로](../../attachments/agent-evaluation-evidence-ladder/agent-evaluation-evidence-ladder-figure-03.png)
 
 ## 현재 GraphRAG 사례의 정확한 다음 단계
 

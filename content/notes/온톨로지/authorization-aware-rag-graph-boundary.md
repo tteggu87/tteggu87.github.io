@@ -2,6 +2,8 @@
 title: "17. 관련도는 권한이 아니다: 멀티테넌트 RAG와 GraphRAG의 문맥 누출을 막는 법"
 description: "검색 결과가 질문에 잘 맞는다는 사실은 공개 권한을 뜻하지 않습니다. 인증·위임·문서·그래프 경로·파생 지식·MCP 도구와 오래 실행되는 작업까지 권한을 다시 증명하는 방법을 설명합니다."
 date: 2026-07-29
+aliases:
+  - /notes/authorization-aware-rag-graph-boundary
 tags:
   - RAG
   - GraphRAG
@@ -11,7 +13,7 @@ tags:
   - AI보안
 ---
 
-![인증된 사용자부터 검색·그래프 확장·파생 지식·도구 실행과 장기 작업의 권한 lease까지 단계별로 다시 증명하는 전체 수명주기](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-infographic.png)
+![인증된 사용자부터 검색·그래프 확장·파생 지식·도구 실행과 장기 작업의 권한 lease까지 단계별로 다시 증명하는 전체 수명주기](../../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-infographic.png)
 
 > [!summary] 핵심 결론
 > 검색 결과가 질문에 잘 맞는다는 사실은 그 자료를 보여 줘도 된다는 뜻이 아닙니다. 멀티테넌트 RAG와 GraphRAG에서는 **연결 자격증명, 작업 위임, 문서·그래프 경로·파생 지식·출처 열기·도구 행동의 현재 권한**을 각각 확인하고, 오래 실행되는 작업은 보호 자료를 다시 읽거나 외부로 보내고 결과를 공개할 때 권한을 재검사해야 합니다. 이 글의 A~K와 파생 산출물 비교 결과는 설계 계약의 빈칸을 찾는 결정론적 장난감 검사이며, 실제 시스템의 누출률이나 방어 우월성을 입증한 벤치마크가 아닙니다.
@@ -20,7 +22,7 @@ tags:
 
 GraphRAG가 그 제품 노드를 따라 두 단계 확장하자 고객사 B의 내부 사고 보고서가 연결됐습니다. 최종 답변은 두 문서를 섞어 그럴듯한 요약을 만들었습니다. 첫 검색은 올바른 문서에서 시작했고 답도 질문과 관련이 높았습니다. 그런데 **그래프 경로와 결합 결과의 권한을 다시 확인하지 않았기 때문에 데이터 유출**이 됐습니다.
 
-[[notes/context-compilation-regression|16번 글]]은 정본 지식에서 질문별 Context Bundle을 만들 때 조건·반례·버전이 사라지는 문제를 다뤘습니다. 이번 글은 그보다 먼저 확인해야 할 질문을 붙입니다.
+[[notes/온톨로지/context-compilation-regression|16번 글]]은 정본 지식에서 질문별 Context Bundle을 만들 때 조건·반례·버전이 사라지는 문제를 다뤘습니다. 이번 글은 그보다 먼저 확인해야 할 질문을 붙입니다.
 
 > **정확하게 골라낸 이 근거를, 지금 이 사용자와 이 작업을 수행하는 에이전트가 볼 권한이 있는가?**
 
@@ -86,7 +88,7 @@ OAuth 연결 성공
 
 OpenFGA의 작업(task) 기반 패턴은 사용자의 원래 권한과, 에이전트가 이번 작업에서만 쓰는 제한된 임시 허가(grant)를 따로 검사합니다. 예를 들어 ‘이 문서를 10분 동안 읽기만 허용’처럼 필요한 도구와 자원, 만료 시간, 대화, 호출 범위와 에이전트를 한 묶음으로 제한할 수 있습니다.[src_019](#src-019) 이 경계가 없으면 사용자가 문서를 읽을 수 있다는 이유만으로 에이전트가 그 문서를 외부에 공유하거나 삭제하는 권한까지 얻을 수 있습니다.
 
-![OAuth 연결, task 위임과 권한 lease, resource와 action 권한을 서로 대체할 수 없는 증명으로 분리한 도해](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-01.png)
+![OAuth 연결, task 위임과 권한 lease, resource와 action 권한을 서로 대체할 수 없는 증명으로 분리한 도해](../../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-01.png)
 
 ### 도구 검색도 권한이 필요한 retrieval입니다
 
@@ -183,7 +185,7 @@ artifact 허용
 > [!important] 교집합은 안전한 기본값이지 보편적 정답이 아닙니다
 > 모든 부모 권한의 단순 교집합은 승인된 공개 통계나 비식별 aggregate까지 과도하게 거부할 수 있습니다. 더 넓은 공개가 필요한 경우에는 boolean ACL을 느슨하게 만드는 대신, 검토된 declassification을 별도 계약으로 둬야 합니다.
 
-![문서와 그래프 경로에서 만들어진 Claim·요약·답변을 별도 자원으로 등록하고 provenance·freshness·declassification을 검사하는 흐름](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-02.png)
+![문서와 그래프 경로에서 만들어진 Claim·요약·답변을 별도 자원으로 등록하고 provenance·freshness·declassification을 검사하는 흐름](../../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-02.png)
 
 ## 같은 제품도 호출 표면마다 안전 기본값이 다를 수 있습니다
 
@@ -324,7 +326,7 @@ J에서 0이 된 이유는 J가 기존 스크립트에 정의한 필드를 모�
 
 마지막 정책의 0/0도 같은 이유로 벤치마크 성과가 아닙니다. 여섯 synthetic artifact에 대해 스크립트가 정의한 기대 계약과 일치했을 뿐입니다. 실제 효과를 주장하려면 DuckCrab·OpenFGA 또는 SpiceDB·MCP server를 연결하고 false allow·false deny·authorized recall·revocation latency·generated disclosure를 측정해야 합니다.
 
-![namespace부터 장기 task 권한 lease까지 A~K 경계를 추가했을 때 계약상 남는 실패 클래스와 실제 검증 과제를 구분한 비교 도판](../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-03.png)
+![namespace부터 장기 task 권한 lease까지 A~K 경계를 추가했을 때 계약상 남는 실패 클래스와 실제 검증 과제를 구분한 비교 도판](../../attachments/authorization-aware-rag-graph-boundary/authorization-aware-rag-graph-boundary-figure-03.png)
 
 ## 실제 시스템에서 먼저 측정할 지표
 
@@ -394,7 +396,7 @@ identity
 → revocation·receipt
 ```
 
-[[notes/knowledge-centric-self-improvement|15번 글]]은 경험을 공유 지식으로 승격하는 과정을 설명했습니다. 16번 글은 그 지식을 작업 문맥으로 손실 없이 옮기는 문제를 다뤘습니다. 이번 글은 **그 지식과 문맥을 지금 이 principal에게 공개해도 되는지**를 검증합니다.
+[[notes/온톨로지/knowledge-centric-self-improvement|15번 글]]은 경험을 공유 지식으로 승격하는 과정을 설명했습니다. 16번 글은 그 지식을 작업 문맥으로 손실 없이 옮기는 문제를 다뤘습니다. 이번 글은 **그 지식과 문맥을 지금 이 principal에게 공개해도 되는지**를 검증합니다.
 
 세 글을 함께 보면 에이전트 지식 수명주기의 서로 다른 조건이 드러납니다.
 

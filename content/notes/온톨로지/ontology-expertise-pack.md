@@ -2,6 +2,8 @@
 title: "10. 온톨로지로 시니어 엔지니어의 사고를 외부화할 수 있을까"
 description: "강한 모델에 필요한 도메인 지도와 판단 재료를 온톨로지로 구성하고, OpenCrab의 기존 기반을 조합해 전문가 작업공간으로 만드는 방법을 살펴봅니다."
 date: 2026-07-22
+aliases:
+  - /notes/ontology-expertise-pack
 tags:
   - 온톨로지
   - AI에이전트
@@ -10,7 +12,7 @@ tags:
   - OpenCrab
 ---
 
-![도메인 세계와 근거, 결정, 경험을 질문별 작업공간으로 조립해 검증 가능한 판단으로 연결하는 구조](../attachments/ontology-expertise-pack/ontology-expertise-pack-infographic.png)
+![도메인 세계와 근거, 결정, 경험을 질문별 작업공간으로 조립해 검증 가능한 판단으로 연결하는 구조](../../attachments/ontology-expertise-pack/ontology-expertise-pack-infographic.png)
 
 > [!summary] 한 문장 결론
 > 약한 모델에는 일을 순서대로 수행하게 하는 레일이 필요합니다. 강한 모델에는 무엇을 믿고 의심하며 더 확인해야 하는지 알려주는 도메인 지도와 증거가 필요합니다.
@@ -65,7 +67,7 @@ AOrchestra는 과제마다 `Instruction–Context–Tools–Model` 조합을 동
 | 실패 위험        | 사람이 사고 절차를 지나치게 대신 씀         | 많은 그래프를 주고도 필요한 관계를 못 고름   |
 | 바람직한 결과    | 정해진 과정을 안정적으로 수행함             | 낯선 문제에서 근거 있는 가설과 반례를 만듦   |
 
-![약한 모델을 보완하는 절차적 레일과 강한 모델을 증폭하는 인식론적 작업공간의 차이](../attachments/ontology-expertise-pack/ontology-expertise-pack-figure-01.png)
+![약한 모델을 보완하는 절차적 레일과 강한 모델을 증폭하는 인식론적 작업공간의 차이](../../attachments/ontology-expertise-pack/ontology-expertise-pack-figure-01.png)
 
 약한 모델에는 “먼저 A를 확인하고 실패하면 B를 실행하라”는 절차가 도움이 됩니다. 강한 모델에 같은 수준의 세부 절차를 강제하면 더 나은 조사 순서를 선택할 자유를 빼앗거나, 오래된 운영 규칙에 모델을 가둘 수 있습니다.
 
@@ -84,7 +86,7 @@ AOrchestra는 과제마다 `Instruction–Context–Tools–Model` 조합을 동
 
 ## 3. 시니어의 전문성은 사실 목록이 아니다
 
-![도메인 온톨로지와 근거, 결정, 경험, 인과, 질문, 평가가 질문별 작업공간으로 이어지는 층위](../attachments/ontology-expertise-pack/ontology-expertise-pack-figure-02.png)
+![도메인 온톨로지와 근거, 결정, 경험, 인과, 질문, 평가가 질문별 작업공간으로 이어지는 층위](../../attachments/ontology-expertise-pack/ontology-expertise-pack-figure-02.png)
 
 시니어의 전문성을 많은 사실을 외운 상태로 보면 온톨로지는 문서 검색 시스템에 머뭅니다. 실제 전문성에는 세계와 증거를 읽는 능력, 판단과 영향을 비교하는 능력, 조사를 설계하고 검증하는 능력이 함께 들어 있습니다.
 
@@ -157,7 +159,7 @@ Competency Question은 온톨로지가 답해야 할 요구사항을 질문으�
 
 ## 5. 여기까지 따라왔다면 OpenCrab이 보인다
 
-여기까지 따라왔다면 한 가지 사실이 보입니다. 시니어형 온톨로지 에이전트에 필요한 재료의 상당 부분이 앞선 [[notes/opencrab-ontology-build-architecture|8번 글]]과 [[notes/ontology-context-compiler-opencrab|9번 글]]에서 살펴본 OpenCrab의 설계와 겹칩니다.[src_013](#src-013)
+여기까지 따라왔다면 한 가지 사실이 보입니다. 시니어형 온톨로지 에이전트에 필요한 재료의 상당 부분이 앞선 [[notes/온톨로지/opencrab-ontology-build-architecture|8번 글]]과 [[notes/온톨로지/ontology-context-compiler-opencrab|9번 글]]에서 살펴본 OpenCrab의 설계와 겹칩니다.[src_013](#src-013)
 
 물론 OpenCrab 안에 완성된 시니어 엔지니어 에이전트가 들어 있는 것은 아닙니다. 발견한 것은 그보다 근본적인 기반입니다. 도메인 세계를 어떤 문법으로 읽고, 어떤 타입과 관계로 보존하며, 어떻게 검증된 Pack으로 만들 것인가라는 문제가 이미 OpenCrab의 중심 설계에 들어 있습니다.
 
@@ -341,7 +343,7 @@ OpenCrab의 HybridQuery 기반은 Vector·BM25·Graph를 조합해 `CacheExposur
 
 ## 9. 그럴듯한 새 말과 도메인 인사이트를 구분한다
 
-![근거에서 경쟁 가설과 반례, 추가 관찰, 조건부 판단으로 이어지는 검증 경로와 누락, 오염, 과신의 실패 경계](../attachments/ontology-expertise-pack/ontology-expertise-pack-figure-03.png)
+![근거에서 경쟁 가설과 반례, 추가 관찰, 조건부 판단으로 이어지는 검증 경로와 누락, 오염, 과신의 실패 경계](../../attachments/ontology-expertise-pack/ontology-expertise-pack-figure-03.png)
 
 모델이 문서에 없는 문장을 만들었다고 모두 새로운 인사이트는 아닙니다. 최소한 다음 여섯 가지를 확인해야 합니다.
 
@@ -390,10 +392,10 @@ OpenCrab의 HybridQuery 기반은 Vector·BM25·Graph를 조합해 `CacheExposur
 
 ## 함께 읽기
 
-- [[notes/opencrab-ontology-build-architecture|8. OpenCrab 온톨로지 빌드는 무엇을 만드는가]]
-- [[notes/ontology-context-compiler-opencrab|9. LLM 시대, 온톨지는 추론기에서 문맥 컴파일러로 이동하는가]]
-- [[notes/ontology-emergent-agent|4. 온톨로지가 행동을 바꾸는 에이전트]]
-- [[notes/local-ontology-agent-implementation|7. 로컬 온톨로지 에이전트 구현 설계]]
+- [[notes/온톨로지/opencrab-ontology-build-architecture|8. OpenCrab 온톨로지 빌드는 무엇을 만드는가]]
+- [[notes/온톨로지/ontology-context-compiler-opencrab|9. LLM 시대, 온톨지는 추론기에서 문맥 컴파일러로 이동하는가]]
+- [[notes/온톨로지/ontology-emergent-agent|4. 온톨로지가 행동을 바꾸는 에이전트]]
+- [[notes/온톨로지/local-ontology-agent-implementation|7. 로컬 온톨로지 에이전트 구현 설계]]
 
 ## 불확실성과 한계
 

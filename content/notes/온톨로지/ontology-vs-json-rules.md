@@ -2,6 +2,8 @@
 title: "6. 온톨로지는 언제 JSON 규칙보다 나아지는가: 다중 홉·변경 영향·감사 비용 실험 설계"
 description: "JSON Schema·규칙 엔진과 RDF·OWL·SPARQL·SHACL을 다중 홉, 변경 영향, 감사 비용 기준으로 공정하게 비교하는 실험 설계"
 date: 2026-07-21
+aliases:
+  - /notes/ontology-vs-json-rules
 tags:
   - 딥리서치
   - 온톨로지
@@ -11,9 +13,9 @@ tags:
   - 실험설계
 ---
 
-![JSON 규칙, 혼합형, 온톨로지의 선택 경계를 관계 깊이·변경 전파·감사 요구와 실험 절차로 요약한 대표 인포그래픽](../attachments/ontology-vs-json-rules/ontology-vs-json-rules-infographic.png)
+![JSON 규칙, 혼합형, 온톨로지의 선택 경계를 관계 깊이·변경 전파·감사 요구와 실험 절차로 요약한 대표 인포그래픽](../../attachments/ontology-vs-json-rules/ontology-vs-json-rules-infographic.png)
 
-[[notes/ontology-agent-behavior-experiment|5번 비교 실험]]에서는 단순한 발행 승인 문제라면 JSON 규칙, 구조화 검색 카드, SHACL이 같은 결론에 도달할 수 있음을 확인했습니다. 이번에는 질문을 한 단계 더 밀어 보겠습니다.
+[[notes/온톨로지/ontology-agent-behavior-experiment|5번 비교 실험]]에서는 단순한 발행 승인 문제라면 JSON 규칙, 구조화 검색 카드, SHACL이 같은 결론에 도달할 수 있음을 확인했습니다. 이번에는 질문을 한 단계 더 밀어 보겠습니다.
 
 > JSON 규칙만으로 충분한 문제와, 관계 의미·변경 영향·감사 경로를 갖춘 온톨로지가 제값을 하는 문제를 어떻게 같은 조건에서 비교하면 좋을까요?
 
@@ -44,7 +46,7 @@ tags:
 
 ## 1. 먼저 역할 경계를 맞춰야 한다
 
-![JSON Schema와 규칙 엔진, RDF·OWL·SPARQL·SHACL이 각각 구조 검증·판정·관계 의미·질의·감사를 맡는 역할 경계 도판](../attachments/ontology-vs-json-rules/ontology-vs-json-rules-figure-01.png)
+![JSON Schema와 규칙 엔진, RDF·OWL·SPARQL·SHACL이 각각 구조 검증·판정·관계 의미·질의·감사를 맡는 역할 경계 도판](../../attachments/ontology-vs-json-rules/ontology-vs-json-rules-figure-01.png)
 
 겉모습은 비슷해도 맡은 일은 서로 다릅니다.
 
@@ -89,7 +91,7 @@ tags:
 
 ## 3. 공정한 통제 실험을 설계한다
 
-![공개 벤치마크와 버전드 도메인 데이터를 동일한 실행 조건에 넣고 정확도·지연·메모리·변경 범위·감사 시간을 수집하는 실험 파이프라인](../attachments/ontology-vs-json-rules/ontology-vs-json-rules-figure-02.png)
+![공개 벤치마크와 버전드 도메인 데이터를 동일한 실행 조건에 넣고 정확도·지연·메모리·변경 범위·감사 시간을 수집하는 실험 파이프라인](../../attachments/ontology-vs-json-rules/ontology-vs-json-rules-figure-02.png)
 
 하나의 거대한 데이터셋으로 모든 것을 재기보다, 목적에 따라 세 패밀리로 나누는 편이 좋습니다.
 
@@ -245,7 +247,7 @@ def run_and_measure(system: str, task_id: str, command: list[str]) -> RunResult:
 
 ## 6. 반대 근거와 대안 가설
 
-![JSON 우세, 온톨로지 우세, 혼합형 우세와 판정 보류 조건을 한 화면에서 구분하고 측정 전 가설임을 강조한 의사결정 도판](../attachments/ontology-vs-json-rules/ontology-vs-json-rules-figure-03.png)
+![JSON 우세, 온톨로지 우세, 혼합형 우세와 판정 보류 조건을 한 화면에서 구분하고 측정 전 가설임을 강조한 의사결정 도판](../../attachments/ontology-vs-json-rules/ontology-vs-json-rules-figure-03.png)
 
 복잡한 관계를 다루기 편하다는 이유만으로 온톨로지의 총비용이 낮아지는 것은 아닙니다.
 

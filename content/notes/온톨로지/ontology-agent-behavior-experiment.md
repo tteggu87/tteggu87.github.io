@@ -2,6 +2,8 @@
 title: "5. 온톨로지 에이전트는 정말 필요한가: 규칙·검색 카드·SHACL 비교 실험"
 description: "같은 발행 정책을 JSON 규칙, 구조화 검색 카드, SHACL로 실행해 최종 판정과 추적 결과가 어떻게 달라지는지 비교한 실험"
 date: 2026-07-21
+aliases:
+  - /notes/ontology-agent-behavior-experiment
 tags:
   - 딥리서치
   - 온톨로지
@@ -10,13 +12,13 @@ tags:
   - 에이전트평가
 ---
 
-![합성 글 10건을 대상으로 일반 규칙·검색 카드·SHACL과 세 통제군의 판정 결과를 비교하고, 세 실행 방식은 10/10·false pass 0이지만 중복 shape는 7/10 판정을 유지한 채 validation trace만 1개에서 2개로 달라졌음을 보여주는 한 장짜리 연구 요약표](../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-one-page-infographic.png)
+![합성 글 10건을 대상으로 일반 규칙·검색 카드·SHACL과 세 통제군의 판정 결과를 비교하고, 세 실행 방식은 10/10·false pass 0이지만 중복 shape는 7/10 판정을 유지한 채 validation trace만 1개에서 2개로 달라졌음을 보여주는 한 장짜리 연구 요약표](../../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-one-page-infographic.png)
 
 - 기준일: 2026-07-20
 - 실행 범위: 합성 Quartz 발행 승인 사례 10건
 - 측정 대상: 결정론적 PASS/FAIL 판정과 판정 근거
 
-이 글은 [[notes/ontology-agent-guide|온톨로지 에이전트의 기본 구조]], [[notes/ontology-in-the-agentic-era|실행의 의미 계층]], [[notes/ontology-judge-loop-agent-validation|Judge Loop]], [[notes/ontology-emergent-agent|지속적 자기변화의 증명 조건]]을 실제 비교 실험으로 이어가는 다섯 번째 글입니다.
+이 글은 [[notes/온톨로지/ontology-agent-guide|온톨로지 에이전트의 기본 구조]], [[notes/온톨로지/ontology-in-the-agentic-era|실행의 의미 계층]], [[notes/온톨로지/ontology-judge-loop-agent-validation|Judge Loop]], [[notes/온톨로지/ontology-emergent-agent|지속적 자기변화의 증명 조건]]을 실제 비교 실험으로 이어가는 다섯 번째 글입니다.
 
 앞선 글에서는 온톨로지 에이전트가 무엇이고, 어떤 조건에서 행동 변화를 증명할 수 있는지 살펴봤습니다. 이번에는 방향을 조금 바꿔보겠습니다.
 
@@ -68,7 +70,7 @@ tags:
 | `C_redundant_shape` | 기존 infographic shape 중복    | 최종 판정과 판정 근거의 차이         |
 | `T_shacl`           | deep-research SHACL shape 추가 | 두 조건을 SHACL 검증 정책으로 실행   |
 
-![정책 v1과 v2의 차이, 네 단계 실행 절차, 여섯 실험군의 역할을 한 화면에 정리한 실험 설계 도판](../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-figure-01.png)
+![정책 v1과 v2의 차이, 네 단계 실행 절차, 여섯 실험군의 역할을 한 화면에 정리한 실험 설계 도판](../../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-figure-01.png)
 
 여기서 `C_lexical_card`는 흔히 떠올리는 신경망 임베딩이나 자유형 RAG가 아닙니다. 두 영문 카드에 단어 빈도 기반 코사인 유사도를 적용하고, 선택된 카드 안의 정확한 `requirements` 배열을 소비자 코드가 실행합니다.
 
@@ -113,7 +115,7 @@ flowchart LR
 | `C_redundant_shape` |                    7/10 |                  3 | 없음           | **있음**       | 통과             | 통과           |
 | `T_shacl`           |                   10/10 |                  0 | 있음           | 있음           | 통과             | 통과           |
 
-![여섯 실험군의 기대값 일치 수, false pass, 최종 판정 변화와 판정 근거 변화를 비교한 결과표](../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-figure-02.png)
+![여섯 실험군의 기대값 일치 수, false pass, 최종 판정 변화와 판정 근거 변화를 비교한 결과표](../../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-figure-02.png)
 
 ### 실험군과 관찰 계층을 직접 비교해 보기
 
@@ -153,7 +155,7 @@ SHACL은 이 문제를 표현하기에 충분했습니다. 하지만 JSON 규칙
 
 따라서 이번 결과는 **이진 판정은 같았지만 추적 정보는 달랐다**고 표현하는 편이 정확합니다.
 
-![metadata-only 변경, 중복 shape, 세 실행 방식의 결과를 비교해 최종 판정과 판정 근거가 서로 다른 관찰층임을 설명하는 도판](../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-figure-03.png)
+![metadata-only 변경, 중복 shape, 세 실행 방식의 결과를 비교해 최종 판정과 판정 근거가 서로 다른 관찰층임을 설명하는 도판](../../attachments/ontology-agent-behavior-experiment/ontology-agent-behavior-experiment-figure-03.png)
 
 ### 2.4 재로드 성공은 운영 롤백 성공이 아니다
 

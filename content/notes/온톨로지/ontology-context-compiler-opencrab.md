@@ -2,6 +2,8 @@
 title: "9. LLM 시대, 온톨로지는 추론기에서 문맥 컴파일러로 이동하는가: OpenCrab의 위치와 다음 단계"
 description: "고전 온톨로지의 TBox·ABox·Reasoner 구조가 해결한 문제를 살펴보고, LLM 시대에는 온톨로지가 외부 지식을 선별·구조화·검증하는 문맥 컴파일러로 어떻게 확장될 수 있는지 OpenCrab의 MCP·9-Space·HybridQuery·Pack 설계를 통해 분석합니다."
 date: 2026-07-22
+aliases:
+  - /notes/ontology-context-compiler-opencrab
 tags:
   - 온톨로지
   - OpenCrab
@@ -12,12 +14,12 @@ tags:
   - 검색증강생성
 ---
 
-![고전 온톨로지의 형식 추론에서 LLM 시대의 의미 기반 문맥 컴파일로 이동하는 전체 흐름과 OpenCrab의 현재 위치](../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-infographic.png)
+![고전 온톨로지의 형식 추론에서 LLM 시대의 의미 기반 문맥 컴파일로 이동하는 전체 흐름과 OpenCrab의 현재 위치](../../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-infographic.png)
 
 > [!summary] 결론부터
 > 고전 온톨로지는 자연어를 이해하지 못하는 기계가 지식을 일관되게 사용하도록 개념·사실·공리를 형식화하고 Reasoner가 결론을 계산하게 했습니다. LLM은 자연어 해석과 유연한 종합을 상당 부분 맡을 수 있지만, 최신·비공개·전문 지식과 정확한 출처를 자동으로 갖고 있지는 않습니다. 그래서 LLM 시대의 온톨로지는 사라지기보다 **질문에 필요한 외부 지식을 근거·관계·정책 구조로 선별해 LLM에 제공하는 의미 기반 문맥 계층**으로 확장될 수 있습니다. OpenCrab은 MCP, 9-Space, Vector·BM25·Graph 검색과 Pack을 통해 이 방향으로 상당히 이동했지만, 현재는 완성된 문맥 컴파일러보다 **온톨로지 유도 Hybrid Retriever와 지식 Pack 공장**에 더 가깝습니다.
 
-이 글은 앞선 [[notes/opencrab-ontology-build-architecture|OpenCrab 온톨로지 빌드 분석]]의 후속편입니다. 앞 글이 원문에서 Pack까지 무엇을 만드는지 살펴봤다면, 이번 글은 만들어진 지식을 **LLM Agent가 어떻게 찾아 쓰는지**, 그리고 그 방식이 고전 온톨로지와 어떻게 다른지를 살펴봅니다.
+이 글은 앞선 [[notes/온톨로지/opencrab-ontology-build-architecture|OpenCrab 온톨로지 빌드 분석]]의 후속편입니다. 앞 글이 원문에서 Pack까지 무엇을 만드는지 살펴봤다면, 이번 글은 만들어진 지식을 **LLM Agent가 어떻게 찾아 쓰는지**, 그리고 그 방식이 고전 온톨로지와 어떻게 다른지를 살펴봅니다.
 
 먼저 오해를 하나 피해야 합니다. 고전 온톨로지는 LLM이 없던 시절의 낡은 우회로가 아닙니다. 형식 의미론, 일관성 검사와 결정론적 추론이라는 고유한 가치를 지금도 갖고 있습니다. 반대로 LLM이 자연어를 잘 읽는다고 해서 필요한 사실을 아무렇게나 많이 넣어도 올바른 결론이 나오는 것도 아닙니다.
 
@@ -66,7 +68,7 @@ flowchart LR
 
 다만 현실 문서를 이 구조로 옮기는 비용이 큽니다. 조직의 PDF, 회의록, 로그와 내부 규정에는 예외와 암묵적 문맥이 많습니다. 이를 모두 클래스·공리·관계로 형식화하고 실제 자료가 바뀔 때마다 유지하려면 상당한 전문 작업이 필요합니다.
 
-![TBox·ABox·Reasoner 중심의 결정론적 온톨로지와 비정형 문서를 해석하는 LLM 중심 구조의 역할 차이](../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-figure-01.png)
+![TBox·ABox·Reasoner 중심의 결정론적 온톨로지와 비정형 문서를 해석하는 LLM 중심 구조의 역할 차이](../../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-figure-01.png)
 
 ## 2. LLM이 등장하면서 병목은 어디로 이동했는가
 
@@ -245,7 +247,7 @@ missing_evidence:
 
 [탐색기를 새 화면에서 크게 열기](/attachments/ontology-context-compiler-opencrab/ontology-context-compiler-explorer.htm)
 
-![자연어 질문을 QueryPlan으로 바꾸고 Evidence·Claim·Policy·Outcome을 AnswerBundle로 조립하는 의미 기반 문맥 컴파일 구조](../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-figure-02.png)
+![자연어 질문을 QueryPlan으로 바꾸고 Evidence·Claim·Policy·Outcome을 AnswerBundle로 조립하는 의미 기반 문맥 컴파일 구조](../../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-figure-02.png)
 
 ## 4. OpenCrab은 이 변화에서 어디에 있는가
 
@@ -478,7 +480,7 @@ Resource → constrained_by → Policy
 
 ## 7. 앞으로 나아갈 방향
 
-![현재 OpenCrab Hybrid Retriever에서 9-Space QueryPlan, Evidence lineage, AnswerBundle과 결정론적 검증을 갖춘 문맥 컴파일러로 가는 단계별 로드맵](../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-figure-03.png)
+![현재 OpenCrab Hybrid Retriever에서 9-Space QueryPlan, Evidence lineage, AnswerBundle과 결정론적 검증을 갖춘 문맥 컴파일러로 가는 단계별 로드맵](../../attachments/ontology-context-compiler-opencrab/ontology-context-compiler-opencrab-figure-03.png)
 
 ### 7.1 9-Space Query Planner를 만듭니다
 
@@ -603,11 +605,11 @@ OpenCrab은 이미 이 변화의 중요한 재료를 갖고 있습니다.
 
 ## 함께 읽기
 
-- [[notes/opencrab-ontology-build-architecture|8. OpenCrab 온톨로지 빌드는 무엇을 만드는가]]
-- [[notes/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 실행의 의미 계층으로 확장될 수 있다]]
-- [[notes/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
-- [[notes/ontology-judge-loop-agent-validation|3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계]]
-- [[notes/local-ontology-agent-implementation|7. 로컬 온톨로지 에이전트 구현 설계]]
+- [[notes/온톨로지/opencrab-ontology-build-architecture|8. OpenCrab 온톨로지 빌드는 무엇을 만드는가]]
+- [[notes/온톨로지/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 실행의 의미 계층으로 확장될 수 있다]]
+- [[notes/온톨로지/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
+- [[notes/온톨로지/ontology-judge-loop-agent-validation|3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계]]
+- [[notes/온톨로지/local-ontology-agent-implementation|7. 로컬 온톨로지 에이전트 구현 설계]]
 
 ## 참고 자료
 

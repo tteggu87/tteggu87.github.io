@@ -2,6 +2,8 @@
 title: "12. 한 번 검색하고 답하지 않는 에이전트: 가설·반례·재검색을 반복하는 조사 루프"
 description: "반복 검색과 자기반성이 곧 정확성을 보장하지는 않습니다. 외부 근거, 반례, 상태 갱신과 종료 조건을 갖춘 조사 계약을 설계하고 검증하는 방법을 살펴봅니다."
 date: 2026-07-23
+aliases:
+  - /notes/iterative-investigation-refutation-loop
 tags:
   - 온톨로지
   - AI에이전트
@@ -11,7 +13,7 @@ tags:
   - 에이전트평가
 ---
 
-![첫 가설이 새 근거와 반례를 받아 상태를 갱신하고 회귀를 검사한 뒤 판단·보류·사람 검토로 끝나는 반복 조사 계약](../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-infographic-v2.png)
+![첫 가설이 새 근거와 반례를 받아 상태를 갱신하고 회귀를 검사한 뒤 판단·보류·사람 검토로 끝나는 반복 조사 계약](../../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-infographic-v2.png)
 
 > [!summary] 한 문장 결론
 > 여러 번 생각한다고 답이 저절로 좋아지지는 않습니다. 좋은 조사 루프는 새 근거와 반례가 들어올 때마다 가설을 고치고, 아직 모르는 것이 남았다면 결론을 보류합니다.
@@ -30,7 +32,7 @@ tags:
 
 ReAct와 IRCoT는 추론 중 행동과 검색을 교차하는 접근이 특정 과업에서 효과를 낼 수 있음을 보여 줬습니다.[src_001](#src-001)[src_002](#src-002) Self-Refine과 Reflexion도 반복 피드백의 가능성을 보였지만,[src_003](#src-003)[src_004](#src-004) 외부 피드백 없는 추론 자기교정은 실패하거나 오히려 성능을 낮출 수 있다는 연구와 비판적 조사도 있습니다.[src_006](#src-006)[src_007](#src-007) CRITIC처럼 검색·코드·검증 도구가 주는 외부 피드백과 단순 자기반성을 구분해야 합니다.[src_005](#src-005)
 
-앞선 [[notes/kg-guided-llm-planning|11번 글]]이 계획 전에 확인할 목표·상태·행동·제약과 근거를 다뤘다면, 이번 글은 그 첫 가설과 첫 계획을 어떻게 다시 검사하고 수정할지 살펴봅니다. [[notes/ontology-expertise-pack|전문성 Pack]]의 사례·실패·경쟁 가설·미지가 이 조사 루프의 작업 재료가 됩니다.
+앞선 [[notes/온톨로지/kg-guided-llm-planning|11번 글]]이 계획 전에 확인할 목표·상태·행동·제약과 근거를 다뤘다면, 이번 글은 그 첫 가설과 첫 계획을 어떻게 다시 검사하고 수정할지 살펴봅니다. [[notes/온톨로지/ontology-expertise-pack|전문성 Pack]]의 사례·실패·경쟁 가설·미지가 이 조사 루프의 작업 재료가 됩니다.
 
 > [!important] 이 글에서 다루는 범위
 > 아래 구조는 DuckCrab이나 OpenCrab에 이미 완성된 기능이 아닙니다. 후속 구현과 비교 실험으로 확인할 설계안입니다.
@@ -72,7 +74,7 @@ Self-Refine은 같은 모델이 초안을 쓰고, 비판하고, 다시 고치는
 
 > 이전 반복과 다른 어떤 검증 가능한 신호가 들어왔는가?
 
-![다섯 반복 계열을 새 입력 신호와 해석 한계로 비교하고 경쟁 가설을 가르는 질문을 강조한 도판](../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-figure-01-v2.png)
+![다섯 반복 계열을 새 입력 신호와 해석 한계로 비교하고 경쟁 가설을 가르는 질문을 강조한 도판](../../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-figure-01-v2.png)
 
 ## 2. 조사 루프는 답안보다 상태를 갱신해야 합니다
 
@@ -154,7 +156,7 @@ Self-RAG는 검색이 필요하지 않은데도 정해진 개수의 문서를 �
 
 반복 조사는 매 턴 전체 보고서를 다시 만드는 채팅 루프보다, 판단 기록과 바뀐 부분을 남기는 작업공간에 가까워야 합니다.
 
-![자료 상태를 선별하고 수정 회귀를 검사한 뒤 판단 보류나 사람 검토 요청까지 구분하는 조사 작업공간 도판](../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-figure-02-v2.png)
+![자료 상태를 선별하고 수정 회귀를 검사한 뒤 판단 보류나 사람 검토 요청까지 구분하는 조사 작업공간 도판](../../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-figure-02-v2.png)
 
 ## 6. 멈추는 능력도 조사 능력입니다
 
@@ -204,7 +206,7 @@ IoRT는 정적인 자기반성이 중복·드리프트·완고함을 만들 수 
 
 비교할 때는 모델, 도구, 검색 코퍼스, 토큰·시간 예산과 평가 질문을 고정해야 합니다. 정답률만 확인해서도 부족합니다. 근거를 충분히 모았는지, 반례를 실제로 찾았는지, 수정 과정에서 기존 내용이 손상되지 않았는지도 함께 봐야 합니다. 비용과 지연시간, 검색 궤적의 오염과 재현성도 기록해야 합니다. Mr Dre와 DREAM은 장문 조사 평가가 최종 문장만 보고 끝날 수 없음을 보여 줍니다.[src_013](#src-013)[src_016](#src-016)
 
-![일회 답변부터 지식 묶음 결합까지 다섯 비교 실험과 고정 조건·평가 지표를 보여주는 최소 실험 매트릭스](../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-figure-03-v2.png)
+![일회 답변부터 지식 묶음 결합까지 다섯 비교 실험과 고정 조건·평가 지표를 보여주는 최소 실험 매트릭스](../../attachments/iterative-investigation-refutation-loop/iterative-investigation-refutation-loop-figure-03-v2.png)
 
 ## 결론
 

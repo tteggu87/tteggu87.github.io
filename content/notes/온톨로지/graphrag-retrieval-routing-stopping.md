@@ -2,6 +2,8 @@
 title: "23. GraphRAG는 어떤 경로로 검색하고 언제 멈춰야 하는가: route·query contract·근거 공백·fallback을 검증하는 법"
 description: "GraphRAG를 도입한 뒤 질문별 검색 경로와 query contract를 고르고, 근거 공백·가역적 가지치기·fallback·보류를 함께 검증하는 실행 제어 방법을 설명합니다."
 date: 2026-07-30
+aliases:
+  - /notes/graphrag-retrieval-routing-stopping
 tags:
   - GraphRAG
   - RAG
@@ -10,7 +12,7 @@ tags:
   - AI에이전트
 ---
 
-![질문의 답변 의무에서 검색 경로를 고르고 근거 공백을 닫을 때까지 반복한 뒤 답변·재탐색·fallback·보류로 끝나는 GraphRAG 실행 제어기](../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-infographic.png)
+![질문의 답변 의무에서 검색 경로를 고르고 근거 공백을 닫을 때까지 반복한 뒤 답변·재탐색·fallback·보류로 끝나는 GraphRAG 실행 제어기](../../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-infographic.png)
 
 > [!summary] 핵심 결론
 > GraphRAG의 검색 제어는 `local인가 global인가`를 한 번 고르는 분류 문제가 아닙니다. 질문의 답변 의무를 먼저 적고, 선택한 경로에 맞게 질의를 다시 표현하며, 서로 다른 근거 공백을 닫을 때만 확장해야 합니다. 버린 후보를 되살릴 수 있어야 하고, 모든 경로가 답을 뒷받침하지 못하면 fallback이나 보류로 끝내야 합니다.
@@ -30,7 +32,7 @@ tags:
 → 답할 것인가, 복구할 것인가, 다른 경로로 갈 것인가, 보류할 것인가
 ```
 
-[[notes/graphrag-adoption-gate|21번 글]]은 관계 증강 문서부터 GraphRAG까지 언제 승격할지를 다뤘습니다. [[notes/graphrag-beyond-context-compiler|22번 글]]은 검색 결과를 안전한 문맥으로 만들고 생성·권한·승격 책임을 어디에 둘지 설명했습니다. 이번 글은 그 사이의 빈칸, 즉 **도입된 검색 경로를 질문마다 어떻게 실행하고 언제 멈출지**에 집중합니다.
+[[notes/온톨로지/graphrag-adoption-gate|21번 글]]은 관계 증강 문서부터 GraphRAG까지 언제 승격할지를 다뤘습니다. [[notes/온톨로지/graphrag-beyond-context-compiler|22번 글]]은 검색 결과를 안전한 문맥으로 만들고 생성·권한·승격 책임을 어디에 둘지 설명했습니다. 이번 글은 그 사이의 빈칸, 즉 **도입된 검색 경로를 질문마다 어떻게 실행하고 언제 멈출지**에 집중합니다.
 
 ## 경로 선택보다 먼저 답변 의무를 적습니다
 
@@ -97,7 +99,7 @@ query contract에는 최소한 다음을 남깁니다.
 
 의미 등가성 검사는 문자열 유사도가 아닙니다. 예를 들어 `실패 원인`을 `실패와 함께 나타난 서비스`로 바꾸면 후보 탐색에는 도움이 되지만 인과 의무를 대체하지 못합니다. 따라서 변환 질의마다 `보존한 의무`, `완화한 제약`, `새로 넣은 가정`을 기록합니다.
 
-![답변 의무가 Local·Global·DRIFT·문서 검색의 서로 다른 query contract로 변환되고 의미 등가성 검사를 거쳐 실행되는 구조](../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-01.png)
+![답변 의무가 Local·Global·DRIFT·문서 검색의 서로 다른 query contract로 변환되고 의미 등가성 검사를 거쳐 실행되는 구조](../../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-01.png)
 
 ## 홉 수가 아니라 근거 공백으로 확장합니다
 
@@ -199,7 +201,7 @@ abstain
 
 이 용어들은 서로 바꿔 쓰면 안 됩니다. `rescue`는 현재 경로 안에서 잘못 잡힌 출발점을 고치는 일입니다. `repair`는 제한된 subgraph나 source 연결의 결손을 고칩니다. `fallback`은 경로 자체를 바꿉니다. `retry`는 의미 계약을 바꾸지 않고 일시적 실행 실패만 재시도합니다. `abstain`은 실패를 숨기지 않고 근거 부족으로 답을 보류하는 종결 상태입니다.
 
-![근거 공백과 가역적 가지치기 원장을 기준으로 continue·rescue·repair·fallback·retry·re-anchor·answer·abstain을 구분하는 상태 전이](../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-02.png)
+![근거 공백과 가역적 가지치기 원장을 기준으로 continue·rescue·repair·fallback·retry·re-anchor·answer·abstain을 구분하는 상태 전이](../../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-02.png)
 
 중단 판정은 세 층으로 나눌 수 있습니다.
 
@@ -277,7 +279,7 @@ stopping contribution
 
 후속 읽기 전용 감사에서는 로컬 저장소에 그래프용 node·relation 묶음(graph projection)이 비어 있지 않았고, 중복 key·끊어진 endpoint·schema 연결 누락도 검사 범위에서는 없었습니다. 그러나 graph query와 graph 결과에서 원문 근거로 내려가는 경로는 실행해 보지 않았습니다. 벡터·전문 검색 색인(index)의 실제 데이터, RRF 결합과 정답 근거가 표시된 평가 자료(fixture)도 확인되지 않았습니다. 따라서 `그래프 데이터가 없다`고 말하는 것도, `경로 비교를 실행할 준비가 됐다`고 말하는 것도 모두 현재 근거를 넘어섭니다. 실제 route benchmark는 이 실행 조건이 갖춰질 때까지 차단된 상태입니다.
 
-![raw query·고정 경로·큰 top-k·RRF·triplet retrieval 기준선과 route·adapter·pruning·stopping ablation을 비교하는 검증 매트릭스](../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-03.png)
+![raw query·고정 경로·큰 top-k·RRF·triplet retrieval 기준선과 route·adapter·pruning·stopping ablation을 비교하는 검증 매트릭스](../../attachments/graphrag-retrieval-routing-stopping/graphrag-retrieval-routing-stopping-figure-03.png)
 
 ## 실행 receipt를 한 장으로 남깁니다
 

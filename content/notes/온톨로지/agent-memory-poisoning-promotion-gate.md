@@ -2,6 +2,8 @@
 title: "18. 에이전트가 스스로 배운 지식은 안전한가: 지속 메모리 오염과 승격 게이트를 검증하는 법"
 description: "에이전트의 장기 기억이 공격 경로가 되지 않도록 저장·승격·검색·행동 커밋의 네 경계를 나누고 검증하는 방법을 살펴봅니다."
 date: 2026-07-29
+aliases:
+  - /notes/agent-memory-poisoning-promotion-gate
 tags:
   - AI에이전트
   - 에이전트메모리
@@ -10,7 +12,7 @@ tags:
   - 딥리서치
 ---
 
-![신뢰할 수 없는 입력이 검토된 지식과 안전한 행동으로 이어지기까지 거쳐야 하는 네 가지 신뢰 경계](../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-infographic.png)
+![신뢰할 수 없는 입력이 검토된 지식과 안전한 행동으로 이어지기까지 거쳐야 하는 네 가지 신뢰 경계](../../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-infographic.png)
 
 > [!summary] 핵심 결론
 > 에이전트가 어떤 내용을 저장했다는 사실만으로 그 기억을 신뢰하거나 재사용 가능한 지식으로 승격해서는 안 됩니다. **쓰기, 지식 승격, 검색, 실제 행동 커밋**을 서로 다른 경계로 나누고, 각 단계에서 출처·권위·범위·버전·권한을 다시 확인해야 합니다.
@@ -19,7 +21,7 @@ tags:
 
 문제는 단순히 나쁜 문장을 탐지하지 못했다는 데 그치지 않습니다. **신뢰할 수 없는 입력이 지속 상태에 들어가고, 검증된 지식처럼 권위를 얻고, 특정 질문에서 다시 활성화된 뒤, 부작용 있는 행동으로 이어지는 전체 수명주기**가 공격 표면이 됩니다.
 
-[[notes/knowledge-centric-self-improvement|15번 글]]은 여러 작업의 경험을 후보 지식으로 만들고, 반례·검증·승인을 거쳐 `Expertise Pack`, 즉 검토된 공유 지식 묶음으로 승격하는 과정을 설명했습니다.[src_001](#src-001) [[notes/context-compilation-regression|16번 글]]은 검증된 Pack에서 현재 질문에 필요한 `Context Bundle`, 즉 작업용 문맥 묶음을 만들 때 조건과 반례가 빠지는 문제를 다뤘습니다. [[notes/authorization-aware-rag-graph-boundary|17번 글]]은 그 문맥을 현재 `principal`(권한을 행사하는 사용자·조직·에이전트)에게 공개하고 행동에 사용해도 되는지 검증했습니다.
+[[notes/온톨로지/knowledge-centric-self-improvement|15번 글]]은 여러 작업의 경험을 후보 지식으로 만들고, 반례·검증·승인을 거쳐 `Expertise Pack`, 즉 검토된 공유 지식 묶음으로 승격하는 과정을 설명했습니다.[src_001](#src-001) [[notes/온톨로지/context-compilation-regression|16번 글]]은 검증된 Pack에서 현재 질문에 필요한 `Context Bundle`, 즉 작업용 문맥 묶음을 만들 때 조건과 반례가 빠지는 문제를 다뤘습니다. [[notes/온톨로지/authorization-aware-rag-graph-boundary|17번 글]]은 그 문맥을 현재 `principal`(권한을 행사하는 사용자·조직·에이전트)에게 공개하고 행동에 사용해도 되는지 검증했습니다.
 
 여기서 권한과 신뢰는 서로 다른 질문입니다. `authorized ≠ trusted`, 다시 말해 **읽어도 되는 자료와 믿어도 되는 자료는 같지 않습니다.** 읽을 권한이 있는 자료라도 오염됐거나 오래됐을 수 있고, 신뢰할 수 있는 지식이라도 다른 `tenant`(조직이나 고객별 격리 단위)에는 공개할 수 없습니다. 따라서 권한 검사를 통과한 뒤에도 지식의 출처·권위·적용 범위·`revision`(특정 버전)을 별도 신뢰 게이트에서 확인해야 합니다.
 
@@ -44,7 +46,7 @@ tags:
 
 AgentPoison은 장기 메모리 또는 RAG 지식베이스의 검색 구조를 이용하는 백도어, 즉 특정 조건에서만 작동하도록 숨겨 둔 공격 경로를 제시했습니다.[src_006](#src-006) MM-PoisonRAG는 텍스트와 이미지처럼 여러 형식을 함께 다루는 멀티모달 지식베이스에서 특정 질의를 노리는 오염과 전역 오염을 평가했습니다.[src_008](#src-008) 이 연구들은 같은 시스템을 독립 재현한 결과가 아니며, 모델·과업·검색기·공격자 권한도 서로 다릅니다. 다만 **지속 상태와 검색 구조가 공격의 수명과 영향 범위를 넓힐 수 있다**는 문제 정의는 여러 환경에서 반복됩니다.
 
-![간접 프롬프트 인젝션, 지식베이스 오염, 지속 메모리 오염과 승격 오염의 활성화 위치를 비교한 도해](../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-figure-01.png)
+![간접 프롬프트 인젝션, 지식베이스 오염, 지속 메모리 오염과 승격 오염의 활성화 위치를 비교한 도해](../../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-figure-01.png)
 
 ## 한 기록만 검사하면 조합형 공격과 휴면 공격을 놓칩니다
 
@@ -113,7 +115,7 @@ VIGIL은 신뢰할 수 없는 도구 결과가 연속해서 들어오는 환경�
 → 실행 / 보류 / 사람 승인
 ```
 
-![쓰기·승격·검색·행동 커밋 단계에서 각각 출처, 조합 위험, 범위와 권한을 재검증하는 구조](../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-figure-02.png)
+![쓰기·승격·검색·행동 커밋 단계에서 각각 출처, 조합 위험, 범위와 권한을 재검증하는 구조](../../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-figure-02.png)
 
 OWASP Agentic Top 10은 Memory & Context Poisoning을 독립적인 운영 위험으로 분류합니다.[src_011](#src-011) 이 분류가 특정 방어의 효과를 증명하는 것은 아니지만, 메모리와 문맥이 이후 추론·행동을 오염시킬 수 있다는 운영 위협 모델을 제공합니다.
 
@@ -195,7 +197,7 @@ memory_trust_receipt:
 
 필수 시험 항목에는 하나의 기록에 담긴 직접 오염, 두 기록의 조합, 특정 질문에서만 활성화되는 휴면 규칙, 오래된 정책 버전, 다른 조직의 유효한 기억, 사실처럼 보이는 행동 지시, 정상적인 사용자 선호와 광고성 지시의 경계, 여러 세션에 걸친 누적을 포함합니다.
 
-![메모리 없음부터 승격·검색·행동·되돌리기 게이트까지 A부터 H 조건을 단계적으로 비교하는 실험 설계](../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-figure-03.png)
+![메모리 없음부터 승격·검색·행동·되돌리기 게이트까지 A부터 H 조건을 단계적으로 비교하는 실험 설계](../../attachments/agent-memory-poisoning-promotion-gate/agent-memory-poisoning-promotion-gate-figure-03.png)
 
 평가할 때는 공격 성공률 외에도 다음 항목을 함께 봐야 합니다.
 
@@ -247,7 +249,7 @@ memory_trust_receipt:
 
 ## 출처
 
-- <a id="src-001"></a> tteggu의 지식창고. (2026). [15. 에이전트를 고치지 말고 지식을 개선하라: 경험을 공유 지식으로 승격하는 자기개선 루프](https://tteggu87.github.io/notes/knowledge-centric-self-improvement).
+- <a id="src-001"></a> tteggu의 지식창고. (2026). [15. 에이전트를 고치지 말고 지식을 개선하라: 경험을 공유 지식으로 승격하는 자기개선 루프](https://tteggu87.github.io/notes/온톨로지/knowledge-centric-self-improvement).
 - <a id="src-002"></a> Gadgil, S. et al. (2026). [Bad Memory: Evaluating Prompt Injection Risks from Memory in Agentic Systems](https://arxiv.org/abs/2607.14611). arXiv:2607.14611.
 - <a id="src-003"></a> Dash, P. et al. (2026). [From Untrusted Input to Trusted Memory: A Systematic Study of Memory Poisoning Attacks in LLM Agents](https://arxiv.org/abs/2606.04329). arXiv:2606.04329v2.
 - <a id="src-004"></a> Gao, J. et al. (2026). [MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents](https://arxiv.org/abs/2607.14651). arXiv:2607.14651.

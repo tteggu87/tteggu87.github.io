@@ -2,6 +2,8 @@
 title: "2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다"
 description: "arXiv 논문을 중심으로 전통 온톨로지가 LLM 에이전트의 메모리·계획·검증·거버넌스 계층으로 확장되는 흐름과 한계를 분석합니다."
 date: 2026-07-19
+aliases:
+  - /notes/ontology-in-the-agentic-era
 tags:
   - 온톨로지
   - LLM
@@ -10,7 +12,7 @@ tags:
   - 딥리서치
 ---
 
-![정적 명세에서 런타임 제약, 에이전트 메모리, 검증과 거버넌스로 확장되는 온톨로지의 역할](../attachments/ontology-in-the-agentic-era/ontology-in-the-agentic-era-infographic.png)
+![정적 명세에서 런타임 제약, 에이전트 메모리, 검증과 거버넌스로 확장되는 온톨로지의 역할](../../attachments/ontology-in-the-agentic-era/ontology-in-the-agentic-era-infographic.png)
 
 기준일: 2026-07-19<br>
 연구 모드: direct research<br>
@@ -226,7 +228,7 @@ LLM 에이전트 시대의 연구는 온톨로지와 더 가벼운 의미 그래
 
 ## 함께 읽기
 
-- [[notes/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
+- [[notes/온톨로지/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
 
 ## 출처
 

@@ -2,6 +2,8 @@
 title: "22. GraphRAG는 끝이 아니다: 왜 우리는 Context Compiler를 만들었는가"
 description: "Microsoft GraphRAG가 해결한 검색·문맥 생성의 범위를 정확히 인정한 뒤, OpenCrab류 온톨로지와 Context Compiler가 왜 의미·권한·검증·지식 승격 계층을 추가하려 하는지 앞선 연재 전체를 앵커로 설명합니다."
 date: 2026-07-29
+aliases:
+  - /notes/graphrag-beyond-context-compiler
 tags:
   - GraphRAG
   - MicrosoftGraphRAG
@@ -13,7 +15,7 @@ tags:
   - AI에이전트
 ---
 
-![Microsoft GraphRAG의 검색·문맥 생성 위에 Context Compiler, 의미 권위, 검증과 지식 승격 계층이 이어지는 전체 구조](../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-infographic.png)
+![Microsoft GraphRAG의 검색·문맥 생성 위에 Context Compiler, 의미 권위, 검증과 지식 승격 계층이 이어지는 전체 구조](../../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-infographic.png)
 
 > [!summary] 핵심 결론
 > Microsoft GraphRAG는 문서의 관계 구조를 이용해 더 좋은 검색 문맥을 만드는 중요한 기반입니다. 그러나 **관련 근거를 찾는 일, 답에 반드시 필요한 근거를 구성하는 일, 그 근거를 사용할 권한을 확인하는 일, 모델이 실제로 이용했는지 검증하는 일, 결과를 장기 지식으로 승격하는 일은 서로 다른 책임**입니다. 이 글에서 Context Compiler는 그 책임들을 질문별 작업공간으로 잇기 위한 프로젝트 개념입니다.
@@ -47,7 +49,7 @@ DRIFT는 여기서 다시 한 걸음 나아갑니다. 전역 community 정보로
 
 따라서 GraphRAG를 `결국 검색일 뿐`이라고 낮춰 말해서는 안 됩니다. Microsoft GraphRAG는 **그래프 기반 인덱싱, 질의 라우팅과 문맥 생성 시스템**입니다. 공식 방법론 문서도 이 프로젝트를 언어모델에 적절한 context window content를 만드는 RAG indexing 연구 플랫폼으로 설명합니다.[src_005](#src-005)
 
-![Microsoft GraphRAG의 인덱싱과 Basic·Local·Global·DRIFT 질의 경로가 담당하는 검색·문맥 생성 범위](../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-01.png)
+![Microsoft GraphRAG의 인덱싱과 Basic·Local·Global·DRIFT 질의 경로가 담당하는 검색·문맥 생성 범위](../../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-01.png)
 
 여기까지가 GraphRAG의 약점이라는 뜻은 아닙니다. 오히려 해결하려는 문제의 경계가 명확하다는 뜻입니다.
 
@@ -57,11 +59,11 @@ DRIFT는 여기서 다시 한 걸음 나아갑니다. 전역 community 정보로
 
 `Microsoft GraphRAG와 OpenCrab 중 무엇이 더 좋은가`라는 질문은 자연스럽지만 정확하지 않습니다. 두 시스템이 중심에 두는 산출물이 다르기 때문입니다.
 
-Microsoft GraphRAG의 중심 산출물은 graph index, community report와 질문별 context입니다. 반면 [[notes/opencrab-ontology-build-architecture|8번 글]]에서 분석한 OpenCrab의 설계는 9-Space 의미 렌즈, Evidence와 Claim, Policy·Outcome·Lever, identity·promotion과 Pack 배포를 하나의 지식 제품 수명주기로 연결하려 합니다.
+Microsoft GraphRAG의 중심 산출물은 graph index, community report와 질문별 context입니다. 반면 [[notes/온톨로지/opencrab-ontology-build-architecture|8번 글]]에서 분석한 OpenCrab의 설계는 9-Space 의미 렌즈, Evidence와 Claim, Policy·Outcome·Lever, identity·promotion과 Pack 배포를 하나의 지식 제품 수명주기로 연결하려 합니다.
 
 8번 글에서는 OpenCrab을 전통적인 RDF·OWL 편집기보다 **문서와 로그를 의미 구조로 해석하고, 후보 지식을 검사하며, 설치 가능한 Pack으로 내보내려는 온톨로지 공장**에 가깝다고 평가했습니다. 동시에 현재 구현은 렌즈·도메인 타입·저장 문법의 결합과 우회 가능한 검토·승격 경계가 남아 있으므로, 완성된 온톨로지 컴파일러보다 문법 검사가 붙은 동적 지식그래프 빌더에 가깝다고 범위를 제한했습니다.
 
-[[notes/ontology-context-compiler-opencrab|9번 글]]에서는 이 경계를 더 좁혔습니다. OpenCrab의 vector·BM25·graph hybrid retrieval과 Pack은 좋은 기반이지만, 질문을 필요한 의미 역할과 수용 조건으로 바꾸고 Evidence·Claim·Policy·Conflict·Missing을 검증 가능한 AnswerBundle로 묶는 단계는 아직 목표 구조에 가깝습니다. 그래서 현행 기반을 완성된 Context Compiler가 아니라 **온톨로지 유도 Hybrid Retriever와 지식 Pack 공장**으로 위치시켰습니다.
+[[notes/온톨로지/ontology-context-compiler-opencrab|9번 글]]에서는 이 경계를 더 좁혔습니다. OpenCrab의 vector·BM25·graph hybrid retrieval과 Pack은 좋은 기반이지만, 질문을 필요한 의미 역할과 수용 조건으로 바꾸고 Evidence·Claim·Policy·Conflict·Missing을 검증 가능한 AnswerBundle로 묶는 단계는 아직 목표 구조에 가깝습니다. 그래서 현행 기반을 완성된 Context Compiler가 아니라 **온톨로지 유도 Hybrid Retriever와 지식 Pack 공장**으로 위치시켰습니다.
 
 이 차이를 표로 줄이면 다음과 같습니다.
 
@@ -80,15 +82,15 @@ GraphRAG는 OpenCrab류 시스템이 사용할 수 있는 강력한 retrieval pr
 
 지금까지의 연재는 각각 독립된 주제를 다루는 것처럼 보였습니다. GraphRAG를 기준점으로 다시 배열하면 하나의 아키텍처가 드러납니다.
 
-이 책임 사슬은 네 묶음으로 읽을 수 있습니다. [[notes/opencrab-ontology-build-architecture|8번 OpenCrab 빌드]]는 어떤 지식 제품을 만들 것인지 정했고, [[notes/ontology-context-compiler-opencrab|9번 Context Compiler]]는 질문에 맞춰 지식을 공급하는 구조를 다뤘습니다. [[notes/ontology-expertise-pack|10번 Expertise Pack]]은 전문가의 근거·결정·실패를 재사용 가능한 지식 단위로 외부화했습니다. 각각 Build, Compile, Knowledge 책임에 해당합니다.
+이 책임 사슬은 네 묶음으로 읽을 수 있습니다. [[notes/온톨로지/opencrab-ontology-build-architecture|8번 OpenCrab 빌드]]는 어떤 지식 제품을 만들 것인지 정했고, [[notes/온톨로지/ontology-context-compiler-opencrab|9번 Context Compiler]]는 질문에 맞춰 지식을 공급하는 구조를 다뤘습니다. [[notes/온톨로지/ontology-expertise-pack|10번 Expertise Pack]]은 전문가의 근거·결정·실패를 재사용 가능한 지식 단위로 외부화했습니다. 각각 Build, Compile, Knowledge 책임에 해당합니다.
 
-그 지식을 실제 조사에 쓰는 과정은 [[notes/ontology-senior-investigation-harness|13번 조사 하네스]]가 Pack·계획·반증·검증의 연결로 정리했습니다. [[notes/knowledge-centric-self-improvement|15번 지식 중심 자기개선]]은 작업 경험 가운데 무엇을 공유 지식으로 남길지 물으며 Promotion 책임을 추가했습니다.
+그 지식을 실제 조사에 쓰는 과정은 [[notes/온톨로지/ontology-senior-investigation-harness|13번 조사 하네스]]가 Pack·계획·반증·검증의 연결로 정리했습니다. [[notes/온톨로지/knowledge-centric-self-improvement|15번 지식 중심 자기개선]]은 작업 경험 가운데 무엇을 공유 지식으로 남길지 물으며 Promotion 책임을 추가했습니다.
 
-이후의 글들은 실패 지점을 더 잘게 나눴습니다. [[notes/context-compilation-regression|16번 문맥 컴파일 회귀]]는 정본 지식이 작업용 문맥으로 조립될 때 손실되는 문제를, [[notes/authorization-aware-rag-graph-boundary|17번 권한 인식 RAG]]는 관련 근거를 현재 사용자가 볼 수 있는지를 다뤘습니다. [[notes/agent-memory-poisoning-promotion-gate|18번 메모리 승격]]은 저장된 경험의 신뢰를, [[notes/generation-faithfulness-regression|19번 생성 충실도]]는 모델이 주어진 근거를 실제로 사용했는지를 검사했습니다. [[notes/long-running-task-authorization-lease|20번 장기 작업 권한]]은 실행 도중 권한이 달라지는 시간 경계까지 확장했습니다.
+이후의 글들은 실패 지점을 더 잘게 나눴습니다. [[notes/온톨로지/context-compilation-regression|16번 문맥 컴파일 회귀]]는 정본 지식이 작업용 문맥으로 조립될 때 손실되는 문제를, [[notes/온톨로지/authorization-aware-rag-graph-boundary|17번 권한 인식 RAG]]는 관련 근거를 현재 사용자가 볼 수 있는지를 다뤘습니다. [[notes/온톨로지/agent-memory-poisoning-promotion-gate|18번 메모리 승격]]은 저장된 경험의 신뢰를, [[notes/온톨로지/generation-faithfulness-regression|19번 생성 충실도]]는 모델이 주어진 근거를 실제로 사용했는지를 검사했습니다. [[notes/온톨로지/long-running-task-authorization-lease|20번 장기 작업 권한]]은 실행 도중 권한이 달라지는 시간 경계까지 확장했습니다.
 
-마지막으로 [[notes/graphrag-adoption-gate|21번 GraphRAG 도입 게이트]]는 어느 질문에서 graph 경로의 추가 비용이 정당화되는지 물었습니다. 이 글은 그 검색 경로가 좋은 문맥을 만든 뒤에도 남는 의미·권한·검증·승격 책임을 한 구조로 잇습니다.
+마지막으로 [[notes/온톨로지/graphrag-adoption-gate|21번 GraphRAG 도입 게이트]]는 어느 질문에서 graph 경로의 추가 비용이 정당화되는지 물었습니다. 이 글은 그 검색 경로가 좋은 문맥을 만든 뒤에도 남는 의미·권한·검증·승격 책임을 한 구조로 잇습니다.
 
-![8번 OpenCrab 빌드에서 21번 GraphRAG 도입 게이트까지 이어진 블로그 연재가 Build·Compile·Investigation·Validation·Promotion 계층으로 모이는 지도](../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-02.png)
+![8번 OpenCrab 빌드에서 21번 GraphRAG 도입 게이트까지 이어진 블로그 연재가 Build·Compile·Investigation·Validation·Promotion 계층으로 모이는 지도](../../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-02.png)
 
 21번 글은 `언제 GraphRAG를 켤 것인가`를 다뤘습니다. 관계 증강 문서라는 강한 기준선을 두고, graph-only 유효 근거가 최종 답에 실제로 기여할 때만 Hybrid GraphRAG와 Agent+Graph로 승격하자고 제안했습니다.
 
@@ -157,7 +159,7 @@ Successful ≠ Promoted
 이번에 성공함 ≠ 다음 작업의 정본 지식으로 승격해도 됨
 ```
 
-![검색됨·권한 있음·신뢰됨·생성에 사용됨·정본으로 승격됨을 서로 다른 다섯 게이트로 분리한 도해](../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-03.png)
+![검색됨·권한 있음·신뢰됨·생성에 사용됨·정본으로 승격됨을 서로 다른 다섯 게이트로 분리한 도해](../../attachments/graphrag-beyond-context-compiler/graphrag-beyond-context-compiler-figure-03.png)
 
 ### 관련성은 권한이 아닙니다
 

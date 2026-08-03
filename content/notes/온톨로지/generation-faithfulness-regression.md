@@ -2,6 +2,8 @@
 title: "19. 근거가 있는데도 왜 틀리게 답하는가: 생성 충실도 회귀를 검증하는 법"
 description: "검증된 지식과 정확한 문맥, 올바른 권한까지 갖췄는데도 LLM이 근거를 무시하거나 잘못 인용하는 이유를 분리하고, 과업별 지식 권위와 다축 회귀 검사로 진단하는 방법을 설명합니다."
 date: 2026-07-29
+aliases:
+  - /notes/generation-faithfulness-regression
 tags:
   - RAG
   - LLM평가
@@ -10,7 +12,7 @@ tags:
   - 지식권위
 ---
 
-![신뢰할 수 있고 완전하며 권한이 확인된 문맥도 생성 단계에서 다시 검증해야 하는 네 단계 게이트](../attachments/generation-faithfulness-regression/generation-faithfulness-regression-infographic.png)
+![신뢰할 수 있고 완전하며 권한이 확인된 문맥도 생성 단계에서 다시 검증해야 하는 네 단계 게이트](../../attachments/generation-faithfulness-regression/generation-faithfulness-regression-infographic.png)
 
 > [!summary] 핵심 결론
 > 좋은 답을 만들려면 지식을 검증하고, 질문에 맞는 자료를 `Context Bundle`, 즉 작업용 문맥 묶음으로 만들고, 현재 사용자의 권한을 확인해야 합니다. 여기서 한 단계 더 나아가 **모델이 질문의 성격에 맞는 지식원을 골라 실제 근거를 사용했는지**도 검사해야 하며, 이 글의 `Task-Aware Authority Policy`는 질문별 지식 우선순위 규칙이고 `Generation Faithfulness Gate`는 답이 근거를 제대로 사용했는지 확인하는 검사입니다. 둘 다 프로젝트 설계안이며, 아직 DuckCrab에서 처음부터 끝까지 성능을 검증한 기능은 아닙니다.
@@ -29,9 +31,9 @@ tags:
 
 최근 글들은 좋은 답이 만들어지기 전의 서로 다른 경계를 다뤘습니다.
 
-- [[notes/agent-memory-poisoning-promotion-gate|18번 글]]은 저장된 경험이 신뢰할 수 있는 지식으로 승격됐는지 묻습니다.
-- [[notes/context-compilation-regression|16번 글]]은 검증된 지식에서 질문별 Context Bundle을 만들 때 조건·반례·버전이 보존됐는지 묻습니다.[src_001](#src-001)
-- [[notes/authorization-aware-rag-graph-boundary|17번 글]]은 관련 있는 자료를 현재 `principal`, 즉 자료를 요청하는 사용자·서비스·에이전트가 실제로 사용할 권한이 있는지 묻습니다.
+- [[notes/온톨로지/agent-memory-poisoning-promotion-gate|18번 글]]은 저장된 경험이 신뢰할 수 있는 지식으로 승격됐는지 묻습니다.
+- [[notes/온톨로지/context-compilation-regression|16번 글]]은 검증된 지식에서 질문별 Context Bundle을 만들 때 조건·반례·버전이 보존됐는지 묻습니다.[src_001](#src-001)
+- [[notes/온톨로지/authorization-aware-rag-graph-boundary|17번 글]]은 관련 있는 자료를 현재 `principal`, 즉 자료를 요청하는 사용자·서비스·에이전트가 실제로 사용할 권한이 있는지 묻습니다.
 - 이번 글은 그 문맥을 모델이 과업에 맞게 사용했는지 묻습니다.
 
 ```text
@@ -70,7 +72,7 @@ CoDA는 정확하고 충분한 검색 문맥이 있는데도 환각이 남을 �
 7. **사실성·충실도 불일치:** 현실에서는 맞지만 제공 문맥에 없는 답과, 문맥에는 충실하지만 현실에서는 틀린 답을 같은 점수로 처리합니다.[src_005](#src-005)
 8. **평가자 편향:** 생성 모델과 자동 judge가 비슷한 context-memory 편향을 공유합니다.[src_011](#src-011)
 
-![정답률·현실 사실성·문맥 충실도·인용·보류·충돌 해결·judge 신뢰성을 분리한 평가 축](../attachments/generation-faithfulness-regression/generation-faithfulness-regression-figure-01.png)
+![정답률·현실 사실성·문맥 충실도·인용·보류·충돌 해결·judge 신뢰성을 분리한 평가 축](../../attachments/generation-faithfulness-regression/generation-faithfulness-regression-figure-01.png)
 
 Facet-Level Tracing은 근거 부재, 검색 결과와 생성 답의 어긋남, 기존 지식이 근거를 덮어쓰는 현상을 더 작은 단위로 나누어 진단합니다.[src_010](#src-010) FRANQ도 현실 사실성과 검색된 근거에 대한 충실도를 구분합니다.[src_005](#src-005) 운영에서는 적어도 다음 축을 따로 기록하는 편이 낫습니다.
 
@@ -92,7 +94,7 @@ FaithfulRAG은 파라미터 지식과 검색 문맥의 충돌을 개별 사실 �
 
 따라서 질문마다 먼저 **어떤 지식원을 어느 순서로 허용할지** 정해야 합니다.
 
-![context-only·parametric-required·mixed·unresolved-conflict 과업별 지식 권위와 보류 규칙](../attachments/generation-faithfulness-regression/generation-faithfulness-regression-figure-02.png)
+![context-only·parametric-required·mixed·unresolved-conflict 과업별 지식 권위와 보류 규칙](../../attachments/generation-faithfulness-regression/generation-faithfulness-regression-figure-02.png)
 
 | 과업 유형                              | 기본 권위                    | 예시                                       | 충돌 시 기본 행동                  |
 | -------------------------------------- | ---------------------------- | ------------------------------------------ | ---------------------------------- |
@@ -207,7 +209,7 @@ Receipt에는 민감한 prompt, 사용자 질문, `tenant`, 즉 조직·고객�
 
 회귀 실험에서는 같은 질문, Pack revision, Context Bundle hash와 권한 상태를 고정합니다. 그런 다음 생성 조건만 바꿔 실패 위치를 좁힙니다.
 
-![동일 Context Bundle을 고정한 A부터 H까지의 생성·권위·judge 비교 실험과 통과 조건](../attachments/generation-faithfulness-regression/generation-faithfulness-regression-figure-03.png)
+![동일 Context Bundle을 고정한 A부터 H까지의 생성·권위·judge 비교 실험과 통과 조건](../../attachments/generation-faithfulness-regression/generation-faithfulness-regression-figure-03.png)
 
 | 조건 | 생성 방식                         | 확인할 질문                                   |
 | ---- | --------------------------------- | --------------------------------------------- |
@@ -262,7 +264,7 @@ Pack이 정확해도 질문에 필요한 자료를 잘못 묶으면 Context Bund
 
 ## 출처
 
-- <a id="src-001"></a> tteggu의 지식창고. (2026). [16. 올바른 지식이 잘못된 답이 되는 순간: 문맥 컴파일 회귀를 검증하는 법](https://tteggu87.github.io/notes/context-compilation-regression).
+- <a id="src-001"></a> tteggu의 지식창고. (2026). [16. 올바른 지식이 잘못된 답이 되는 순간: 문맥 컴파일 회귀를 검증하는 법](https://tteggu87.github.io/notes/온톨로지/context-compilation-regression).
 - <a id="src-002"></a> Shi, J. et al. (2026). [CoDA: Restoring Contextual Dominance via Copy-Encouraged Attention Intervention for Mitigating RAG Hallucinations](https://aclanthology.org/2026.findings-acl.576/). Findings of ACL 2026.
 - <a id="src-003"></a> Zhang, W. et al. (2026). [Context-Fidelity Boosting: Enhancing Faithful Generation through Watermark-Inspired Decoding](https://aclanthology.org/2026.findings-acl.2121/). Findings of ACL 2026.
 - <a id="src-004"></a> Zhang, Q. et al. (2025). [FaithfulRAG: Fact-Level Conflict Modeling for Context-Faithful Retrieval-Augmented Generation](https://aclanthology.org/2025.acl-long.1062/). ACL 2025.

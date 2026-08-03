@@ -2,6 +2,8 @@
 title: "15. 에이전트를 고치지 말고 지식을 개선하라: 경험을 공유 지식으로 승격하는 자기개선 루프"
 description: "일회성 에이전트가 남긴 성공과 실패를 검증 가능한 공유 지식으로 정리하고, 다음 작업에 안전하게 전달하는 방법을 살펴봅니다."
 date: 2026-07-28
+aliases:
+  - /notes/knowledge-centric-self-improvement
 tags:
   - AI에이전트
   - 에이전트메모리
@@ -11,7 +13,7 @@ tags:
   - 딥리서치
 ---
 
-![일회성 작업 경험이 Task Forum과 지식 후보 검증을 거쳐 새 Pack revision과 다음 작업 문맥으로 이어지는 전체 자기개선 구조](../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-infographic.png)
+![일회성 작업 경험이 Task Forum과 지식 후보 검증을 거쳐 새 Pack revision과 다음 작업 문맥으로 이어지는 전체 자기개선 구조](../../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-infographic.png)
 
 > [!summary] 핵심 결론
 > 에이전트가 일을 마칠 때 대화 기록만 남기면 다음 에이전트가 같은 실수를 반복하기 쉽습니다. **어떤 조건에서 통했는지, 무엇이 실패했는지, 근거와 반례는 무엇인지, 다시 어떻게 확인할지를 함께 정리한 외부 지식**을 남겨야 경험이 재사용됩니다.
@@ -28,7 +30,7 @@ AI 에이전트도 비슷합니다. 과거 대화와 실행 로그를 모두 저
 
 그래서 중요한 질문은 “에이전트가 얼마나 많이 기억하는가”보다 **“한 번의 작업이 다음 작업에 어떤 지식을 남기는가”**입니다.
 
-[[notes/pi-agent-duckcrab-dag-harness|14번 글]]에서는 한 요청을 여러 조사 작업으로 나누고, 실패한 부분만 다시 실행하는 구조를 살펴봤습니다. 이번 글에서는 한 작업이 끝난 뒤 남은 경험을 다음 작업에서도 쓸 수 있는 공유 지식으로 바꾸는 방법을 다룹니다.
+[[notes/온톨로지/pi-agent-duckcrab-dag-harness|14번 글]]에서는 한 요청을 여러 조사 작업으로 나누고, 실패한 부분만 다시 실행하는 구조를 살펴봤습니다. 이번 글에서는 한 작업이 끝난 뒤 남은 경험을 다음 작업에서도 쓸 수 있는 공유 지식으로 바꾸는 방법을 다룹니다.
 
 2026년 7월 공개된 **Knowledge-Centric Self-Improvement(KSI)** 연구는 작업을 푸는 에이전트를 고정한 채, 여러 에이전트가 남긴 경험을 공유 지식 베이스에서 정리하는 방식을 제안했습니다.[src_001](#src-001) [src_002](#src-002)
 
@@ -44,7 +46,7 @@ AI 에이전트도 비슷합니다. 과거 대화와 실행 로그를 모두 저
 
 ## 경험을 많이 저장하는 것과 지식을 만드는 것은 다릅니다
 
-![원시 대화와 실행 로그가 불일치 비교를 거쳐 적용 조건·근거·반례·검증 방법을 가진 재사용 지식으로 정리되는 과정](../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-figure-01.png)
+![원시 대화와 실행 로그가 불일치 비교를 거쳐 적용 조건·근거·반례·검증 방법을 가진 재사용 지식으로 정리되는 과정](../../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-figure-01.png)
 
 다음 기록은 과거에 있었던 일을 보여 줍니다.
 
@@ -171,7 +173,7 @@ recommended_next_step      권장하는 다음 행동
 
 ## 연구 결과는 가능성과 적용 범위를 함께 보여 줍니다
 
-![다섯 benchmark의 저자 보고 결과와 held-out·cross-model transfer가 task-conditioned adapter를 거치며 독립 재현과 조직 과업 일반화는 별도 검증 대상으로 남는 경계](../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-figure-02.png)
+![다섯 benchmark의 저자 보고 결과와 held-out·cross-model transfer가 task-conditioned adapter를 거치며 독립 재현과 조직 과업 일반화는 별도 검증 대상으로 남는 경계](../../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-figure-02.png)
 
 KSI 연구진은 추상 추론, 코딩, 터미널 작업을 포함한 다섯 벤치마크에서 10세대 동안 고정된 문제 묶음을 사용했습니다. 공식 페이지가 공개한 Haiku 4.5 기반 결과는 다음과 같습니다.[src_002](#src-002)
 
@@ -245,9 +247,9 @@ KSI 컨테이너는 허용된 모델 제공자를 제외한 직접 외부 통신
 
 ## Expertise Pack에는 지식의 전체 수명주기가 필요합니다
 
-![지식 후보가 active·refine·scope·deprecate·retire 상태를 거치고 새 Pack revision이 학습 frontier와 회귀 probe를 함께 통과하는 수명주기](../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-figure-03.png)
+![지식 후보가 active·refine·scope·deprecate·retire 상태를 거치고 새 Pack revision이 학습 frontier와 회귀 probe를 함께 통과하는 수명주기](../../attachments/knowledge-centric-self-improvement/knowledge-centric-self-improvement-figure-03.png)
 
-KSI의 공유 지식 베이스와 [[notes/ontology-expertise-pack|Expertise Pack]]은 비슷한 목적을 가집니다. KSI는 여러 작업의 경험을 비교하고 정리하는 절차에 집중합니다. Expertise Pack은 근거, 관계, 정책, 버전과 승인 권한을 갖춘 장기 지식 묶음입니다.
+KSI의 공유 지식 베이스와 [[notes/온톨로지/ontology-expertise-pack|Expertise Pack]]은 비슷한 목적을 가집니다. KSI는 여러 작업의 경험을 비교하고 정리하는 절차에 집중합니다. Expertise Pack은 근거, 관계, 정책, 버전과 승인 권한을 갖춘 장기 지식 묶음입니다.
 
 둘을 연결하면 다음 흐름을 만들 수 있습니다.
 
@@ -323,7 +325,7 @@ candidate 후보
 
 ## 첫 구현은 작은 반복 작업에서 시작합니다
 
-[[notes/ontology-senior-investigation-harness|13번 글]]과 14번 글의 구조를 한꺼번에 범용 자기개선 플랫폼으로 확장하면 검증할 항목이 너무 많아집니다. 먼저 반복해서 실패하는 한 종류의 작업을 고르고, 고정된 작업 흐름과 구조화된 기록이 실제로 도움이 되는지 확인하는 편이 안전합니다.
+[[notes/온톨로지/ontology-senior-investigation-harness|13번 글]]과 14번 글의 구조를 한꺼번에 범용 자기개선 플랫폼으로 확장하면 검증할 항목이 너무 많아집니다. 먼저 반복해서 실패하는 한 종류의 작업을 고르고, 고정된 작업 흐름과 구조화된 기록이 실제로 도움이 되는지 확인하는 편이 안전합니다.
 
 권장 순서는 다음과 같습니다.
 
@@ -414,9 +416,9 @@ KSI가 보여 주는 핵심 아이디어는 간단합니다. 작업 에이전트
 6. 현재 작업에 필요한 부분만 골라 짧은 문맥으로 제공합니다.
 7. 새 문제와 이전 문제를 함께 시험해 회귀를 막습니다.
 
-[[notes/iterative-investigation-refutation-loop|12번 글]]은 한 질문 안에서 가설과 반례를 반복해 답을 개선하는 방법을 다뤘습니다. 14번 글은 그 조사 의무를 실행 가능한 작업 구조로 옮겼습니다. 이번 구조는 여러 작업이 남긴 자료를 비교해 **근거, 조건, 반례와 버전이 붙은 공유 지식**으로 유지합니다.
+[[notes/온톨로지/iterative-investigation-refutation-loop|12번 글]]은 한 질문 안에서 가설과 반례를 반복해 답을 개선하는 방법을 다뤘습니다. 14번 글은 그 조사 의무를 실행 가능한 작업 구조로 옮겼습니다. 이번 구조는 여러 작업이 남긴 자료를 비교해 **근거, 조건, 반례와 버전이 붙은 공유 지식**으로 유지합니다.
 
-다만 승격된 지식이 다음 작업에 전달되는 과정에서도 조건과 반례가 빠질 수 있습니다. [[notes/context-compilation-regression|16번 글]]은 Pack 전체의 정확성과 실제 에이전트가 읽는 Context Bundle의 정확성을 나눠 검사하는 방법을 이어서 다룹니다.
+다만 승격된 지식이 다음 작업에 전달되는 과정에서도 조건과 반례가 빠질 수 있습니다. [[notes/온톨로지/context-compilation-regression|16번 글]]은 Pack 전체의 정확성과 실제 에이전트가 읽는 Context Bundle의 정확성을 나눠 검사하는 방법을 이어서 다룹니다.
 
 모델과 실행 프로그램은 바뀔 수 있습니다. 그 변화 속에서도 조직의 판단을 다시 사용하려면, 지식은 많은 기억보다 정확한 출처와 적용 조건, 검증 방법을 갖춰야 합니다.
 

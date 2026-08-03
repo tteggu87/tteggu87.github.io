@@ -2,6 +2,8 @@
 title: "8. OpenCrab 온톨로지 빌드는 무엇을 만드는가: 9-Space 문법, MCP 단일 진입점과 SSOT 설계"
 description: "온톨로지 초보자의 눈높이에서 OpenCrab의 9-Space를 도메인 해석 렌즈로 읽고, LLM 추출, MCP 단일 진입점, SSOT, promotion과 Pack 구조의 의도와 한계를 분석합니다."
 date: 2026-07-21
+aliases:
+  - /notes/opencrab-ontology-build-architecture
 tags:
   - 온톨로지
   - OpenCrab
@@ -11,7 +13,7 @@ tags:
   - 소프트웨어아키텍처
 ---
 
-![원문을 질문 기반 9-Space 해석 렌즈로 읽고 검증한 뒤 MCP와 지식 Pack으로 연결하는 OpenCrab 온톨로지 공장 전체 구조](../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-infographic.png)
+![원문을 질문 기반 9-Space 해석 렌즈로 읽고 검증한 뒤 MCP와 지식 Pack으로 연결하는 OpenCrab 온톨로지 공장 전체 구조](../../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-infographic.png)
 
 > [!summary] 결론부터
 > OpenCrab은 전통적인 RDF·OWL 온톨로지 편집기가 아닙니다. 더 정확히 말하면 **문서와 로그를 질문에 맞는 의미 구조로 해석하고, Agent가 MCP를 통해 읽고 쓰며, 최종 결과를 설치 가능한 지식 Pack으로 배포하려는 온톨로지 공장**입니다. 여기서 9-Space는 도메인 노드 타입을 대신하는 아홉 개 상자가 아니라, 같은 도메인을 주체·근거·결과·정책 같은 서로 다른 관점으로 읽는 **아홉 가지 해석 렌즈**입니다. 설계 철학은 매우 좋지만 현재 코드는 렌즈·도메인 타입·저장 문법을 다소 강하게 결합하고 검토·승격 절차도 우회할 수 있어, 완성된 온톨로지 컴파일러보다는 문법 검사가 붙은 동적 지식그래프 빌더에 가깝습니다.
@@ -157,7 +159,7 @@ flowchart LR
     M --> V[근거 · 문법 · 수용 질문으로 검증]
 ```
 
-![도메인 객체를 주체·자원·근거·개념·주장·군집·결과·조절변수·정책 관점으로 읽는 9-Space 해석 렌즈 지도](../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-figure-01.png)
+![도메인 객체를 주체·자원·근거·개념·주장·군집·결과·조절변수·정책 관점으로 읽는 9-Space 해석 렌즈 지도](../../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-figure-01.png)
 
 ### 같은 자료도 질문이 바뀌면 렌즈가 달라진다
 
@@ -527,7 +529,7 @@ MCP는 Agent가 온톨로지를 조회하고 조작하는 단일 진입점입니
 
 MCP는 이 기준들에 접근하는 단일 진입점입니다. 실제 SSOT는 다음처럼 여러 층으로 나뉩니다.
 
-![Agent가 MCP 창구를 통해 의미·타입·도구 기준과 여러 저장소, Pack 배포 계층에 접근하는 구조](../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-figure-02.png)
+![Agent가 MCP 창구를 통해 의미·타입·도구 기준과 여러 저장소, Pack 배포 계층에 접근하는 구조](../../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-figure-02.png)
 
 ### 5.1 Semantic SSOT: 의미 규칙의 기준
 
@@ -891,7 +893,7 @@ Pack에 근거, 품질, hash, license와 sample query를 넣으려는 생각은 
 
 현재 철학을 살리면서 구현을 단순화하려면 다섯 가지가 중요합니다.
 
-![OpenCrab의 설계 의도, 현재 구현, 권장 구조를 세 단계로 비교한 도해](../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-figure-03.png)
+![OpenCrab의 설계 의도, 현재 구현, 권장 구조를 세 단계로 비교한 도해](../../attachments/opencrab-ontology-build-architecture/opencrab-ontology-build-architecture-figure-03.png)
 
 ### 11.1 모든 write를 하나의 command service로 모은다
 
@@ -959,11 +961,11 @@ MCP는 온톨로지를 조회하고 조작하는 단일 진입점입니다. 이�
 
 ## 함께 읽기
 
-- [[notes/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
-- [[notes/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다]]
-- [[notes/ontology-judge-loop-agent-validation|3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계]]
-- [[notes/ontology-emergent-agent|4. 온톨로지가 행동을 바꾸는 에이전트]]
-- [[notes/local-ontology-agent-implementation|7. 로컬 온톨로지 에이전트 구현 설계]]
+- [[notes/온톨로지/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
+- [[notes/온톨로지/ontology-in-the-agentic-era|2. LLM 에이전트 시대, 온톨로지는 ‘실행의 의미 계층’으로 확장될 수 있다]]
+- [[notes/온톨로지/ontology-judge-loop-agent-validation|3. 온톨로지 기반 Judge Loop와 에이전트 검증 설계]]
+- [[notes/온톨로지/ontology-emergent-agent|4. 온톨로지가 행동을 바꾸는 에이전트]]
+- [[notes/온톨로지/local-ontology-agent-implementation|7. 로컬 온톨로지 에이전트 구현 설계]]
 
 ## 검토한 주요 코드와 문서
 

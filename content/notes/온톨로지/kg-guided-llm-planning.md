@@ -2,6 +2,8 @@
 title: "11. 지식그래프는 LLM의 계획을 어떻게 돕는가: 검색에서 행동 설계로"
 description: "지식그래프가 답을 대신 계산하는 것이 아니라, LLM이 목표·상태·행동·제약·관찰을 연결해 더 나은 조사와 행동 순서를 만들도록 돕는 구조를 살펴봅니다."
 date: 2026-07-23
+aliases:
+  - /notes/kg-guided-llm-planning
 tags:
   - 온톨로지
   - AI에이전트
@@ -11,7 +13,7 @@ tags:
   - OpenCrab
 ---
 
-![자연어 질문이 세계·근거 지도, 영향 지도, 행동 계약을 거쳐 PlanningContext와 조건부 계획으로 이어지는 구조](../attachments/kg-guided-llm-planning/kg-guided-llm-planning-infographic-v4.png)
+![자연어 질문이 세계·근거 지도, 영향 지도, 행동 계약을 거쳐 PlanningContext와 조건부 계획으로 이어지는 구조](../../attachments/kg-guided-llm-planning/kg-guided-llm-planning-infographic-v4.png)
 
 > [!summary] 한 문장 결론
 > 지식그래프는 계획을 대신 계산하는 장치라기보다, LLM이 **현재 무엇이 사실인지, 무엇을 바꿀 수 있는지, 어떤 조건과 위험을 확인해야 하는지** 놓치지 않도록 계획 재료를 구조화하는 외부 지도에 가깝습니다.
@@ -30,7 +32,7 @@ tags:
 
 관련 문서를 잘 찾는 것과 실행 가능한 계획을 만드는 것은 다른 문제입니다. 계획에는 문서 요약보다 더 엄격한 구조가 필요합니다.
 
-앞선 [[notes/ontology-context-compiler-opencrab|9번 글]]에서는 자연어 질문을 `QueryPlan`으로 바꾸고, 검색 결과를 근거·정책·경로·누락이 포함된 `AnswerBundle`로 조립하는 문맥 컴파일러를 살펴봤습니다. [[notes/ontology-expertise-pack|10번 글]]에서는 시니어 엔지니어의 판단 재료를 가설·반례·결정·실패·다음 검사까지 포함한 전문성 Pack으로 확장했습니다.
+앞선 [[notes/온톨로지/ontology-context-compiler-opencrab|9번 글]]에서는 자연어 질문을 `QueryPlan`으로 바꾸고, 검색 결과를 근거·정책·경로·누락이 포함된 `AnswerBundle`로 조립하는 문맥 컴파일러를 살펴봤습니다. [[notes/온톨로지/ontology-expertise-pack|10번 글]]에서는 시니어 엔지니어의 판단 재료를 가설·반례·결정·실패·다음 검사까지 포함한 전문성 Pack으로 확장했습니다.
 
 이번 글은 그다음 단계입니다.
 
@@ -66,7 +68,7 @@ PlanBench는 당시 LLM이 계획 생성과 상태 변화 추론에서 겪는 �
 | 영향 지도      | 무엇이 무엇에 영향을 줄 수 있는가? | Lever, Outcome, 영향 방향, 조건, 지연, 부작용, 반례                      | 영향 관계를 검증된 인과 법칙으로 과장하면 안 됨 |
 | 행동 계약      | 무엇을 어떤 조건에서 할 수 있는가? | Action, precondition, permission, expected effect, observation, rollback | 그래프에 적혔다고 자동 실행 가능한 것은 아님    |
 
-![세계·근거 지도, 영향 지도, 행동 계약이 서로 다른 질문에 답하고 하나의 PlanningContext로 수렴하는 비교](../attachments/kg-guided-llm-planning/kg-guided-llm-planning-figure-01-v4.png)
+![세계·근거 지도, 영향 지도, 행동 계약이 서로 다른 질문에 답하고 하나의 PlanningContext로 수렴하는 비교](../../attachments/kg-guided-llm-planning/kg-guided-llm-planning-figure-01-v4.png)
 
 ### 세계·근거 지도
 
@@ -229,7 +231,7 @@ forbidden_or_blocked:
 
 여기서 그래프가 계획을 만든 것은 아닙니다. 그래프와 Pack은 LLM이 비교할 상태, 가설, 행동, 제약과 관찰을 제공했습니다. 계획의 선택과 설명은 LLM이 맡고, 권한과 금지 규칙은 Validator가 확인합니다.
 
-![캐시 장애의 관찰과 정책 경계가 경쟁 가설, 가역적 행동 후보, 관찰과 재계획 순서로 바뀌는 사례](../attachments/kg-guided-llm-planning/kg-guided-llm-planning-figure-02-v4.png)
+![캐시 장애의 관찰과 정책 경계가 경쟁 가설, 가역적 행동 후보, 관찰과 재계획 순서로 바뀌는 사례](../../attachments/kg-guided-llm-planning/kg-guided-llm-planning-figure-02-v4.png)
 
 ### 직접 계획 순서를 바꿔 보기
 
@@ -279,7 +281,7 @@ LLM에게 모든 것을 맡기면 계획이 자연스럽지만 검증하기 어�
 
 불완전한 KG에서 KG-RAG의 성능 저하와 retrieval failure가 주요 병목으로 나타난다는 분석도 “그래프가 있으면 필요한 근거가 자동으로 확보된다”는 가정을 경계하게 합니다.[src_008](#src-008) 이는 운영 계획의 직접 실증은 아니지만, 그래프의 불완전성이 하류 판단에 영향을 준다는 점은 같습니다.
 
-![잘못된 관계, 오래된 정책, 검증되지 않은 영향, 권한 없는 실행과 그래프 누락을 원문·버전·상태·승인·기권 경계로 통제하는 구조](../attachments/kg-guided-llm-planning/kg-guided-llm-planning-figure-03-v4.png)
+![잘못된 관계, 오래된 정책, 검증되지 않은 영향, 권한 없는 실행과 그래프 누락을 원문·버전·상태·승인·기권 경계로 통제하는 구조](../../attachments/kg-guided-llm-planning/kg-guided-llm-planning-figure-03-v4.png)
 
 최소한 다음 경계가 필요합니다.
 

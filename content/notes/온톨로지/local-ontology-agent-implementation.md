@@ -2,6 +2,8 @@
 title: "7. 로컬 온톨로지 에이전트 구현 설계: 저장·검증·추론을 나누는 법"
 description: "로컬 온톨로지 에이전트를 RDF 정본, SPARQL 질의, SHACL 검증, 빠른 규칙 추론과 격리된 깊은 추론으로 설계하는 실전 가이드"
 date: 2026-07-21
+aliases:
+  - /notes/local-ontology-agent-implementation
 tags:
   - 온톨로지
   - AI에이전트
@@ -11,9 +13,9 @@ tags:
   - SHACL
 ---
 
-![자연어 질문부터 RDF 정본, SPARQL 질의, SHACL 검증, 빠른 규칙 추론, 깊은 추론과 승인된 쓰기까지 로컬 온톨로지 에이전트의 전체 구조를 요약한 대표 인포그래픽](../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-infographic.png)
+![자연어 질문부터 RDF 정본, SPARQL 질의, SHACL 검증, 빠른 규칙 추론, 깊은 추론과 승인된 쓰기까지 로컬 온톨로지 에이전트의 전체 구조를 요약한 대표 인포그래픽](../../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-infographic.png)
 
-[[notes/ontology-vs-json-rules|6번 글]]에서는 관계 깊이, 변경 전파, 감사 요구가 어느 지점에서 온톨로지 비용을 정당화하는지 검증할 실험을 설계했습니다. 이번 글에서는 그 조건이 실제로 나타났다고 보고, **한 대의 로컬 머신에서 무엇부터 나눠 구현할지** 차근차근 정리해 보겠습니다.
+[[notes/온톨로지/ontology-vs-json-rules|6번 글]]에서는 관계 깊이, 변경 전파, 감사 요구가 어느 지점에서 온톨로지 비용을 정당화하는지 검증할 실험을 설계했습니다. 이번 글에서는 그 조건이 실제로 나타났다고 보고, **한 대의 로컬 머신에서 무엇부터 나눠 구현할지** 차근차근 정리해 보겠습니다.
 
 > [!important] 이 글의 검증 상태
 > 이 글은 공식 표준과 각 도구의 문서를 바탕으로 쓴 **구현 설계 가이드**입니다. 아래의 저장소, reasoner, API 조합을 하나의 시스템으로 설치해 성능과 호환성까지 검증한 완료 보고서는 아닙니다. 코드와 명령도 출발점에 가깝습니다. 실제 도입 전에는 버전을 고정하고 스모크 테스트와 회귀 검사를 따로 진행하셔야 합니다.
@@ -42,11 +44,11 @@ OWL은 클래스·속성·개체와 관계 의미를 표현합니다. SPARQL은 
 - 읽기 전용 MVP로 시작하고 쓰기는 나중에 추가
 - 성능 숫자보다 재현성·근거·복구 가능성을 먼저 검증
 
-단일 JSON 문서의 구조를 검사하고 간단한 참·거짓 정책만 판단하신다면 이 구조는 과합니다. 그런 문제는 [[notes/ontology-vs-json-rules|6번 글의 JSON 기준선]]부터 시작하는 편이 낫습니다.
+단일 JSON 문서의 구조를 검사하고 간단한 참·거짓 정책만 판단하신다면 이 구조는 과합니다. 그런 문제는 [[notes/온톨로지/ontology-vs-json-rules|6번 글의 JSON 기준선]]부터 시작하는 편이 낫습니다.
 
 ## 1. 하나의 에이전트가 아니라 여러 결정 경로다
 
-![자연어 질문을 의도와 URI 후보로 변환한 뒤 SPARQL, SHACL, OWL RL, 깊은 reasoner와 벡터 후보 검색으로 라우팅하고 근거 패킷으로 합치는 실행 경로 도판](../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-figure-01.png)
+![자연어 질문을 의도와 URI 후보로 변환한 뒤 SPARQL, SHACL, OWL RL, 깊은 reasoner와 벡터 후보 검색으로 라우팅하고 근거 패킷으로 합치는 실행 경로 도판](../../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-figure-01.png)
 
 자연어 제어기가 모든 일을 직접 처리할 필요는 없습니다. 질문의 성격을 살펴보고 조회·검증·빠른 추론·깊은 추론·검색 보조 중 알맞은 경로를 고르시면 됩니다.
 
@@ -84,7 +86,7 @@ flowchart TD
 
 ## 2. 배치 방식은 재사용 범위에 맞춘다
 
-![Python 단일 프로세스, Jena·RDF4J 기반 로컬 서비스와 Neo4j 기반 property graph 탐색형을 개인 실험·여러 앱 공유·경로 탐색 기준으로 비교한 배치 선택 도판](../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-figure-02.png)
+![Python 단일 프로세스, Jena·RDF4J 기반 로컬 서비스와 Neo4j 기반 property graph 탐색형을 개인 실험·여러 앱 공유·경로 탐색 기준으로 비교한 배치 선택 도판](../../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-figure-02.png)
 
 ### 요구 조건에 따라 구성을 바꿔 보기
 
@@ -227,7 +229,7 @@ ASK {
 
 ## 6. 쓰기 제안과 정본 반영을 분리한다
 
-![에이전트의 변경 제안이 staging graph, SHACL 검증과 사람 승인을 거쳐 RDF 정본에 반영되고 그래프 버전·근거·유도 사실·복구 기록을 남기는 안전한 쓰기 흐름 도판](../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-figure-03.png)
+![에이전트의 변경 제안이 staging graph, SHACL 검증과 사람 승인을 거쳐 RDF 정본에 반영되고 그래프 버전·근거·유도 사실·복구 기록을 남기는 안전한 쓰기 흐름 도판](../../attachments/local-ontology-agent-implementation/local-ontology-agent-implementation-figure-03.png)
 
 로컬에서 실행한다고 쓰기 권한까지 안전해지는 것은 아닙니다. 정본은 아래 순서를 거쳐서만 바꾸셔야 합니다.
 

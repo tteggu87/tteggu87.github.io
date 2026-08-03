@@ -2,6 +2,8 @@
 title: "14. Expertise Pack은 어떻게 에이전트가 되는가: DuckCrab·Pi·DAG로 구현하는 전문가 작업공간"
 description: "10번 글의 Expertise Pack을 실제 조사 에이전트로 구현하기 위해 DuckCrab에 무엇이 준비돼 있고, 왜 질문별 DAG와 Pi Agent가 필요한지 살펴봅니다."
 date: 2026-07-25
+aliases:
+  - /notes/pi-agent-duckcrab-dag-harness
 tags:
   - AI에이전트
   - 온톨로지
@@ -13,12 +15,12 @@ tags:
   - MCP
 ---
 
-![조직 지식을 Expertise Pack으로 만들고 DuckCrab·Pi·DAG가 질문별 전문가 작업공간으로 실행하는 전체 구조](../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-infographic.png)
+![조직 지식을 Expertise Pack으로 만들고 DuckCrab·Pi·DAG가 질문별 전문가 작업공간으로 실행하는 전체 구조](../../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-infographic.png)
 
 > [!summary] 핵심 결론
 > **DuckCrab은 조직의 사실·근거·결정·실패를 Expertise Pack에 보존합니다. Pi Agent는 질문마다 필요한 근거·반례·유사·대조 사례를 DAG 순서에 따라 조사합니다.** 이 둘을 연결하면 조직 자료를 실제 판단에 쓰는 질문별 전문가 작업공간을 만들 수 있습니다.
 
-[[notes/ontology-expertise-pack|10번 글]]에서는 이런 질문을 던졌습니다.
+[[notes/온톨로지/ontology-expertise-pack|10번 글]]에서는 이런 질문을 던졌습니다.
 
 > 온톨로지로 시니어 엔지니어가 사용하는 판단 재료를 모델 밖에 보존할 수 있을까?
 
@@ -170,7 +172,7 @@ A. 조직 자료를 Expertise Pack으로 만드는 단계
 B. 만들어진 Pack을 질문별 전문가 작업공간으로 사용하는 단계
 ```
 
-![Expertise Pack 구축 흐름과 질문별 전문가 작업공간 실행 흐름을 구분한 두 단계 설계](../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-figure-01.png)
+![Expertise Pack 구축 흐름과 질문별 전문가 작업공간 실행 흐름을 구분한 두 단계 설계](../../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-figure-01.png)
 
 ### 첫 번째: 좋은 Pack을 만듭니다
 
@@ -234,7 +236,7 @@ OpenCrab은 자료를 여러 관점에서 읽는 9-Space, Evidence와 Claim의 �
 어떤 정책이 행동을 제한하는가
 ```
 
-다만 분석 당시 OpenCrab은 전체 지식 수명주기를 강제한 완성형 엔진보다, **문법 검사가 붙은 동적 지식그래프 빌더와 Pack 공장**에 가까웠습니다. Evidence·Identity·Approval·Promotion이 느슨하게 연결된 경로도 있었습니다. 이 부분은 [[notes/opencrab-ontology-build-architecture|8번 글]]에서 자세히 살펴봤습니다.
+다만 분석 당시 OpenCrab은 전체 지식 수명주기를 강제한 완성형 엔진보다, **문법 검사가 붙은 동적 지식그래프 빌더와 Pack 공장**에 가까웠습니다. Evidence·Identity·Approval·Promotion이 느슨하게 연결된 경로도 있었습니다. 이 부분은 [[notes/온톨로지/opencrab-ontology-build-architecture|8번 글]]에서 자세히 살펴봤습니다.
 
 ### DuckCrab이 실제로 구현한 기반
 
@@ -320,7 +322,7 @@ DuckCrab에는 Pack을 만들고 검색하기 위한 기반이 상당히 준비�
 사람의 승인이 필요한가
 ```
 
-![DuckCrab에 이미 구현된 Pack·검색·근거 기반과 아직 필요한 조사 상태·반례·검증 실행 계층의 경계](../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-figure-02.png)
+![DuckCrab에 이미 구현된 Pack·검색·근거 기반과 아직 필요한 조사 상태·반례·검증 실행 계층의 경계](../../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-figure-02.png)
 
 | 기능                           | 현재 상태 |
 | ------------------------------ | --------- |
@@ -577,7 +579,7 @@ pack_revision: cache_operations_v1@17
 
 범용 병렬 실행과 작업 그래프를 모두 처음부터 만들 필요는 없습니다. 다만 Pi 패키지는 사용자 권한으로 코드를 실행하고 에이전트 행동에 영향을 줄 수 있으므로 설치 전에 소스와 권한을 검토해야 합니다.[src_001](#src-001)
 
-![Pi 기본 기능과 워크플로 패키지가 담당할 범위, Expertise Pack 전용으로 직접 구현할 계약을 나눈 구성 지도](../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-figure-03.png)
+![Pi 기본 기능과 워크플로 패키지가 담당할 범위, Expertise Pack 전용으로 직접 구현할 계약을 나눈 구성 지도](../../attachments/pi-agent-duckcrab-dag-harness/pi-agent-duckcrab-dag-harness-figure-03.png)
 
 ### 가장 빠른 조사 MVP: `pi-subagent-workflows`
 

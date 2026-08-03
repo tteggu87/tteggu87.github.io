@@ -2,6 +2,8 @@
 title: "20. 작업이 끝나기 전에 권한이 바뀌면: 장기 실행 AI 작업의 권한 만료·취소·결과 공개를 검증하는 법"
 description: "백그라운드 AI 작업이 실행되는 동안 사용자·조직·문서 권한이 바뀔 때, 작업 TTL과 권한 유효시간을 분리하고 읽기·부작용·결과 공개를 다시 검증하는 방법을 설명합니다."
 date: 2026-07-29
+aliases:
+  - /notes/long-running-task-authorization-lease
 tags:
   - AI에이전트
   - 권한관리
@@ -10,7 +12,7 @@ tags:
   - 에이전트보안
 ---
 
-![장기 실행 AI 작업에서 생성·실행·취소·결과 공개를 권한 수명주기로 분리한 인포그래픽](../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-infographic.png)
+![장기 실행 AI 작업에서 생성·실행·취소·결과 공개를 권한 수명주기로 분리한 인포그래픽](../../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-infographic.png)
 
 > [!summary] 핵심 결론
 > 장기 실행 작업은 시작할 때 받은 허가를 끝까지 그대로 쓸 수 없습니다. **작업 상태를 보관하는 기간, 로그인 자격증명의 유효기간, 이전 권한 판단을 재사용할 수 있는 시간, 문서·조직 권한의 현재 버전을 따로 관리하고, 새 보호 자료를 읽거나 외부 시스템에 쓰거나 완료 결과를 보여 주기 직전에 현재 권한을 다시 확인해야 합니다.**
@@ -21,7 +23,7 @@ tags:
 
 작업 생성 허가는 시작 시점의 결정일 뿐입니다. 장기 실행 작업에서는 보호 자료를 읽는 시점, 파일을 쓰거나 전송하는 시점, 완료 결과를 현재 요청자에게 보여 주는 시점이 서로 다릅니다. 그 사이에 권한이 바뀔 수 있으므로 **작업의 진행 상태와 권한의 유효 상태를 따로 관리해야 합니다.**
 
-[[notes/authorization-aware-rag-graph-boundary|17번 글]]은 관련도와 권한을 분리하고 문서·그래프 경로·파생 답변·도구 행동을 각각 다시 허가해야 한다고 설명했습니다.[src_001](#src-001) [[notes/agent-memory-poisoning-promotion-gate|18번 글]]은 저장된 상태가 다음 세션까지 살아남아도 곧바로 신뢰할 수 있는 지식이 되는 것은 아니라고 정리했습니다.[src_002](#src-002) 이번 글은 두 경계 사이에 남은 시간 문제를 다룹니다.
+[[notes/온톨로지/authorization-aware-rag-graph-boundary|17번 글]]은 관련도와 권한을 분리하고 문서·그래프 경로·파생 답변·도구 행동을 각각 다시 허가해야 한다고 설명했습니다.[src_001](#src-001) [[notes/온톨로지/agent-memory-poisoning-promotion-gate|18번 글]]은 저장된 상태가 다음 세션까지 살아남아도 곧바로 신뢰할 수 있는 지식이 되는 것은 아니라고 정리했습니다.[src_002](#src-002) 이번 글은 두 경계 사이에 남은 시간 문제를 다룹니다.
 
 > **권한이 있었던 작업이 오래 실행되는 동안 권한이 바뀌면, 어디에서 멈추고 무엇을 다시 검사해야 하는가?**
 
@@ -70,7 +72,7 @@ MCP의 작업 `ttl`은 작업을 받은 쪽이 상태와 결과를 얼마나 오
 ≠ 완료 결과 공개 권한
 ```
 
-![작업 TTL·토큰 만료·권한 임대·정책 버전이 서로 다른 시계임을 비교한 도해](../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-01.png)
+![작업 TTL·토큰 만료·권한 임대·정책 버전이 서로 다른 시계임을 비교한 도해](../../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-01.png)
 
 `authorization lease`, 즉 권한 임대는 이전 권한 판단을 무한히 재사용하지 않도록 제한하는 프로젝트 계약입니다. 예를 들어 짧은 시간 안에 끝나는 순수 계산에는 기존 판단을 다시 쓸 수 있습니다. 하지만 임대 시간이 끝났거나 권한 변경 신호를 받으면, 다음 보호 행동 전에 현재 정책 버전으로 권한을 다시 계산합니다. 적정 시간은 자료의 민감도, 행동의 위험, 권한 엔진의 응답 지연, 회수 신호가 도착하는 시간을 실제로 측정해 정해야 합니다. 이 글은 모든 시스템에 통하는 초 단위 기준을 제안하지 않습니다.
 
@@ -117,7 +119,7 @@ CAEP 이벤트는 “권한을 다시 확인하라”는 빠른 신호입니다.
 - 쓰기·공유·삭제·외부 전송은 현재 권한 없이는 확정하지 않습니다.
 - 권한을 복구할 수 없으면 민감한 내부 사유를 드러내지 않는 오류로 종료하거나 취소합니다.
 
-![봉인된 입력만 계산하는 snapshot-safe 작업과 실행 중 새 자료·도구를 사용하는 live-sensitive 작업의 차이](../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-02.png)
+![봉인된 입력만 계산하는 snapshot-safe 작업과 실행 중 새 자료·도구를 사용하는 live-sensitive 작업의 차이](../../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-02.png)
 
 이 구분은 작업을 계속 실행할 수 있는지와 결과를 공개할 수 있는지를 분리합니다. 이미 허용된 입력으로 내부 계산을 끝낼 수 있어도, 권한이 회수된 사용자에게 그 결과를 돌려주는 것은 별도 행동입니다.
 
@@ -149,9 +151,9 @@ MCP Tasks는 취소 요청 뒤 작업 상태를 `cancelled`로 전환하지만, 
 4. 검토를 거쳐 보호 수준을 낮추는 공개 승인이나 봉인된 사본 공개 정책이 있는가
 5. 결과 보관 기간, 작업 TTL, 권한 임대가 각각 유효한가
 
-[[notes/authorization-aware-rag-graph-boundary|17번 글]]에서 파생 Claim·summary·answer도 별도 보호 자원으로 다뤄야 한다고 설명한 이유가 여기서 더 분명해집니다.[src_001](#src-001) 결과는 원문을 복사하지 않았더라도 여러 보호 자료의 결론과 존재를 드러낼 수 있습니다. 과거에 허용된 문맥으로 만들었다는 이유만으로 현재 공개 권한을 자동 상속시키지 않습니다.
+[[notes/온톨로지/authorization-aware-rag-graph-boundary|17번 글]]에서 파생 Claim·summary·answer도 별도 보호 자원으로 다뤄야 한다고 설명한 이유가 여기서 더 분명해집니다.[src_001](#src-001) 결과는 원문을 복사하지 않았더라도 여러 보호 자료의 결론과 존재를 드러낼 수 있습니다. 과거에 허용된 문맥으로 만들었다는 이유만으로 현재 공개 권한을 자동 상속시키지 않습니다.
 
-![Lease Receipt의 principal·scope·만료·revision·cancel epoch와 deny·retry·cancel·quarantine 결과 및 운영 지표](../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-03.png)
+![Lease Receipt의 principal·scope·만료·revision·cancel epoch와 deny·retry·cancel·quarantine 결과 및 운영 지표](../../attachments/long-running-task-authorization-lease/long-running-task-authorization-lease-figure-03.png)
 
 ## 작업 권한 임대 기록에는 무엇을 남깁니까
 
@@ -269,9 +271,9 @@ task_authorization_lease:
 
 ## 출처
 
-<a id="src-001"></a>**src_001.** tteggu의 지식창고. “17. 관련도는 권한이 아니다: 멀티테넌트 RAG와 GraphRAG의 문맥 누출을 막는 법.” 2026-07-29. https://tteggu87.github.io/notes/authorization-aware-rag-graph-boundary
+<a id="src-001"></a>**src_001.** tteggu의 지식창고. “17. 관련도는 권한이 아니다: 멀티테넌트 RAG와 GraphRAG의 문맥 누출을 막는 법.” 2026-07-29. https://tteggu87.github.io/notes/온톨로지/authorization-aware-rag-graph-boundary
 
-<a id="src-002"></a>**src_002.** tteggu의 지식창고. “18. 에이전트가 스스로 배운 지식은 안전한가: 지속 메모리 오염과 승격 게이트를 검증하는 법.” 2026-07-29. https://tteggu87.github.io/notes/agent-memory-poisoning-promotion-gate
+<a id="src-002"></a>**src_002.** tteggu의 지식창고. “18. 에이전트가 스스로 배운 지식은 안전한가: 지속 메모리 오염과 승격 게이트를 검증하는 법.” 2026-07-29. https://tteggu87.github.io/notes/온톨로지/agent-memory-poisoning-promotion-gate
 
 <a id="src-003"></a>**src_003.** Model Context Protocol. “Tasks.” Specification 2025-11-25. https://modelcontextprotocol.io/specification/2025-11-25/basic/utilities/tasks
 

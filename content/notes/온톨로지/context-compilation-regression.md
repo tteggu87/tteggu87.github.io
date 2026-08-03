@@ -2,6 +2,8 @@
 title: "16. 올바른 지식이 잘못된 답이 되는 순간: 문맥 컴파일 회귀를 검증하는 법"
 description: "정확한 지식이 있어도 에이전트에게 전달되는 과정에서 조건과 반례가 빠질 수 있습니다. 필수 정보 목록, 재현 기록, 보안·그래프 검사로 이 문제를 찾는 방법을 설명합니다."
 date: 2026-07-29
+aliases:
+  - /notes/context-compilation-regression
 tags:
   - RAG
   - 문맥컴파일
@@ -10,7 +12,7 @@ tags:
   - AI보안
 ---
 
-![원문과 지식 Pack이 검색·선택·압축·검증을 거쳐 작업용 Context Bundle로 변하는 과정](../attachments/context-compilation-regression/context-compilation-regression-infographic.png)
+![원문과 지식 Pack이 검색·선택·압축·검증을 거쳐 작업용 Context Bundle로 변하는 과정](../../attachments/context-compilation-regression/context-compilation-regression-infographic.png)
 
 > [!summary] 핵심 결론
 > 원문과 지식 묶음이 정확해도, 에이전트에게 전달할 짧은 문맥을 만드는 과정에서 중요한 조건이나 반례가 빠질 수 있습니다. 따라서 **저장된 지식이 맞는지**와 **실제로 전달된 문맥이 충분한지**를 따로 검사해야 합니다. 이 글의 DuckCrab 결과는 누락·외부 명령·그래프 관계 변경을 찾아내는 계약 검사의 가능성을 확인한 제한적 실험이며, 특정 모델이나 압축 방식이 더 우수하다는 성능 비교는 아닙니다.
@@ -25,7 +27,7 @@ tags:
 
 > 원문·지식 묶음·정책은 정확하지만, 질문 해석·검색·선택·압축·배열·버전 결합 방식이 바뀐 뒤 에이전트가 실제로 읽는 문맥에서 필수 근거·반례·정책·미확인 정보가 빠지거나, 외부 문서 속 문장이 상위 명령처럼 작동하는 현상.
 
-[[notes/ontology-context-compiler-opencrab|9번 글]]은 온톨로지와 지식 Pack을 문맥 컴파일러로 보는 관점을 설명했습니다. [[notes/knowledge-centric-self-improvement|15번 글]]은 여러 작업에서 얻은 경험을 검증된 공유 지식으로 승격하는 과정을 다뤘습니다. 그 글에서 소개한 Knowledge-Centric Self-Improvement(KSI) 연구도 여러 작업의 경험을 공유 지식으로 정리하는 구조를 제안합니다.[src_001](#src-001) [src_002](#src-002)
+[[notes/온톨로지/ontology-context-compiler-opencrab|9번 글]]은 온톨로지와 지식 Pack을 문맥 컴파일러로 보는 관점을 설명했습니다. [[notes/온톨로지/knowledge-centric-self-improvement|15번 글]]은 여러 작업에서 얻은 경험을 검증된 공유 지식으로 승격하는 과정을 다뤘습니다. 그 글에서 소개한 Knowledge-Centric Self-Improvement(KSI) 연구도 여러 작업의 경험을 공유 지식으로 정리하는 구조를 제안합니다.[src_001](#src-001) [src_002](#src-002)
 
 이번 글은 그 다음 단계입니다. **좋은 지식을 만들었다는 사실과, 현재 질문에 좋은 문맥이 전달됐다는 사실을 분리해 확인합니다.**
 
@@ -69,7 +71,7 @@ tags:
 8. **명령 경계 실패:** 외부 문서의 문장이 분석할 데이터가 아니라 상위 명령처럼 작동했습니다.
 9. **그래프 무결성 실패:** 문장 자체는 그대로지만 잘못된 관계(edge)와 경로가 추론 재료를 바꿨습니다.
 
-![정본·컴파일러·에이전트 이용 단계에서 서로 다르게 발생하는 아홉 가지 실패 위치](../attachments/context-compilation-regression/context-compilation-regression-figure-01.png)
+![정본·컴파일러·에이전트 이용 단계에서 서로 다르게 발생하는 아홉 가지 실패 위치](../../attachments/context-compilation-regression/context-compilation-regression-figure-01.png)
 
 RAGAs, ARES, RAGChecker와 RAGVUE 같은 평가 도구도 비슷한 이유로 검색 품질, 답변 관련성, 완전성, 근거 충실도와 생성 오류를 나누어 봅니다. 최종 답 하나만 검사하면 검색 단계와 답변 생성 단계 중 어디가 잘못됐는지 알기 어렵기 때문입니다.[src_004](#src-004) [src_005](#src-005) [src_006](#src-006) [src_010](#src-010)
 
@@ -209,7 +211,7 @@ GraphRAG에서는 문장만 검사해도 충분하지 않습니다. GraphRAG는 
 
 이 연구는 세 공개 데이터셋, 세 LLM과 세 GraphRAG 방식으로 평가했지만, 정적인 영어 자료와 특정 공격 조건에 한정됩니다. 그럼에도 **관계(edge), 경로(path), 근거, 버전과 관계 종류를 문장과 별도로 확인해야 한다**는 설계 근거를 제공합니다.
 
-![외부 문서의 명령 격리, 재현용 Receipt, 그래프 관계 mutation 검사를 하나의 보안 경계로 연결한 도해](../attachments/context-compilation-regression/context-compilation-regression-figure-03.png)
+![외부 문서의 명령 격리, 재현용 Receipt, 그래프 관계 mutation 검사를 하나의 보안 경계로 연결한 도해](../../attachments/context-compilation-regression/context-compilation-regression-figure-03.png)
 
 ## A부터 H까지, 문맥만 바꾸어 실패 위치를 찾습니다
 
@@ -250,7 +252,7 @@ GraphRAG에서는 문장만 검사해도 충분하지 않습니다. GraphRAG는 
 | 합성 외부 명령 probe                      |      검출 | 최종 Bundle에서 격리          |
 | `SUPPORTS_CLAIM` → `CONTRADICTS` mutation |      검출 | 예상 관계와 불일치 확인       |
 
-![A부터 H까지의 계약 스모크에서 보존된 의무와 누락된 caveat를 비교한 결과 도판](../attachments/context-compilation-regression/context-compilation-regression-figure-02.png)
+![A부터 H까지의 계약 스모크에서 보존된 의무와 누락된 caveat를 비교한 결과 도판](../../attachments/context-compilation-regression/context-compilation-regression-figure-02.png)
 
 > [!warning] 이 결과가 말해 주는 범위
 > 이 결과는 정해진 입력과 규칙으로 실행한 **결정론적 계약 스모크**입니다. 실제 LLM 답변 생성, 인용과 근거의 일치도, 학습된 생성형 압축기, 탐지기의 오탐·미탐과 그래프의 의미 정확성은 측정하지 않았습니다. 사용한 Pack에는 활성 벡터 색인이 없어, 그래프 관계를 먼저 따라가는 `graph_first` 진단 경로를 사용했습니다.
@@ -283,7 +285,7 @@ Pack validation ≠ Context Bundle validation
 Receipt ≠ 진실 증명
 ```
 
-[[notes/kg-guided-llm-planning|11번 글]]은 지식그래프를 계획과 검증 신호에 연결했습니다. [[notes/pi-agent-duckcrab-dag-harness|14번 글]]은 조사 의무를 실행 가능한 작업 구조로 옮겼습니다. 문맥 컴파일 회귀 검사는 그 작업에 들어가는 **실제 판단 재료가 충분하고 안전한지 확인하는 게이트**입니다.
+[[notes/온톨로지/kg-guided-llm-planning|11번 글]]은 지식그래프를 계획과 검증 신호에 연결했습니다. [[notes/온톨로지/pi-agent-duckcrab-dag-harness|14번 글]]은 조사 의무를 실행 가능한 작업 구조로 옮겼습니다. 문맥 컴파일 회귀 검사는 그 작업에 들어가는 **실제 판단 재료가 충분하고 안전한지 확인하는 게이트**입니다.
 
 다음 단계는 활성 벡터 검색, 실제 압축기와 여러 모델을 포함한 end-to-end 비교입니다. 사람이 만든 Obligation Set의 품질과 검토 비용도 함께 측정해야 합니다. 그전까지 이번 결과는 성능 우월성 주장이 아니라 **누락, 외부 명령과 그래프 관계 변경을 찾기 위한 검증 설계와 제한적 스모크 테스트**로 읽어야 합니다.
 

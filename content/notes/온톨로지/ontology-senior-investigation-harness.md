@@ -2,6 +2,8 @@
 title: "13. 온톨로지 에이전트 시리즈 총정리: 12편의 결론을 하나의 조사 구조로 잇기"
 description: "온톨로지 에이전트 시리즈 1~12번을 의미와 검증, 도입 경계, 지식 Pack, 계획과 반증의 네 부로 정리하고, 이를 하나의 근거 기반 조사 구조로 통합합니다."
 date: 2026-07-24
+aliases:
+  - /notes/ontology-senior-investigation-harness
 tags:
   - 온톨로지
   - AI에이전트
@@ -9,7 +11,7 @@ tags:
   - 에이전트평가
 ---
 
-![온톨로지 에이전트 시리즈의 네 발전 단계가 지속 지식, 질문별 조사 상태, 검증과 조건부 판단을 갖춘 하나의 조사 하네스로 이어지는 전체 지도](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-infographic.png)
+![온톨로지 에이전트 시리즈의 네 발전 단계가 지속 지식, 질문별 조사 상태, 검증과 조건부 판단을 갖춘 하나의 조사 하네스로 이어지는 전체 지도](../../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-infographic.png)
 
 > [!summary] 핵심 결론
 > 앞선 열두 편이 도달한 결론은 “온톨로지를 붙이면 AI가 똑똑해진다”가 아닙니다. **조직의 말과 규칙을 같은 뜻으로 이해하게 하고, 근거와 제약을 보존하며, 질문마다 가설·반례·미지를 갱신하고, 검증되지 않은 판단과 지식 변경을 막는 작업환경이 필요하다**는 것입니다. 이 부품들은 하나의 조사 하네스로 연결됩니다.
@@ -33,7 +35,7 @@ tags:
 | 3부. Pack과 문맥 조립 | 8~10번  | 조직의 지식을 어떤 형태로 에이전트에게 줍니까?                   | 그래프만 넘기지 말고 근거, 결정, 실패, 반례와 출처를 버전 있는 Pack으로 묶어야 합니다. |
 | 4부. 계획과 반증      | 11~12번 | 검색한 지식으로 어떻게 행동하고, 틀린 첫 판단을 어떻게 고칩니까? | 계획의 조건을 명시하고, 새 외부 근거로 가설을 갱신하며, 필요하면 보류해야 합니다.      |
 
-![온톨로지 에이전트 시리즈 1~12번이 의미·검증, 도입 경계, Pack·전문성, 계획·반증의 네 단계로 발전한 뒤 13번의 조사 하네스로 통합되는 지도](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-figure-01.png)
+![온톨로지 에이전트 시리즈 1~12번이 의미·검증, 도입 경계, Pack·전문성, 계획·반증의 네 단계로 발전한 뒤 13번의 조사 하네스로 통합되는 지도](../../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-figure-01.png)
 
 이 네 부는 서로 독립된 주제가 아닙니다. 앞부분에서 발견한 문제가 다음 부의 질문이 됐습니다.
 
@@ -51,7 +53,7 @@ tags:
 
 ### 1번: 온톨로지는 AI에게 같은 뜻을 쓰게 하는 약속입니다
 
-[[notes/ontology-agent-guide|1번 글]]은 가장 기본적인 질문에서 시작했습니다. 온톨로지는 단순한 용어 사전이나 그래프 데이터베이스가 아닙니다. 사람과 시스템이 `고객`, `장애`, `근거`, `승인` 같은 말을 어떤 뜻으로 쓰고, 서로 어떻게 연결하며, 어떤 제약을 적용할지 명시하는 **공유 의미 계약**입니다.
+[[notes/온톨로지/ontology-agent-guide|1번 글]]은 가장 기본적인 질문에서 시작했습니다. 온톨로지는 단순한 용어 사전이나 그래프 데이터베이스가 아닙니다. 사람과 시스템이 `고객`, `장애`, `근거`, `승인` 같은 말을 어떤 뜻으로 쓰고, 서로 어떻게 연결하며, 어떤 제약을 적용할지 명시하는 **공유 의미 계약**입니다.
 
 LLM은 자연어를 유연하게 다루지만, 그 유연함 때문에 같은 단어를 문맥마다 다르게 해석할 수 있습니다. 온톨로지는 모델의 추론을 대신하지 않습니다. 대신 모델이 조직 안에서 어떤 개념과 관계를 기준으로 답해야 하는지 경계를 제공합니다.
 
@@ -59,7 +61,7 @@ LLM은 자연어를 유연하게 다루지만, 그 유연함 때문에 같은 �
 
 ### 2번: 에이전트 시대의 온톨로지는 실행의 의미 계층입니다
 
-[[notes/ontology-in-the-agentic-era|2번 글]]은 의미 계약을 행동으로 확장했습니다. 질문에 답하는 시스템이라면 개념을 잘 찾는 것만으로도 쓸모가 있습니다. 그러나 도구를 호출하고 설정을 바꾸는 에이전트라면 `무엇을 할 수 있는가`, `어떤 조건에서 가능한가`, `누가 승인해야 하는가`까지 알아야 합니다.
+[[notes/온톨로지/ontology-in-the-agentic-era|2번 글]]은 의미 계약을 행동으로 확장했습니다. 질문에 답하는 시스템이라면 개념을 잘 찾는 것만으로도 쓸모가 있습니다. 그러나 도구를 호출하고 설정을 바꾸는 에이전트라면 `무엇을 할 수 있는가`, `어떤 조건에서 가능한가`, `누가 승인해야 하는가`까지 알아야 합니다.
 
 그래서 에이전트 시대의 온톨로지는 지식을 설명하는 층을 넘어 다음 항목을 연결해야 합니다.
 
@@ -73,7 +75,7 @@ LLM은 자연어를 유연하게 다루지만, 그 유연함 때문에 같은 �
 
 ### 3번: 그럴듯한 답과 통과한 판단은 다릅니다
 
-[[notes/ontology-judge-loop-agent-validation|3번 글]]은 LLM이 스스로 낸 답을 그대로 믿지 않는 검증 구조를 다뤘습니다. 검증은 하나의 거대한 Judge에게 맡기기보다 역할을 나눠야 합니다.
+[[notes/온톨로지/ontology-judge-loop-agent-validation|3번 글]]은 LLM이 스스로 낸 답을 그대로 믿지 않는 검증 구조를 다뤘습니다. 검증은 하나의 거대한 Judge에게 맡기기보다 역할을 나눠야 합니다.
 
 - 기계가 확실히 확인할 수 있는 형식, 인용, 수치, 권한과 상태 전환
 - 문맥을 읽어야 하는 품질, 충실성, 반례와 설명
@@ -83,7 +85,7 @@ LLM은 자연어를 유연하게 다루지만, 그 유연함 때문에 같은 �
 
 ### 4번: 창발은 멋진 답이 아니라 검증 가능한 행동 변화입니다
 
-[[notes/ontology-emergent-agent|4번 글]]은 “온톨로지를 주면 새로운 행동이 창발한다”는 표현을 엄격하게 다뤘습니다. 온톨로지를 바꾼 뒤 에이전트의 행동이 달라졌다고 해서 곧바로 온톨로지의 효과라고 말할 수는 없습니다. 프롬프트, 검색 결과와 모델의 우연한 변동 때문일 수도 있습니다.
+[[notes/온톨로지/ontology-emergent-agent|4번 글]]은 “온톨로지를 주면 새로운 행동이 창발한다”는 표현을 엄격하게 다뤘습니다. 온톨로지를 바꾼 뒤 에이전트의 행동이 달라졌다고 해서 곧바로 온톨로지의 효과라고 말할 수는 없습니다. 프롬프트, 검색 결과와 모델의 우연한 변동 때문일 수도 있습니다.
 
 행동 변화는 다음처럼 추적해야 합니다.
 
@@ -107,7 +109,7 @@ LLM은 자연어를 유연하게 다루지만, 그 유연함 때문에 같은 �
 
 ### 5번: 먼저 더 작은 기준선과 비교해야 합니다
 
-[[notes/ontology-agent-behavior-experiment|5번 글]]은 “온톨로지가 정말 필요한가?”를 실험 문제로 바꿨습니다. 비교 대상은 일반 LLM 하나가 아닙니다.
+[[notes/온톨로지/ontology-agent-behavior-experiment|5번 글]]은 “온톨로지가 정말 필요한가?”를 실험 문제로 바꿨습니다. 비교 대상은 일반 LLM 하나가 아닙니다.
 
 - 프롬프트에 직접 적은 규칙
 - JSON 정책
@@ -120,7 +122,7 @@ LLM은 자연어를 유연하게 다루지만, 그 유연함 때문에 같은 �
 
 ### 6번: 관계가 재사용되고 변경이 퍼질 때 온톨로지가 값을 합니다
 
-[[notes/ontology-vs-json-rules|6번 글]]은 JSON 규칙과 온톨로지의 경계를 더 구체적으로 정리했습니다.
+[[notes/온톨로지/ontology-vs-json-rules|6번 글]]은 JSON 규칙과 온톨로지의 경계를 더 구체적으로 정리했습니다.
 
 JSON은 한 장소에서 읽고 바로 판정할 수 있는 작은 규칙에 강합니다. 반면 다음 조건이 커지면 관계 모델이 유리해질 수 있습니다.
 
@@ -134,7 +136,7 @@ JSON은 한 장소에서 읽고 바로 판정할 수 있는 작은 규칙에 강
 
 ### 7번: 구현은 저장, 검색, 검증, 추론과 쓰기를 분리해야 합니다
 
-[[notes/local-ontology-agent-implementation|7번 글]]은 현실적인 로컬 구현 경계를 다뤘습니다. 한 시스템이 모든 일을 맡으면 빠르게 복잡해집니다. 최소한 다음 층을 분리해야 합니다.
+[[notes/온톨로지/local-ontology-agent-implementation|7번 글]]은 현실적인 로컬 구현 경계를 다뤘습니다. 한 시스템이 모든 일을 맡으면 빠르게 복잡해집니다. 최소한 다음 층을 분리해야 합니다.
 
 ```text
 정본 저장
@@ -160,7 +162,7 @@ JSON은 한 장소에서 읽고 바로 판정할 수 있는 작은 규칙에 강
 
 ### 8번: OpenCrab이 만든 것은 온톨로지 파일 하나가 아니라 배포 단위입니다
 
-[[notes/opencrab-ontology-build-architecture|8번 글]]은 OpenCrab의 공개 구조를 살펴보며 온톨로지 빌드가 무엇을 만들어야 하는지 분석했습니다.[src_015](#src-015)
+[[notes/온톨로지/opencrab-ontology-build-architecture|8번 글]]은 OpenCrab의 공개 구조를 살펴보며 온톨로지 빌드가 무엇을 만들어야 하는지 분석했습니다.[src_015](#src-015)
 
 OpenCrab의 중요한 아이디어는 다음을 한 흐름으로 묶는 데 있습니다.
 
@@ -175,7 +177,7 @@ OpenCrab의 중요한 아이디어는 다음을 한 흐름으로 묶는 데 있�
 
 ### 9번: 온톨로지는 추론기보다 문맥 컴파일러에 가깝습니다
 
-[[notes/ontology-context-compiler-opencrab|9번 글]]은 OpenCrab의 실제 공개 구현과 목표 구조 사이의 간극을 짚었습니다. 공개 구현은 완성된 판단 엔진이라기보다 Pack을 만들고 여러 방식으로 검색하는 기반에 더 가깝습니다.
+[[notes/온톨로지/ontology-context-compiler-opencrab|9번 글]]은 OpenCrab의 실제 공개 구현과 목표 구조 사이의 간극을 짚었습니다. 공개 구현은 완성된 판단 엔진이라기보다 Pack을 만들고 여러 방식으로 검색하는 기반에 더 가깝습니다.
 
 질문에 답할 수 있는 문맥을 만들려면 검색 결과 목록만으로는 부족합니다.
 
@@ -193,7 +195,7 @@ OpenCrab의 중요한 아이디어는 다음을 한 흐름으로 묶는 데 있�
 
 ### 10번: 전문가의 지식은 사실 목록보다 넓습니다
 
-[[notes/ontology-expertise-pack|10번 글]]은 “시니어 엔지니어의 사고를 외부화할 수 있는가?”를 물었습니다. 시니어의 전문성은 용어와 정답 목록만으로 설명되지 않습니다.
+[[notes/온톨로지/ontology-expertise-pack|10번 글]]은 “시니어 엔지니어의 사고를 외부화할 수 있는가?”를 물었습니다. 시니어의 전문성은 용어와 정답 목록만으로 설명되지 않습니다.
 
 실제 판단에는 다음 내용이 함께 들어갑니다.
 
@@ -221,7 +223,7 @@ Expertise Pack은 “무엇이 사실인가”뿐 아니라 “왜 그렇게 판
 
 ### 11번: 지식그래프는 계획을 계산하기보다 계획의 재료와 제약을 제공합니다
 
-[[notes/kg-guided-llm-planning|11번 글]]은 지식그래프가 LLM의 계획을 어떻게 도울 수 있는지 다뤘습니다.
+[[notes/온톨로지/kg-guided-llm-planning|11번 글]]은 지식그래프가 LLM의 계획을 어떻게 도울 수 있는지 다뤘습니다.
 
 계획에는 목표만 있으면 안 됩니다. 적어도 다음 요소가 필요합니다.
 
@@ -239,7 +241,7 @@ Think-on-Graph와 KG-Agent는 LLM이 그래프의 개체와 관계를 단계적�
 
 ### 12번: 좋은 조사 에이전트는 한 번 검색하고 답하지 않습니다
 
-[[notes/iterative-investigation-refutation-loop|12번 글]]은 계획과 가설을 어떻게 수정할지 다뤘습니다. 중요한 것은 같은 모델에게 “다시 생각해”라고 여러 번 말하는 것이 아닙니다. 새로운 외부 신호를 요구하고, 그 신호 때문에 무엇이 바뀌었는지 기록해야 합니다.
+[[notes/온톨로지/iterative-investigation-refutation-loop|12번 글]]은 계획과 가설을 어떻게 수정할지 다뤘습니다. 중요한 것은 같은 모델에게 “다시 생각해”라고 여러 번 말하는 것이 아닙니다. 새로운 외부 신호를 요구하고, 그 신호 때문에 무엇이 바뀌었는지 기록해야 합니다.
 
 조사 상태에는 다음 내용이 필요합니다.
 
@@ -300,7 +302,7 @@ Proposal → 검증 → 사람 검토 → 승인
 
 첫 조사에서 나온 미확정 가설을 장기 지식에 바로 넣으면, 다음 질문에서 추측이 사실처럼 재사용될 수 있습니다. 반대로 모든 내용을 임시 대화에만 남기면 과거 결정의 이유와 출처를 다시 찾을 수 없습니다. 그래서 기억할 지식, 질문별 추론, 검사 기록과 지식 변경을 서로 다른 수명으로 관리해야 합니다.
 
-![지속되는 Expertise Pack, 질문별 조사 계획과 조사 상태, 출력 단계의 검증 기록과 조건부 판단을 서로 다른 수명주기로 분리한 다섯 계약](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-figure-02.png)
+![지속되는 Expertise Pack, 질문별 조사 계획과 조사 상태, 출력 단계의 검증 기록과 조건부 판단을 서로 다른 수명주기로 분리한 다섯 계약](../../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-figure-02.png)
 
 | 쉬운 질문                                     | 계약                | 역할                                                                    |
 | --------------------------------------------- | ------------------- | ----------------------------------------------------------------------- |
@@ -330,7 +332,7 @@ Proposal → 검증 → 사람 검토 → 승인
 
 ## 주문 배송 지연에 적용한 조사 구조
 
-![결제 뒤 상품 준비 상태가 계속되는 주문을 재고 예약 실패와 창고 처리 누락이라는 경쟁 가설로 나누고, 빠진 기록과 다음 확인을 거쳐 안내·보류·사람 검토 중 하나로 끝내는 가상 조사](../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-figure-03.png)
+![결제 뒤 상품 준비 상태가 계속되는 주문을 재고 예약 실패와 창고 처리 누락이라는 경쟁 가설로 나누고, 빠진 기록과 다음 확인을 거쳐 안내·보류·사람 검토 중 하나로 끝내는 가상 조사](../../attachments/ontology-senior-investigation-harness/ontology-senior-investigation-harness-v5-figure-03.png)
 
 > 결제한 지 사흘이 지났는데 주문이 아직 `상품 준비 중`인 이유는 무엇이며, 고객에게 지금 무엇을 안내해야 합니까?
 
@@ -430,12 +432,12 @@ Harness-Bench는 같은 모델도 프롬프트, 도구, 상태 관리와 실행 
 
 ## 함께 읽기
 
-- [[notes/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
-- [[notes/ontology-agent-behavior-experiment|5. 온톨로지 에이전트는 정말 필요한가]]
-- [[notes/opencrab-ontology-build-architecture|8. OpenCrab 온톨로지 빌드는 무엇을 만드는가]]
-- [[notes/ontology-expertise-pack|10. 온톨로지로 시니어 엔지니어의 사고를 외부화할 수 있을까]]
-- [[notes/kg-guided-llm-planning|11. 지식그래프는 LLM의 계획을 어떻게 돕는가]]
-- [[notes/iterative-investigation-refutation-loop|12. 한 번 검색하고 답하지 않는 에이전트]]
+- [[notes/온톨로지/ontology-agent-guide|1. 온톨로지 에이전트: 의미를 아는 AI를 만드는 방법]]
+- [[notes/온톨로지/ontology-agent-behavior-experiment|5. 온톨로지 에이전트는 정말 필요한가]]
+- [[notes/온톨로지/opencrab-ontology-build-architecture|8. OpenCrab 온톨로지 빌드는 무엇을 만드는가]]
+- [[notes/온톨로지/ontology-expertise-pack|10. 온톨로지로 시니어 엔지니어의 사고를 외부화할 수 있을까]]
+- [[notes/온톨로지/kg-guided-llm-planning|11. 지식그래프는 LLM의 계획을 어떻게 돕는가]]
+- [[notes/온톨로지/iterative-investigation-refutation-loop|12. 한 번 검색하고 답하지 않는 에이전트]]
 
 ## 출처
 

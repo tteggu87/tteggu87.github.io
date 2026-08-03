@@ -2,6 +2,8 @@
 title: "21. GraphRAG는 언제 필요한가: 그래프를 붙이기 전에 관계 증강과 문맥 활용률부터 검증하라"
 description: "관계 정보의 가치와 그래프 런타임의 가치를 분리하고, 관계 증강 문서부터 Hybrid GraphRAG와 Agent+Graph까지 바로 아래 기준선을 이길 때만 승격하는 평가 방법을 설명합니다."
 date: 2026-07-29
+aliases:
+  - /notes/graphrag-adoption-gate
 tags:
   - GraphRAG
   - RAG
@@ -11,7 +13,7 @@ tags:
   - AI에이전트
 ---
 
-![설명 문서 RAG에서 관계 증강 문서, Hybrid GraphRAG, 질문별 그래프 경로와 최소 Agent+Graph로 단계적으로 승격하는 GraphRAG 도입 게이트](../attachments/graphrag-adoption-gate/graphrag-adoption-gate-infographic.png)
+![설명 문서 RAG에서 관계 증강 문서, Hybrid GraphRAG, 질문별 그래프 경로와 최소 Agent+Graph로 단계적으로 승격하는 GraphRAG 도입 게이트](../../attachments/graphrag-adoption-gate/graphrag-adoption-gate-infographic.png)
 
 > [!summary] 핵심 결론
 > 관계 정보가 필요하다고 해서 그래프 런타임까지 곧바로 필요한 것은 아닙니다. 설명 문서에 안정적인 1-hop 관계를 붙인 기준선부터 시작하고, 그래프만 찾을 수 있는 유효 근거가 최종 답과 인용에 실제로 기여하며 추가 비용까지 정당화할 때만 다음 단계로 승격해야 합니다.
@@ -22,7 +24,7 @@ tags:
 
 두 질문 모두 관계를 다루지만 필요한 시스템은 같지 않습니다. 그런데 이를 곧바로 `GraphRAG가 필요한가`라는 찬반 문제로 바꾸면 관계 정보가 준 이득과 그래프 런타임이 준 이득이 뒤섞입니다. GraphRAG는 단일 검색기가 아니라 그래프 구축, 엔티티 연결, 경로 탐색, 커뮤니티 요약, 문맥 직렬화와 생성까지 아우르는 방법군이기 때문입니다.
 
-이 글의 질문은 더 구체적입니다. **어떤 질문에서 그래프 경로가 바로 아래의 단순한 방법보다 실제로 나은가?** 이를 확인하려고 GraphRAG를 고급 RAG의 기본값으로 두지 않고, 더 얇은 기준선을 이길 때만 다음 단계로 올라가는 **단계적 도입 게이트**로 다룹니다. 이 구조는 연구 결과를 그대로 제품 규칙으로 옮긴 표준이 아닙니다. 기존 [[notes/ontology-context-compiler-opencrab|9번 문맥 컴파일러]], [[notes/context-compilation-regression|16번 문맥 컴파일 회귀]], [[notes/generation-faithfulness-regression|19번 생성 충실도]]의 경계를 하나의 아키텍처 선택 실험으로 연결한 프로젝트 제안입니다.
+이 글의 질문은 더 구체적입니다. **어떤 질문에서 그래프 경로가 바로 아래의 단순한 방법보다 실제로 나은가?** 이를 확인하려고 GraphRAG를 고급 RAG의 기본값으로 두지 않고, 더 얇은 기준선을 이길 때만 다음 단계로 올라가는 **단계적 도입 게이트**로 다룹니다. 이 구조는 연구 결과를 그대로 제품 규칙으로 옮긴 표준이 아닙니다. 기존 [[notes/온톨로지/ontology-context-compiler-opencrab|9번 문맥 컴파일러]], [[notes/온톨로지/context-compilation-regression|16번 문맥 컴파일 회귀]], [[notes/온톨로지/generation-faithfulness-regression|19번 생성 충실도]]의 경계를 하나의 아키텍처 선택 실험으로 연결한 프로젝트 제안입니다.
 
 ## `GraphRAG가 필요한가`라는 질문은 너무 큽니다
 
@@ -65,7 +67,7 @@ graph DB·traversal·serialization 전체가 항상 필요함
 
 앞서 든 배터리 호환 사례에서 단일 모델과 부품의 관계는 이 기준선으로 처리할 수 있습니다. 반면 두 모델의 공통 부품을 찾고 특정 규격을 제외해야 한다면, 문서에 미리 펼쳐 둔 관계만으로는 질문마다 필요한 교집합을 만들기 어려울 수 있습니다. 그래프의 가치는 이 차이에서 시작합니다.
 
-![RAG·GraphRAG·온톨로지의 책임과 질문 유형별 Document RAG·관계 증강·Hybrid GraphRAG·Agent 라우팅](../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-01.png)
+![RAG·GraphRAG·온톨로지의 책임과 질문 유형별 Document RAG·관계 증강·Hybrid GraphRAG·Agent 라우팅](../../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-01.png)
 
 관계 증강 문서도 공짜는 아닙니다. 관계를 만들고 검증하고 문서 revision과 함께 갱신해야 합니다. 관계가 자주 바뀌거나, 질문마다 다른 방향과 깊이로 탐색해야 하거나, 문서에 관계를 펼치면서 중복과 폭증이 생긴다면 graph query의 동적 가치가 커집니다. 중요한 것은 이 비용까지 같은 비교표에 넣는 것입니다.
 
@@ -112,9 +114,9 @@ Generation utilization
 
 `generation utilization`은 이 글에서 사용하는 프로젝트 운영 지표입니다. 확립된 학술 표준이 아닙니다. 최종 Context Bundle에 포함된 유효 근거 가운데 답, 인용 또는 판단에 추적 가능하게 사용된 근거의 비율로 관찰할 수 있습니다.
 
-![검색 coverage에서 graph 고유 근거, 문맥 보존과 생성 활용으로 이어지는 네 단계와 각 단계의 실패 위치](../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-02.png)
+![검색 coverage에서 graph 고유 근거, 문맥 보존과 생성 활용으로 이어지는 네 단계와 각 단계의 실패 위치](../../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-02.png)
 
-이 분리는 [[notes/context-compilation-regression|16번 글]]의 `검색 후보에 존재함 ≠ 최종 문맥에 보존됨`과 [[notes/generation-faithfulness-regression|19번 글]]의 `최종 문맥에 존재함 ≠ 모델이 안정적으로 이용함`을 GraphRAG 도입 판단으로 되돌립니다. 검색 recall 상승만 보고 graph를 채택하면 selection, serialization, ordering 또는 generation 실패를 graph의 성과로 잘못 계산할 수 있습니다.
+이 분리는 [[notes/온톨로지/context-compilation-regression|16번 글]]의 `검색 후보에 존재함 ≠ 최종 문맥에 보존됨`과 [[notes/온톨로지/generation-faithfulness-regression|19번 글]]의 `최종 문맥에 존재함 ≠ 모델이 안정적으로 이용함`을 GraphRAG 도입 판단으로 되돌립니다. 검색 recall 상승만 보고 graph를 채택하면 selection, serialization, ordering 또는 generation 실패를 graph의 성과로 잘못 계산할 수 있습니다.
 
 따라서 그래프 검색의 성과를 판단하려면 검색기 바깥까지 봐야 합니다. 그래프가 찾은 근거가 중복 제거와 배열을 거쳐 살아남았는지, 답과 인용에 실제로 쓰였는지 확인해야 비로소 런타임의 순기여를 계산할 수 있습니다.
 
@@ -158,7 +160,7 @@ GraphRAG Adoption Gate는 다음과 같은 승격 사다리입니다.
 - 동일한 최대 token과 latency budget
 - 동일한 final generator와 가능한 경우 동일 reranker
 
-권한과 revision을 고정해야 하는 이유는 [[notes/authorization-aware-rag-graph-boundary|17번 글]]과 [[notes/long-running-task-authorization-lease|20번 글]]에서 다룬 경계와 같습니다. graph path 하나가 여러 문서와 파생 요약을 연결하면 검색 범위뿐 아니라 권한, lineage와 stale 상태의 실패 표면도 넓어집니다. 품질 이득이 없는데 이 비용만 늘어난다면 채택 중단 신호입니다.
+권한과 revision을 고정해야 하는 이유는 [[notes/온톨로지/authorization-aware-rag-graph-boundary|17번 글]]과 [[notes/온톨로지/long-running-task-authorization-lease|20번 글]]에서 다룬 경계와 같습니다. graph path 하나가 여러 문서와 파생 요약을 연결하면 검색 범위뿐 아니라 권한, lineage와 stale 상태의 실패 표면도 넓어집니다. 품질 이득이 없는데 이 비용만 늘어난다면 채택 중단 신호입니다.
 
 이 승격 사다리가 말로만 그럴듯한 규칙에 머물지 않으려면, 각 책임을 따로 추가하는 통제 비교가 필요합니다.
 
@@ -177,7 +179,7 @@ DuckCrab·OpenCrab에 적용할 수 있는 첫 비교는 거대한 production be
 
 이번 비공개 연구 번들에서는 직접 사실, 안정적인 1-hop, 다중 홉, 집합 교집합, 전체 corpus 주제와 반복 정제라는 여섯 합성 질문을 예상 경로에 배치하고 여섯 route와 여섯 계약 assertion을 통과시켰습니다. 이것은 작성한 분기표에 빠진 경우가 없는지 확인한 **구조적 스모크 테스트**일 뿐, DuckCrab·OpenCrab·Microsoft GraphRAG의 정확도, 비용, 지연이나 production readiness를 증명하지 않습니다.
 
-![설명 문서부터 관계 증강, KG, hybrid, 최소 agent와 Agent+Graph까지 A~F 통제 비교와 승격 판정](../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-03.png)
+![설명 문서부터 관계 증강, KG, hybrid, 최소 agent와 Agent+Graph까지 A~F 통제 비교와 승격 판정](../../attachments/graphrag-adoption-gate/graphrag-adoption-gate-figure-03.png)
 
 실제 비교에서는 평균 정답률 하나로 끝내지 않습니다.
 
