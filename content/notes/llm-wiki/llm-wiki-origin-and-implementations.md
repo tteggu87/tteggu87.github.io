@@ -14,6 +14,8 @@ tags:
 
 ![카파시의 원문에서 Raw Sources·Markdown Wiki·Schema를 거쳐 네 가지 구현 방식으로 갈라지는 LLM Wiki 지도](../../attachments/llm-wiki-origin-and-implementations/llm-wiki-origin-and-implementations-infographic.png)
 
+검색은 빨라졌는데, 어제의 판단은 왜 오늘 다시 사라질까요?
+
 RAG는 질문이 들어오면 관련 문서를 찾아 모델의 문맥에 넣습니다. 지금 필요한 근거를 찾는 데는 강력한 방식입니다. 그런데 한 번의 질문이 끝난 뒤, 그 과정에서 얻은 비교와 판단은 어디에 남을까요?
 
 가정해 보겠습니다. 어제 여러 자료를 읽고 공통점과 차이, 기각한 가설까지 정리했습니다. 오늘 비슷한 질문을 던지자 시스템은 다시 원문을 찾고, 어제의 종합은 출발점이 되지 못합니다. 검색은 반복되는데 지식은 반드시 자라지 않습니다.
