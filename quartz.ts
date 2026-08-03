@@ -1,6 +1,8 @@
 import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/config-loader"
 import { ConditionalRender, Flex } from "./quartz/components"
 import HomeHero from "./quartz/components/HomeHero"
+import ArticleDescription from "./quartz/components/ArticleDescription"
+import HomeFeatured from "./quartz/components/HomeFeatured"
 import ReaderMode from "./quartz/components/ReaderMode"
 import TopNav from "./quartz/components/TopNav"
 import { FirstImageSocialImage, PageTypes } from "./quartz/plugins"
@@ -19,6 +21,17 @@ const homeHero = ConditionalRender({
   component: HomeHero(),
   condition: ({ fileData }) => fileData.slug === "index",
 })
+const homeFeatured = ConditionalRender({
+  component: HomeFeatured(),
+  condition: ({ fileData }) => fileData.slug === "index",
+})
+const articleDescription = ConditionalRender({
+  component: ArticleDescription(),
+  condition: ({ fileData }) => {
+    const slug = fileData.slug ?? ""
+    return slug.startsWith("notes/") && !slug.endsWith("/index")
+  },
+})
 const header = Flex({
   components: [
     { Component: TopNav(), grow: true, align: "stretch" },
@@ -28,6 +41,11 @@ const header = Flex({
 })
 const contentLayout = baseLayout.byPageType.content ?? {}
 const folderLayout = baseLayout.byPageType.folder ?? {}
+const contentBeforeBody = [...(contentLayout.beforeBody ?? baseLayout.defaults.beforeBody ?? [])]
+// Breadcrumbs (priority 5) comes before ArticleTitle (priority 10) in the
+// configured content layout. Insert the public lead after the title and
+// before note properties/date/meta.
+contentBeforeBody.splice(2, 0, articleDescription)
 
 export const layout = {
   ...baseLayout,
@@ -44,7 +62,7 @@ export const layout = {
     content: {
       ...contentLayout,
       header: [header],
-      beforeBody: [homeHero, ...(contentLayout.beforeBody ?? baseLayout.defaults.beforeBody ?? [])],
+      beforeBody: [homeHero, homeFeatured, ...contentBeforeBody],
     },
   },
 }
