@@ -1,5 +1,5 @@
 ---
-title: "27. Andrej Karpathy의 LLM Wiki 원문 읽기: 구현 방식은 어떻게 갈라지는가"
+title: "1. Andrej Karpathy의 LLM Wiki 원문 읽기: 구현 방식은 어떻게 갈라지는가"
 description: "카파시의 LLM Wiki Gist가 제안한 세 층과 세 작업을 정리하고, Skill·CLI·Obsidian·Compiler 구현이 무엇을 보존하고 무엇을 추가했는지 비교합니다."
 date: 2026-08-03
 aliases:
