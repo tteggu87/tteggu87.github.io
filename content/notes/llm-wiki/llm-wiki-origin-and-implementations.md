@@ -1,6 +1,6 @@
 ---
 title: "1. LLM Wiki가 뭔가? 안드레이 카파시가 건넨 지식 성장 루프"
-description: "RAG가 질문마다 원문을 찾는 시대에 카파시의 LLM Wiki가 왜 매력적인지 살펴보고, 편집 가능한 지식 루프와 네 가지 구현 방식의 차이를 비교합니다."
+description: "RAG가 질문마다 원문을 찾는 시대에 카파시의 LLM Wiki가 왜 매력적인지 살펴보고, 편집 가능한 지식 루프와 여러 구현 방식의 차이를 비교합니다."
 date: 2026-08-03
 aliases:
   - /notes/llm-wiki-origin-and-implementations
@@ -12,22 +12,20 @@ tags:
   - RAG
 ---
 
-![카파시의 원문에서 Raw Sources·Markdown Wiki·Schema를 거쳐 네 가지 구현 방식으로 갈라지는 LLM Wiki 지도](../../attachments/llm-wiki-origin-and-implementations/llm-wiki-origin-and-implementations-infographic.png)
+![카파시의 원문에서 Raw Sources·Markdown Wiki·Schema를 거쳐 DocTology를 포함한 여러 구현 방식으로 갈라지는 LLM Wiki 지도](../../attachments/llm-wiki-origin-and-implementations/llm-wiki-origin-and-implementations-infographic-v2.png)
 
 RAG는 매번 답을 찾지만, LLM Wiki는 찾은 지식을 남깁니다.
 
-Andrej Karpathy가 제안한 `LLM Wiki`는 LLM이 원문을 매번 다시 검색하는 대신, 읽은 내용을 서로 연결된 Markdown Wiki에 축적하고 갱신하는 방식입니다. 이 글에서는 카파시의 원문을 기준으로 LLM Wiki의 핵심 구조와 매력을 정리하고, 여러 구현 방식이 무엇을 보존하고 어디까지 확장했는지 비교합니다.
+Andrej Karpathy가 제안한 `LLM Wiki`는 LLM이 원문을 매번 다시 검색하는 대신, 읽은 내용을 서로 연결된 Markdown Wiki에 축적하고 갱신하는 방식입니다.
 
 > [!summary] 핵심 결론
 > RAG가 질문이 들어온 순간 관련 원문을 찾아 답변에 넣는 방식이라면, LLM Wiki는 그 과정에서 얻은 종합·반례·연결을 다음 질문에 다시 쓸 수 있는 Markdown으로 남기는 지식 성장 루프입니다. 매력은 RAG보다 무조건 정확하거나 빠르다는 데 있지 않고, 사람이 고칠 수 있고 에이전트가 계속 키울 수 있다는 데 있습니다.
-
-이 글은 RAG의 원리를 설명하는 글이 아닙니다. 먼저 [Andrej Karpathy의 원문 Gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)를 읽고, 카파시가 말한 내용과 실제 구현들이 보존하거나 추가한 내용을 비교합니다. 앞선 [[notes/온톨로지/llm-wiki-double-compilation|25번 글]]에서는 LLM Wiki를 RAG와 문맥 컴파일의 관점에서 넓게 살펴봤습니다. 이번 글은 출발점을 다시 좁힙니다.
 
 ## 1. 왜 원문부터 읽어야 하는가
 
 카파시의 Gist 제목은 `LLM Wiki`이고, 설명은 특정 애플리케이션의 사용법이 아니라 **LLM으로 개인 지식 기반을 만드는 패턴**입니다. 그는 이 문서를 완성된 제품 명세가 아니라 자신의 에이전트에 복사해 넣어 아이디어를 전달하는 파일로 제시합니다.
 
-이 차이는 중요합니다. 원문은 핵심 방향을 정하지만 다음 항목을 고정하지 않습니다.
+원문은 핵심 방향을 정하지만 다음 항목을 고정하지 않습니다.
 
 - 반드시 사용해야 할 데이터베이스
 - 특정 임베딩 모델이나 검색 엔진
@@ -35,17 +33,7 @@ Andrej Karpathy가 제안한 `LLM Wiki`는 LLM이 원문을 매번 다시 검색
 - Obsidian 이외의 유일한 사용자 인터페이스
 - 자동화 수준과 승인 정책
 
-따라서 원문을 읽기 전에 구현체를 먼저 보면, 구현체가 추가한 기능이 LLM Wiki의 본래 정의처럼 보일 수 있습니다. 이 글에서는 다음 순서를 지킵니다.
-
-```text
-원문이 정의한 핵심
-→ 구현체가 보존한 부분
-→ 구현체가 추가한 부분
-→ 아직 확인되지 않은 부분
-```
-
-> [!important] 이 글의 범위
-> 이 글은 LLM Wiki의 효과나 RAG 대비 성능을 판정하지 않습니다. 공개 원문과 저장소 문서를 기준으로 개념과 구현 접근을 비교하고, 그 구조에서 읽을 수 있는 채택 이유를 정리합니다. 동일한 자료와 모델로 네 구현체를 설치해 성능·비용을 비교한 실험은 아닙니다. 속도·정확도·비용에 관한 표현은 구현 조건에 따라 달라지는 가설과 경계 조건을 함께 둡니다.
+구현체를 먼저 보면 추가 기능이 LLM Wiki의 본래 정의처럼 보일 수 있습니다. 따라서 원문이 정의한 핵심과 구현체가 추가한 기능을 분리해 읽어야 합니다.
 
 ## 2. 카파시가 바꾸려는 것은 검색 위치가 아니라 지식의 수명이다
 
@@ -96,7 +84,7 @@ RAG의 검색 결과는 질문마다 새로 조립됩니다. 반면 Wiki 페이�
 
 작고 자주 다루는 지식 영역에서는 Markdown 파일과 단순 색인만으로도 검색이 빠르게 느껴질 수 있습니다. 정확도 역시 임베딩 품질 하나로 결정되지 않습니다. 페이지 제목과 링크, 색인, 출처 연결, Query 절차, Lint와 검토 하네스가 함께 영향을 줍니다.
 
-따라서 이 글에서 “LLM Wiki가 RAG보다 빠르고 정확하다”고 결론내리지는 않습니다. 더 정확한 표현은 이렇습니다.
+LLM Wiki가 RAG보다 빠르고 정확한지는 지식 규모와 하네스 설계에 따라 달라집니다.
 
 > 잘 정리된 제한된 지식 영역과 충분한 하네스가 있다면, LLM Wiki는 반복 질문에서 빠르고 충분히 정확한 경험을 만들 수 있다는 구현 가설을 제공한다. 그 가설은 실제 동일 조건 비교로 검증해야 한다.
 
@@ -182,11 +170,11 @@ Wiki가 커지면 다음 문제가 생깁니다.
 
 Lint는 문법 검사를 넘어 Wiki의 지식 구조가 계속 유지되는지 점검하는 작업입니다. 원문에서 제안한 기능을 최소한으로 구현한다면 `index.md`와 `log.md`, 그리고 고아·끊어진 링크 검사부터 시작할 수 있습니다.
 
-## 6. 같은 원문에서 네 가지 구현 경로가 나왔다
+## 6. 같은 원문에서 여러 구현 경로가 나왔다
 
 공개 구현체들은 모두 같은 핵심을 공유하지만, 각자 다른 층에 집중합니다.
 
-![같은 원문 계약을 Agent Skill·CLI·Obsidian·Compiler라는 네 구현 경로로 구체화한 비교 지도](../../attachments/llm-wiki-origin-and-implementations/llm-wiki-origin-and-implementations-figure-02.png)
+![같은 원문 계약을 Agent Skill·CLI·Obsidian·Compiler·DocTology라는 여러 구현 경로로 구체화한 비교 지도](../../attachments/llm-wiki-origin-and-implementations/llm-wiki-origin-and-implementations-figure-02-v2.png)
 
 ### 6.1 Agent Skill / Plugin — LLM의 행동 계약으로 구현하기
 
@@ -230,9 +218,29 @@ Lint는 문법 검사를 넘어 Wiki의 지식 구조가 계속 유지되는지 
 
 이 방식은 규모와 운영 안전성을 염두에 둔 강화형입니다. 다만 provenance, review queue, hybrid search와 MCP는 카파시 원문의 필수 정의가 아니라, 원문을 운영 환경에 가져갈 때 추가한 기능으로 읽어야 합니다.
 
+### 6.5 DocTology — AGENTS.md를 Wiki 유지 하네스로 사용하기
+
+[DocTology](https://github.com/tteggu87/DocTology)는 카파시의 Schema 계층을 저장소의 `AGENTS.md`로 구체화한 구현 사례입니다. 여러 프로필 가운데 원문에 가장 가까운 `wiki-only` 프로필은 다음 구조로 시작합니다.
+
+```text
+DocTology
+├── raw/                  # 사람이 수집한 원자료
+├── wiki/                 # 에이전트가 유지하는 Markdown Wiki
+│   └── _meta/
+│       ├── index.md
+│       ├── dashboard.md
+│       └── log.md
+├── AGENTS.md             # Wiki 운영 계약
+└── scripts/llm_wiki.py   # 등록·색인·상태·Lint 지원
+```
+
+`AGENTS.md`는 에이전트가 먼저 읽을 파일, 새 페이지를 만들거나 기존 페이지를 고치는 기준, Wikilink와 출처 규칙, ingest·query·lint 절차를 고정합니다. 모델 자체를 바꾸지 않고 저장소의 작업 계약과 구조 검사로 행동을 안정시키는 **하네스 엔지니어링**입니다.
+
+사람은 원자료를 고르고 질문하며, 에이전트는 Wiki를 만들고 갱신합니다. 스크립트는 등록·색인·로그·구조 검사를 지원하지만 의미 판단을 대신하지 않습니다. 온톨로지와 그래프 계층은 `wiki-only` 프로필의 필수 구성요소가 아닙니다.
+
 ## 7. 무엇이 같고, 어디서부터 달라지는가
 
-네 구현체를 비교할 때 기능 개수로 순위를 매기면 핵심을 놓칩니다. 먼저 원문에서 보존해야 할 공통 계약을 확인하고, 그 위에 각 구현이 어떤 어댑터와 확장을 올렸는지 봐야 합니다.
+기능 개수로 구현체의 순위를 매기면 핵심을 놓칩니다. 원문에서 보존해야 할 공통 계약과 각 구현이 추가한 어댑터·확장을 나눠 봐야 합니다.
 
 ### 공통으로 보존하는 핵심
 
@@ -249,23 +257,22 @@ Lint는 문법 검사를 넘어 Wiki의 지식 구조가 계속 유지되는지 
 - **CLI**는 변경 제안과 사용자 확인을 강화합니다.
 - **Obsidian**은 시각적 탐색과 로컬 편집 경험을 강화합니다.
 - **Compiler**는 출처 추적·검토·검색·MCP를 강화합니다.
+- **DocTology wiki-only**는 `AGENTS.md`와 로컬 스크립트로 Schema와 세 작업을 하네스로 만듭니다.
 
 ![원문 핵심, 구현 어댑터, 운영 확장을 분리해 읽는 LLM Wiki 비교 원칙](../../attachments/llm-wiki-origin-and-implementations/llm-wiki-origin-and-implementations-figure-03.png)
 
-이렇게 보면 어느 구현이 “정답”인지보다 어떤 문제를 해결하려고 어떤 층을 추가했는지가 보입니다.
+평가 기준은 기능 개수가 아니라 어떤 문제를 해결하려고 어떤 층을 추가했는가입니다.
 
 ```text
 카파시 원문
   ├─ 핵심 계약: raw / wiki / schema + ingest / query / lint
-  ├─ 어댑터: agent skill / CLI / Obsidian UI
+  ├─ 어댑터: agent skill / CLI / Obsidian UI / AGENTS.md harness
   └─ 확장: provenance / review / search / MCP
 ```
 
-이 구분은 우리 구현에도 중요합니다. 나중에 Quartz를 연결하거나 provenance와 검토 게이트를 추가하더라도, 그것을 LLM Wiki의 원래 정의라고 부르지 않고 **우리 프로젝트의 구현 선택**으로 기록할 수 있습니다.
-
 ## 8. 어디까지 매력적인가
 
-여기까지의 논지는 LLM Wiki가 모든 질문에서 유리하다는 뜻이 아닙니다. 다음 조건에서는 오히려 RAG나 더 단순한 파일 검색이 낫습니다.
+LLM Wiki가 모든 질문에서 유리한 것은 아닙니다. 다음 조건에서는 오히려 RAG나 더 단순한 파일 검색이 낫습니다.
 
 - 하나의 최신 사실을 빠르게 확인하면 되는 질문
 - 원문이 자주 바뀌어 매번 최신 버전을 확인해야 하는 작업
@@ -281,24 +288,19 @@ Lint는 문법 검사를 넘어 Wiki의 지식 구조가 계속 유지되는지 
 - 사람이 수정한 내용이 다음 답변에 반영되는 비율
 - 오래된 페이지와 출처가 끊긴 페이지의 발생 빈도
 
-이 글에서 아직 결정하지 않은 것도 분명합니다. 어떤 구현체가 성능이나 비용 면에서 우월한지, 벡터 DB나 GraphRAG가 언제 필수인지, 온톨로지가 LLM Wiki에 필요한지는 실제 동일 조건 실험 뒤에 판단해야 합니다. 원문과 구현 문서만으로 그 순위를 정할 수는 없습니다.
+어떤 구현체가 성능이나 비용 면에서 우월한지, 벡터 DB나 GraphRAG가 언제 필수인지, 온톨로지가 필요한지는 동일 조건 실험으로 판단해야 합니다. 원문과 구현 문서만으로 순위를 정할 수는 없습니다.
 
 먼저 가장 작은 구조를 만들고, Source 하나가 Wiki를 어떻게 바꾸는지 확인해야 합니다. 그 뒤에야 검색·그래프·온톨로지·검토 게이트를 어느 지점에 추가할지 결정할 수 있습니다.
 
-## 9. 다음 글: 빈 폴더에서 첫 Wiki 만들기
+## 9. 다음 글: 구현체를 같은 기준으로 비교하기
 
-다음 글에서는 이 원문을 최소한으로 구현합니다.
+Agent Skill, CLI, Obsidian Plugin, Compiler와 DocTology `wiki-only` 프로필을 같은 기준에 놓고 비교합니다.
 
-```text
-llm-wiki/
-├── raw/
-├── wiki/
-│   ├── index.md
-│   └── log.md
-└── SCHEMA.md
-```
-
-첫 단계에서는 검색 서버도, 그래프 DB도, 정식 온톨로지도 만들지 않습니다. 카파시가 제안한 세 층과 세 작업을 Markdown과 에이전트만으로 재현하고, 그 다음 Source를 하나씩 넣으면서 Wiki가 실제로 축적되는지 확인하겠습니다.
+- 원자료와 생성 Wiki의 분리
+- Schema 또는 `AGENTS.md`의 역할
+- ingest·query·lint 구현 방식
+- 사람이 개입하고 승인하는 지점
+- 검색·provenance·그래프가 추가되는 시점
 
 ## 출처
 
@@ -307,3 +309,4 @@ llm-wiki/
 - [hellohejinyu/llm-wiki](https://github.com/hellohejinyu/llm-wiki)
 - [green-dalii/obsidian-llm-wiki](https://github.com/green-dalii/obsidian-llm-wiki)
 - [atomicstrata/llm-wiki-compiler](https://github.com/atomicstrata/llm-wiki-compiler)
+- [tteggu87/DocTology](https://github.com/tteggu87/DocTology)
