@@ -6,6 +6,7 @@ import HomeFeatured from "./quartz/components/HomeFeatured"
 import ReaderMode from "./quartz/components/ReaderMode"
 import TopNav from "./quartz/components/TopNav"
 import { FirstImageSocialImage, PageTypes } from "./quartz/plugins"
+import type { PageGenerator } from "./quartz/plugins/types"
 import { RecentNotes as configureRecentNotes } from "./.quartz/plugins"
 
 configureRecentNotes({
@@ -16,6 +17,20 @@ configureRecentNotes({
 })
 const config = await loadQuartzConfig()
 config.plugins.transformers.push(FirstImageSocialImage())
+
+// Tag pages are useful as reader-facing filters, but most are too thin to be
+// standalone search landing pages. Keep emitting them while excluding them
+// from the sitemap, RSS, search index, explorer, and graph.
+const tagPage = config.plugins.pageTypes?.find((pageType) => pageType.name === "TagPage")
+if (tagPage?.generate) {
+  const generateTagPages = tagPage.generate as unknown as PageGenerator
+  tagPage.generate = ((args: Parameters<PageGenerator>[0]) =>
+    generateTagPages(args).map((page) => ({
+      ...page,
+      data: { ...page.data, unlisted: true },
+    }))) as unknown as NonNullable<typeof tagPage.generate>
+}
+
 const baseLayout = await loadQuartzLayout()
 const homeHero = ConditionalRender({
   component: HomeHero(),

@@ -19,6 +19,7 @@ export default (() => {
       fileData.frontmatter?.socialDescription ??
       fileData.frontmatter?.description ??
       unescapeHTML(fileData.description?.trim() ?? i18n(cfg.locale).propertyDefaults.description)
+    const isUnlisted = (fileData as Record<string, unknown>).unlisted === true
 
     const { css, js, additionalHead } = externalResources
 
@@ -96,6 +97,7 @@ export default (() => {
 
         <link rel="icon" href={iconPath} />
         <meta name="description" content={description} />
+        {isUnlisted && <meta name="robots" content="noindex,follow" />}
         <meta name="generator" content="Quartz" />
 
         {css.map((resource) => CSSResourceToStyleElement(resource, true))}
