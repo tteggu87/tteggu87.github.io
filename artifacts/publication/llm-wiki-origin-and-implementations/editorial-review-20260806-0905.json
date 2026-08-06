@@ -1,0 +1,118 @@
+{
+  "schema": "publication-editorial-review",
+  "version": 1,
+  "slug": "llm-wiki-origin-and-implementations",
+  "reviewed_at": "2026-08-06T09:05:00+09:00",
+  "article": "content/notes/llm-wiki/llm-wiki-origin-and-implementations.md",
+  "status": "pass",
+  "trigger": {
+    "type": "latest_article_changed_with_claim_and_conclusion_gaps",
+    "details": "최신 공개 글이 2026-08-06에 갱신됐고, RAG의 수명주기와 LLM Wiki의 속도·정확도·비용을 근거 수준보다 강하게 설명했으며 마지막 절이 독자용 결론이 아니라 후속 비교 목록으로 끝났다."
+  },
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/operations/editorial-style.md",
+    "content/operations/research-publishing-rules.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/sources/llm-wiki-from-scratch-2026-08-03.md",
+    "wiki/sources/doctology-llm-wiki-runtime-2026-08-06.md",
+    "wiki/concepts/llm-compiled-wiki.md",
+    "wiki/playbooks/llm-wiki-implementation.md",
+    "research/llm-wiki-from-scratch_20260803-221616/README.md",
+    "research/llm-wiki-from-scratch_20260803-221616/state.json",
+    "research/llm-wiki-from-scratch_20260803-221616/outputs/evidence_audit.json",
+    "https://github.com/tteggu87/DocTology",
+    "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
+  ],
+  "evidence_use": {
+    "reflected": [
+      "LLM Wiki를 원문으로 돌아갈 경로를 유지하며 검토된 종합을 다음 작업에 넘기는 지식 작업 공간으로 정의",
+      "RAG가 답변과 로그를 저장할 수 없다는 과도한 대비를 제거하고 질문 시점의 근거 공급과 지속 지식 유지의 책임 차이로 재구성",
+      "속도·정확도·비용 개선을 조건부 가설로 낮추고 동일 자료·질문·모델·예산 비교 필요성을 명시",
+      "Raw Source를 절대적 Ground Truth가 아니라 주장 확인을 위한 출처와 revision 기준으로 조정",
+      "DocTology에서 Wiki·원문·구조화 claim·graph·receipt의 권위와 책임을 분리",
+      "마지막 절을 반복 질문 하나에서 재사용 가치와 유지 비용을 비교하는 독자 판단으로 재작성"
+    ],
+    "excluded": [
+      {
+        "material": "DocTology 설치·bootstrap·ingest 실행 성공 주장",
+        "reason": "공식 문서와 계약은 확인했지만 이번 검토에서 별도 smoke test를 수행하지 않았다."
+      },
+      {
+        "material": "source·candidate·canonical·receipt 네 객체의 전체 구현 설계",
+        "reason": "후속 구현 글의 범위이며 현재 원형·구현 지형 글에 넣으면 중심 논지가 넓어진다."
+      },
+      {
+        "material": "공개 구현의 성능·비용·보안 우열",
+        "reason": "같은 corpus·질문·모델·예산에서 실행한 비교가 없다."
+      }
+    ]
+  },
+  "central_question": "LLM Wiki는 무엇을 오래 남기는 구조이며, RAG와 어떤 책임을 나누고 어떤 조건에서 도입해야 하는가?",
+  "final_claim": "LLM Wiki는 RAG의 대체 검색기가 아니라 검토된 종합과 판단 이력을 유지하는 계층이며, 반복 질문 하나에서 재사용 가치가 검토·유지 비용보다 큰지 확인한 뒤 확장해야 한다.",
+  "edits": [
+    "도입을 과장된 검색 비판에서 반복 조사 문제와 구체적 가상 사례로 바꿨다.",
+    "핵심 요약에서 LLM과 RAG를 처음 등장할 때 풀어 쓰고 두 개념의 역할을 독립적으로 설명했다.",
+    "RAG·LLM Wiki의 지식 수명 차이를 절대적 대조가 아닌 책임 경계로 수정했다.",
+    "속도·정확도·비용과 구현체 설명의 광고성·미검증 단정을 제거했다.",
+    "Raw Sources·Wiki·Schema, Ingest·Query·Lint와 DocTology의 현재 권위 경계를 보강했다.",
+    "후속 분석 목록을 배경·방법·근거·의미·한계를 포함한 독립형 결론으로 교체했다."
+  ],
+  "concept_dependency_check": {
+    "llm_defined_before_comparison": "pass",
+    "rag_expanded_before_comparison": "pass",
+    "llm_wiki_purpose_and_output_explained": "pass",
+    "comparison_after_both_definitions": "pass",
+    "implementation_terms_explained_in_context": "pass",
+    "conclusion_redefines_core_concepts": "pass"
+  },
+  "humanize_korean": {
+    "genre": "report",
+    "strength": "conservative",
+    "application": "manual conservative pass using repository and humanize-korean rules",
+    "full_article_change_rate_percent": 44.18,
+    "manual_overedit_review": "pass",
+    "rollback_threshold_exceeded": false,
+    "voice_preserved": true,
+    "claim_regression": "none",
+    "protected": [
+      "title and publication number",
+      "date",
+      "source URLs",
+      "implementation names",
+      "image paths and labels",
+      "Raw·Wiki·Schema and Ingest·Query·Lint structure"
+    ]
+  },
+  "conclusion_independent_reading": {
+    "topic": "pass",
+    "core_concept": "pass",
+    "problem": "pass",
+    "proposal": "pass",
+    "operation": "pass",
+    "rationale": "pass",
+    "meaning_and_limits": "pass",
+    "next_action": "pass"
+  },
+  "image_impact": "reuse",
+  "image_reason": "글의 중심 구조, 네 이미지의 담당 절, 구현 분류와 Raw·Wiki·Schema 및 Ingest·Query·Lint 레이블은 유지됐다. 문체·주장 강도·결론만 교정했으므로 기존 PNG 네 종을 재검사해 재사용한다.",
+  "verification": {
+    "status": "pass",
+    "plugins": 45,
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
+    "build": "35 inputs, 379 outputs",
+    "post_check": "pass",
+    "built_post_check": "pass",
+    "route_check": "pass",
+    "built_route_check": "pass",
+    "images": "4 referenced PNG files verified at 1659x948"
+  },
+  "remaining_uncertainty": [
+    "LLM Wiki라는 단일 산업 표준이나 상호운용 규격은 확인되지 않았다.",
+    "공개 구현을 같은 환경에서 설치해 속도·정확도·비용·보안을 비교하지 않았다.",
+    "DocTology 공식 문서의 현재 인터페이스를 읽었지만 별도 설치 smoke test는 수행하지 않았다.",
+    "llm-wiki-from-scratch 연구의 반증 검토는 독립 reviewer가 없는 passed_degraded 상태다."
+  ]
+}
