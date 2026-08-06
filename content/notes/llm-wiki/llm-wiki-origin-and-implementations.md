@@ -189,9 +189,7 @@ Lint는 오탈자보다 페이지와 링크 구조의 문제를 찾는 작업입
 
 [DocTology](https://github.com/tteggu87/DocTology)는 `AGENTS.md`를 최우선 작업 계약으로 두고, 원문과 사람이 읽는 Wiki, 선택적인 구조화 지식·그래프·검토 화면을 서로 다른 표면으로 관리합니다. 사람이 읽고 추론하는 주 표면은 Wiki이지만, 원문 사실과 구조화된 claim·evidence까지 Wiki 한곳을 유일한 기준으로 삼지는 않습니다.
 
-현재 공개 계약에서는 단순 Source 등록과 LLM을 이용한 의미 통합을 다른 작업으로 구분합니다. 다만 저장소 전체의 reference runtime과 bootstrap으로 만든 독립 workspace가 같은 명령을 제공하는 것은 아닙니다. 저장소 루트에는 `llm_full_ingest.py`와 `answer-receipt`가 있지만, 현재 bootstrap 생성물의 `llm_wiki.py`는 `ingest`·`reindex`·`lint`·`status`·`log` 중심의 최소 CLI를 제공합니다. 두 실행 표면을 섞어 설명하면 독자가 복사한 명령이 실패할 수 있습니다.
-
-Answer receipt도 질문과 사용한 자료 경로를 남기는 추적 자료이지, 답을 자동 검증하거나 지식을 승인하는 도구는 아닙니다. Graph와 Workbench는 탐색과 검토를 돕는 선택적 파생 표면입니다. 2026년 8월 6일의 제한된 bootstrap·registration 스모크는 두 profile의 생성과 구조 검사를 확인했을 뿐, 의미 통합 품질이나 답변 성능까지 검증하지 않았습니다.
+현재 공개 계약에서는 단순 Source 등록과 LLM을 이용한 의미 통합을 다른 작업으로 구분합니다. Answer receipt도 질문과 사용한 자료 경로를 남기는 추적 자료이지, 답을 자동 검증하거나 지식을 승인하는 도구는 아닙니다. Graph와 Workbench는 탐색과 검토를 돕는 선택적 파생 표면입니다.
 
 이 구현들은 같은 이름을 사용하지만 해결하려는 운영 문제가 다릅니다. 직접 설치해 같은 자료와 질문으로 비교하지 않았다면 우열을 단정할 수 없습니다.
 
@@ -244,4 +242,3 @@ LLM Wiki는 LLM이 원문을 읽어 만든 개념·비교·결정·반례를 연
 - [green-dalii/obsidian-llm-wiki](https://github.com/green-dalii/obsidian-llm-wiki)
 - [atomicstrata/llm-wiki-compiler](https://github.com/atomicstrata/llm-wiki-compiler)
 - [tteggu87/DocTology](https://github.com/tteggu87/DocTology)
-- [DocTology llm-wiki-bootstrap 계약](https://github.com/tteggu87/DocTology/tree/main/.agents/skills/llm-wiki-bootstrap)
