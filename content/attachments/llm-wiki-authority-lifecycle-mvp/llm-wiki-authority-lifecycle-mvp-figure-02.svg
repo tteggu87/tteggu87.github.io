@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc" preserveAspectRatio="xMidYMid meet">
+  <title id="title">검토된 canonical만 답변에 사용하고 rejected candidate는 excluded로 기록하는 receipt 흐름</title>
+  <desc id="desc">질문에서 검토된 canonical revision과 source locator는 answer와 receipt의 selected 행으로 연결된다. rejected candidate는 answer로 연결되지 않고 receipt의 excluded 행으로만 연결된다. receipt에는 selected, excluded, missing, answer hash가 있으며 receipt는 승격이 아니다.</desc>
+  <defs>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L12,6 L0,12 z" fill="#168A88"/></marker>
+    <marker id="arrowOrange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L12,6 L0,12 z" fill="#D97732"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#17324D" flood-opacity="0.14"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F6F1E8"/>
+  <text x="80" y="86" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="42" font-weight="700" fill="#17324D">질문 실행과 receipt 기록은 같은 흐름이지만 같은 권위가 아니다</text>
+  <text x="82" y="132" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="23" fill="#526678">reviewed canonical만 answer에 들어가고, rejected candidate는 excluded로만 남는다</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="315" width="220" height="150" rx="24" fill="#FFFFFF" stroke="#17324D" stroke-width="4"/>
+    <text x="180" y="373" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="30" font-weight="700" fill="#17324D">question</text>
+    <text x="180" y="414" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="22" fill="#526678">무엇이 승격 조건인가?</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="390" y="190" width="360" height="190" rx="24" fill="#E4F4F2" stroke="#168A88" stroke-width="5"/>
+    <text x="570" y="252" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="700" fill="#0E6968">reviewed canonical revision</text>
+    <rect x="455" y="292" width="230" height="54" rx="14" fill="#FFFFFF" stroke="#168A88" stroke-width="3"/>
+    <text x="570" y="327" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="23" font-weight="700" fill="#17324D">source locator</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="390" y="500" width="360" height="150" rx="24" fill="#FFF0E1" stroke="#D97732" stroke-width="5"/>
+    <text x="570" y="565" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="30" font-weight="700" fill="#A94E12">rejected candidate</text>
+    <text x="570" y="609" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="22" fill="#7C4A2D">answer 경로 없음</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="850" y="190" width="170" height="150" rx="24" fill="#E4F4F2" stroke="#168A88" stroke-width="5"/>
+    <text x="935" y="275" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="34" font-weight="700" fill="#0E6968">answer</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1110" y="160" width="390" height="520" rx="28" fill="#EEEAF8" stroke="#6B5FA8" stroke-width="5"/>
+    <text x="1305" y="220" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="34" font-weight="700" fill="#51468A">receipt</text>
+    <rect x="1160" y="255" width="290" height="70" rx="15" fill="#E4F4F2" stroke="#168A88" stroke-width="3"/>
+    <text x="1305" y="300" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700" fill="#0E6968">selected</text>
+    <rect x="1160" y="350" width="290" height="70" rx="15" fill="#FFF0E1" stroke="#D97732" stroke-width="3"/>
+    <text x="1305" y="395" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700" fill="#A94E12">excluded</text>
+    <rect x="1160" y="445" width="290" height="70" rx="15" fill="#FFFFFF" stroke="#6B5FA8" stroke-width="3"/>
+    <text x="1305" y="490" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700" fill="#51468A">missing</text>
+    <rect x="1160" y="540" width="290" height="70" rx="15" fill="#FFFFFF" stroke="#6B5FA8" stroke-width="3"/>
+    <text x="1305" y="585" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700" fill="#51468A">answer hash</text>
+  </g>
+
+  <path d="M290 390 C330 390 342 285 390 285" fill="none" stroke="#17324D" stroke-width="5"/>
+  <path d="M685 319 C760 319 785 265 850 265" fill="none" stroke="#168A88" stroke-width="7" marker-end="url(#arrowGreen)"/>
+  
+  <path d="M685 338 C870 338 955 290 1160 290" fill="none" stroke="#168A88" stroke-width="7" marker-end="url(#arrowGreen)"/>
+  <path d="M750 575 C880 575 940 385 1160 385" fill="none" stroke="#D97732" stroke-width="7" marker-end="url(#arrowOrange)"/>
+  <text x="904" y="536" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="700" fill="#A94E12">제외 이유만 기록</text>
+
+  <rect x="230" y="745" width="1140" height="90" rx="24" fill="#17324D"/>
+  <text x="800" y="802" text-anchor="middle" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">receipt는 승격이 아니다</text>
+</svg>
