@@ -1,0 +1,27 @@
+{
+  "slug": "opencrab-foundry-ontology-reinterpretation",
+  "updated_at": "2026-08-27T00:00:00+09:00",
+  "gates": {
+    "evidence": {
+      "status": "passed",
+      "inputs": [
+        "Palantir official Ontology and Action documentation",
+        "OpenCrab public repository commit d34352cec9d99c755c1e891f811911461a460280",
+        "existing series posts 8 and 9"
+      ],
+      "notes": "Current facts are separated from interpretation; direct creator lineage is not asserted."
+    },
+    "article_and_images": {
+      "status": "in_progress",
+      "article": "content/notes/온톨로지/opencrab-foundry-ontology-reinterpretation.md",
+      "image_impact": "full_regenerate",
+      "next": "Generate and visually review four report images, then run editorial and post validation."
+    },
+    "release": {
+      "status": "pending",
+      "branch": "agent/publish-opencrab-foundry-20260827",
+      "base": "origin/main",
+      "next": "Run full release gate, commit exact paths, push PR, merge and verify exact Pages deployment."
+    }
+  }
+}
