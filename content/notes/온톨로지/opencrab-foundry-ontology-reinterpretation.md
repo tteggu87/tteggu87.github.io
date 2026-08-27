@@ -20,25 +20,44 @@ tags:
 > [!summary] 먼저 결론
 > OpenCrab은 팔란티어 Foundry를 작게 복제한 프로젝트가 아닙니다. Foundry가 조직의 실제 객체와 업무 변경을 온톨로지 안에서 운영한다면, OpenCrab은 문서와 로그에서 **근거·주장·결과·조절점·정책**을 뽑아 Agent가 읽을 수 있는 그래프로 만들고, 이를 Pack과 MCP로 옮기는 쪽에 무게를 둡니다. 둘은 같은 문제의식을 공유하지만 강한 지점이 다릅니다.
 
-## ‘작은 Foundry’라고 부르면 중요한 차이를 놓칩니다
+## OpenCrab은 왜 만들어졌을까요
 
-팔란티어는 Ontology를 데이터 위에 붙이는 분류표로만 설명하지 않습니다. 공식 문서에서 Ontology는 현실의 개체와 사건을 `Object`, 속성을 `Property`, 개체 사이의 관계를 `Link`로 표현합니다. 여기에 조직의 변경과 의사결정을 담당하는 `Action type`과 `Function`, 접근 제어와 거버넌스를 결합합니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [Core concepts](https://www.palantir.com/docs/foundry/ontology/core-concepts/))
+OpenCrab 제작자의 출발점은 Palantir AIP였습니다. 공개 Threads 글에서 그는 2025년 여름 AIP를 업무에 쓰면서 온톨로지를 업무에 도입하는 방식이 강력하다고 느꼈지만, 실제로 다루는 과정은 쉽지 않았다고 적었습니다. 그때부터 혼자 쓸 온톨로지 도구를 만들기 시작했고, 초기의 `Langent`를 거쳐 OpenCrab으로 발전시켰다고 설명합니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
 
-이 구조의 목표는 지식을 잘 설명하는 데서 끝나지 않습니다. 현업 사용자가 같은 객체를 보고, 같은 규칙으로 변경을 요청하고, 같은 권한 검사를 거쳐 실제 업무 상태를 바꾸도록 만드는 데 있습니다. 예를 들어 BI 화면의 `설비 A`, 정비 앱의 `Equipment-1024`, Agent가 조회한 센서 레코드가 같은 현실 설비를 가리킨다면, 이들을 공통 운영 객체와 관계로 묶는 것이 중요합니다. Foundry Ontology의 힘은 그래프 모양 자체보다 **여러 데이터·애플리케이션·Agent가 같은 업무 객체를 기준으로 읽고 행동하게 만드는 운영 정본**에 있습니다.
+이 배경을 먼저 알고 나면 OpenCrab을 보는 질문도 달라집니다. “Foundry를 작게 복제했나?”보다 **AIP를 쓰며 경험한 운영 온톨로지의 장점을 개인과 작은 팀이 다룰 수 있는 부품으로 어떻게 다시 풀었나?**가 더 좋은 질문입니다.
+
+## 잠깐, Foundry와 AIP는 같은 것일까요
+
+같은 것은 아닙니다. 아주 거칠게 나누면 Foundry는 기업의 데이터와 업무를 운영하는 플랫폼이고, Ontology는 그 안에서 현실의 업무 객체와 관계·행동을 공통 의미로 묶는 계층입니다. AIP는 LLM과 Agent가 그 Ontology와 데이터를 활용하도록 연결하는 AI 계층에 가깝습니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [AIP features](https://www.palantir.com/docs/foundry/aip/aip-features/))
 
 ```text
-현실의 설비와 작업
-→ Object · Property · Link
-→ Action · Function
-→ Security · Governance
-→ 운영 애플리케이션과 Agent
+Palantir Foundry
+데이터 · 업무 플랫폼
+        ↓
+Foundry Ontology
+Object · Property · Link · Action · Function · Security
+        ↓
+Palantir AIP
+LLM · Agent가 Ontology를 읽고 분석하고 행동
 ```
 
-OpenCrab의 출발점은 다릅니다. 그리고 이 비교는 구조가 우연히 닮았다는 추측만은 아닙니다. 제작자는 공개 Threads 글에서 2025년 여름 Palantir AIP를 업무에 사용하면서 온톨로지 도입이 강력하다고 느꼈지만 AIP를 다루는 과정은 고생스러웠고, 그때부터 개인 온톨로지 도구를 만들기 시작했다고 직접 설명했습니다. 초기에는 LangGraph와 Agent를 조합한 `Langent`였고, 이후 온톨로지의 규율과 법칙이 더 중요하다고 판단해 OpenCrab으로 발전시켰다고 밝힙니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
+예를 들어 BI 화면의 `설비 A`, 정비 앱의 `Equipment-1024`, Agent가 조회한 센서 기록이 모두 같은 현실 설비를 가리킨다면, 조직은 이 셋을 같은 업무 객체로 다뤄야 합니다. Foundry Ontology의 힘은 그래프를 예쁘게 그리는 데 있지 않습니다. **여러 데이터·애플리케이션·Agent가 같은 업무 객체와 같은 변경 규칙을 기준으로 움직이게 만드는 운영 정본**에 있습니다.
 
-다만 **AIP에서 영감을 받았다는 사실과 Foundry의 구조를 그대로 복제했다는 주장은 구분해야 합니다.** 공개 코드에서 Foundry의 Object·Link·Action 구조를 1:1로 옮긴 흔적보다는, 운영 온톨로지에서 체감한 문제를 9-Space, Evidence·Claim, Outcome·Lever·Policy, Pack, MCP라는 다른 부품으로 다시 나눈 모습이 더 뚜렷합니다.
+그래서 제작자가 “AIP를 쓰면서 온톨로지가 강력하다고 느꼈다”고 말한 것도 자연스럽습니다. AIP에서 Agent가 단순히 문서를 검색하는 것을 넘어 업무 객체·관계·행동을 다룰 수 있는 배경에 Ontology가 있기 때문입니다.
 
-공개 저장소는 자신을 LocalCrab 온톨로지 공장과 OpenCrab 호스팅 생태계를 연결하는 통합 저장소로 설명합니다. 로컬 엔진은 문서·크롤링 자료·OCR 결과를 모으고, Evidence를 색인하고, 그래프를 검증해 OpenCrab Pack을 만드는 역할을 맡습니다. ([OpenCrab README](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280))
+## 그렇다면 OpenCrab은 무엇을 가져왔을까요
+
+AIP에서 영감을 받았다는 사실과 Foundry의 구조를 그대로 복제했다는 주장은 분리해야 합니다. 공개 코드에서는 Object·Link·Action을 1:1로 옮기기보다, 운영 온톨로지에서 체감한 문제를 OpenCrab식 부품으로 다시 나눈 흔적이 더 뚜렷합니다.
+
+공개 구현을 따라가다 보면 세 가지 문제가 반복해서 눈에 들어옵니다.
+
+문서를 검색하는 것만으로는 부족합니다. OpenCrab은 원문 관찰인 Evidence와 모델이 해석한 Claim을 나누고, Concept·Outcome까지 연결합니다. OpenCrab의 온톨로지형 Evidence 데이터에서도 Claim에 `evidence_refs`, confidence, claim type 같은 정보를 붙여 근거와 해석을 구분하는 패턴을 확인할 수 있습니다.
+
+지식은 설명에서 끝나지 않고 행동과 이어져야 합니다. 그래서 `Outcome`과 `Lever`를 따로 두고, 무엇이 중요한 결과인지와 사람이 무엇을 조절할 수 있는지를 구분합니다.
+
+그리고 Agent가 움직이기 시작하면 경계가 필요합니다. `Subject`, `Resource`, `Policy`와 ReBAC·Approval 같은 구성요소는 누가 무엇을 보고 바꾸고 승인할 수 있는지를 표현하려는 장치입니다.
+
+OpenCrab 공개 저장소는 이 구조를 LocalCrab 온톨로지 공장과 호스팅 생태계를 잇는 형태로 설명합니다. 로컬 엔진은 문서·크롤링 자료·OCR 결과를 모으고, Evidence를 색인하고, 그래프를 검증해 OpenCrab Pack을 만드는 역할을 맡습니다. ([OpenCrab README](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280))
 
 ```text
 문서와 로그
@@ -49,10 +68,10 @@ OpenCrab의 출발점은 다릅니다. 그리고 이 비교는 구조가 우연�
 → MCP로 Agent에 제공
 ```
 
-둘 다 “데이터를 사람이 의사결정할 수 있는 의미 구조로 바꾼다”는 방향을 봅니다. 그러나 Foundry는 **운영 객체와 변경의 일관성**에 강하고, OpenCrab은 **비정형 자료를 근거가 있는 지식 제품으로 가공하고 옮기는 과정**에 더 관심을 둡니다.
+Foundry가 **운영 객체와 변경을 하나의 플랫폼에서 일관되게 관리하는 데 강하다면**, OpenCrab은 **비정형 자료를 근거가 있는 지식으로 가공해 Pack으로 옮기고 Agent에 연결하는 쪽**에 더 무게가 실려 있습니다.
 
 > [!important] 비교할 때 지켜야 할 경계
-> Foundry는 전사 운영 플랫폼이고 OpenCrab은 공개 코드 기준으로 알파 단계의 로컬 온톨로지 공장입니다. OpenCrab을 Foundry의 대체품으로 평가하기보다, Foundry가 제기한 운영 온톨로지 문제를 로컬 Agent 환경에서 어떻게 다시 나눴는지 보는 편이 정확합니다.
+> Foundry는 전사 운영 플랫폼이고 OpenCrab은 공개 코드 기준으로 알파 단계의 로컬 온톨로지 공장입니다. OpenCrab을 Foundry의 대체품으로 보기보다, AIP에서 경험한 운영 온톨로지의 문제를 로컬 Agent 환경에서 어떤 최소 부품으로 다시 풀었는지 보는 편이 정확합니다.
 
 ## 같은 설비 문제를 두 시스템은 어떻게 바라볼까요
 
@@ -106,7 +125,7 @@ OpenCrab의 9-Space로 같은 장면을 읽으면 다음처럼 바뀝니다.
 
 ![설비 점검 주기 변경 사례를 Subject부터 Policy까지 9-Space 의미 역할로 풀어낸 그래프](../../attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-01.png)
 
-이 구조가 주는 변화는 분명합니다. 문서에서 `베어링`, `진동`, `점검`이라는 단어를 찾는 데서 멈추지 않고 다음 질문을 한 그래프 안에서 이어 볼 수 있습니다. 특히 `Evidence → Claim`을 별도 관계로 둔 것은 검색된 문장과 모델이 만든 해석을 같은 사실로 취급하지 않게 합니다. 목표는 단순히 “관련 문서를 찾았다”가 아니라 **이 주장을 무엇이 지지하고 무엇이 반박하는지 다시 추적할 수 있는 그래프**를 만드는 것입니다.
+이 구조가 주는 변화는 단순합니다. `베어링`, `진동`, `점검`이라는 단어를 찾는 데서 멈추지 않고, “이 판단은 어디서 나왔지?”를 다시 따라갈 수 있게 합니다. `Evidence → Claim`을 따로 둔 이유도 여기에 있습니다. 검색된 문장과 모델이 붙인 해석을 같은 사실로 섞지 않고, **어떤 근거가 어떤 주장을 지지하거나 반박하는지** 남겨 두려는 것입니다.
 
 - 어떤 Evidence가 고장 위험 Claim을 지지합니까?
 - 위험과 비가동 시간에 영향을 주는 Lever는 무엇입니까?
@@ -161,7 +180,7 @@ Outcome · Lever · Policy
 - Claim이 어떤 Concept나 Outcome에 관한 주장인지 직접 잇는 관계가 부족합니다.
 - 의료의 `CONTRAINDICATED_WITH`, 건설의 `PROHIBITED_BY`처럼 도메인 고유 관계가 `related_to`나 `restricts`로 압축될 수 있습니다.
 
-따라서 9-Space를 도메인 언어의 대체재로 사용하면 정보가 줄어듭니다. **9-Space는 설비·의료·법률의 도메인 온톨로지를 대신하는 vocabulary라기보다, 서로 다른 도메인 그래프를 Agent가 공통 방식으로 읽게 만드는 meta-schema 또는 역할 문법에 가깝습니다.** 더 나은 방법은 두 층을 함께 유지하는 것입니다.
+그래서 9-Space를 현업 용어의 대체재로 쓰면 오히려 정보가 줄어듭니다. 설비·의료·법률마다 필요한 정확한 타입과 관계는 따로 남겨 두고, 9-Space는 그 위에서 Agent가 공통 질문을 던지도록 돕는 **메타 스키마, 또는 역할 문법**으로 쓰는 편이 자연스럽습니다.
 
 ```text
 도메인 그래프
