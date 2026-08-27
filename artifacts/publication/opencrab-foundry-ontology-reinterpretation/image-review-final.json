@@ -1,0 +1,44 @@
+{
+  "slug": "opencrab-foundry-ontology-reinterpretation",
+  "status": "passed",
+  "final_assets": [
+    {
+      "file": "content/attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-infographic.png",
+      "dimensions": "1600x900",
+      "review": "passed",
+      "checks": ["labels", "spelling", "column flows", "arrow directions", "720px readability"]
+    },
+    {
+      "file": "content/attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-01.png",
+      "dimensions": "1600x900",
+      "review": "passed",
+      "checks": ["nine Spaces", "eight exact directed edges", "no extra edges", "720px readability"]
+    },
+    {
+      "file": "content/attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-02.png",
+      "dimensions": "1600x900",
+      "review": "passed",
+      "checks": ["81/11 count", "eleven exact pairs", "benefits and costs", "720px readability"]
+    },
+    {
+      "file": "content/attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-03.png",
+      "dimensions": "1600x900",
+      "review": "passed",
+      "checks": [
+        "eight-stage pipeline",
+        "gate badges",
+        "Pack and MCP details",
+        "four cautions",
+        "720px readability"
+      ]
+    }
+  ],
+  "source_assets": [
+    "artifacts/publication/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-infographic.svg",
+    "artifacts/publication/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-01.svg",
+    "artifacts/publication/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-02.svg",
+    "artifacts/publication/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-03.svg"
+  ],
+  "renderer": "macOS sips",
+  "history": "Two generative raster sets failed strict pixel review due to arrow ambiguity, hallucinated text, noise or mobile readability. Final publication assets were regenerated from editable deterministic SVG sources and passed strict pixel review."
+}

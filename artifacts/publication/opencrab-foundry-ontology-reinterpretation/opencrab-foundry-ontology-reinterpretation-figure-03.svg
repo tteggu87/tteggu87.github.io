@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+
+    <defs>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#17324D" flood-opacity="0.12"/>
+      </filter>
+      <marker id="arrowNavy" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L12,6 L0,12 z" fill="#17324D"/>
+      </marker>
+      <marker id="arrowTeal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L12,6 L0,12 z" fill="#2F7F7A"/>
+      </marker>
+      <style>
+        text { font-family: Apple SD Gothic Neo, Pretendard, Noto Sans KR, sans-serif; fill: #263238; }
+        .title { font-size: 46px; font-weight: 800; letter-spacing: -1px; }
+        .subtitle { font-size: 26px; font-weight: 650; }
+        .heading { font-size: 34px; font-weight: 800; }
+        .cardTitle { font-size: 29px; font-weight: 800; }
+        .body { font-size: 25px; font-weight: 600; }
+        .small { font-size: 21px; font-weight: 600; }
+        .tiny { font-size: 18px; font-weight: 600; }
+      </style>
+    </defs>
+
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<text x="800" y="70" text-anchor="middle" dominant-baseline="middle" class="title" fill="#17324D">OpenCrab Pack · MCP 수명주기</text>
+<text x="800" y="115" text-anchor="middle" dominant-baseline="middle" class="subtitle" fill="#2F7F7A">지식을 만들고 검증하고 Agent에 전달하는 공개 구조</text>
+<rect x="90" y="155" width="295" height="88" rx="22" fill="#E8EEF3" stroke="#17324D" stroke-width="2" filter="url(#shadow)"/>
+<text x="237" y="199" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#17324D">Mission</text>
+<line x1="385" y1="199" x2="455" y2="199" stroke="#17324D" stroke-width="4" stroke-linecap="round"/><polygon points="455.0,199.0 439.0,208.3 439.0,189.7" fill="#17324D"/>
+<rect x="465" y="155" width="295" height="88" rx="22" fill="#E8EEF3" stroke="#17324D" stroke-width="2" filter="url(#shadow)"/>
+<text x="612" y="199" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#17324D">수집 · 파싱</text>
+<line x1="760" y1="199" x2="830" y2="199" stroke="#17324D" stroke-width="4" stroke-linecap="round"/><polygon points="830.0,199.0 814.0,208.3 814.0,189.7" fill="#17324D"/>
+<rect x="840" y="155" width="295" height="88" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="987" y="199" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">Evidence 색인</text>
+<line x1="1135" y1="199" x2="1205" y2="199" stroke="#17324D" stroke-width="4" stroke-linecap="round"/><polygon points="1205.0,199.0 1189.0,208.3 1189.0,189.7" fill="#17324D"/>
+<rect x="1215" y="155" width="295" height="88" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="1362" y="199" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">9-Space 그래프</text>
+<rect x="90" y="395" width="295" height="88" rx="22" fill="#F7ECD5" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="237" y="439" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#D89B32">문법 · 품질 검사</text>
+<line x1="385" y1="439" x2="455" y2="439" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round"/><polygon points="455.0,439.0 439.0,448.3 439.0,429.7" fill="#2F7F7A"/>
+<rect x="465" y="395" width="295" height="88" rx="22" fill="#F7ECD5" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="612" y="439" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#D89B32">Pack v1</text>
+<line x1="760" y1="439" x2="830" y2="439" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round"/><polygon points="830.0,439.0 814.0,448.3 814.0,429.7" fill="#2F7F7A"/>
+<rect x="840" y="395" width="295" height="88" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="987" y="439" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">MCP</text>
+<line x1="1135" y1="439" x2="1205" y2="439" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round"/><polygon points="1205.0,439.0 1189.0,448.3 1189.0,429.7" fill="#2F7F7A"/>
+<rect x="1215" y="395" width="295" height="88" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="1362" y="439" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">Agent</text>
+<path d="M1510 199 L1550 199 L1550 330 L45 330 L45 439 L90 439" fill="none" stroke="#17324D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="90.0,439.0 74.0,448.3 74.0,429.7" fill="#17324D"/>
+<rect x="115" y="354" width="245" height="34" rx="13" fill="#D89B32" stroke="none" stroke-width="2"/>
+<text x="238" y="371" text-anchor="middle" dominant-baseline="middle" class="tiny" fill="#FFFFFF">필수 게이트</text>
+<rect x="490" y="354" width="245" height="34" rx="13" fill="#D89B32" stroke="none" stroke-width="2"/>
+<text x="613" y="371" text-anchor="middle" dominant-baseline="middle" class="tiny" fill="#FFFFFF">필수 게이트</text>
+<rect x="405" y="525" width="430" height="126" rx="18" fill="#FFFFFF" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="620" y="550" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#D89B32">Pack 내용</text>
+<text x="620" y="570" text-anchor="middle" dominant-baseline="middle" class="small">manifest · nodes/edges</text><text x="620" y="600" text-anchor="middle" dominant-baseline="middle" class="small">evidence index · quality report</text><text x="620" y="630" text-anchor="middle" dominant-baseline="middle" class="small">Neo4j snapshot</text>
+<rect x="865" y="525" width="645" height="126" rx="18" fill="#FFFFFF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="1188" y="550" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">MCP 도구 영역</text>
+<text x="1188" y="570" text-anchor="middle" dominant-baseline="middle" class="small">온톨로지·검색 · Workflow·Approval</text><text x="1188" y="600" text-anchor="middle" dominant-baseline="middle" class="small">Identity·Promotion</text><text x="1188" y="630" text-anchor="middle" dominant-baseline="middle" class="small">Schema Pack · Billing · CrabHarness</text>
+<rect x="80" y="700" width="315" height="58" rx="17" fill="#F7ECD5" stroke="#D89B32" stroke-width="2"/>
+<text x="237" y="729" text-anchor="middle" dominant-baseline="middle" class="small" fill="#263238">Approval 선택적</text>
+<rect x="455" y="700" width="315" height="58" rx="17" fill="#F7ECD5" stroke="#D89B32" stroke-width="2"/>
+<text x="612" y="729" text-anchor="middle" dominant-baseline="middle" class="small" fill="#263238">Promotion 선택적</text>
+<rect x="830" y="700" width="315" height="58" rx="17" fill="#F7ECD5" stroke="#D89B32" stroke-width="2"/>
+<text x="987" y="729" text-anchor="middle" dominant-baseline="middle" class="small" fill="#263238">Pack 연합 계약 없음</text>
+<rect x="1205" y="700" width="315" height="58" rx="17" fill="#F7ECD5" stroke="#D89B32" stroke-width="2"/>
+<text x="1362" y="729" text-anchor="middle" dominant-baseline="middle" class="small" fill="#263238">QueryResult ≠ AnswerBundle</text>
+<rect x="180" y="800" width="1240" height="64" rx="18" fill="#E8EEF3" stroke="#17324D" stroke-width="2"/>
+<text x="800" y="832" text-anchor="middle" dominant-baseline="middle" class="subtitle" fill="#17324D">지식 유통은 보이지만 운영 강제와 Pack 연합은 아직 미완성</text>
+</svg>

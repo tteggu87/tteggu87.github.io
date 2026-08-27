@@ -37,10 +37,19 @@
     "creator_motivation": "not asserted because the public repository does not establish a direct implementation lineage"
   },
   "regression": {
-    "claim_strength": "pending-final-review",
-    "citations": "pending-final-review",
-    "numbers": "pending-final-review",
-    "urls": "pending-final-review"
+    "claim_strength": "passed",
+    "citations": "passed",
+    "numbers": "passed",
+    "urls": "passed",
+    "visual_review": "passed"
   },
-  "image_impact": "full_regenerate"
+  "image_impact": "full_regenerate_then_editable_vector_fallback",
+  "image_review": {
+    "lead": "passed",
+    "figure_01": "passed",
+    "figure_02": "passed",
+    "figure_03": "passed",
+    "final_dimensions": "1600x900",
+    "source": "editable SVG rendered to PNG with macOS sips"
+  }
 }

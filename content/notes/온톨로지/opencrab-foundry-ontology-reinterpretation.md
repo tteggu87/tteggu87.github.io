@@ -88,17 +88,17 @@ Security
 
 OpenCrab의 9-Space로 같은 장면을 읽으면 다음처럼 바뀝니다.
 
-| Space | 설비 사례에서 찾는 것 | 예시 |
-| --- | --- | --- |
-| Subject | 행동·소유·승인 주체 | 현장팀, 정비 책임자, Agent |
-| Resource | 읽거나 수정하거나 실행할 대상 | 설비 매뉴얼, 점검표, 센서 데이터, API |
-| Evidence | 직접 관찰하거나 인용한 근거 | 진동 측정값, 고장 로그, 보고서 문장 |
-| Concept | 설명할 개체·상태·메커니즘 | 베어링 마모, 진동 증가 |
-| Claim | Evidence에서 도출한 주장 | “진동 증가가 고장 위험을 높인다” |
-| Community | 함께 묶이는 사건·개념군 | 반복 고장 패턴 묶음 |
-| Outcome | 관리하려는 결과와 위험 | 비가동 시간, 고장 위험, 정비 비용 |
-| Lever | 사람이 조절할 수 있는 값 | 점검 주기, 교체 임계값 |
-| Policy | 권한·금지·승인 조건 | 주기 변경은 책임자 승인 필요 |
+| Space     | 설비 사례에서 찾는 것         | 예시                                  |
+| --------- | ----------------------------- | ------------------------------------- |
+| Subject   | 행동·소유·승인 주체           | 현장팀, 정비 책임자, Agent            |
+| Resource  | 읽거나 수정하거나 실행할 대상 | 설비 매뉴얼, 점검표, 센서 데이터, API |
+| Evidence  | 직접 관찰하거나 인용한 근거   | 진동 측정값, 고장 로그, 보고서 문장   |
+| Concept   | 설명할 개체·상태·메커니즘     | 베어링 마모, 진동 증가                |
+| Claim     | Evidence에서 도출한 주장      | “진동 증가가 고장 위험을 높인다”      |
+| Community | 함께 묶이는 사건·개념군       | 반복 고장 패턴 묶음                   |
+| Outcome   | 관리하려는 결과와 위험        | 비가동 시간, 고장 위험, 정비 비용     |
+| Lever     | 사람이 조절할 수 있는 값      | 점검 주기, 교체 임계값                |
+| Policy    | 권한·금지·승인 조건           | 주기 변경은 책임자 승인 필요          |
 
 ![설비 점검 주기 변경 사례를 Subject부터 Policy까지 9-Space 의미 역할로 풀어낸 그래프](../../attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-01.png)
 
@@ -132,19 +132,19 @@ Outcome · Lever · Policy
 
 현재 공개 문법은 9개 Space 사이의 모든 조합을 허용하지 않습니다. 가능한 81개 방향 조합 중 11개만 열어 두고, 그 안에서 38개의 관계 이름을 사용합니다. ([`manifest.py`](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/opencrab/grammar/manifest.py))
 
-| From → To | 허용 관계의 예 |
-| --- | --- |
-| Subject → Resource | owns, manages, can_view, can_edit, can_execute, can_approve |
-| Resource → Evidence | contains, derived_from, logged_as |
-| Evidence → Concept | mentions, describes, exemplifies |
-| Evidence → Claim | supports, contradicts, timestamps |
-| Concept → Concept | related_to, subclass_of, part_of, influences, depends_on |
-| Concept → Outcome | contributes_to, constrains, predicts, degrades |
-| Lever → Outcome | raises, lowers, stabilizes, optimizes |
-| Lever → Concept | affects |
-| Community → Concept | clusters, summarizes |
-| Policy → Resource | protects, classifies, restricts |
-| Policy → Subject | permits, denies, requires_approval |
+| From → To           | 허용 관계의 예                                              |
+| ------------------- | ----------------------------------------------------------- |
+| Subject → Resource  | owns, manages, can_view, can_edit, can_execute, can_approve |
+| Resource → Evidence | contains, derived_from, logged_as                           |
+| Evidence → Concept  | mentions, describes, exemplifies                            |
+| Evidence → Claim    | supports, contradicts, timestamps                           |
+| Concept → Concept   | related_to, subclass_of, part_of, influences, depends_on    |
+| Concept → Outcome   | contributes_to, constrains, predicts, degrades              |
+| Lever → Outcome     | raises, lowers, stabilizes, optimizes                       |
+| Lever → Concept     | affects                                                     |
+| Community → Concept | clusters, summarizes                                        |
+| Policy → Resource   | protects, classifies, restricts                             |
+| Policy → Subject    | permits, denies, requires_approval                          |
 
 ![9-Space에서 허용된 11개 방향과 닫힌 관계 문법이 제공하는 안전성과 표현 비용을 함께 보여주는 지도](../../attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-02.png)
 
@@ -210,10 +210,10 @@ OpenCrab 공개 코드에는 YAML Action schema, workflow 상태, 승인 큐, �
 
 OpenCrab에서 `Pack`은 문맥에 따라 다른 뜻으로 사용됩니다.
 
-| 이름 | 역할 |
-| --- | --- |
-| Schema Pack | 특정 도메인의 Node type schema를 설치하는 어휘 확장 |
-| PromotionPackage | 한 Mission이 수집·검증한 Node와 Edge 후보 묶음 |
+| 이름             | 역할                                                       |
+| ---------------- | ---------------------------------------------------------- |
+| Schema Pack      | 특정 도메인의 Node type schema를 설치하는 어휘 확장        |
+| PromotionPackage | 한 Mission이 수집·검증한 Node와 Edge 후보 묶음             |
 | OpenCrab Pack v1 | Graph·Evidence·품질 보고서·Neo4j 검증 결과를 담은 배포 ZIP |
 
 이 가운데 OpenCrab의 제품 철학을 가장 잘 보여 주는 것은 Pack v1입니다. 공개 명세는 다음 파일을 하나의 배포 계약으로 묶습니다. ([OpenCrab Pack v1](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/docs/opencrab-pack-v1.md))
@@ -276,18 +276,18 @@ ontology_query · ontology_add_node · ontology_impact처럼
 
 ### 먼저 알아야 할 핵심 도구 10개
 
-| 도구 | 하는 일 |
-| --- | --- |
-| `ontology_manifest` | 현재 9-Space와 허용 관계를 조회 |
-| `ontology_ingest` | 원문을 Vector·Document 저장소에 넣음 |
-| `ontology_extract` | LLM으로 원문에서 Node·Edge 후보를 추출 |
-| `ontology_add_node` | 문법 검사를 거쳐 Node를 기록 |
-| `ontology_add_edge` | Space 방향과 Relation을 검사해 Edge를 기록 |
-| `ontology_query` | Vector·BM25·Graph를 결합해 검색 |
-| `query_bm25` | 정확한 용어 중심의 키워드 검색 |
-| `ontology_rebac_check` | Subject의 Resource 권한을 검사 |
-| `ontology_impact` | Node 변경의 I1~I7 영향 범위를 탐색 |
-| `ontology_lever_simulate` | Lever와 연결된 Outcome 변화 방향을 탐색 |
+| 도구                      | 하는 일                                    |
+| ------------------------- | ------------------------------------------ |
+| `ontology_manifest`       | 현재 9-Space와 허용 관계를 조회            |
+| `ontology_ingest`         | 원문을 Vector·Document 저장소에 넣음       |
+| `ontology_extract`        | LLM으로 원문에서 Node·Edge 후보를 추출     |
+| `ontology_add_node`       | 문법 검사를 거쳐 Node를 기록               |
+| `ontology_add_edge`       | Space 방향과 Relation을 검사해 Edge를 기록 |
+| `ontology_query`          | Vector·BM25·Graph를 결합해 검색            |
+| `query_bm25`              | 정확한 용어 중심의 키워드 검색             |
+| `ontology_rebac_check`    | Subject의 Resource 권한을 검사             |
+| `ontology_impact`         | Node 변경의 I1~I7 영향 범위를 탐색         |
+| `ontology_lever_simulate` | Lever와 연결된 Outcome 변화 방향을 탐색    |
 
 전체 30개 도구는 다음 영역으로 나뉩니다.
 
@@ -309,16 +309,16 @@ MCP의 가치는 모델을 바꿔도 같은 도구 계약을 유지할 수 있�
 
 ## Foundry와 OpenCrab을 같은 기준으로 비교하면
 
-| 비교 축 | 팔란티어 Foundry | OpenCrab 공개 구조 |
-| --- | --- | --- |
-| 시작점 | 조직의 운영 데이터와 실제 업무 객체 | 문서·로그·크롤링 자료와 Evidence |
-| 의미 모델 | Object·Property·Link | 9-Space Node·Edge와 도메인 schema |
-| 행동 | Action type·Function으로 운영 변경 | Lever·Action schema·Workflow·MCP 도구 |
-| 권한 | Ontology resource와 데이터에 통합된 보안 | ReBAC·Policy·Approval의 경량 구성 |
-| 검색·분석 | Object set, 애플리케이션, AIP 분석과 Agent | Vector·BM25·Graph 확장과 RRF |
-| 배포 | Foundry DevOps와 Marketplace 제품 | Evidence와 품질을 담은 Pack ZIP |
-| 강한 지점 | 트랜잭션·업무 규칙·전사 운영 통합 | 로컬성·이동성·근거 수집·Agent 연결 |
-| 현재 한계 | 높은 플랫폼·모델링·운영 비용 | 강제 게이트·Pack 연합·형식 보장이 미완성 |
+| 비교 축   | 팔란티어 Foundry                           | OpenCrab 공개 구조                       |
+| --------- | ------------------------------------------ | ---------------------------------------- |
+| 시작점    | 조직의 운영 데이터와 실제 업무 객체        | 문서·로그·크롤링 자료와 Evidence         |
+| 의미 모델 | Object·Property·Link                       | 9-Space Node·Edge와 도메인 schema        |
+| 행동      | Action type·Function으로 운영 변경         | Lever·Action schema·Workflow·MCP 도구    |
+| 권한      | Ontology resource와 데이터에 통합된 보안   | ReBAC·Policy·Approval의 경량 구성        |
+| 검색·분석 | Object set, 애플리케이션, AIP 분석과 Agent | Vector·BM25·Graph 확장과 RRF             |
+| 배포      | Foundry DevOps와 Marketplace 제품          | Evidence와 품질을 담은 Pack ZIP          |
+| 강한 지점 | 트랜잭션·업무 규칙·전사 운영 통합          | 로컬성·이동성·근거 수집·Agent 연결       |
+| 현재 한계 | 높은 플랫폼·모델링·운영 비용               | 강제 게이트·Pack 연합·형식 보장이 미완성 |
 
 팔란티어 공식 문서는 Ontology가 기업의 복잡하고 연결된 의사결정을 표현하며 사람과 AI Agent가 운영 흐름에서 협업하도록 설계됐다고 설명합니다. ([The Ontology system](https://www.palantir.com/docs/foundry/architecture-center/ontology-system/)) OpenCrab도 Outcome·Lever·Policy와 MCP를 통해 같은 방향을 바라봅니다.
 
