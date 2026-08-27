@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+
+    <defs>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#17324D" flood-opacity="0.12"/>
+      </filter>
+      <marker id="arrowNavy" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L12,6 L0,12 z" fill="#17324D"/>
+      </marker>
+      <marker id="arrowTeal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L12,6 L0,12 z" fill="#2F7F7A"/>
+      </marker>
+      <style>
+        text { font-family: Apple SD Gothic Neo, Pretendard, Noto Sans KR, sans-serif; fill: #263238; }
+        .title { font-size: 46px; font-weight: 800; letter-spacing: -1px; }
+        .subtitle { font-size: 26px; font-weight: 650; }
+        .heading { font-size: 34px; font-weight: 800; }
+        .cardTitle { font-size: 29px; font-weight: 800; }
+        .body { font-size: 25px; font-weight: 600; }
+        .small { font-size: 21px; font-weight: 600; }
+        .tiny { font-size: 18px; font-weight: 600; }
+      </style>
+    </defs>
+
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<text x="800" y="70" text-anchor="middle" dominant-baseline="middle" class="title" fill="#17324D">가상 사례: 설비 점검 주기 30일 → 14일</text>
+<text x="800" y="112" text-anchor="middle" dominant-baseline="middle" class="subtitle" fill="#2F7F7A">한 업무 질문을 Evidence · 의미 · 결정 · 통제 역할로 분해</text>
+<rect x="120" y="145" width="360" height="90" rx="22" fill="#F7ECD5" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="300" y="175" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#D89B32">Policy</text>
+<text x="300" y="212" text-anchor="middle" dominant-baseline="middle" class="body">책임자 승인 필요</text>
+<rect x="120" y="270" width="360" height="90" rx="22" fill="#E8EEF3" stroke="#17324D" stroke-width="2" filter="url(#shadow)"/>
+<text x="300" y="300" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#17324D">Subject</text>
+<text x="300" y="337" text-anchor="middle" dominant-baseline="middle" class="body">현장팀 · 정비 책임자</text>
+<rect x="580" y="270" width="470" height="90" rx="22" fill="#E8EEF3" stroke="#17324D" stroke-width="2" filter="url(#shadow)"/>
+<text x="815" y="300" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#17324D">Resource</text>
+<text x="815" y="322" text-anchor="middle" dominant-baseline="middle" class="small">매뉴얼 · 점검표</text><text x="815" y="352" text-anchor="middle" dominant-baseline="middle" class="small">센서 데이터 · API</text>
+<rect x="580" y="410" width="470" height="90" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="815" y="440" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">Evidence</text>
+<text x="815" y="477" text-anchor="middle" dominant-baseline="middle" class="body">진동 측정값 · 고장 로그</text>
+<rect x="120" y="555" width="360" height="90" rx="22" fill="#FFFFFF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="300" y="585" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">Community</text>
+<text x="300" y="622" text-anchor="middle" dominant-baseline="middle" class="small">반복 고장 패턴 (선택)</text>
+<rect x="580" y="555" width="380" height="90" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="770" y="585" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#2F7F7A">Concept</text>
+<text x="770" y="622" text-anchor="middle" dominant-baseline="middle" class="small">베어링 마모 · 진동 증가</text>
+<rect x="1050" y="555" width="420" height="90" rx="22" fill="#F7ECD5" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="1260" y="585" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#D89B32">Claim</text>
+<text x="1260" y="622" text-anchor="middle" dominant-baseline="middle" class="small">진동 증가가 고장 위험을 높인다</text>
+<rect x="580" y="720" width="380" height="90" rx="22" fill="#F7ECD5" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="770" y="750" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#D89B32">Lever</text>
+<text x="770" y="787" text-anchor="middle" dominant-baseline="middle" class="small">점검 주기 · 교체 임계값</text>
+<rect x="1050" y="720" width="420" height="90" rx="22" fill="#E8EEF3" stroke="#17324D" stroke-width="2" filter="url(#shadow)"/>
+<text x="1260" y="750" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#17324D">Outcome</text>
+<text x="1260" y="772" text-anchor="middle" dominant-baseline="middle" class="small">비가동 시간 · 고장 위험</text><text x="1260" y="802" text-anchor="middle" dominant-baseline="middle" class="small">정비 비용</text>
+<line x1="300" y1="235" x2="300" y2="270" stroke="#D89B32" stroke-width="4" stroke-linecap="round"/><polygon points="300.0,270.0 290.7,254.0 309.3,254.0" fill="#D89B32"/>
+<path d="M480 190 C540 190 535 315 580 315" fill="none" stroke="#D89B32" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="580.0,315.0 564.0,324.3 564.0,305.7" fill="#D89B32"/>
+<line x1="815" y1="360" x2="815" y2="410" stroke="#17324D" stroke-width="4" stroke-linecap="round"/><polygon points="815.0,410.0 805.7,394.0 824.3,394.0" fill="#17324D"/>
+<path d="M760 500 C735 520 740 535 760 555" fill="none" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="760.0,555.0 742.1,550.2 755.2,537.1" fill="#2F7F7A"/>
+<path d="M900 500 C1030 520 1140 525 1220 555" fill="none" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="1220.0,555.0 1201.8,558.1 1208.3,540.7" fill="#2F7F7A"/>
+<line x1="480" y1="600" x2="580" y2="600" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round"/><polygon points="580.0,600.0 564.0,609.3 564.0,590.7" fill="#2F7F7A"/>
+<path d="M960 600 C1050 620 1120 680 1200 720" fill="none" stroke="#2F7F7A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="1200.0,720.0 1181.5,721.1 1189.8,704.5" fill="#2F7F7A"/>
+<line x1="960" y1="765" x2="1050" y2="765" stroke="#D89B32" stroke-width="4" stroke-linecap="round"/><polygon points="1050.0,765.0 1034.0,774.3 1034.0,755.7" fill="#D89B32"/>
+</svg>

@@ -1,0 +1,40 @@
+{
+  "slug": "opencrab-foundry-ontology-reinterpretation",
+  "updated_at": "2026-08-27T09:15:00+09:00",
+  "gates": {
+    "evidence": {
+      "status": "passed",
+      "inputs": [
+        "Palantir official Ontology and Action documentation",
+        "OpenCrab public repository commit d34352cec9d99c755c1e891f811911461a460280",
+        "existing series posts 8 and 9"
+      ],
+      "notes": "Current facts are separated from interpretation; direct creator lineage is not asserted."
+    },
+    "article_and_images": {
+      "status": "passed",
+      "article": "content/notes/온톨로지/opencrab-foundry-ontology-reinterpretation.md",
+      "image_impact": "editable_vector_fallback_after_raster_review_failure",
+      "images": 4,
+      "dimensions": "1600x900",
+      "visual_review": "passed",
+      "next": "Run the repository release gate and verify the built route."
+    },
+    "release": {
+      "status": "ready_for_pr",
+      "branch": "agent/publish-opencrab-foundry-20260827",
+      "base": "origin/main",
+      "validation": {
+        "npm_ci": "passed",
+        "quartz_plugin_install": "passed",
+        "npm_run_check": "passed",
+        "npm_test": "122 passed",
+        "quartz_build": "405 files emitted",
+        "post_validator": "passed",
+        "built_route": "public/notes/온톨로지/opencrab-foundry-ontology-reinterpretation.html",
+        "built_images": 4
+      },
+      "next": "Commit exact paths, push, open and merge the PR, then verify the exact Pages deployment and live route."
+    }
+  }
+}

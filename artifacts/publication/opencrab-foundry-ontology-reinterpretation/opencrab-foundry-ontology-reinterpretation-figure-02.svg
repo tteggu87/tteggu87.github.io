@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+
+    <defs>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#17324D" flood-opacity="0.12"/>
+      </filter>
+      <marker id="arrowNavy" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L12,6 L0,12 z" fill="#17324D"/>
+      </marker>
+      <marker id="arrowTeal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L12,6 L0,12 z" fill="#2F7F7A"/>
+      </marker>
+      <style>
+        text { font-family: Apple SD Gothic Neo, Pretendard, Noto Sans KR, sans-serif; fill: #263238; }
+        .title { font-size: 46px; font-weight: 800; letter-spacing: -1px; }
+        .subtitle { font-size: 26px; font-weight: 650; }
+        .heading { font-size: 34px; font-weight: 800; }
+        .cardTitle { font-size: 29px; font-weight: 800; }
+        .body { font-size: 25px; font-weight: 600; }
+        .small { font-size: 21px; font-weight: 600; }
+        .tiny { font-size: 18px; font-weight: 600; }
+      </style>
+    </defs>
+
+<rect width="1600" height="900" fill="#F7F3EA"/>
+<text x="800" y="70" text-anchor="middle" dominant-baseline="middle" class="title" fill="#17324D">9-Space 닫힌 그래프 문법</text>
+<rect x="515" y="110" width="570" height="54" rx="16" fill="#F7ECD5" stroke="#D89B32" stroke-width="2"/>
+<text x="800" y="137" text-anchor="middle" dominant-baseline="middle" class="subtitle" fill="#263238">9 × 9 = 81개 방향 중 11개 허용</text>
+<rect x="80" y="180" width="960" height="88" rx="18" fill="#FFFFFF" stroke="#E8EEF3" stroke-width="2" filter="url(#shadow)"/>
+<rect x="80" y="180" width="150" height="88" rx="18" fill="#17324D" stroke="none" stroke-width="2"/>
+<text x="155" y="224" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#FFFFFF">권한</text>
+<text x="260" y="224" text-anchor="start" dominant-baseline="middle" class="body">Subject → Resource</text>
+<rect x="80" y="286" width="960" height="104" rx="18" fill="#FFFFFF" stroke="#E8EEF3" stroke-width="2" filter="url(#shadow)"/>
+<rect x="80" y="286" width="150" height="104" rx="18" fill="#2F7F7A" stroke="none" stroke-width="2"/>
+<text x="155" y="338" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#FFFFFF">근거</text>
+<text x="260" y="321" text-anchor="start" dominant-baseline="middle" class="body">Resource → Evidence</text><text x="260" y="355" text-anchor="start" dominant-baseline="middle" class="body">Evidence → Concept · Evidence → Claim</text>
+<rect x="80" y="408" width="960" height="88" rx="18" fill="#FFFFFF" stroke="#E8EEF3" stroke-width="2" filter="url(#shadow)"/>
+<rect x="80" y="408" width="150" height="88" rx="18" fill="#17324D" stroke="none" stroke-width="2"/>
+<text x="155" y="452" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#FFFFFF">지식</text>
+<text x="260" y="452" text-anchor="start" dominant-baseline="middle" class="body">Concept → Concept · Community → Concept</text>
+<rect x="80" y="514" width="960" height="104" rx="18" fill="#FFFFFF" stroke="#E8EEF3" stroke-width="2" filter="url(#shadow)"/>
+<rect x="80" y="514" width="150" height="104" rx="18" fill="#2F7F7A" stroke="none" stroke-width="2"/>
+<text x="155" y="566" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#FFFFFF">결정</text>
+<text x="260" y="549" text-anchor="start" dominant-baseline="middle" class="body">Concept → Outcome</text><text x="260" y="583" text-anchor="start" dominant-baseline="middle" class="body">Lever → Concept · Lever → Outcome</text>
+<rect x="80" y="636" width="960" height="88" rx="18" fill="#FFFFFF" stroke="#E8EEF3" stroke-width="2" filter="url(#shadow)"/>
+<rect x="80" y="636" width="150" height="88" rx="18" fill="#17324D" stroke="none" stroke-width="2"/>
+<text x="155" y="680" text-anchor="middle" dominant-baseline="middle" class="cardTitle" fill="#FFFFFF">통제</text>
+<text x="260" y="680" text-anchor="start" dominant-baseline="middle" class="body">Policy → Resource · Policy → Subject</text>
+<rect x="1090" y="180" width="430" height="240" rx="22" fill="#E5F1EF" stroke="#2F7F7A" stroke-width="2" filter="url(#shadow)"/>
+<text x="1305" y="220" text-anchor="middle" dominant-baseline="middle" class="heading" fill="#2F7F7A">안전성 이점</text>
+<text x="1140" y="242" text-anchor="start" dominant-baseline="middle" class="body">• LLM 관계 남발 억제</text><text x="1140" y="290" text-anchor="start" dominant-baseline="middle" class="body">• Pack 공통 질문</text><text x="1140" y="338" text-anchor="start" dominant-baseline="middle" class="body">• 문법 검증</text>
+<rect x="1090" y="450" width="430" height="300" rx="22" fill="#F7ECD5" stroke="#D89B32" stroke-width="2" filter="url(#shadow)"/>
+<text x="1305" y="490" text-anchor="middle" dominant-baseline="middle" class="heading" fill="#D89B32">표현 비용</text>
+<text x="1140" y="523" text-anchor="start" dominant-baseline="middle" class="small">• Subject↔Subject 부족</text><text x="1140" y="571" text-anchor="start" dominant-baseline="middle" class="small">• Resource↔Resource 부족</text><text x="1140" y="619" text-anchor="start" dominant-baseline="middle" class="small">• Claim 대상 연결 부족</text><text x="1140" y="667" text-anchor="start" dominant-baseline="middle" class="small">• 도메인 관계 압축</text>
+<rect x="230" y="805" width="1140" height="62" rx="18" fill="#E8EEF3" stroke="#17324D" stroke-width="2"/>
+<text x="800" y="836" text-anchor="middle" dominant-baseline="middle" class="subtitle" fill="#17324D">도메인 그래프의 정확한 관계 + 9-Space 역할 투영</text>
+</svg>

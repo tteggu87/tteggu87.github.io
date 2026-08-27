@@ -1,9 +1,9 @@
 ---
 title: "온톨로지"
-description: "온톨로지, 지식그래프, 의미 계약, 문맥 컴파일과 에이전트 검증을 연결해 읽는 1~26번 글 모음입니다."
+description: "온톨로지, 지식그래프, 의미 계약, 문맥 컴파일과 에이전트 검증을 연결해 읽는 1~27번 글 모음입니다."
 ---
 
-온톨로지는 단순한 용어 목록이 아니라, **개념·관계·근거·제약·권한을 공유하는 의미 계약**입니다. 이 카테고리는 온톨로지 에이전트 시리즈 1~26번을 공개 글의 순서와 설계 책임의 흐름에 따라 묶습니다.
+온톨로지는 단순한 용어 목록이 아니라, **개념·관계·근거·제약·권한을 공유하는 의미 계약**입니다. 이 카테고리는 온톨로지 에이전트 시리즈 1~27번을 공개 글의 순서와 설계 책임의 흐름에 따라 묶습니다.
 
 ## 추천 읽기 경로
 
@@ -15,6 +15,7 @@ description: "온톨로지, 지식그래프, 의미 계약, 문맥 컴파일과 
 4. [[notes/온톨로지/kg-guided-llm-planning|11. KG-guided LLM Planning]] → [[notes/온톨로지/iterative-investigation-refutation-loop|12. 반복 조사·반증 루프]] → [[notes/온톨로지/ontology-senior-investigation-harness|13. 시니어 조사·판단 하네스]] → [[notes/온톨로지/pi-agent-duckcrab-dag-harness|14. Pi Agent × DuckCrab 동적 DAG]]: 계획·검증·실행을 분리합니다.
 5. [[notes/온톨로지/knowledge-centric-self-improvement|15. 지식 중심 자기개선]]부터 [[notes/온톨로지/agent-evaluation-evidence-ladder|24. 에이전트 평가 증거 사다리]]까지: 지식 수명주기, 문맥 손실, 권한, 검색, 평가의 운영 경계를 확장합니다.
 6. [[notes/온톨로지/llm-wiki-double-compilation|25. LLM Wiki 이중 컴파일]] → [[notes/온톨로지/path-predictability-semantic-authority|26. 경로 예측 가능성과 의미 권위]]: 지속 지식과 그래프 도입의 경계를 점검합니다.
+7. [[notes/온톨로지/opencrab-foundry-ontology-reinterpretation|27. OpenCrab과 팔란티어 Foundry]]: 운영 온톨로지, 9-Space, Lever·Action, Pack과 MCP를 하나의 사례로 비교합니다.
 
 ## 이 카테고리에서 보는 것
 
@@ -24,4 +25,4 @@ description: "온톨로지, 지식그래프, 의미 계약, 문맥 컴파일과 
 - 조사·실행 하네스: 반례·조건부 판단·DAG·실행 호스트·정본 권위의 분리
 - 운영 안전성: 메모리 승격, 권한 lease, GraphRAG 경로, 생성 충실도와 평가 증거
 
-아래 목록은 Quartz의 FolderPage가 이 폴더에 포함된 26개 글을 자동으로 표시합니다. 각 글의 본문과 인용이 공개 정본이며, 이 페이지는 탐색을 위한 카테고리 입구입니다.
+아래 목록은 Quartz의 FolderPage가 이 폴더에 포함된 27개 글을 자동으로 표시합니다. 각 글의 본문과 인용이 공개 정본이며, 이 페이지는 탐색을 위한 카테고리 입구입니다.
