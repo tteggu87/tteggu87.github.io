@@ -24,7 +24,7 @@ tags:
 
 팔란티어는 Ontology를 데이터 위에 붙이는 분류표로만 설명하지 않습니다. 공식 문서에서 Ontology는 현실의 개체와 사건을 `Object`, 속성을 `Property`, 개체 사이의 관계를 `Link`로 표현합니다. 여기에 조직의 변경과 의사결정을 담당하는 `Action type`과 `Function`, 접근 제어와 거버넌스를 결합합니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [Core concepts](https://www.palantir.com/docs/foundry/ontology/core-concepts/))
 
-이 구조의 목표는 지식을 잘 설명하는 데서 끝나지 않습니다. 현업 사용자가 같은 객체를 보고, 같은 규칙으로 변경을 요청하고, 같은 권한 검사를 거쳐 실제 업무 상태를 바꾸도록 만드는 데 있습니다.
+이 구조의 목표는 지식을 잘 설명하는 데서 끝나지 않습니다. 현업 사용자가 같은 객체를 보고, 같은 규칙으로 변경을 요청하고, 같은 권한 검사를 거쳐 실제 업무 상태를 바꾸도록 만드는 데 있습니다. 예를 들어 BI 화면의 `설비 A`, 정비 앱의 `Equipment-1024`, Agent가 조회한 센서 레코드가 같은 현실 설비를 가리킨다면, 이들을 공통 운영 객체와 관계로 묶는 것이 중요합니다. Foundry Ontology의 힘은 그래프 모양 자체보다 **여러 데이터·애플리케이션·Agent가 같은 업무 객체를 기준으로 읽고 행동하게 만드는 운영 정본**에 있습니다.
 
 ```text
 현실의 설비와 작업
@@ -34,7 +34,11 @@ tags:
 → 운영 애플리케이션과 Agent
 ```
 
-OpenCrab의 출발점은 다릅니다. 공개 저장소는 자신을 LocalCrab 온톨로지 공장과 OpenCrab 호스팅 생태계를 연결하는 통합 저장소로 설명합니다. 로컬 엔진은 문서·크롤링 자료·OCR 결과를 모으고, Evidence를 색인하고, 그래프를 검증해 OpenCrab Pack을 만드는 역할을 맡습니다. ([OpenCrab README](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280))
+OpenCrab의 출발점은 다릅니다. 그리고 이 비교는 구조가 우연히 닮았다는 추측만은 아닙니다. 제작자는 공개 Threads 글에서 2025년 여름 Palantir AIP를 업무에 사용하면서 온톨로지 도입이 강력하다고 느꼈지만 AIP를 다루는 과정은 고생스러웠고, 그때부터 개인 온톨로지 도구를 만들기 시작했다고 직접 설명했습니다. 초기에는 LangGraph와 Agent를 조합한 `Langent`였고, 이후 온톨로지의 규율과 법칙이 더 중요하다고 판단해 OpenCrab으로 발전시켰다고 밝힙니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
+
+다만 **AIP에서 영감을 받았다는 사실과 Foundry의 구조를 그대로 복제했다는 주장은 구분해야 합니다.** 공개 코드에서 Foundry의 Object·Link·Action 구조를 1:1로 옮긴 흔적보다는, 운영 온톨로지에서 체감한 문제를 9-Space, Evidence·Claim, Outcome·Lever·Policy, Pack, MCP라는 다른 부품으로 다시 나눈 모습이 더 뚜렷합니다.
+
+공개 저장소는 자신을 LocalCrab 온톨로지 공장과 OpenCrab 호스팅 생태계를 연결하는 통합 저장소로 설명합니다. 로컬 엔진은 문서·크롤링 자료·OCR 결과를 모으고, Evidence를 색인하고, 그래프를 검증해 OpenCrab Pack을 만드는 역할을 맡습니다. ([OpenCrab README](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280))
 
 ```text
 문서와 로그
@@ -102,7 +106,7 @@ OpenCrab의 9-Space로 같은 장면을 읽으면 다음처럼 바뀝니다.
 
 ![설비 점검 주기 변경 사례를 Subject부터 Policy까지 9-Space 의미 역할로 풀어낸 그래프](../../attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-01.png)
 
-이 구조가 주는 변화는 분명합니다. 문서에서 `베어링`, `진동`, `점검`이라는 단어를 찾는 데서 멈추지 않고 다음 질문을 한 그래프 안에서 이어 볼 수 있습니다.
+이 구조가 주는 변화는 분명합니다. 문서에서 `베어링`, `진동`, `점검`이라는 단어를 찾는 데서 멈추지 않고 다음 질문을 한 그래프 안에서 이어 볼 수 있습니다. 특히 `Evidence → Claim`을 별도 관계로 둔 것은 검색된 문장과 모델이 만든 해석을 같은 사실로 취급하지 않게 합니다. 목표는 단순히 “관련 문서를 찾았다”가 아니라 **이 주장을 무엇이 지지하고 무엇이 반박하는지 다시 추적할 수 있는 그래프**를 만드는 것입니다.
 
 - 어떤 Evidence가 고장 위험 Claim을 지지합니까?
 - 위험과 비가동 시간에 영향을 주는 Lever는 무엇입니까?
@@ -157,7 +161,7 @@ Outcome · Lever · Policy
 - Claim이 어떤 Concept나 Outcome에 관한 주장인지 직접 잇는 관계가 부족합니다.
 - 의료의 `CONTRAINDICATED_WITH`, 건설의 `PROHIBITED_BY`처럼 도메인 고유 관계가 `related_to`나 `restricts`로 압축될 수 있습니다.
 
-따라서 9-Space를 도메인 언어의 대체재로 사용하면 정보가 줄어듭니다. 더 나은 방법은 두 층을 함께 유지하는 것입니다.
+따라서 9-Space를 도메인 언어의 대체재로 사용하면 정보가 줄어듭니다. **9-Space는 설비·의료·법률의 도메인 온톨로지를 대신하는 vocabulary라기보다, 서로 다른 도메인 그래프를 Agent가 공통 방식으로 읽게 만드는 meta-schema 또는 역할 문법에 가깝습니다.** 더 나은 방법은 두 층을 함께 유지하는 것입니다.
 
 ```text
 도메인 그래프
@@ -303,6 +307,21 @@ CrabHarness 연결 1
 
 ![자료 수집부터 Pack 검증과 MCP Agent 사용까지의 흐름, 그리고 현재 강제되지 않는 경계를 표시한 수명주기](../../attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-figure-03.png)
 
+처음 접할 때는 30개를 외울 필요가 없습니다. 가장 작은 사용 흐름은 다음처럼 이해하면 됩니다.
+
+```text
+자료 넣기
+ontology_ingest
+→ 그래프 후보 만들기
+ontology_extract
+→ 문법에 맞게 Node · Edge 기록
+ontology_add_node · ontology_add_edge
+→ Agent가 검색
+ontology_query
+→ 필요하면 권한 · 영향 확인
+ontology_rebac_check · ontology_impact
+```
+
 MCP의 가치는 모델을 바꿔도 같은 도구 계약을 유지할 수 있다는 데 있습니다. Claude, Codex와 로컬 LLM이 같은 `ontology_query`를 호출할 수 있습니다. 저장 방식이 바뀌어도 Agent에게 노출되는 의미 도구를 유지할 수 있습니다.
 
 다만 “MCP가 있다”와 “모든 변경이 하나의 안전한 명령 경계를 통과한다”는 다른 말입니다. CLI, REST API, stdio MCP와 다른 실행 표면이 동일한 내부 Command Service를 사용해야 문법·권한·승인·Evidence 검사를 한곳에서 강제할 수 있습니다. OpenCrab은 그 방향을 보여 주지만 공개 코드의 모든 경로가 완전히 합쳐진 상태는 아닙니다.
@@ -332,11 +351,11 @@ OpenCrab
 자료 수집 + 의미 그래프 + 검색 + Pack + Agent 도구
 ```
 
-OpenCrab이 Foundry에서 받은 영감을 한 문장으로 정리하면 다음과 같습니다.
+제작자가 밝힌 AIP 경험과 공개 구현을 함께 놓고 보면, OpenCrab이 가져온 문제의식을 한 문장으로 이렇게 읽을 수 있습니다.
 
 > **온톨로지는 데이터 설명서가 아니라 Agent와 사람이 판단하고 행동할 때 공유하는 의미 계층이어야 한다.**
 
-그리고 OpenCrab은 이 문제를 전사 플랫폼이 아니라 로컬 공장·Pack·MCP라는 더 작은 부품으로 다시 나눴습니다.
+이 문장은 제작자의 직접 인용이 아니라, 앞서 확인한 AIP 사용 경험과 OpenCrab 구조를 함께 읽어 정리한 해석입니다. OpenCrab은 그 문제를 전사 플랫폼이 아니라 로컬 공장·Pack·MCP라는 더 작은 부품으로 다시 나눴습니다.
 
 ## OpenCrab이 잘 잡은 부분과 아직 남은 부분
 
@@ -439,6 +458,7 @@ MCP
 - Palantir, [Action types overview](https://www.palantir.com/docs/foundry/action-types/overview/)
 - Palantir, [Action types getting started](https://www.palantir.com/docs/foundry/action-types/getting-started/)
 - Palantir, [AIP features](https://www.palantir.com/docs/foundry/aip/aip-features/)
+- OpenCrab 제작자, [Palantir AIP 사용 경험과 OpenCrab 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y)
 - OpenCrab, [공개 통합 저장소](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280)
 - OpenCrab, [9-Space grammar manifest](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/opencrab/grammar/manifest.py)
 - OpenCrab, [MCP tool registry](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/opencrab/mcp/tools.py)
