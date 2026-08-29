@@ -1,6 +1,6 @@
 ---
-title: "30. AI 플랫폼에서 실제로 빠져나올 수 있는가"
-description: "Homes for Ukraine의 Palantir Foundry 도입과 Share 전환 사례를 따라 긴급 도입 가치, switching friction, 실제 migration, 공급자 계약 종료와 post-exit 측정을 분리해 AI 플랫폼의 exit readiness를 판단하는 방법을 설명합니다."
+title: "30. 인공지능 플랫폼에서 실제로 빠져나올 수 있는가"
+description: "Homes for Ukraine의 Palantir Foundry 도입과 Share 전환 사례를 따라 긴급 도입 가치, 전환 마찰(switching friction), 실제 데이터·업무 이전, 공급자 계약 종료와 전환 후 증거를 분리해 인공지능 플랫폼의 exit readiness(전환 준비도)를 판단하는 방법을 설명합니다."
 date: 2026-08-30
 tags:
   - AI플랫폼
@@ -14,14 +14,14 @@ tags:
 
 한 플랫폼이 지금 큰 가치를 만들고 있다면, 나중에 그 플랫폼을 떠날 준비까지 지금 해야 할까요? 보통은 도입 효과와 기능을 먼저 봅니다. 하지만 운영 데이터와 업무 흐름이 깊게 묶일수록 더 어려운 질문은 계약이 끝날 때 시작됩니다. 데이터를 옮길 수 있는지, 업무를 멈추지 않고 새 시스템으로 전환할 수 있는지, 사용자를 다시 교육할 수 있는지, 전환 뒤 비용과 품질을 같은 기준으로 비교할 수 있는지를 확인해야 합니다.
 
-영국의 Homes for Ukraine 서비스는 이 질문을 한 번에 보여 주는 드문 공개 사례입니다. 2022년 긴급 상황에서는 Palantir 기반 시스템이 빠른 서비스 가동에 기여했습니다. 이후 정부는 migration 비용과 일정·품질·safeguarding 위험 때문에 즉시 교체하지 않았고, 몇 년 뒤에는 실제로 Foundry에서 자체 Share 시스템으로 데이터를 옮겨 공급자 계약을 종료했습니다. ([National Audit Office](https://www.nao.org.uk/reports/investigation-into-the-homes-for-ukraine-scheme/), [MHCLG system change survey](https://consult.communities.gov.uk/digital-delivery/homes-for-ukraine-new-platform-survey/), [MHCLG Digital retrospective](https://mhclgdigital.blog.gov.uk/2026/04/09/from-emergency-to-sustainability-creating-share-homes-for-ukraine-data/))
+영국의 Homes for Ukraine 서비스는 이 질문을 한 번에 보여 주는 드문 공개 사례입니다. 2022년 긴급 상황에서는 Palantir 기반 시스템이 빠른 서비스 가동에 기여했습니다. 이후 정부는 데이터·업무 이전(migration) 비용과 일정·품질·보호·안전(safeguarding) 위험 때문에 즉시 교체하지 않았고, 몇 년 뒤에는 실제로 Foundry에서 자체 Share 시스템으로 데이터를 옮겨 공급자 계약을 종료했습니다. ([National Audit Office](https://www.nao.org.uk/reports/investigation-into-the-homes-for-ukraine-scheme/), [MHCLG system change survey](https://consult.communities.gov.uk/digital-delivery/homes-for-ukraine-new-platform-survey/), [MHCLG Digital retrospective](https://mhclgdigital.blog.gov.uk/2026/04/09/from-emergency-to-sustainability-creating-share-homes-for-ukraine-data/))
 
 > [!summary] 먼저 결론
-> **벤더 락인은 `나갈 수 있다 / 없다`의 이진 판정으로 보기 어렵습니다.** 더 유용한 질문은 switching friction이 얼마나 크며, 그 마찰을 감수하고도 실제 데이터를 옮기고 서비스를 이어서 운영할 수 있는 **exit capability**를 조직이 갖췄는지입니다. 도입 효과와 exit readiness는 처음부터 별도 증거로 관리하는 편이 안전합니다.
+> **Exit readiness(전환 준비도)는 현재 공급자 없이도 데이터와 업무 의미를 넘겨받아 대체 시스템으로 서비스를 이어갈 준비 상태입니다.** 공급자 교체가 어려운 상태를 뜻하는 **벤더 락인(vendor lock-in)**을 `나갈 수 있다 / 없다`로만 보지 말고, 교체에 드는 비용·위험인 **switching friction(전환 마찰)**과 이를 감수하고 실제 전환을 수행하는 **exit capability(전환 실행 능력)**를 나눠 봐야 합니다. 도입 효과와 전환 뒤 비용·품질을 다시 확인하는 **post-exit evidence(전환 후 증거)**도 별도로 관리해야 합니다.
 
 ## 빠르게 도입했다는 사실과 오래 남아야 한다는 결론은 다릅니다
 
-2022년 3월 영국 정부는 Homes for Ukraine 제도를 매우 짧은 시간 안에 가동해야 했습니다. National Audit Office는 Palantir이 6개월 동안 무상 지원을 제공했고, 이 선택이 제도를 빠르게 시작하는 데 도움이 됐다고 기록합니다. 동시에 통상적인 사전 사용자 조사와 충분한 시험을 거치기 어려웠고 일부 지방정부 사용자는 시스템을 혼란스럽게 느꼈다고 지적했습니다. ([NAO, Investigation into the Homes for Ukraine scheme](https://www.nao.org.uk/reports/investigation-into-the-homes-for-ukraine-scheme/))
+2022년 3월 영국 정부는 Homes for Ukraine 제도를 매우 짧은 시간 안에 가동해야 했습니다. 영국 감사원(NAO, National Audit Office)은 Palantir이 6개월 동안 무상 지원을 제공했고, 이 선택이 제도를 빠르게 시작하는 데 도움이 됐다고 기록합니다. 동시에 통상적인 사전 사용자 조사와 충분한 시험을 거치기 어려웠고 일부 지방정부 사용자는 시스템을 혼란스럽게 느꼈다고 지적했습니다. ([NAO, Investigation into the Homes for Ukraine scheme](https://www.nao.org.uk/reports/investigation-into-the-homes-for-ukraine-scheme/))
 
 여기서 첫 번째 경계가 생깁니다.
 
@@ -39,7 +39,7 @@ tags:
 
 ## Switching friction은 “못 나간다”와 다릅니다
 
-NAO 기록에 따르면 DLUHC는 Palantir 무료 지원 기간 이후 유상 계약을 맺었습니다. 이후 대안을 검토했지만 새로운 공급자로 옮길 때 필요한 초기 비용, 일정과 품질 위험, safeguarding 서비스 중단 가능성 때문에 2023년에는 migration을 바로 실행하지 않았습니다. ([NAO](https://www.nao.org.uk/reports/investigation-into-the-homes-for-ukraine-scheme/))
+NAO 기록에 따르면 영국 레벨링업·주택·커뮤니티부(DLUHC, Department for Levelling Up, Housing and Communities)는 Palantir 무료 지원 기간 이후 유상 계약을 맺었습니다. 이후 대안을 검토했지만 새로운 공급자로 옮길 때 필요한 초기 비용, 일정과 품질 위험, 보호·안전 서비스 중단 가능성 때문에 2023년에는 데이터·업무 이전을 바로 실행하지 않았습니다. ([NAO](https://www.nao.org.uk/reports/investigation-into-the-homes-for-ukraine-scheme/))
 
 이 상태를 곧바로 `vendor lock-in`이라고 부르면 중요한 정보가 사라집니다. 교체를 미루는 이유는 하나가 아니기 때문입니다.
 
@@ -54,7 +54,7 @@ NAO 기록에 따르면 DLUHC는 Palantir 무료 지원 기간 이후 유상 계
 
 ![2022년 긴급 도입에서 2023년 전환 보류, 2024년 자체 시스템 구축, 2025년 Foundry에서 Share로 전환하고 공급자 계약을 종료하기까지의 Homes for Ukraine 수명주기](../../attachments/palantir-platform-exit-readiness/palantir-platform-exit-readiness-figure-01.png)
 
-Homes for Ukraine는 실제로 다음 단계까지 갔습니다. 2025년 MHCLG의 사용자 조사 페이지는 조사 목적을 **Foundry에서 새로운 Share Homes for Ukraine Data 시스템으로 전환하는 과정**이라고 명시합니다. 2026년 MHCLG Digital 회고는 정부팀이 2024년 여름부터 자체 시스템을 만들기 시작했고 약 3년치 운영 데이터를 이관한 뒤 2025년 9월 Share를 가동해 공급자 계약을 종료했다고 설명합니다. ([MHCLG system change survey](https://consult.communities.gov.uk/digital-delivery/homes-for-ukraine-new-platform-survey/), [MHCLG Digital retrospective](https://mhclgdigital.blog.gov.uk/2026/04/09/from-emergency-to-sustainability-creating-share-homes-for-ukraine-data/))
+Homes for Ukraine는 실제로 다음 단계까지 갔습니다. 2025년 영국 주택·커뮤니티·지방정부부(MHCLG, Ministry of Housing, Communities and Local Government)의 사용자 조사 페이지는 조사 목적을 **Foundry에서 새로운 Share Homes for Ukraine Data 시스템으로 전환하는 과정**이라고 명시합니다. 2026년 MHCLG Digital 회고는 정부팀이 2024년 여름부터 자체 시스템을 만들기 시작했고 약 3년치 운영 데이터를 이관한 뒤 2025년 9월 Share를 가동해 공급자 계약을 종료했다고 설명합니다. ([MHCLG system change survey](https://consult.communities.gov.uk/digital-delivery/homes-for-ukraine-new-platform-survey/), [MHCLG Digital retrospective](https://mhclgdigital.blog.gov.uk/2026/04/09/from-emergency-to-sustainability-creating-share-homes-for-ukraine-data/))
 
 따라서 이 사례가 직접 보여 주는 비동치는 명확합니다.
 
@@ -69,13 +69,13 @@ switching friction이 높음
 
 계약에 break clause가 있다고 해서 전환이 준비된 것은 아닙니다. 데이터를 내보낼 수 있어도 새 시스템이 같은 업무를 수행하지 못하면 서비스는 멈춥니다. 코드를 소유해도 데이터 의미와 권한 규칙이 문서화돼 있지 않으면 새 환경에서 재구축하기 어렵습니다.
 
-그래서 exit readiness를 다음처럼 정의해 볼 수 있습니다.
+앞서 짧게 정의한 exit readiness를 실제 운영 기준으로 풀면 `전환할 수 있는가`와 `그 전환을 지금 실행할 준비가 됐는가`를 나눠 볼 수 있습니다.
 
-> **Exit readiness는 현재 공급자 없이도 필요한 데이터와 업무 의미를 인수하고, 제한된 시간 안에 대체 시스템으로 전환해 서비스 연속성과 품질을 검증할 수 있는 실행 능력입니다.**
+> **Exit capability는 실제 전환을 수행할 능력이고, exit readiness는 그 능력을 필요한 시점에 실행할 수 있도록 데이터·업무 의미·권한·사람·계약 준비를 미리 확인해 둔 상태입니다.**
 
-이 정의는 Palantir의 공식 용어가 아니라 이번 연구를 바탕으로 만든 프로젝트 분석 프레임입니다.
+이 구분은 Palantir의 공식 용어가 아니라 이번 연구를 바탕으로 만든 프로젝트 분석 프레임입니다.
 
-실제 전환을 준비하려면 적어도 다음 질문에 답할 수 있어야 합니다.
+실제 전환을 준비하려면 적어도 다음 질문에 답할 수 있어야 합니다. 아래에서 상태 대조(reconciliation)는 기존 시스템과 새 시스템의 상태가 일치하는지 확인하는 일이고, 품질보증(QA, Quality Assurance)은 전환 과정에서 권한·데이터 무결성·감사 조건을 다시 점검하는 절차입니다.
 
 ```yaml
 exit_readiness_receipt:
@@ -93,11 +93,11 @@ exit_readiness_receipt:
 
 ![데이터 이동성, 코드·스키마 소유권, 대체 리드타임, reconciliation, 서비스 연속성, 보안 QA, 사용자 전환과 post-exit evidence로 구성한 Exit Readiness Receipt](../../attachments/palantir-platform-exit-readiness/palantir-platform-exit-readiness-figure-02.png)
 
-이 영수증을 채우는 목적은 플랫폼에 점수를 매기는 데 있지 않습니다. 빈칸을 찾는 것입니다. `data_portability`는 명확한데 `user_transition`과 `reconciliation`이 비어 있다면, 기술적 export가 가능해도 실제 cutover는 아직 준비되지 않은 상태입니다.
+이 영수증을 채우는 목적은 플랫폼에 점수를 매기는 데 있지 않습니다. 빈칸을 찾는 것입니다. `data_portability`는 명확한데 `user_transition`과 `reconciliation`이 비어 있다면, 기술적 export가 가능해도 실제 운영 전환(cutover)은 아직 준비되지 않은 상태입니다.
 
 ## 백업과 복구가 가능해도 독립적인 exit가 되는 것은 아닙니다
 
-[[notes/온톨로지/palantir-foundry-aip-operational-loop|28번 글]]에서는 Palantir Global Branching의 변경 검토와 merge, recovery, retention을 서로 다른 책임으로 나눠 봤습니다. Palantir 공식 문서상 branch는 변경을 격리하고 검토하는 데 쓸 수 있지만 partial merge failure에서는 일부 resource만 반영될 수 있고 자동 revert가 보장되지 않습니다. Inactive·archived branch의 일부 branch-only data도 retention 설정의 영향을 받습니다. ([Global Branching core concepts](https://www.palantir.com/docs/foundry/global-branching/core-concepts), [June 2026 lifecycle announcement](https://www.palantir.com/docs/foundry/announcements/2026-06))
+[[notes/온톨로지/palantir-foundry-aip-operational-loop|28번 글]]에서는 Palantir Global Branching의 변경 검토와 병합(merge), 복구(recovery), 보존(retention)을 서로 다른 책임으로 나눠 봤습니다. Palantir 공식 문서상 branch는 변경을 격리하고 검토하는 데 쓸 수 있지만 부분 병합 실패(partial merge failure)에서는 일부 resource만 반영될 수 있고 자동 되돌리기(revert)가 보장되지 않습니다. 비활성·보관 상태(inactive·archived)의 branch 전용 데이터도 보존 설정의 영향을 받습니다. ([Global Branching core concepts](https://www.palantir.com/docs/foundry/global-branching/core-concepts), [June 2026 lifecycle announcement](https://www.palantir.com/docs/foundry/announcements/2026-06))
 
 여기서 exit readiness와 연결되는 새로운 경계가 하나 더 생깁니다.
 
@@ -132,7 +132,7 @@ MHCLG Digital의 회고가 유용한 이유는 기술 선택보다 전환 작업
 이 가운데 하나라도 빠지면 “데이터를 옮겼다”와 “서비스를 옮겼다” 사이에 틈이 생깁니다. 특히 운영 AI나 Ontology 기반 시스템은 단순한 테이블보다 **업무 객체, 상태, 관계, action과 permission**이 함께 움직이기 때문에 이 틈이 더 중요해질 수 있습니다.
 
 > [!important] Exit 성공은 비용 우위를 자동으로 증명하지 않습니다
-> MHCLG Digital 팀은 Share 전환 뒤 연간 수백만 파운드 규모의 running cost 절감을 보고했습니다. 하지만 공개 자료에는 동일 scope로 정규화한 상세 TCO, 내부 인력 비용, 일회성 migration 비용과 독립 감사가 없습니다. 따라서 이 숫자를 `Palantir은 일반적으로 더 비싸다`거나 `in-house가 항상 싸다`는 결론으로 확대하면 안 됩니다. ([MHCLG Digital](https://mhclgdigital.blog.gov.uk/2026/04/09/from-emergency-to-sustainability-creating-share-homes-for-ukraine-data/))
+> MHCLG Digital 팀은 Share 전환 뒤 연간 수백만 파운드 규모의 running cost 절감을 보고했습니다. 하지만 공개 자료에는 동일 scope로 정규화한 상세 총소유비용(TCO, Total Cost of Ownership), 내부 인력 비용, 일회성 migration 비용과 독립 감사가 없습니다. 따라서 이 숫자를 `Palantir은 일반적으로 더 비싸다`거나 `in-house가 항상 싸다`는 결론으로 확대하면 안 됩니다. ([MHCLG Digital](https://mhclgdigital.blog.gov.uk/2026/04/09/from-emergency-to-sustainability-creating-share-homes-for-ukraine-data/))
 
 새 시스템은 요구사항이 안정된 뒤 만들어졌고, 그동안 사용자 연구와 운영 경험도 축적됐습니다. 공급자 가격, scope 변화, 내부 역량, 기술 선택 가운데 무엇이 비용 차이를 만들었는지는 공개 자료만으로 분리하기 어렵습니다.
 
@@ -157,7 +157,7 @@ MHCLG Digital의 회고가 유용한 이유는 기술 선택보다 전환 작업
 
 전사 migration을 미리 할 필요는 없습니다. 대신 도입 초기에 작은 **exit drill**을 한 번 수행하는 방법을 제안할 수 있습니다. 이것은 이번 연구에서 도출한 설계 제안이며, 실제 Palantir tenant에서 검증한 표준 절차는 아닙니다.
 
-가정해 보겠습니다. 한 운영팀이 여러 공장의 품질 데이터를 AI 플랫폼에 묶으려 합니다. 첫 production 전 다음 정도만 확인합니다.
+가정해 보겠습니다. 한 운영팀이 여러 공장의 품질 데이터를 인공지능 플랫폼에 묶으려 합니다. 첫 실제 운영(production) 전 다음 정도만 확인합니다.
 
 1. 대표적인 업무 객체와 이력 일부를 실제 export합니다.
 2. 외부의 작은 중립 schema에서 원래 의미를 복원할 수 있는지 확인합니다.
@@ -172,7 +172,7 @@ MHCLG Digital의 회고가 유용한 이유는 기술 선택보다 전환 작업
 
 Exit readiness 비용은 통합이 깊어질수록 커질 수 있습니다. 그렇다고 항상 얇은 stack이 낫다는 뜻은 아닙니다. 여러 workflow가 같은 데이터와 권한, 업무 객체를 재사용한다면 통합 플랫폼이 운영 복잡도를 줄일 수도 있습니다. 현재 연구에는 이 총비용을 동일 조건으로 비교한 실험이 없습니다.
 
-다음 조건에서는 더 얇은 baseline을 먼저 검토할 만합니다.
+다음 조건에서는 더 얇은 기준 구성(baseline)을 먼저 검토할 만합니다.
 
 - 읽기 전용 dashboard나 문서 검색이 중심입니다.
 - 실제 write action과 복잡한 승인 흐름이 없습니다.
@@ -188,7 +188,7 @@ Homes for Ukraine 사례를 `Palantir 성공`이나 `Palantir 실패` 한 단어
 
 이 시간축이 보여 주는 것은 “lock-in이 없다”도 “lock-in에서 탈출했다”도 아닙니다. **운영 가치, switching friction, exit capability와 post-exit evidence를 따로 측정해야 한다**는 점입니다.
 
-AI 플랫폼을 선택할 때도 같은 질문을 적용할 수 있습니다. `이 플랫폼으로 무엇을 더 잘할 수 있는가`와 함께 `데이터·업무 의미·권한·사용자를 다른 실행 환경으로 옮기려면 무엇이 필요한가`를 적어 보십시오. 빈칸이 많다면 아직 exit readiness가 증명되지 않은 것입니다. 가장 작은 다음 행동은 계약 종료를 상상하는 일이 아니라, 대표 데이터와 workflow 하나로 실제 export·reconciliation·replacement 경로를 시험해 보는 것입니다.
+인공지능 플랫폼을 선택할 때도 같은 질문을 적용할 수 있습니다. **Exit readiness는 공급자 없이도 데이터·업무 의미·권한·사용자를 대체 환경으로 옮겨 서비스를 이어갈 준비가 됐는지를 묻는 기준입니다.** `이 플랫폼으로 무엇을 더 잘할 수 있는가`와 함께 `다른 실행 환경으로 옮기려면 무엇이 필요한가`를 적어 보십시오. 빈칸이 많다면 아직 전환 준비도가 증명되지 않은 것입니다. 가장 작은 다음 행동은 계약 종료를 상상하는 일이 아니라, 대표 데이터와 workflow 하나로 실제 export·상태 대조·대체 경로를 시험해 보는 것입니다.
 
 ## 함께 읽기
 
