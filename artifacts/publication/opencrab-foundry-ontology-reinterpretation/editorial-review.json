@@ -2,129 +2,138 @@
   "slug": "opencrab-foundry-ontology-reinterpretation",
   "profile": "longform-technical-explainer",
   "date": "2026-08-29",
-  "trigger": "latest article changed after the prior automation; AIP appeared before a standalone definition and the final conclusion did not independently restate the operating flow, rationale, and implementation limits",
-  "editorial_thesis": "OpenCrab은 팔란티어 Foundry의 축소 복제본이 아니라, 운영 온톨로지 문제를 9-Space 의미 문법, Evidence 중심 Pack 공장, MCP 도구 표면으로 분해한 경량 재해석이다.",
-  "reader_problem": "Foundry를 막 배우는 독자는 OpenCrab을 작은 Foundry 또는 단순 GraphRAG로 오해하기 쉽고, AIP를 모르면 제작 배경부터 비교의 전제를 놓칠 수 있다.",
-  "why_now": "LLM Agent가 조직 자료를 읽고 행동하려면 모델 파라미터 밖에서 의미, 근거, 권한과 변경 계약을 관리해야 한다.",
-  "concrete_example": "베어링 진동 증가로 설비 점검 주기를 30일에서 14일로 바꾸는 명시적 가상 사례",
-  "existing_approach": "Foundry의 Object, Property, Link, Action type, Function, Security가 결합된 운영 온톨로지",
-  "new_perspective": "OpenCrab은 문서와 로그를 Evidence, Claim, Outcome, Lever, Policy로 해석하고 Pack과 MCP로 운반한다.",
-  "value_mechanisms": [
-    "9-Space가 서로 다른 도메인에 공통 의미 역할을 제공한다.",
-    "Pack이 Graph와 Evidence, 품질 검사를 하나의 배포 계약으로 묶는다.",
-    "MCP가 모델과 저장소를 분리한다.",
-    "Evidence와 Claim 분리가 LLM 해석을 원문 관찰과 구분한다."
-  ],
-  "cost_shift": "도메인 고유 관계의 의미 손실, 닫힌 관계 행렬, 느슨한 승인·승격 게이트, 미완성 Pack federation으로 비용이 이동한다.",
-  "failure_conditions": [
-    "실제 업무 변경에 강한 트랜잭션과 권한 경계가 필요하다.",
-    "법률·의료 판단에 형식 일관성과 결정론적 규칙이 필요하다.",
-    "여러 Pack의 의존성, 전역 ID와 Claim 충돌을 자동 관리해야 한다.",
-    "Lever의 인과 효과를 수치로 검증해야 한다."
-  ],
-  "comparison_axes": [
-    "출발 데이터와 운영 객체",
-    "의미 모델",
-    "행동과 변경 계약",
-    "권한과 거버넌스",
-    "검색과 분석",
-    "배포와 이동성"
-  ],
-  "closing_judgment": "OpenCrab은 Foundry 대체품이 아니라 Evidence-first Agent ontology를 작게 실험하는 도구로 평가하고, 한 업무 흐름을 두 모델로 매핑해 플랫폼이 보장할 부분과 Agent가 판단할 부분을 구분한다.",
-  "claim_origins": {
-    "foundry_model": "Palantir official documentation",
-    "opencrab_architecture": "OpenCrab public repository at commit d34352cec9d99c755c1e891f811911461a460280",
-    "implementation_limits": "source inspection and explicit inference from public code",
-    "creator_motivation": "creator-authored Threads post linked in the article; treated as a creator account of motivation, not as implementation proof"
+  "reviewed_at": "2026-08-29T22:06:00+09:00",
+  "prior_deployment_commit": "d5ca1bdc4340cbf9b018cd9b2988a07a75731f44",
+  "trigger": {
+    "type": "directly_related_research_material_update",
+    "details": "직전 배포 뒤 Palantir Foundry·AIP 운영 루프 연구 revision이 완성되어 최신 27번 글의 AIP 설명과 Foundry 비교에 직접 관련된 경계가 추가로 확인됐다. 특히 staged writes의 Beta 상태, Automate의 구성 가능한 human-review 경로, AIP Evals의 주장 상한과 기존 비교표의 미검증 비용 일반화를 재점검할 필요가 생겼다."
   },
+  "editorial_thesis": "OpenCrab은 Palantir Foundry의 축소 복제본이 아니라, 운영 온톨로지 문제를 9-Space 의미 문법, Evidence 중심 Pack 공장, MCP 도구 표면으로 분해한 경량 재해석이다.",
+  "central_question": "Palantir Foundry·AIP가 데이터·의미·행동을 연결하는 방식과 OpenCrab이 이를 Evidence·9-Space·Pack·MCP로 다시 나눈 방식은 무엇이 같고 어디에서 보장 수준이 갈리는가?",
+  "final_claim": "Foundry와 AIP는 데이터·Ontology·Action·AI 개발·평가 표면을 한 환경에서 연결할 수 있지만 안전한 운영 루프의 폐쇄는 설정과 조직 정책에 달려 있고, OpenCrab은 그 문제를 더 작은 의미·근거·배포 부품으로 분해한다.",
   "sources_reviewed": [
     "AGENTS.md",
     "content/operations/editorial-style.md",
     "content/operations/research-publishing-rules.md",
+    "intelligence/policies/content_publication.yaml",
     "wiki/_meta/index.md",
     "wiki/_meta/log.md",
-    "wiki/sources/ontology-agent-series-08-opencrab-ontology-build-architecture.md",
-    "wiki/sources/ontology-agent-series-09-ontology-context-compiler-opencrab.md",
-    "wiki/concepts/evidence-pack-and-context-compilation.md",
-    "content/notes/온톨로지/opencrab-ontology-build-architecture.md",
-    "content/notes/온톨로지/ontology-context-compiler-opencrab.md",
-    "Palantir Ontology and AIP official documentation",
-    "OpenCrab public repository and the pinned commit cited by the article"
+    "research/palantir-foundry-aip-operational-loop-20260829/README.md",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/state.json",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/outputs/01_full_report.md",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/outputs/evidence_audit.json",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/artifacts/revision-validation-20260829-2140.json",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/artifacts/state-supplement-20260829-2140.json",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/sources/bibliography.md",
+    "research/palantir-foundry-aip-operational-loop-20260829-2315/sources/evidence-notes/current-state-and-independent-boundary-verification-20260829-2140.md",
+    "Palantir AIP overview",
+    "Palantir AIP Logic staged writes",
+    "Palantir AIP Logic integration with Automate",
+    "Palantir AIP Evals overview",
+    "Palantir Ontology overview",
+    "OpenCrab public repository at commit d34352cec9d99c755c1e891f811911461a460280"
   ],
   "evidence_use": {
     "reflected": [
-      "AIP를 첫 등장 지점에서 정의해 제작 배경과 Foundry 비교의 전제를 먼저 제공했다.",
-      "기존 본문의 9-Space·Evidence/Claim·Pack·MCP·Action/Approval/ReBAC 경계를 마지막 결론에 다시 조립했다.",
-      "최종 판단의 적용 범위를 공개 OpenCrab 고정 커밋과 본문 인용 문서로 한정했다.",
-      "강한 트랜잭션·권한 집행·형식 판정·인과 검증이 필요한 경우의 적용 한계를 결론에 명시했다."
+      "AIP의 첫 정의를 Palantir 공식 범위에 맞춰 AI를 조직의 데이터·운영에 연결하는 플랫폼이자 Logic·Chatbot Studio·Evals 등을 포함하는 개발·실행 표면으로 구체화했다.",
+      "AIP Logic staged writes가 2026-08-29 현재 Beta이며 human review는 Automate 구성에 따라 proposal 경로로 둘 수 있지만 자동 보장은 아니라는 경계를 비교 전에 추가했다.",
+      "AIP Evals가 정의된 test case·evaluator 안의 평가 표면이며 production 안전성 전체를 자동 보증하지 않는다는 주장 상한을 추가했다.",
+      "비교표의 '높은 플랫폼·모델링·운영 비용'을 실제 비용 비교가 없다는 연구 범위와 맞지 않는 일반화로 판단해 '비용·ROI·실제 tenant 효과는 미검증'으로 교정했다.",
+      "결론에서 Foundry·AIP의 기능 연결 가능성과 실제 승인·평가·사후 대응을 조직이 닫아야 한다는 운영 경계를 다시 조립했다."
     ],
     "excluded": [
       {
-        "material": "2026-08-29 현재 OpenCrab main의 후속 구조 변화",
-        "reason": "이 글의 구현 분석 범위는 본문에 고정한 d34352cec9d99c755c1e891f811911461a460280 커밋이므로 최신 main의 기능을 섞지 않았다."
+        "material": "NIST의 배포 전 평가와 배포 후 monitoring 분리 자료",
+        "reason": "AIP Evals의 주장 상한을 이해하는 데 유용하지만 최신 27번의 중심 질문은 OpenCrab과 Foundry의 온톨로지 재해석 비교다. Palantir 자체 운영 루프를 다루는 후속 28번에 더 직접적이므로 본문을 넓히지 않았다."
       },
       {
-        "material": "기존 GraphRAG·LLM Wiki 후속 연구 번들",
-        "reason": "최신 글의 중심 질문인 Foundry와 OpenCrab의 운영 온톨로지 재해석에 직접 필요한 새 근거가 아니어서 추가하지 않았다."
+        "material": "MCP 2026-07-28 authorization hardening 자료",
+        "reason": "외부 Agent transport authorization의 독립 경계를 보강하지만 현재 글의 OpenCrab MCP 비교를 새 보안 논제로 확장할 정도의 필요는 없었다."
       },
       {
-        "material": "새 성능·비용·정확도 수치",
-        "reason": "동일 workload 비교가 없어 근거보다 강한 제품 우열 주장으로 확장하지 않았다."
+        "material": "Global Branching과 observability의 상세 lifecycle",
+        "reason": "Palantir 전용 후속 글의 핵심 소재이며, 27번의 OpenCrab 비교 논지를 유지하기 위해 결론의 일반 경계 이상으로 확장하지 않았다."
+      },
+      {
+        "material": "Palantir 비용·ROI·정확도·production 효과 수치 또는 우월성 주장",
+        "reason": "동일 workload 비교나 tenant 실행 근거가 없고 새 연구도 이를 미검증으로 명시하므로 추가하지 않았다."
+      },
+      {
+        "material": "Palantir 연구 번들의 PASS audit 자체",
+        "reason": "최신 audit는 citation resolution을 통과했지만 Palantir 출처가 metadata-only이고 local full-text snapshot·section hash와 독립 reviewer가 부족하다. 따라서 공개 글의 근거 SSOT로 승격하지 않고 공식 원문 재확인의 탐색 지도와 주장 경계로만 사용했다."
       }
     ]
   },
+  "edits": [
+    "첫 AIP 정의를 공식 AIP overview에 맞춰 구체화했다.",
+    "Foundry·Ontology·AIP 분리 설명 뒤 staged writes·Automate·Evals의 보장 경계를 추가했다.",
+    "AIP 도식의 '분석하고 행동'을 '분석·함수·자동화에 활용'로 좁혀 과도한 자동 행동 뉘앙스를 줄였다.",
+    "비교표의 근거 없는 비용 일반화를 미검증 범위 표기로 교체했다.",
+    "최종 결론에서 플랫폼 기능 존재와 실제 운영 루프 폐쇄를 분리했다.",
+    "Palantir 참고 자료를 현재 사용한 AIP overview·staged writes·Automate·Evals 문서로 정렬했다."
+  ],
   "concept_dependency_check": {
-    "aip_defined_at_first_use": "passed_after_edit",
-    "foundry_and_aip_separated_before_structural_comparison": "passed",
-    "9_space_roles_explained_before_detailed_comparison": "passed",
-    "comparison_tables_follow_prose_definitions": "passed"
+    "aip_defined_at_first_use": "pass",
+    "foundry_ontology_aip_separated_before_opencrab_comparison": "pass",
+    "aip_action_evaluation_limits_before_comparison_table": "pass",
+    "opencrab_9_space_roles_before_detailed_comparison": "pass",
+    "comparison_tables_follow_prose_definitions": "pass",
+    "undefined_core_term_before_evaluation": "none_found"
   },
-  "conclusion_independent_reading": {
-    "topic_and_background": "passed_after_edit",
-    "core_concepts": "passed_after_edit",
-    "proposal_and_operation": "passed_after_edit",
-    "rationale": "passed_after_edit",
-    "meaning_and_limits": "passed_after_edit",
-    "next_decision": "passed_after_edit"
+  "column_quality_check": {
+    "single_central_question": "pass",
+    "author_judgment_and_evidence_separated": "pass",
+    "sections_advance_argument": "pass",
+    "evidence_interpretation_colocated": "pass",
+    "report_like_listing": "acceptable_no_rewrite_needed",
+    "reasonable_counterconditions_visible": "pass",
+    "sentence_rhythm": "pass_manual_read_aloud_review",
+    "specific_closing_judgment": "pass"
+  },
+  "narrative_immersion": {
+    "mode": "not_needed",
+    "opencrab_pack_used": false,
+    "reason": "기존 글은 설비 점검 주기 사례, AIP 개발 배경, Foundry와 OpenCrab의 동일 사례 비교가 이미 글 전체를 관통한다. 새 연구는 정확성 경계를 고치는 표적 수정이므로 Mystery Box·False Victory 같은 장치를 추가하면 오히려 과연출과 논지 확장 위험이 크다."
   },
   "humanize_korean": {
     "genre": "column",
     "strength": "conservative",
-    "application": "manual rule review after structural edit",
-    "full_article_character_sequence_change_rate_percent": 10.7,
+    "application": "manual conservative review only; no standalone Fast Path rewrite because this run changes a small set of technical boundary sentences",
+    "current_run_character_sequence_change_rate_percent": 3.53,
     "claim_regression": "none",
-    "protected_facts_numbers_dates_names_acronyms_quotes_urls": "passed"
+    "protected_facts_numbers_dates_names_acronyms_quotes_urls": "pass"
   },
-  "regression": {
-    "claim_strength": "passed",
-    "citations": "passed",
-    "numbers": "passed",
-    "urls": "passed",
-    "visual_review": "passed_reuse_revalidation"
+  "conclusion_independent_reading": {
+    "topic_and_background": "pass",
+    "core_concepts": "pass",
+    "problem": "pass",
+    "proposal_and_operation": "pass",
+    "rationale": "pass",
+    "meaning_and_limits": "pass_after_targeted_boundary_edit",
+    "next_decision": "pass"
   },
   "image_impact": "reuse",
-  "image_review": {
-    "lead": "passed_reuse_revalidation",
-    "figure_01": "passed_reuse_revalidation",
-    "figure_02": "passed_reuse_revalidation",
-    "figure_03": "passed_reuse_revalidation",
-    "final_dimensions": "1659x948",
-    "source": "existing published PNG set; assets are unchanged from HEAD, prior pixel review remains applicable, and paths, alt text, placement, dimensions, and semantic coverage were revalidated"
-  },
+  "image_reason": "이번 변경은 AIP의 보장 범위와 미검증 비용 경계를 문장으로 교정하는 작업이다. 기존 네 이미지는 OpenCrab의 9-Space·Evidence·Pack·MCP 구조와 Foundry 대비를 시각화하며 변경된 Beta·Evals·비용 문구를 이미지 레이블이나 수치로 주장하지 않는다.",
   "verification": {
-    "quartz_plugins": 45,
-    "post_validator": "passed",
-    "route_check": "passed",
-    "typescript_prettier": "passed",
-    "tests": "122/122 passed",
+    "status": "release_gate_passed_pending_deployment",
+    "quartz_plugins": "45 installed",
+    "post_validator": "pass",
+    "route_check": "pass",
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
     "production_build": "38 inputs, 405 outputs",
-    "built_post_validator": "passed",
-    "built_route_check": "passed",
-    "images_unchanged_from_head": "passed"
+    "built_post_validator": "pass",
+    "built_route_check": "pass",
+    "built_concept_order": "AIP definition and action/evaluation boundary appear before the Foundry/OpenCrab comparison table",
+    "built_content_regression": "unsupported cost generalization absent; conclusion boundary present; H1=1; images=4",
+    "image_reuse_revalidation": "pass; four tracked PNG assets unchanged, each 1659x948",
+    "git_diff_check": "pass",
+    "live_page": "pending"
   },
   "remaining_uncertainty": [
-    "The creator-motivation Threads post is externally linked but is not archived as a local source snapshot in this repository.",
-    "The article's implementation analysis is intentionally pinned to OpenCrab commit d34352cec9d99c755c1e891f811911461a460280; later repository changes are outside that implementation claim scope.",
-    "No same-workload performance, cost, or production-readiness benchmark between Foundry and OpenCrab is claimed."
+    "Palantir tenant에서 Logic·Action·Evals·Branching·observability·MCP를 직접 실행하지 않았다.",
+    "Palantir 연구 번들은 현재 citation resolution은 통과하지만 vendor source의 local full-text snapshot·section hash와 독립 reviewer가 부족하다.",
+    "Palantir 비용·ROI·production 효과는 비교하지 않았으며 이번 글은 해당 우열을 주장하지 않는다.",
+    "OpenCrab 구현 분석은 기존과 동일하게 공개 commit d34352cec9d99c755c1e891f811911461a460280에 고정한다."
   ]
 }
