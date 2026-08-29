@@ -1,6 +1,6 @@
 ---
-title: "27. OpenCrab은 팔란티어 Foundry의 온톨로지를 어떻게 다시 풀었나"
-description: "팔란티어 Foundry가 데이터·업무·권한·행동을 하나의 운영 온톨로지로 묶는다면, OpenCrab은 그 문제를 9-Space 문법, Evidence 중심 Pack, GraphRAG와 MCP로 어떻게 경량 재해석했는지 실제 코드 구조와 한계까지 설명합니다."
+title: "27. 같은 온톨로지, 다른 책임: OpenCrab은 팔란티어 Foundry를 어떻게 다시 풀었나"
+description: "같은 온톨로지라는 말을 쓰는 Palantir Foundry와 OpenCrab이 왜 서로 다른 방식으로 움직이는지, 설비 사례와 공개 코드를 따라 9-Space·Evidence·Pack·MCP의 역할과 한계를 설명합니다."
 date: 2026-08-27
 tags:
   - 온톨로지
@@ -15,18 +15,22 @@ tags:
 
 ![팔란티어 Foundry의 운영 온톨로지와 OpenCrab의 9-Space·Evidence·Pack·MCP 재해석을 비교한 전체 지도](../../attachments/opencrab-foundry-ontology-reinterpretation/opencrab-foundry-ontology-reinterpretation-infographic.png)
 
-설비 점검 주기를 30일에서 14일로 줄여야 하는지 묻는 순간, 필요한 것은 문서 검색 하나가 아닙니다. 어떤 설비에서 문제가 생겼는지, 어떤 기록이 위험 증가를 보여 주는지, 누가 변경을 승인할 수 있는지, 실제 시스템의 주기를 어떻게 바꿀지까지 이어져야 합니다.
+가정해 보겠습니다. 공장의 베어링 진동이 평소보다 커졌습니다. 현장팀은 점검 주기를 30일에서 14일로 줄이자고 제안합니다. 관련 문서와 고장 기록은 찾았습니다. 그런데 버튼을 누르려는 순간, 더 어려운 질문들이 남습니다. 이 판단은 어떤 기록에서 나왔을까요? 누가 변경을 승인할 수 있을까요? 주기를 바꾼 뒤 고장률과 비가동 시간이 실제로 줄었는지는 누가 확인할까요?
+
+Palantir Foundry와 OpenCrab은 둘 다 이런 문제를 **온톨로지**로 풀려고 합니다. 그렇다면 OpenCrab은 Foundry의 축소 복제본일까요? 겉으로는 그렇게 보일 수 있습니다. 그러나 제작 배경과 공개 코드를 따라가면 첫 답은 곧 깨집니다. 두 시스템은 같은 문제의식에서 출발했지만, 근거를 모으는 일부터 실제 변경을 책임지는 지점까지 서로 다른 길을 택했습니다.
 
 > [!summary] 먼저 결론
-> OpenCrab은 팔란티어 Foundry를 작게 복제한 프로젝트가 아닙니다. Foundry가 조직의 실제 객체와 업무 변경을 온톨로지 안에서 운영한다면, OpenCrab은 문서와 로그에서 **근거·주장·결과·조절점·정책**을 뽑아 Agent가 읽을 수 있는 그래프로 만들고, 이를 Pack과 MCP로 옮기는 쪽에 무게를 둡니다. 둘은 같은 문제의식을 공유하지만 강한 지점이 다릅니다.
+> OpenCrab은 Palantir Foundry의 축소판이 아니라, 운영 온톨로지의 일부 책임을 작은 부품으로 다시 나눈 프로젝트입니다. Foundry가 업무 객체·행동·권한을 한 플랫폼에서 연결한다면, OpenCrab은 문서와 로그를 **Evidence·Claim·Outcome·Lever·Policy**로 읽고 검증한 지식을 Pack과 MCP로 Agent에 전달합니다. 둘의 차이는 기능 수보다 **근거에서 실제 변경까지 어디를 누가 책임지는가**에 있습니다.
 
-## OpenCrab은 왜 만들어졌을까요
+## 첫 단서: OpenCrab은 AIP를 쓰던 경험에서 시작됐습니다
 
 OpenCrab 제작자의 출발점은 Palantir AIP였습니다. AIP(Artificial Intelligence Platform)는 Palantir 공식 문서에서 AI를 조직의 데이터와 운영에 연결하는 플랫폼으로 설명되며, AIP Logic·Chatbot Studio·Evals 같은 도구가 Ontology 위에서 LLM 워크플로·Agent·함수를 만들도록 돕습니다. ([Palantir AIP overview](https://www.palantir.com/docs/foundry/aip)) 공개 Threads 글에서 제작자는 2025년 여름 AIP를 업무에 쓰면서 온톨로지를 업무에 도입하는 방식이 강력하다고 느꼈지만, 실제로 다루는 과정은 쉽지 않았다고 적었습니다. 그때부터 혼자 쓸 온톨로지 도구를 만들기 시작했고, 초기의 `Langent`를 거쳐 OpenCrab으로 발전시켰다고 설명합니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
 
-이 배경을 먼저 알고 나면 OpenCrab을 보는 질문도 달라집니다. “Foundry를 작게 복제했나?”보다 **AIP를 쓰며 경험한 운영 온톨로지의 장점을 개인과 작은 팀이 다룰 수 있는 부품으로 어떻게 다시 풀었나?**가 더 좋은 질문입니다.
+이 배경을 알고 나면 OpenCrab을 보는 질문도 달라집니다. “Foundry를 얼마나 작게 복제했나?”보다 **AIP를 쓰며 경험한 운영 온톨로지의 장점을 개인과 작은 팀이 다룰 수 있는 부품으로 어떻게 다시 풀었나?**를 물어야 합니다.
 
-## 잠깐, Foundry와 AIP는 같은 것일까요
+출발점이 같다고 목적지까지 같은 것은 아닙니다. 그 차이를 보려면 먼저 Foundry, Ontology와 AIP가 각각 무슨 일을 맡는지 나눠야 합니다.
+
+## Foundry·Ontology·AIP를 나누면 차이가 보입니다
 
 같은 것은 아닙니다. 아주 거칠게 나누면 Foundry는 기업의 데이터와 업무를 운영하는 플랫폼이고, Ontology는 그 안에서 현실의 업무 객체와 관계·행동을 공통 의미로 묶는 계층입니다. AIP는 모델과 Agent가 그 Ontology와 데이터를 활용해 분석·함수·자동화와 업무 흐름을 만들도록 하는 AI 개발·실행 표면입니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [AIP overview](https://www.palantir.com/docs/foundry/aip))
 
@@ -49,17 +53,19 @@ LLM · Agent가 Ontology를 읽고 분석·함수·자동화에 활용
 
 그래서 제작자가 “AIP를 쓰면서 온톨로지가 강력하다고 느꼈다”고 말한 것도 자연스럽습니다. AIP에서 Agent가 단순히 문서를 검색하는 것을 넘어 업무 객체·관계·행동을 다룰 수 있는 배경에 Ontology가 있기 때문입니다.
 
-## 그렇다면 OpenCrab은 무엇을 가져왔을까요
+여기까지만 보면 OpenCrab은 이 구조를 작게 옮긴 도구처럼 보입니다. 하지만 공개 코드를 열어 보면 예상과 다른 장면이 나옵니다. Object·Link·Action의 축소 복사본보다, 운영 온톨로지에서 풀어야 할 질문을 전혀 다른 부품으로 나눈 흔적이 더 선명합니다.
+
+## 공개 코드는 다른 답을 보여줍니다: OpenCrab은 작은 Foundry가 아니었습니다
 
 AIP에서 영감을 받았다는 사실과 Foundry의 구조를 그대로 복제했다는 주장은 분리해야 합니다. 공개 코드에서는 Object·Link·Action을 1:1로 옮기기보다, 운영 온톨로지에서 체감한 문제를 OpenCrab식 부품으로 다시 나눈 흔적이 더 뚜렷합니다.
 
-공개 구현을 따라가다 보면 세 가지 문제가 반복해서 눈에 들어옵니다.
+코드를 따라가며 가장 먼저 마주치는 것은 검색의 한계입니다.
 
 문서를 검색하는 것만으로는 부족합니다. OpenCrab은 원문 관찰인 Evidence와 모델이 해석한 Claim을 나누고, Concept·Outcome까지 연결합니다. OpenCrab의 온톨로지형 Evidence 데이터에서도 Claim에 `evidence_refs`, confidence, claim type 같은 정보를 붙여 근거와 해석을 구분하는 패턴을 확인할 수 있습니다.
 
-지식은 설명에서 끝나지 않고 행동과 이어져야 합니다. 그래서 `Outcome`과 `Lever`를 따로 두고, 무엇이 중요한 결과인지와 사람이 무엇을 조절할 수 있는지를 구분합니다.
+그다음에는 검색 결과를 행동과 연결하는 문제가 나타납니다. OpenCrab은 `Outcome`과 `Lever`를 따로 두고, 무엇이 중요한 결과인지와 사람이 무엇을 조절할 수 있는지를 구분합니다.
 
-그리고 Agent가 움직이기 시작하면 경계가 필요합니다. `Subject`, `Resource`, `Policy`와 ReBAC·Approval 같은 구성요소는 누가 무엇을 보고 바꾸고 승인할 수 있는지를 표현하려는 장치입니다.
+마지막으로 Agent가 움직이기 시작하면 권한 경계가 필요합니다. `Subject`, `Resource`, `Policy`와 ReBAC·Approval 같은 구성요소는 누가 무엇을 보고 바꾸고 승인할 수 있는지를 표현하려는 장치입니다.
 
 OpenCrab 공개 저장소는 이 구조를 LocalCrab 온톨로지 공장과 호스팅 생태계를 잇는 형태로 설명합니다. 로컬 엔진은 문서·크롤링 자료·OCR 결과를 모으고, Evidence를 색인하고, 그래프를 검증해 OpenCrab Pack을 만드는 역할을 맡습니다. ([OpenCrab README](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280))
 
@@ -77,9 +83,9 @@ Foundry가 **운영 객체와 변경을 하나의 플랫폼에서 일관되게 �
 > [!important] 비교할 때 지켜야 할 경계
 > Foundry는 전사 운영 플랫폼이고 OpenCrab은 공개 코드 기준으로 알파 단계의 로컬 온톨로지 공장입니다. OpenCrab을 Foundry의 대체품으로 보기보다, AIP에서 경험한 운영 온톨로지의 문제를 로컬 Agent 환경에서 어떤 최소 부품으로 다시 풀었는지 보는 편이 정확합니다.
 
-## 같은 설비 문제를 두 시스템은 어떻게 바라볼까요
+## 같은 설비 앞에서 두 시스템은 서로 다른 지도를 펼칩니다
 
-가정해 보겠습니다. 한 공장의 베어링 진동이 계속 커지고 있습니다. 현장팀은 점검 주기를 30일에서 14일로 줄이려 합니다. 변경하려면 정비 책임자의 승인이 필요하고, 변경 뒤에는 고장률과 비가동 시간을 추적해야 합니다.
+도입의 설비 문제를 두 시스템에 차례로 넣어 보겠습니다. 베어링 진동이 계속 커지는 상황에서 현장팀은 점검 주기를 30일에서 14일로 줄이려 합니다. 변경하려면 정비 책임자의 승인이 필요하고, 변경 뒤에는 고장률과 비가동 시간을 추적해야 합니다.
 
 ### Foundry에서는 운영 객체와 변경 계약을 먼저 세웁니다
 
@@ -138,7 +144,9 @@ OpenCrab의 9-Space로 같은 장면을 읽으면 다음처럼 바뀝니다.
 
 이 지점에서 OpenCrab은 일반적인 GraphRAG보다 의사결정에 가까워집니다. 다만 그래프가 실제 설비 관리 시스템의 값을 자동으로 바꾸는 것은 아닙니다. 의미를 읽고 판단 재료를 준비하는 일과 실제 운영 변경은 구분해야 합니다.
 
-## 9-Space는 경량 상위 온톨로지이면서 닫힌 그래프 문법입니다
+이제 두 번째 질문이 생깁니다. OpenCrab은 이렇게 나눈 의미를 어떤 규칙으로 연결할까요? 답은 9-Space의 닫힌 그래프 문법에 있습니다.
+
+## OpenCrab은 세계를 아홉 역할로 잘라 읽습니다
 
 9-Space는 세 묶음으로 보면 기억하기 쉽습니다.
 
@@ -196,7 +204,9 @@ Concept · Resource · Policy · Outcome
 
 도메인 그래프는 현업의 정확한 의미를 보존하고, 9-Space는 질문 계획·근거 검사·Pack 호환을 위한 공통 렌즈로 쓰는 방식입니다.
 
-## Lever는 Foundry Action이 아닙니다
+여기서 가장 그럴듯한 오해가 하나 남습니다. 결과를 바꾸는 `Lever`가 있다면 Foundry의 `Action`도 대신할 수 있지 않을까요? 이 질문에서 두 시스템의 책임 차이가 다시 드러납니다.
+
+## 결정적인 함정: Lever를 Action으로 읽으면 틀립니다
 
 사용자 입장에서 가장 헷갈리기 쉬운 부분입니다.
 
@@ -233,7 +243,9 @@ OpenCrab 공개 코드에는 YAML Action schema, workflow 상태, 승인 큐, �
 
 그래서 OpenCrab의 실행 구조는 **운영 Action의 골격**으로 보는 편이 맞습니다. Foundry처럼 변경의 유일한 트랜잭션 경계가 되었다고 보기는 이릅니다.
 
-## Pack은 지식을 옮기는 방법이지만, 세 가지 Pack을 구분해야 합니다
+실행 경계가 아직 하나로 닫히지 않았다면 OpenCrab의 강점은 어디에 있을까요? 답은 지식을 만드는 과정과 결과를 함께 옮기는 `Pack`에서 찾을 수 있습니다.
+
+## 지식을 옮기는 상자, Pack 안에는 무엇이 들어갈까요
 
 OpenCrab에서 `Pack`은 문맥에 따라 다른 뜻으로 사용됩니다.
 
@@ -286,7 +298,9 @@ canonical_entity_mapping
 
 OpenCrab에는 alias와 duplicate candidate를 관리하는 Identity 계층이 있지만, 검색과 Pack federation 전체에 자동 적용되는 수준은 아닙니다. **Pack 유통 구조는 보이지만 Pack 연합 의미론은 아직 비어 있다**고 정리할 수 있습니다.
 
-## MCP는 OpenCrab의 가장 실용적인 선택입니다
+Pack이 검증한 지식을 담아 옮기는 상자라면, Agent는 그 안의 지식을 어떻게 꺼내 쓸까요? 여기서 OpenCrab의 가장 실용적인 선택인 MCP가 등장합니다.
+
+## Agent가 Pack을 여는 열쇠는 MCP입니다
 
 MCP는 Agent가 저장소 내부 구조를 몰라도 의미 있는 도구를 호출하게 합니다. OpenCrab의 로컬 stdio 서버는 `initialize`, `tools/list`, `tools/call`을 처리하고, 도구 이름·입력 schema·실제 함수를 하나의 registry에 모읍니다. ([`server.py`](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/opencrab/mcp/server.py))
 
@@ -349,7 +363,9 @@ MCP의 가치는 모델을 바꿔도 같은 도구 계약을 유지할 수 있�
 
 다만 “MCP가 있다”와 “모든 변경이 하나의 안전한 명령 경계를 통과한다”는 다른 말입니다. CLI, REST API, stdio MCP와 다른 실행 표면이 동일한 내부 Command Service를 사용해야 문법·권한·승인·Evidence 검사를 한곳에서 강제할 수 있습니다. OpenCrab은 그 방향을 보여 주지만 공개 코드의 모든 경로가 완전히 합쳐진 상태는 아닙니다.
 
-## Foundry와 OpenCrab을 같은 기준으로 비교하면
+이제 처음의 베어링 문제로 돌아갈 수 있습니다. 문서를 찾고, 근거를 해석하고, 바꿀 값을 고르고, 실제 변경을 실행하는 책임을 어디까지 맡느냐에 따라 두 시스템의 정체가 갈립니다.
+
+## 수수께끼의 답: 같은 문제를 맡지만 책임의 끝이 다릅니다
 
 | 비교 축             | 팔란티어 Foundry                           | OpenCrab 공개 구조                       |
 | ------------------- | ------------------------------------------ | ---------------------------------------- |
@@ -364,7 +380,7 @@ MCP의 가치는 모델을 바꿔도 같은 도구 계약을 유지할 수 있�
 
 팔란티어 공식 문서는 Ontology가 기업의 복잡하고 연결된 의사결정을 표현하며 사람과 AI Agent가 운영 흐름에서 협업하도록 설계됐다고 설명합니다. ([The Ontology system](https://www.palantir.com/docs/foundry/architecture-center/ontology-system/)) OpenCrab도 Outcome·Lever·Policy와 MCP를 통해 같은 방향을 바라봅니다.
 
-차이는 “운영을 어디까지 책임지는가”에 있습니다.
+차이는 “운영을 어디까지 책임지는가”에 있습니다. 기능 이름이 비슷해도 이 경계가 다르면 실제 사용 방식은 완전히 달라집니다.
 
 ```text
 Foundry
@@ -380,7 +396,7 @@ OpenCrab
 
 이 문장은 제작자의 직접 인용이 아니라, 앞서 확인한 AIP 사용 경험과 OpenCrab 구조를 함께 읽어 정리한 해석입니다. OpenCrab은 그 문제를 전사 플랫폼이 아니라 로컬 공장·Pack·MCP라는 더 작은 부품으로 다시 나눴습니다.
 
-## OpenCrab이 잘 잡은 부분과 아직 남은 부분
+## 매력은 선명하지만 빈칸도 함께 보입니다
 
 ### 잘 잡은 부분
 
@@ -408,7 +424,7 @@ OpenCrab
 
 **형식 Reasoner가 아닙니다.** HybridQuery와 Impact·Lever 기능은 관련 경로와 영향 후보를 찾는 데 유용하지만 논리적 필연성이나 인과 효과를 증명하지 않습니다.
 
-## 이 스터디에서는 무엇을 비교해 보면 좋을까요
+## 직접 확인하려면 같은 장면을 두 번 모델링해 보십시오
 
 OpenCrab을 소개할 때 전체 기능을 한 번에 외우기보다, 하나의 업무 장면을 두 방식으로 모델링해 보는 편이 좋습니다.
 
@@ -421,7 +437,7 @@ OpenCrab을 소개할 때 전체 기능을 한 번에 외우기보다, 하나의
 5. 결과를 Pack으로 옮길 때 필요한 Evidence와 품질 검사를 확인합니다.
 6. 여러 Pack을 함께 쓸 때 ID와 Claim 충돌을 어떻게 처리할지 질문합니다.
 
-이 비교의 목적은 어느 쪽이 더 낫다고 고르는 것이 아닙니다. **어떤 보장을 플랫폼이 맡고, 어떤 판단을 Agent와 운영자가 맡는지**를 분명하게 보는 데 있습니다.
+두 모델을 나란히 놓으면 처음의 수수께끼가 실무 질문으로 바뀝니다. **어떤 보장을 플랫폼이 맡고, 어떤 판단을 Agent와 운영자가 맡는지**를 직접 표시할 수 있기 때문입니다.
 
 ## 어디에 쓰면 맞고, 어디에서는 멈춰야 할까요
 
@@ -443,15 +459,17 @@ OpenCrab은 다음 조건에서 매력적입니다.
 
 작은 실험의 기준도 여기서 나옵니다. 먼저 문서 검색이 어려운 업무 하나를 고르고, `Evidence → Claim → Outcome → Lever → Policy` 경로가 실제 판단을 더 잘 설명하는지 확인하면 됩니다. 그다음에만 Pack과 MCP를 붙여도 늦지 않습니다.
 
-## 최종 판단
+## 최종 판단: 같은 온톨로지라는 말 뒤에는 다른 책임이 있습니다
 
-문서와 로그를 Agent가 읽게 한다고 곧바로 운영 온톨로지가 되는 것은 아닙니다. 실제 의사결정으로 이어지려면 원문 근거와 모델의 해석을 구분하고, 어떤 결과를 관리하는지와 무엇을 조절할 수 있는지 밝히며, 누가 변경을 승인하고 실행할 수 있는지도 함께 다뤄야 합니다. Foundry와 AIP는 Object·Link·Action·Function·Security, Logic·Evals·observability 같은 기능과 계약을 한 환경에서 연결할 수 있습니다. 다만 실제 승인·평가·변경 통합·실패 복구·증거 보존·사후 대응이 이어져 안전한 운영 루프가 되는지는 각 기능의 설정과 조직의 정책에 달려 있습니다. OpenCrab은 같은 문제를 전사 플랫폼이 아니라 더 작은 의미·근거·배포 부품으로 나눠 다룹니다.
+처음의 베어링 문제로 돌아가 보겠습니다. 진동 기록을 찾아 “점검 주기를 14일로 줄이자”는 문장을 만드는 것까지는 검색 시스템도 할 수 있습니다. 운영 온톨로지로 이어지려면 그 문장이 어떤 Evidence에서 나왔는지, 어떤 Outcome을 지키기 위한 Claim인지, 누가 Lever를 바꿀 수 있는지, 어떤 Policy가 승인을 요구하는지까지 설명해야 합니다. 그리고 실제 시스템의 주기를 바꾸려면 이 판단을 실행 계약과 권한, 승인, 결과 관측에 연결해야 합니다.
 
-OpenCrab의 중심 흐름은 문서와 로그에서 Evidence를 수집하고, 그 근거를 Claim·Concept·Outcome·Lever·Policy 같은 9-Space 역할로 연결한 뒤, 검사한 지식을 Pack으로 묶어 MCP를 통해 Agent에 제공하는 방식입니다. 이 구조에서 9-Space는 현업의 정확한 도메인 그래프를 대신하는 분류표가 아니라 자료를 읽는 공통 역할 문법입니다. Pack은 그래프와 함께 Evidence와 품질 정보를 옮기는 배포 단위이고, MCP는 여러 모델이 같은 의미 작업을 호출하게 하는 도구 계약입니다. 원문 관찰과 모델 해석을 분리하고, 관계 문법과 근거 경로를 모델 밖에 남긴다는 점이 OpenCrab을 단순 문서 검색보다 의사결정에 가까운 지식 구조로 만드는 이유입니다.
+여기서 “OpenCrab은 작은 Foundry일 것”이라는 첫 답이 깨집니다. Foundry와 AIP는 Object·Link·Action·Function·Security, Logic·Evals·observability 같은 기능과 계약을 한 환경에서 연결할 수 있습니다. 다만 실제 승인·평가·변경 통합·실패 복구·증거 보존·사후 대응이 안전한 운영 루프로 이어지는지는 각 기능의 설정과 조직의 정책에 달려 있습니다. OpenCrab은 그 전체 운영 플랫폼을 재현하는 대신, 문서와 로그를 판단 가능한 지식으로 만드는 구간을 더 작은 부품으로 분해했습니다.
 
-다만 이 판단은 본문에서 분석한 공개 OpenCrab 커밋 `d34352cec9d99c755c1e891f811911461a460280`과 인용한 공개 문서를 기준으로 합니다. 그 구현에는 Action schema·Workflow·Approval·ReBAC 같은 부품이 있지만 모든 쓰기가 하나의 강제된 실행 경계를 통과하지는 않으며, 여러 Pack의 ID·revision·Claim 충돌을 해결하는 연합 계약도 아직 확인되지 않았습니다. HybridQuery와 Lever simulation 역시 형식 Reasoner나 인과 효과 추정 모델이 아닙니다. 강한 트랜잭션·권한 집행·형식 판정·인과 검증이 필요한 업무라면 OpenCrab만으로 그 보장을 대신할 수 없습니다.
+OpenCrab의 경로는 `문서·로그 → Evidence → Claim·Concept·Outcome·Lever·Policy → 검사 → Pack → MCP → Agent`입니다. 9-Space는 현업의 정밀한 도메인 그래프를 대신하지 않고 자료를 읽는 공통 역할 문법으로 작동합니다. Pack은 그래프와 함께 Evidence와 품질 정보를 옮기는 배포 단위이며, MCP는 여러 모델이 같은 의미 작업을 호출하게 하는 도구 계약입니다. 원문 관찰과 모델 해석을 분리하고 근거 경로를 모델 밖에 남긴다는 점이 OpenCrab을 단순 문서 검색보다 의사결정에 가까운 지식 구조로 만듭니다.
 
-그래서 첫 실험은 작게 잡는 편이 낫습니다. 실제 업무 하나를 골라 Foundry식으로 `Object·Link·Action·Function·Security`를 적고, 같은 장면을 OpenCrab의 `Evidence → Claim → Outcome → Lever → Policy`로 다시 풀어 보십시오. 두 모델을 나란히 놓았을 때 근거를 되짚고 승인 경계를 설명하는 데 이 경량 구조가 충분하다면 Pack과 MCP로 범위를 넓힐 수 있습니다. 반대로 실제 변경을 강제하는 운영 계약이 핵심이라면, 그 책임은 더 강한 플랫폼이나 별도의 결정론적 계층에 남겨 두는 것이 맞습니다.
+하지만 이 판단은 공개 OpenCrab 커밋 `d34352cec9d99c755c1e891f811911461a460280`과 본문에 인용한 공개 문서를 기준으로 합니다. Action schema·Workflow·Approval·ReBAC 같은 부품은 있어도 모든 쓰기가 하나의 강제된 실행 경계를 통과하지는 않습니다. 여러 Pack의 ID·revision·Claim 충돌을 해결하는 연합 계약도 아직 확인되지 않았고, HybridQuery와 Lever simulation은 형식 Reasoner나 인과 효과 추정 모델이 아닙니다. 강한 트랜잭션·권한 집행·형식 판정·인과 검증이 필요한 업무라면 별도의 결정론적 계층이나 더 강한 운영 플랫폼이 필요합니다.
+
+따라서 첫 실험은 작게 잡는 편이 낫습니다. 실제 업무 하나를 Foundry식 `Object·Link·Action·Function·Security`와 OpenCrab식 `Evidence → Claim → Outcome → Lever → Policy`로 각각 적어 보십시오. 후자의 구조만으로도 근거를 되짚고 승인 경계를 설명할 수 있다면 Pack과 MCP로 넓혀 갈 수 있습니다. 반대로 실제 변경을 강제하는 계약이 핵심이라면 그 책임을 OpenCrab에 넘기지 말아야 합니다. 같은 **온톨로지**라는 이름보다 중요한 것은, 판단이 근거에서 행동으로 넘어가는 동안 어느 경계를 누가 책임지는가입니다.
 
 ## 함께 읽기
 

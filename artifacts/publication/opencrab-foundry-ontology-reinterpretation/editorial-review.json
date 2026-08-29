@@ -2,134 +2,170 @@
   "slug": "opencrab-foundry-ontology-reinterpretation",
   "profile": "longform-technical-explainer",
   "date": "2026-08-30",
-  "reviewed_at": "2026-08-30T00:01:00+09:00",
-  "prior_deployment_commit": "fee029281a4c4b2c4242b6d1d8ad170b65104314",
+  "reviewed_at": "2026-08-30T01:56:45+09:00",
+  "prior_deployment_commit": "b318cbcdbb15eb55a7afcbbe231c69a087e08e03",
   "trigger": {
-    "type": "directly_related_research_material_update",
-    "details": "직전 배포 뒤 2026-08-29 23:16 KST에 Palantir Foundry·AIP 운영 루프 연구의 Global Branching governance·recovery·retention 보강이 canonical report와 26-source·16-claim Evidence audit PASS 상태로 재결속됐다. 이 보강은 최신 27번 글의 Foundry 강점 표기와 '안전한 운영 루프' 경계를 직접 좁힐 수 있어 조건 2를 충족했다."
+    "type": "explicit_opencrab_narrative_editorial_request",
+    "details": "사용자가 27번 글을 OpenCrab의 super_fantasy ontology pack을 활용해 더 흥미진진하게 다듬어 달라고 요청했다. 기존 글은 사실과 개념 정의는 충분했지만 기능 설명이 길게 이어져, 도입의 설비 사례와 'OpenCrab은 작은 Foundry인가'라는 중심 질문이 중간에 약해지는 구조적 결함이 있었다."
   },
-  "editorial_thesis": "OpenCrab은 Palantir Foundry의 축소 복제본이 아니라, 운영 온톨로지 문제를 9-Space 의미 문법, Evidence 중심 Pack 공장, MCP 도구 표면으로 분해한 경량 재해석이다.",
-  "central_question": "Palantir Foundry·AIP가 데이터·의미·행동을 연결하는 방식과 OpenCrab이 이를 Evidence·9-Space·Pack·MCP로 다시 나눈 방식은 무엇이 같고 어디에서 보장 수준이 갈리는가?",
-  "final_claim": "Foundry와 AIP는 데이터·Ontology·Action·AI 개발·평가·변경 검토 표면을 한 환경에서 연결할 수 있지만, 승인·변경 통합·실패 복구·증거 보존·사후 대응이 자동으로 하나의 안전한 운영 루프가 되는 것은 아니며 OpenCrab은 같은 문제를 더 작은 의미·근거·배포 부품으로 분해한다.",
+  "editorial_thesis": "OpenCrab은 Palantir Foundry의 축소 복제본이 아니라, 운영 온톨로지 문제 가운데 문서·로그를 근거가 있는 판단 재료로 만들고 Pack과 MCP로 Agent에 전달하는 구간을 작은 부품으로 다시 나눈 프로젝트다.",
+  "central_question": "같은 온톨로지라는 말을 쓰는 Palantir Foundry와 OpenCrab은 왜 실제 운영에서 서로 다른 책임을 지는가?",
+  "final_claim": "Foundry는 업무 객체·행동·권한·운영 변경을 한 환경에서 연결할 수 있고 OpenCrab은 Evidence·9-Space·Pack·MCP를 통해 판단 가능한 지식을 만드는 데 무게를 두므로, 선택 기준은 기능 수가 아니라 근거에서 행동까지 어느 경계를 누가 책임지는가다.",
+  "instruction_check": {
+    "tracked_agents_md": "not_found_in_clean_origin_main_worktree",
+    "applied_skills": ["publish-tteggu-blog", "humanize-korean"],
+    "workspace_isolation": "clean publication worktree based on latest origin/main",
+    "unrelated_changes_preserved": true
+  },
   "sources_reviewed": [
-    "AGENTS.md",
-    "content/operations/editorial-style.md",
-    "content/operations/research-publishing-rules.md",
-    "wiki/_meta/index.md",
-    "wiki/_meta/log.md",
-    "wiki/sources/palantir-foundry-aip-operational-loop-2026-08-29.md",
-    "wiki/analyses/next-blog-topic-palantir-foundry-aip-operational-loop-2026-08-29.md",
-    "wiki/concepts/evaluation-evidence-ladder-and-claim-ceiling.md",
-    "wiki/concepts/semantic-contract-and-promotion-governance.md",
-    "wiki/concepts/execution-host-and-semantic-authority.md",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/README.md",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/state.json",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/outputs/01_full_report.md",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/outputs/evidence_audit.json",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/sources/bibliography.md",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/sources/sources.jsonl",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/outputs/03_independent_change_control_audit_retention_supplement.md",
-    "research/palantir-foundry-aip-operational-loop-20260829-2315/artifacts/state-supplement-20260829-2340.json",
-    "Palantir Global Branching core concepts",
-    "Palantir June 2026 Global Branch lifecycle announcement",
-    "Palantir Global Branching resource protection and approval policies"
+    "content/notes/온톨로지/opencrab-foundry-ontology-reinterpretation.md",
+    "artifacts/publication/opencrab-foundry-ontology-reinterpretation/editorial-review.json at prior deployment",
+    "content/notes/온톨로지/palantir-foundry-aip-operational-loop.md as a voice and concept-order exemplar only",
+    "OpenCrab pack metadata: super_fantasy ontology pack version 1.0.0",
+    "OpenCrab source package 8d1d73f2-f333-4e3e-ba9e-7e6a305adea9",
+    "OpenCrab installed alias package 재미있는판타지 / e7f73deb-25b7-4ba8-9ffa-380b795b812f",
+    "super_fantasy_ontology/nodes.json",
+    "super_fantasy_ontology/edges.json"
   ],
+  "opencrab_narrative_lens": {
+    "mode": "opencrab_pack",
+    "pack_title": "super_fantasy ontology pack",
+    "version": "1.0.0",
+    "source_package_id": "8d1d73f2-f333-4e3e-ba9e-7e6a305adea9",
+    "installed_alias_package_id": "e7f73deb-25b7-4ba8-9ffa-380b795b812f",
+    "duplicate_handling": "super_fantasy ontology pack과 재미있는판타지는 같은 super_fantasy_ontology 원본에서 파생됐으므로 서로 독립된 두 근거로 계산하지 않았다.",
+    "dominant_device": {
+      "name": "Mystery Box",
+      "pack_definition": "핵심 비밀이 서서히 드러나는 구조로 호기심과 탐구욕을 만든다.",
+      "application": [
+        "도입에서 'OpenCrab은 Foundry의 축소 복제본인가'라는 실제 비교 질문을 제시했다.",
+        "Foundry·Ontology·AIP의 역할, OpenCrab 공개 코드, 9-Space, Lever·Action, Pack, MCP를 단서 순서로 배치했다.",
+        "비교 절과 결론에서 '같은 이름이지만 책임의 끝이 다르다'는 답을 명시적으로 회수했다."
+      ]
+    },
+    "secondary_device": {
+      "name": "False Victory",
+      "pack_definition": "해결된 것처럼 보인 첫 답 뒤에서 더 큰 조건이나 문제가 드러나는 전환이다.",
+      "application": [
+        "AIP에서 영감을 받았다는 사실 때문에 OpenCrab을 작은 Foundry로 보는 첫 가설을 제시했다.",
+        "공개 코드가 Object·Link·Action 복제보다 Evidence·9-Space·Pack·MCP로 책임을 다시 나눈 구조임을 보여 주며 그 가설을 깨뜨렸다.",
+        "Lever가 존재한다는 이유로 Foundry Action까지 대신한다고 보는 두 번째 오해도 실제 구현 한계로 교정했다."
+      ]
+    },
+    "emotional_rhythm": "호기심 → 그럴듯한 첫 답 → 공개 코드에서 생긴 의문 → 9-Space·Lever·Pack·MCP의 점진적 발견 → 책임 경계에 대한 납득",
+    "excluded_devices": [
+      {
+        "name": "Ticking Clock",
+        "reason": "글에 실제 시한이나 시간 압박이 없으므로 가짜 긴장감을 만들지 않았다."
+      },
+      {
+        "name": "Heist & Planning",
+        "reason": "이 글은 구현 프로젝트 기록보다 비교·해석 칼럼에 가까워 계획 수행 서사를 강제하지 않았다."
+      },
+      {
+        "name": "강한 배신·희생·정체 공개 감정 비트",
+        "reason": "기술과 조직을 인물극으로 만들거나 감정을 과장할 위험이 있어 사용하지 않았다."
+      }
+    ],
+    "factual_use_boundary": "팩은 문단 순서와 질문·전환·회수 방식을 설계하는 편집 렌즈로만 사용했다. 공개 글의 사실·수치·주장·인용 근거로 사용하지 않았다."
+  },
   "evidence_use": {
     "reflected": [
-      "Global Branching을 여러 application 변경을 별도 branch에서 검토한 뒤 main에 합치는 기능으로 첫 등장 즉시 정의했다.",
-      "현재 공식 문서의 partial merge failure 경계, 즉 일부 resource만 merge되고 나머지가 branch에 남을 수 있으며 자동 revert가 없다는 사실을 짧게 추가했다.",
-      "inactive·archived branch의 branch-only data가 retention 설정에 따라 삭제될 수 있어 branch isolation과 장기 감사 증거 보존을 동일시하지 않도록 했다.",
-      "approval policy가 reviewer eligibility, required approval count와 contributor self-approval 허용 여부를 별도 구성하므로 reviewer 존재를 독립 승인 보장으로 확대하지 않도록 했다.",
-      "비교표의 Foundry 강점 '트랜잭션·업무 규칙·전사 운영 통합'을 'Action 계약·업무 규칙·전사 운영 통합'으로 좁혀 cross-resource atomicity를 암시하지 않게 했다.",
-      "결론에서 승인·평가 뒤에 변경 통합·실패 복구·증거 보존을 별도 책임으로 회수했다."
+      "기존 설비 점검 주기 가상 사례를 글 전체의 단일 서사 축으로 유지했다.",
+      "기존 공개 코드와 Palantir 공식 문서에서 이미 확인한 사실·수치·보장 경계를 그대로 보존했다.",
+      "OpenCrab의 책임 범위를 Evidence·Claim·Outcome·Lever·Policy, Pack, MCP의 연결로 설명했다.",
+      "Foundry의 실행·권한·운영 책임과 OpenCrab의 지식 가공·이동 책임이 갈리는 지점을 결론에서 회수했다."
     ],
     "excluded": [
       {
-        "material": "2026-08-29 23:40 KST NIST SP 800-53 change-control·audit-retention supplement",
-        "reason": "부모 26-source Evidence audit 뒤 생성된 post-audit supplement이며 state가 reopened_post_audit_supplement, latest_supplement_evidence_audit NOT_RERUN, publication_evidence_gate not_ready다. 일반 책임 분리를 보강하지만 발행 근거로 승격하지 않았다."
+        "material": "super_fantasy ontology pack의 소설·작품 관계와 감정 사례",
+        "reason": "기술 글의 사실 근거가 아니며 글의 주제와 직접 관련되지 않는다."
       },
       {
-        "material": "Global Branching의 일곱 control surface 전체, receipt 3종 설계와 실제 tenant 실험 계획",
-        "reason": "후속 28번 Palantir 전용 글의 중심 소재다. 27번은 OpenCrab·Foundry 비교 글이므로 정확성에 필요한 최소 경계만 반영했다."
-      },
-      {
-        "material": "Palantir 비용·ROI·정확도·production 효과 또는 우월성 주장",
-        "reason": "동일 workload 비교와 실제 tenant 실행 근거가 없고 canonical research도 미검증으로 명시한다."
+        "material": "새 성능·비용·정확도·도입 효과 주장",
+        "reason": "이번 작업은 서사 구조 교정이며 새로운 실증 자료를 조사하거나 추가하지 않았다."
       }
     ]
   },
   "edits": [
-    "AIP 경계 설명 직후 Global Branching의 쉬운 정의와 partial merge·retention·approval 경계를 한 문단으로 추가했다.",
-    "비교표의 '트랜잭션' 일반화를 Action 계약 수준으로 좁혔다.",
-    "최종 결론의 안전한 운영 루프 조건에 변경 통합·실패 복구·증거 보존을 추가했다.",
-    "본문에서 실제 사용한 Palantir Global Branching 공식 문서 3개를 참고 자료에 연결했다."
+    "제목을 '같은 온톨로지, 다른 책임'이라는 중심 판단이 드러나도록 수정했다.",
+    "첫 화면을 명시적인 가상 설비 상황, 세 가지 운영 질문, 중심 미스터리 순서로 재작성했다.",
+    "요약에서 Foundry와 OpenCrab의 책임 차이를 기능 수가 아닌 근거에서 행동까지의 경계로 정리했다.",
+    "주요 절 제목과 전환 문장을 단서 → 첫 가설의 붕괴 → 의미 문법 → 실행 경계 → Pack → MCP → 비교 답의 흐름으로 연결했다.",
+    "기능 목록 사이에 다음 절이 필요한 이유를 설명하는 질문을 추가했다.",
+    "최종 결론에서 도입의 베어링 사례와 첫 가설을 회수하고, 작동 경로·한계·작은 실험 기준을 독립적으로 이해할 수 있게 재구성했다."
   ],
   "concept_dependency_check": {
+    "ontology_context_before_comparison": "pass",
     "aip_defined_at_first_use": "pass",
     "foundry_ontology_aip_separated_before_opencrab_comparison": "pass",
-    "global_branching_defined_at_first_use": "pass",
-    "partial_merge_failure_explained_in_korean_at_first_use": "pass",
-    "retention_context_explained_at_first_use": "pass",
-    "global_branching_limits_before_foundry_opencrab_comparison_table": "pass",
-    "opencrab_9_space_roles_before_detailed_comparison": "pass",
-    "comparison_tables_follow_prose_definitions": "pass",
+    "opencrab_9_space_roles_before_detailed_tradeoff": "pass",
+    "lever_defined_before_action_boundary": "pass",
+    "pack_meanings_defined_before_mcp_use": "pass",
+    "comparison_table_after_both_systems_explained": "pass",
     "undefined_core_term_before_evaluation": "none_found"
   },
   "column_quality_check": {
     "single_central_question": "pass",
+    "concrete_hook_before_summary": "pass",
+    "hypothetical_case_explicitly_labeled": "pass",
     "author_judgment_and_evidence_separated": "pass",
     "sections_advance_argument": "pass",
-    "evidence_interpretation_colocated": "pass",
-    "report_like_listing": "acceptable_no_rewrite_needed",
+    "section_transitions_explain_next_question": "pass",
+    "report_like_listing": "reduced_with_interpretive_transitions",
     "reasonable_counterconditions_visible": "pass",
-    "sentence_rhythm": "pass_manual_read_aloud_review",
+    "sentence_rhythm": "pass_manual_conservative_review",
     "specific_closing_judgment": "pass"
-  },
-  "narrative_immersion": {
-    "mode": "not_needed",
-    "opencrab_pack_used": false,
-    "reason": "설비 점검 주기라는 구체 사례가 도입부터 Foundry·OpenCrab 비교와 최종 판단까지 이미 이어진다. 이번 변경은 최신 연구로 보장 경계를 좁히는 정확성 수정이므로 미스터리·반전·갈등 장치를 추가하면 과연출과 범위 확장 위험이 더 크다."
   },
   "humanize_korean": {
     "genre": "column",
     "strength": "conservative",
-    "application": "manual conservative review only; no standalone Fast Path rewrite because the change is a small technical-boundary correction",
-    "current_run_changed_line_ratio_percent": 1.89,
+    "application": "manual section-level review after structural editing",
+    "character_change_percent": 7.54,
     "claim_regression": "none",
-    "protected_facts_numbers_dates_names_acronyms_quotes_urls": "pass"
+    "protected_facts_numbers_dates_names_acronyms_quotes_urls": "pass",
+    "urls_unchanged": true,
+    "image_paths_unchanged": true,
+    "code_fence_count_unchanged": true,
+    "numbers_removed_or_added": "none"
   },
   "conclusion_independent_reading": {
     "topic_and_background": "pass",
     "core_concepts": "pass",
-    "problem": "pass",
+    "initial_misconception": "pass",
     "proposal_and_operation": "pass",
     "rationale": "pass",
-    "meaning_and_limits": "pass_after_recovery_retention_boundary_edit",
-    "next_decision": "pass"
+    "meaning_and_limits": "pass",
+    "next_decision": "pass",
+    "opening_hook_recovered": "pass"
   },
   "image_impact": "reuse",
-  "image_reason": "이번 변경은 Palantir Global Branching의 보장 범위와 표의 용어를 문장으로 좁히는 편집이다. 기존 네 이미지는 OpenCrab의 9-Space·Evidence·Pack·MCP 구조와 Foundry 대비를 시각화하며 Global Branching의 atomic merge·rollback·retention을 이미지 레이블이나 수치로 주장하지 않는다.",
+  "image_reason": "이번 변경은 제목·도입·절 전환·결론의 서사 구조를 다듬는 편집이다. 기존 주장, 수치, 주요 기술 구조와 이미지 레이블은 바뀌지 않아 네 PNG의 의미 범위가 유지된다.",
+  "image_revalidation": {
+    "count": 4,
+    "dimensions": "all 1659x948",
+    "paths_and_alt_text": "pass",
+    "lead_first_content_placement": "pass",
+    "assets_unchanged_by_diff": true
+  },
   "verification": {
-    "status": "release_gate_passed_pending_deployment",
+    "status": "release_gate_passed_pending_commit_and_deployment",
     "quartz_plugins": "45 installed",
     "post_validator": "pass",
     "route_check": "pass",
     "typescript_prettier": "pass",
     "tests": "122/122 pass",
-    "production_build": "38 inputs, 405 outputs",
+    "production_build": "39 inputs, 412 outputs",
     "built_post_validator": "pass",
     "built_route_check": "pass",
-    "built_concept_order": "AIP definition and Global Branching definition/limits appear before the Foundry/OpenCrab comparison table",
-    "built_content_regression": "old transaction generalization absent; Action contract wording present; recovery-retention conclusion boundary present; H1=1; images=4",
-    "image_reuse_revalidation": "pass; four tracked PNG assets unchanged by this diff and each is 1659x948",
+    "built_content_check": "new title, concrete hook, narrative transitions and expanded conclusion present; hook precedes summary; H1=1",
     "git_diff_check": "pass",
     "live_page": "pending"
   },
   "remaining_uncertainty": [
-    "Palantir tenant에서 partial merge failure, reviewer independence, restore·retention과 실제 evidence retrieval을 재현하지 않았다.",
-    "Palantir 공식 문서는 기능 동작의 1차 근거지만 제품 효과의 독립 검증은 아니다.",
-    "2026-08-29 23:40 NIST supplement는 아직 canonical report·source ledger·Evidence audit에 통합되지 않았다.",
-    "비용·ROI·정확도·production 효과는 비교하지 않았으며 이번 글은 해당 우열을 주장하지 않는다.",
-    "OpenCrab 구현 분석은 기존과 동일하게 공개 commit d34352cec9d99c755c1e891f811911461a460280에 고정한다."
+    "이번 편집은 읽기 흐름과 이해도를 개선했지만 독자 체류 시간이나 완독률을 측정하지 않았다.",
+    "OpenCrab 구현 분석은 기존과 동일하게 공개 commit d34352cec9d99c755c1e891f811911461a460280에 고정한다.",
+    "Palantir tenant와 OpenCrab 운영 환경에서 기능·비용·성과를 동일 조건으로 비교하지 않았다.",
+    "super_fantasy ontology pack은 편집 렌즈로만 사용했으며 기술 사실의 독립 근거가 아니다."
   ]
 }
