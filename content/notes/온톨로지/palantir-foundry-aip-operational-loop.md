@@ -197,6 +197,8 @@ branch 수명주기도 감사 증거 보존과 같지 않습니다. [2026년 6�
 
 [Resource protection과 approval policy](https://www.palantir.com/docs/foundry/global-branching/resource-protection-and-approval-policies)는 eligible reviewer, required approval count, contributor approval 허용 여부를 구성할 수 있다고 설명합니다. reviewer가 화면에 배정됐다는 사실, 정책상 승인이 충족됐다는 사실, 실제 merge 권한이 있다는 사실은 하나의 `human reviewed` 상태로 합치면 안 됩니다.
 
+여기서 권한을 한 번 더 나눠야 합니다. [Branch security](https://www.palantir.com/docs/foundry/global-branching/branch-security)는 branch role이 branch 관리 동작을 통제할 뿐 resource edit permission을 주지는 않는다고 설명합니다. Proposal을 볼 수 있는 사용자는 resource-level approval과 checks가 충족되고 `Do not merge`가 없으면 merge를 실행할 수 있으며, merge 실행자가 해당 resource의 edit permission을 직접 갖지 않을 수도 있습니다. 즉 변경 내용을 작성하는 권한과 이미 작성·승인된 변경을 Main에 적용하는 권한은 분리될 수 있습니다.
+
 [NIST SP 800-53 Rev. 5의 CM-3·AU-9·AU-11](https://pages.nist.gov/oscal-tools/demos/csx/baseline-reviewer/)도 변경 검토·승인, 승인된 변경 구현, 변경 기록 보존, 감사 정보 보호와 장기 retrieval을 별도 책임으로 둡니다. 이는 Palantir이 해당 통제를 충족한다는 인증이 아닙니다. 변경 승인과 복구·감사 증거 보존을 한 상태로 압축하지 않는 일반 설계 원칙을 대조하는 근거입니다.
 
 ![AIP Evals와 simulation, Global Branching의 checks·approval·merge, partial merge 복구와 evidence retention, observability가 서로 다른 증거 단계이며 하나의 PASS가 다음 단계를 보장하지 않는다는 경계](../../attachments/palantir-foundry-aip-operational-loop/palantir-foundry-aip-operational-loop-figure-03.png)
@@ -248,15 +250,15 @@ Palantir 문서도 외부 LLM과 Ontology MCP를 사용하면 Palantir 환경의
 
 Palantir AIP·Foundry를 하나의 운영 AI 루프로 읽을 때는 자동으로 되먹임 화살표를 그리기보다 다음 일곱 표면을 분리하는 편이 정확합니다.
 
-| 제어 표면    | Palantir에서 관찰되는 구성                      | 설계자가 답할 질문                           |
-| ------------ | ----------------------------------------------- | -------------------------------------------- |
-| 문맥 권위    | Foundry data operations·Ontology                | Agent가 읽는 현재 상태와 출처는 무엇인가     |
-| 판단 표면    | Chatbot Studio·AIP Logic·model·tool             | 어떤 입력과 도구로 결정을 만드는가           |
-| 쓰기 권한    | Action type·validation·permission·staged writes | 무엇을 어떤 단위로 바꿀 수 있는가            |
-| 배포 전 증거 | AIP Evals·Ontology simulation·branch checks     | 어떤 test와 evaluator를 통과해야 하는가      |
-| 변경 통합    | approval policy·rebase·proposal·merge           | 누가 승인하고 무엇이 Main에 반영됐는가       |
-| 복구·보존    | partial merge 처리·rebuild·retention            | 실패 뒤 무엇을 복구하고 어떤 증거를 남기는가 |
-| 배포 후 증거 | observability·운영 결과·사람 검토               | 실제 환경에서 어떤 결과와 이상을 관측하는가  |
+| 제어 표면    | Palantir에서 관찰되는 구성                      | 설계자가 답할 질문                                |
+| ------------ | ----------------------------------------------- | ------------------------------------------------- |
+| 문맥 권위    | Foundry data operations·Ontology                | Agent가 읽는 현재 상태와 출처는 무엇인가          |
+| 판단 표면    | Chatbot Studio·AIP Logic·model·tool             | 어떤 입력과 도구로 결정을 만드는가                |
+| 쓰기 권한    | Action type·validation·permission·staged writes | 무엇을 어떤 단위로 바꿀 수 있는가                 |
+| 배포 전 증거 | AIP Evals·Ontology simulation·branch checks     | 어떤 test와 evaluator를 통과해야 하는가           |
+| 변경 통합    | approval policy·rebase·proposal·merge           | 누가 작성·승인·merge하고 무엇이 Main에 반영됐는가 |
+| 복구·보존    | partial merge 처리·rebuild·retention            | 실패 뒤 무엇을 복구하고 어떤 증거를 남기는가      |
+| 배포 후 증거 | observability·운영 결과·사람 검토               | 실제 환경에서 어떤 결과와 이상을 관측하는가       |
 
 이 표면들을 한 플랫폼에서 연결할 수 있다는 점이 AIP를 문서 검색형 챗봇보다 넓게 보게 만드는 이유입니다. 실제 feedback loop는 observability 신호가 evaluator 수정, Action 제한, Ontology 갱신이나 rollback으로 이어질 때 닫힙니다. 그 연결에는 정책과 책임 주체가 필요합니다. 제품 기능의 존재만으로 자동 완성되지는 않습니다.
 
@@ -308,7 +310,7 @@ Palantir을 그대로 도입할지 결정하기 전에 현재 시스템의 책�
 
 Palantir AIP를 기업용 챗봇이라고만 부르면 데이터에서 행동으로 넘어가는 책임이 사라집니다. Foundry는 데이터의 출처·변환·접근 경계를 운영하고, Ontology는 주문·재고·설비 같은 업무 객체와 Action·Function·Security를 묶습니다. AIP는 모델과 Agent가 그 문맥과 도구를 사용해 판단하도록 하며, Action type과 staged writes·Automate는 변경 단위를 제한하고 검토할 수 있는 경로를 제공합니다.
 
-그 뒤에도 평가와 운영은 끝나지 않습니다. AIP Evals와 Ontology simulation은 배포 전 증거를 만들고, Global Branching은 여러 resource의 변경을 검토·통합하며, observability는 실제 실행을 관측합니다. 그러나 Evals PASS는 production 보증이 아니고, proposal 승인은 원자적 merge나 자동 rollback이 아니며, branch 보존은 장기 감사 archive가 아닙니다. 로그와 외부 MCP에는 데이터 권한과 다른 노출 경계도 생깁니다.
+그 뒤에도 평가와 운영은 끝나지 않습니다. AIP Evals와 Ontology simulation은 배포 전 증거를 만들고, Global Branching은 여러 resource의 변경을 검토·통합하며, observability는 실제 실행을 관측합니다. 그러나 Evals PASS는 production 보증이 아니고, proposal 승인은 원자적 merge나 자동 rollback이 아니며, 변경 작성 권한과 승인된 변경의 merge 실행 권한도 같다고 볼 수 없습니다. branch 보존 역시 장기 감사 archive가 아닙니다. 로그와 외부 MCP에는 데이터 권한과 다른 노출 경계도 생깁니다.
 
 따라서 AIP·Foundry의 특징은 LLM 하나의 능력보다 **문맥 권위, 판단, 쓰기, 평가, 변경 통합, 복구·보존과 관측을 연결할 수 있는 구조**에서 찾는 편이 정확합니다. 그 구조가 실제로 안전하고 유용한 운영 루프가 되는지는 조직이 정의한 object model, Action schema, permission, evaluator, approval policy, recovery 절차와 운영 증거로 다시 확인해야 합니다. 첫 단계는 제품 목록을 고르는 일이 아니라, 현재 Agent 시스템의 일곱 제어 표면과 그 사이의 보증되지 않은 틈을 적어보는 것입니다.
 
@@ -336,6 +338,7 @@ Palantir AIP를 기업용 챗봇이라고만 부르면 데이터에서 행동으
 - Palantir, [Evaluate Ontology edits](https://www.palantir.com/docs/foundry/aip-evals/ontology-edits)
 - Palantir, [Global Branching core concepts](https://www.palantir.com/docs/foundry/global-branching/core-concepts)
 - Palantir, [Resource protection and approval policies](https://www.palantir.com/docs/foundry/global-branching/resource-protection-and-approval-policies)
+- Palantir, [Global Branching branch security](https://www.palantir.com/docs/foundry/global-branching/branch-security)
 - Palantir, [Ontology and AIP observability](https://www.palantir.com/docs/foundry/aip-observability/overview)
 - Palantir, [Observability log permissions](https://www.palantir.com/docs/foundry/aip-observability/log-permissioning)
 - Palantir, [Ontology MCP](https://www.palantir.com/docs/foundry/ontology-mcp/overview)
