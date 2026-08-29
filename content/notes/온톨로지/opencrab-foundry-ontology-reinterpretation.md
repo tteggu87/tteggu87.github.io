@@ -22,13 +22,13 @@ tags:
 
 ## OpenCrab은 왜 만들어졌을까요
 
-OpenCrab 제작자의 출발점은 Palantir AIP였습니다. AIP(Artificial Intelligence Platform)는 LLM과 Agent가 Foundry의 데이터와 Ontology를 활용해 분석과 업무 흐름을 만들도록 잇는 AI 계층입니다. 공개 Threads 글에서 제작자는 2025년 여름 AIP를 업무에 쓰면서 온톨로지를 업무에 도입하는 방식이 강력하다고 느꼈지만, 실제로 다루는 과정은 쉽지 않았다고 적었습니다. 그때부터 혼자 쓸 온톨로지 도구를 만들기 시작했고, 초기의 `Langent`를 거쳐 OpenCrab으로 발전시켰다고 설명합니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
+OpenCrab 제작자의 출발점은 Palantir AIP였습니다. AIP(Artificial Intelligence Platform)는 Palantir 공식 문서에서 AI를 조직의 데이터와 운영에 연결하는 플랫폼으로 설명되며, AIP Logic·Chatbot Studio·Evals 같은 도구가 Ontology 위에서 LLM 워크플로·Agent·함수를 만들도록 돕습니다. ([Palantir AIP overview](https://www.palantir.com/docs/foundry/aip)) 공개 Threads 글에서 제작자는 2025년 여름 AIP를 업무에 쓰면서 온톨로지를 업무에 도입하는 방식이 강력하다고 느꼈지만, 실제로 다루는 과정은 쉽지 않았다고 적었습니다. 그때부터 혼자 쓸 온톨로지 도구를 만들기 시작했고, 초기의 `Langent`를 거쳐 OpenCrab으로 발전시켰다고 설명합니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
 
 이 배경을 먼저 알고 나면 OpenCrab을 보는 질문도 달라집니다. “Foundry를 작게 복제했나?”보다 **AIP를 쓰며 경험한 운영 온톨로지의 장점을 개인과 작은 팀이 다룰 수 있는 부품으로 어떻게 다시 풀었나?**가 더 좋은 질문입니다.
 
 ## 잠깐, Foundry와 AIP는 같은 것일까요
 
-같은 것은 아닙니다. 아주 거칠게 나누면 Foundry는 기업의 데이터와 업무를 운영하는 플랫폼이고, Ontology는 그 안에서 현실의 업무 객체와 관계·행동을 공통 의미로 묶는 계층입니다. AIP는 앞서 말한 AI 계층으로, LLM과 Agent가 그 Ontology와 데이터를 실제 분석과 업무 흐름에서 활용하게 합니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [AIP features](https://www.palantir.com/docs/foundry/aip/aip-features/))
+같은 것은 아닙니다. 아주 거칠게 나누면 Foundry는 기업의 데이터와 업무를 운영하는 플랫폼이고, Ontology는 그 안에서 현실의 업무 객체와 관계·행동을 공통 의미로 묶는 계층입니다. AIP는 모델과 Agent가 그 Ontology와 데이터를 활용해 분석·함수·자동화와 업무 흐름을 만들도록 하는 AI 개발·실행 표면입니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [AIP overview](https://www.palantir.com/docs/foundry/aip))
 
 ```text
 Palantir Foundry
@@ -38,8 +38,10 @@ Foundry Ontology
 Object · Property · Link · Action · Function · Security
         ↓
 Palantir AIP
-LLM · Agent가 Ontology를 읽고 분석하고 행동
+LLM · Agent가 Ontology를 읽고 분석·함수·자동화에 활용
 ```
+
+여기서 한 가지 경계가 중요합니다. AIP가 Ontology edit와 Action, 평가와 관측 도구를 연결할 수 있다는 사실이 모든 AI 작업을 자동 승인·검증하는 닫힌 운영 루프를 뜻하지는 않습니다. 2026년 8월 29일 현재 AIP Logic의 staged writes는 Beta이고, Automate는 설정에 따라 Action을 자동 적용하거나 사람 검토용 proposal로 보낼 수 있습니다. AIP Evals도 정의한 test case와 evaluator 안에서 함수를 평가하는 도구이지 실제 운영 전체의 안전성을 자동으로 보증하는 장치는 아닙니다. ([Staged writes](https://www.palantir.com/docs/foundry/logic/staged-writes), [AIP Logic integration with Automate](https://www.palantir.com/docs/foundry/logic/aip-logic-integration-automate), [AIP Evals](https://www.palantir.com/docs/foundry/aip-evals/overview))
 
 예를 들어 BI 화면의 `설비 A`, 정비 앱의 `Equipment-1024`, Agent가 조회한 센서 기록이 모두 같은 현실 설비를 가리킨다면, 조직은 이 셋을 같은 업무 객체로 다뤄야 합니다. Foundry Ontology의 힘은 그래프를 예쁘게 그리는 데 있지 않습니다. **여러 데이터·애플리케이션·Agent가 같은 업무 객체와 같은 변경 규칙을 기준으로 움직이게 만드는 운영 정본**에 있습니다.
 
@@ -347,16 +349,16 @@ MCP의 가치는 모델을 바꿔도 같은 도구 계약을 유지할 수 있�
 
 ## Foundry와 OpenCrab을 같은 기준으로 비교하면
 
-| 비교 축   | 팔란티어 Foundry                           | OpenCrab 공개 구조                       |
-| --------- | ------------------------------------------ | ---------------------------------------- |
-| 시작점    | 조직의 운영 데이터와 실제 업무 객체        | 문서·로그·크롤링 자료와 Evidence         |
-| 의미 모델 | Object·Property·Link                       | 9-Space Node·Edge와 도메인 schema        |
-| 행동      | Action type·Function으로 운영 변경         | Lever·Action schema·Workflow·MCP 도구    |
-| 권한      | Ontology resource와 데이터에 통합된 보안   | ReBAC·Policy·Approval의 경량 구성        |
-| 검색·분석 | Object set, 애플리케이션, AIP 분석과 Agent | Vector·BM25·Graph 확장과 RRF             |
-| 배포      | Foundry DevOps와 Marketplace 제품          | Evidence와 품질을 담은 Pack ZIP          |
-| 강한 지점 | 트랜잭션·업무 규칙·전사 운영 통합          | 로컬성·이동성·근거 수집·Agent 연결       |
-| 현재 한계 | 높은 플랫폼·모델링·운영 비용               | 강제 게이트·Pack 연합·형식 보장이 미완성 |
+| 비교 축             | 팔란티어 Foundry                           | OpenCrab 공개 구조                       |
+| ------------------- | ------------------------------------------ | ---------------------------------------- |
+| 시작점              | 조직의 운영 데이터와 실제 업무 객체        | 문서·로그·크롤링 자료와 Evidence         |
+| 의미 모델           | Object·Property·Link                       | 9-Space Node·Edge와 도메인 schema        |
+| 행동                | Action type·Function으로 운영 변경         | Lever·Action schema·Workflow·MCP 도구    |
+| 권한                | Ontology resource와 데이터에 통합된 보안   | ReBAC·Policy·Approval의 경량 구성        |
+| 검색·분석           | Object set, 애플리케이션, AIP 분석과 Agent | Vector·BM25·Graph 확장과 RRF             |
+| 배포                | Foundry DevOps와 Marketplace 제품          | Evidence와 품질을 담은 Pack ZIP          |
+| 강한 지점           | 트랜잭션·업무 규칙·전사 운영 통합          | 로컬성·이동성·근거 수집·Agent 연결       |
+| 이 글에서 남는 경계 | 비용·ROI·실제 tenant 효과는 미검증         | 강제 게이트·Pack 연합·형식 보장이 미완성 |
 
 팔란티어 공식 문서는 Ontology가 기업의 복잡하고 연결된 의사결정을 표현하며 사람과 AI Agent가 운영 흐름에서 협업하도록 설계됐다고 설명합니다. ([The Ontology system](https://www.palantir.com/docs/foundry/architecture-center/ontology-system/)) OpenCrab도 Outcome·Lever·Policy와 MCP를 통해 같은 방향을 바라봅니다.
 
@@ -441,7 +443,7 @@ OpenCrab은 다음 조건에서 매력적입니다.
 
 ## 최종 판단
 
-문서와 로그를 Agent가 읽게 한다고 곧바로 운영 온톨로지가 되는 것은 아닙니다. 실제 의사결정으로 이어지려면 원문 근거와 모델의 해석을 구분하고, 어떤 결과를 관리하는지와 무엇을 조절할 수 있는지 밝히며, 누가 변경을 승인하고 실행할 수 있는지도 함께 다뤄야 합니다. Foundry는 이 책임을 Object·Link·Action·Function·Security가 연결된 운영 플랫폼 안에서 묶습니다. OpenCrab은 같은 문제를 전사 플랫폼이 아니라 더 작은 의미·근거·배포 부품으로 나눠 다룹니다.
+문서와 로그를 Agent가 읽게 한다고 곧바로 운영 온톨로지가 되는 것은 아닙니다. 실제 의사결정으로 이어지려면 원문 근거와 모델의 해석을 구분하고, 어떤 결과를 관리하는지와 무엇을 조절할 수 있는지 밝히며, 누가 변경을 승인하고 실행할 수 있는지도 함께 다뤄야 합니다. Foundry와 AIP는 Object·Link·Action·Function·Security, Logic·Evals·observability 같은 기능과 계약을 한 환경에서 연결할 수 있습니다. 다만 실제 승인·평가·사후 대응이 이어져 안전한 운영 루프가 되는지는 각 기능의 설정과 조직의 정책에 달려 있습니다. OpenCrab은 같은 문제를 전사 플랫폼이 아니라 더 작은 의미·근거·배포 부품으로 나눠 다룹니다.
 
 OpenCrab의 중심 흐름은 문서와 로그에서 Evidence를 수집하고, 그 근거를 Claim·Concept·Outcome·Lever·Policy 같은 9-Space 역할로 연결한 뒤, 검사한 지식을 Pack으로 묶어 MCP를 통해 Agent에 제공하는 방식입니다. 이 구조에서 9-Space는 현업의 정확한 도메인 그래프를 대신하는 분류표가 아니라 자료를 읽는 공통 역할 문법입니다. Pack은 그래프와 함께 Evidence와 품질 정보를 옮기는 배포 단위이고, MCP는 여러 모델이 같은 의미 작업을 호출하게 하는 도구 계약입니다. 원문 관찰과 모델 해석을 분리하고, 관계 문법과 근거 경로를 모델 밖에 남긴다는 점이 OpenCrab을 단순 문서 검색보다 의사결정에 가까운 지식 구조로 만드는 이유입니다.
 
@@ -463,7 +465,10 @@ OpenCrab의 중심 흐름은 문서와 로그에서 Evidence를 수집하고, �
 - Palantir, [The Ontology system](https://www.palantir.com/docs/foundry/architecture-center/ontology-system/)
 - Palantir, [Action types overview](https://www.palantir.com/docs/foundry/action-types/overview/)
 - Palantir, [Action types getting started](https://www.palantir.com/docs/foundry/action-types/getting-started/)
-- Palantir, [AIP features](https://www.palantir.com/docs/foundry/aip/aip-features/)
+- Palantir, [AIP overview](https://www.palantir.com/docs/foundry/aip)
+- Palantir, [AIP Logic staged writes](https://www.palantir.com/docs/foundry/logic/staged-writes)
+- Palantir, [AIP Logic integration with Automate](https://www.palantir.com/docs/foundry/logic/aip-logic-integration-automate)
+- Palantir, [AIP Evals](https://www.palantir.com/docs/foundry/aip-evals/overview)
 - OpenCrab 제작자, [Palantir AIP 사용 경험과 OpenCrab 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y)
 - OpenCrab, [공개 통합 저장소](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280)
 - OpenCrab, [9-Space grammar manifest](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/opencrab/grammar/manifest.py)
