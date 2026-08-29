@@ -43,6 +43,8 @@ LLM · Agent가 Ontology를 읽고 분석·함수·자동화에 활용
 
 여기서 한 가지 경계가 중요합니다. AIP가 Ontology edit와 Action, 평가와 관측 도구를 연결할 수 있다는 사실이 모든 AI 작업을 자동 승인·검증하는 닫힌 운영 루프를 뜻하지는 않습니다. 2026년 8월 29일 현재 AIP Logic의 staged writes는 Beta이고, Automate는 설정에 따라 Action을 자동 적용하거나 사람 검토용 proposal로 보낼 수 있습니다. AIP Evals도 정의한 test case와 evaluator 안에서 함수를 평가하는 도구이지 실제 운영 전체의 안전성을 자동으로 보증하는 장치는 아닙니다. ([Staged writes](https://www.palantir.com/docs/foundry/logic/staged-writes), [AIP Logic integration with Automate](https://www.palantir.com/docs/foundry/logic/aip-logic-integration-automate), [AIP Evals](https://www.palantir.com/docs/foundry/aip-evals/overview))
 
+여러 애플리케이션의 변경을 별도 작업 공간인 branch에서 검토한 뒤 `main`에 합치는 Global Branching도 같은 맥락에서 봐야 합니다. 현재 공식 문서는 부분 병합 실패(partial merge failure)가 생기면 일부 리소스만 먼저 합쳐지고 나머지는 branch에 남을 수 있으며, 이 상태를 자동으로 되돌릴 수 없다고 설명합니다. 비활성·보관 상태(inactive·archived)의 branch 전용 데이터도 보존 기간(retention) 설정에 따라 삭제될 수 있습니다. 사람 검토도 하나의 신호가 아닙니다. 승인 정책은 검토 자격, 필요한 승인 수, 작성자의 자기 승인 허용 여부를 따로 설정하므로 리뷰어가 있다는 사실만으로 독립적인 사람 승인이 보장되지는 않습니다. 따라서 branch 검토와 merge가 있다는 사실을 “모든 변경이 한 번에 성공하거나 자동으로 되돌아간다”거나 “검토 증거가 장기 보존된다”는 보장으로 읽으면 안 됩니다. ([Global Branching core concepts](https://www.palantir.com/docs/foundry/global-branching/core-concepts), [Global Branch lifecycle](https://www.palantir.com/docs/foundry/announcements/2026-06), [Global Branching approval policies](https://www.palantir.com/docs/foundry/global-branching/resource-protection-and-approval-policies))
+
 예를 들어 BI 화면의 `설비 A`, 정비 앱의 `Equipment-1024`, Agent가 조회한 센서 기록이 모두 같은 현실 설비를 가리킨다면, 조직은 이 셋을 같은 업무 객체로 다뤄야 합니다. Foundry Ontology의 힘은 그래프를 예쁘게 그리는 데 있지 않습니다. **여러 데이터·애플리케이션·Agent가 같은 업무 객체와 같은 변경 규칙을 기준으로 움직이게 만드는 운영 정본**에 있습니다.
 
 그래서 제작자가 “AIP를 쓰면서 온톨로지가 강력하다고 느꼈다”고 말한 것도 자연스럽습니다. AIP에서 Agent가 단순히 문서를 검색하는 것을 넘어 업무 객체·관계·행동을 다룰 수 있는 배경에 Ontology가 있기 때문입니다.
@@ -357,7 +359,7 @@ MCP의 가치는 모델을 바꿔도 같은 도구 계약을 유지할 수 있�
 | 권한                | Ontology resource와 데이터에 통합된 보안   | ReBAC·Policy·Approval의 경량 구성        |
 | 검색·분석           | Object set, 애플리케이션, AIP 분석과 Agent | Vector·BM25·Graph 확장과 RRF             |
 | 배포                | Foundry DevOps와 Marketplace 제품          | Evidence와 품질을 담은 Pack ZIP          |
-| 강한 지점           | 트랜잭션·업무 규칙·전사 운영 통합          | 로컬성·이동성·근거 수집·Agent 연결       |
+| 강한 지점           | Action 계약·업무 규칙·전사 운영 통합       | 로컬성·이동성·근거 수집·Agent 연결       |
 | 이 글에서 남는 경계 | 비용·ROI·실제 tenant 효과는 미검증         | 강제 게이트·Pack 연합·형식 보장이 미완성 |
 
 팔란티어 공식 문서는 Ontology가 기업의 복잡하고 연결된 의사결정을 표현하며 사람과 AI Agent가 운영 흐름에서 협업하도록 설계됐다고 설명합니다. ([The Ontology system](https://www.palantir.com/docs/foundry/architecture-center/ontology-system/)) OpenCrab도 Outcome·Lever·Policy와 MCP를 통해 같은 방향을 바라봅니다.
@@ -443,7 +445,7 @@ OpenCrab은 다음 조건에서 매력적입니다.
 
 ## 최종 판단
 
-문서와 로그를 Agent가 읽게 한다고 곧바로 운영 온톨로지가 되는 것은 아닙니다. 실제 의사결정으로 이어지려면 원문 근거와 모델의 해석을 구분하고, 어떤 결과를 관리하는지와 무엇을 조절할 수 있는지 밝히며, 누가 변경을 승인하고 실행할 수 있는지도 함께 다뤄야 합니다. Foundry와 AIP는 Object·Link·Action·Function·Security, Logic·Evals·observability 같은 기능과 계약을 한 환경에서 연결할 수 있습니다. 다만 실제 승인·평가·사후 대응이 이어져 안전한 운영 루프가 되는지는 각 기능의 설정과 조직의 정책에 달려 있습니다. OpenCrab은 같은 문제를 전사 플랫폼이 아니라 더 작은 의미·근거·배포 부품으로 나눠 다룹니다.
+문서와 로그를 Agent가 읽게 한다고 곧바로 운영 온톨로지가 되는 것은 아닙니다. 실제 의사결정으로 이어지려면 원문 근거와 모델의 해석을 구분하고, 어떤 결과를 관리하는지와 무엇을 조절할 수 있는지 밝히며, 누가 변경을 승인하고 실행할 수 있는지도 함께 다뤄야 합니다. Foundry와 AIP는 Object·Link·Action·Function·Security, Logic·Evals·observability 같은 기능과 계약을 한 환경에서 연결할 수 있습니다. 다만 실제 승인·평가·변경 통합·실패 복구·증거 보존·사후 대응이 이어져 안전한 운영 루프가 되는지는 각 기능의 설정과 조직의 정책에 달려 있습니다. OpenCrab은 같은 문제를 전사 플랫폼이 아니라 더 작은 의미·근거·배포 부품으로 나눠 다룹니다.
 
 OpenCrab의 중심 흐름은 문서와 로그에서 Evidence를 수집하고, 그 근거를 Claim·Concept·Outcome·Lever·Policy 같은 9-Space 역할로 연결한 뒤, 검사한 지식을 Pack으로 묶어 MCP를 통해 Agent에 제공하는 방식입니다. 이 구조에서 9-Space는 현업의 정확한 도메인 그래프를 대신하는 분류표가 아니라 자료를 읽는 공통 역할 문법입니다. Pack은 그래프와 함께 Evidence와 품질 정보를 옮기는 배포 단위이고, MCP는 여러 모델이 같은 의미 작업을 호출하게 하는 도구 계약입니다. 원문 관찰과 모델 해석을 분리하고, 관계 문법과 근거 경로를 모델 밖에 남긴다는 점이 OpenCrab을 단순 문서 검색보다 의사결정에 가까운 지식 구조로 만드는 이유입니다.
 
@@ -469,6 +471,9 @@ OpenCrab의 중심 흐름은 문서와 로그에서 Evidence를 수집하고, �
 - Palantir, [AIP Logic staged writes](https://www.palantir.com/docs/foundry/logic/staged-writes)
 - Palantir, [AIP Logic integration with Automate](https://www.palantir.com/docs/foundry/logic/aip-logic-integration-automate)
 - Palantir, [AIP Evals](https://www.palantir.com/docs/foundry/aip-evals/overview)
+- Palantir, [Global Branching core concepts](https://www.palantir.com/docs/foundry/global-branching/core-concepts)
+- Palantir, [Global Branch lifecycle](https://www.palantir.com/docs/foundry/announcements/2026-06)
+- Palantir, [Global Branching resource protection and approval policies](https://www.palantir.com/docs/foundry/global-branching/resource-protection-and-approval-policies)
 - OpenCrab 제작자, [Palantir AIP 사용 경험과 OpenCrab 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y)
 - OpenCrab, [공개 통합 저장소](https://github.com/AlexAI-MCP/OpenCrab/tree/d34352cec9d99c755c1e891f811911461a460280)
 - OpenCrab, [9-Space grammar manifest](https://github.com/AlexAI-MCP/OpenCrab/blob/d34352cec9d99c755c1e891f811911461a460280/opencrab/grammar/manifest.py)
