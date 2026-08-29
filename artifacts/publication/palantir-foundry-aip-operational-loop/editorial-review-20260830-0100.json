@@ -1,0 +1,128 @@
+{
+  "schema": "publication-editorial-review",
+  "version": 1,
+  "slug": "palantir-foundry-aip-operational-loop",
+  "reviewed_at": "2026-08-30T01:00:00+09:00",
+  "article": "content/notes/온톨로지/palantir-foundry-aip-operational-loop.md",
+  "status": "pass_pending_release_validation",
+  "trigger": {
+    "conditions": [
+      "latest_article_newly_published",
+      "directly_related_research_materially_updated"
+    ],
+    "details": "PR #156으로 28번 Palantir AIP 운영 루프 글이 새로 발행됐고, 직전 연구 정본 뒤 Global Branching branch-security 근거가 통합되어 resource edit authority와 approved proposal merge execution authority의 분리를 공개 글에 반영할 가치가 생겼다."
+  },
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/operations/editorial-style.md",
+    "content/operations/research-publishing-rules.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "research/palantir-foundry-aip-operational-loop-20260830-0014/README.md",
+    "research/palantir-foundry-aip-operational-loop-20260830-0014/state.json",
+    "research/palantir-foundry-aip-operational-loop-20260830-0014/outputs/01_full_report.md",
+    "research/palantir-foundry-aip-operational-loop-20260830-0014/outputs/evidence_audit.json",
+    "research/palantir-foundry-aip-operational-loop-20260830-0014/sources/bibliography.md",
+    "research/palantir-foundry-aip-operational-loop-20260830-0014/sources/sources.jsonl",
+    "Palantir Global Branching — Branch security",
+    "Palantir Global Branching — Core concepts"
+  ],
+  "evidence_use": {
+    "reflected": [
+      "Branch role은 branch 관리 동작을 통제하지만 resource edit permission을 부여하지 않는다는 현재 공식 문서 경계",
+      "Proposal을 볼 수 있는 사용자는 resource-level approvals와 checks가 충족되고 Do not merge가 없으면 merge를 실행할 수 있으며 해당 resource edit permission을 직접 갖지 않을 수도 있다는 경계",
+      "변경 작성 권한과 이미 작성·승인된 변경의 merge 실행 권한을 한 상태로 합치지 않는 책임 분리"
+    ],
+    "excluded": [
+      {
+        "material": "Palantir tenant의 실제 merge·permission 동작 재현",
+        "reason": "연구 번들과 이번 실행 모두 실제 tenant에서 재현하지 않았으므로 제품 효과·운영 안전성의 실증 근거로 사용하지 않았다."
+      },
+      {
+        "material": "비용·ROI·정확도·incident 감소·vendor lock-in 비교",
+        "reason": "직접 비교 실험과 독립 효과 검증이 없고 최신 연구의 claim ceiling 밖이다."
+      },
+      {
+        "material": "NIST 통제를 Palantir compliance 증거로 사용하는 해석",
+        "reason": "NIST 자료는 일반 변경·감사 lifecycle 책임 분리의 보조 근거일 뿐 Palantir 인증이나 성능 검증이 아니다."
+      }
+    ]
+  },
+  "central_question": "Palantir Foundry·Ontology·AIP가 기업 AI의 판단을 실제 업무 변경으로 연결할 때 어떤 제어 표면이 필요하며, 각 표면의 PASS와 권한은 어디까지 보장하는가?",
+  "final_claim": "Palantir AIP·Foundry의 특징은 문맥 권위, 판단, 쓰기, 평가, 변경 통합, 복구·보존과 관측을 연결할 수 있는 구조에 있으며, 안전하고 유용한 운영 루프가 되려면 작성·승인·merge 권한과 복구·증거 책임을 조직이 별도로 설계하고 실제 운영 증거로 검증해야 한다.",
+  "edits": [
+    "Global Branching의 resource edit permission과 proposal merge execution authority를 분리해 설명하는 한 문단을 추가했다.",
+    "일곱 제어 표면의 변경 통합 질문을 작성·승인·merge 주체까지 드러나도록 좁게 보강했다.",
+    "최종 결론에서 변경 작성 권한과 승인된 변경의 merge 실행 권한이 동일하지 않을 수 있다는 경계를 회수했다.",
+    "참고 자료에 Palantir Global Branching Branch security 공식 문서를 추가했다."
+  ],
+  "concept_dependency_check": {
+    "foundry_defined_before_use": "pass",
+    "ontology_defined_before_action_comparison": "pass",
+    "aip_defined_before_evaluation_and_write_comparison": "pass",
+    "apollo_defined_before_platform_map": "pass",
+    "control_surface_defined_before_seven_surface_framework": "pass",
+    "global_branching_defined_before_permission_boundary": "pass",
+    "branch_security_permission_terms_have_context": "pass",
+    "tables_follow_explanatory_prose": "pass",
+    "conclusion_redefines_core_roles": "pass"
+  },
+  "column_quality_check": {
+    "central_question_clear": "pass",
+    "final_judgment_clear": "pass",
+    "sections_advance_argument": "pass",
+    "evidence_interpreted_in_place": "pass",
+    "single_concrete_example_carries_article": "pass",
+    "reasonable_counterconditions_present": "pass",
+    "list_and_table_use_structurally_justified": "pass",
+    "sentence_rhythm": "pass",
+    "generic_ai_phrasing": "pass",
+    "specific_closing_judgment": "pass"
+  },
+  "narrative_immersion": {
+    "mode": "not_needed",
+    "reason": "재고 재배정이라는 하나의 구체적 사례가 도입부터 권한·평가·복구·결론까지 이어지고 있어 별도의 Mystery Box나 False Victory를 추가하면 사실 교정보다 연출이 앞설 위험이 크다."
+  },
+  "humanize_korean": {
+    "genre": "column",
+    "strength": "conservative",
+    "application": "manual_review_only",
+    "reason": "새 산문은 짧은 근거 설명 한 문단이며 기존 존댓말·리듬과 자연스럽게 연결된다. 별도 자동 윤문은 사실·권한 조건을 불필요하게 바꿀 위험이 있어 실행하지 않았다.",
+    "change_rate_pct": 1.64,
+    "claim_regression": "none"
+  },
+  "conclusion_independent_reading": {
+    "topic": "pass",
+    "core_concepts_and_roles": "pass",
+    "problem": "pass",
+    "proposal_or_judgment": "pass",
+    "operation_or_application": "pass",
+    "rationale": "pass",
+    "meaning_and_limits": "pass"
+  },
+  "image_impact": "reuse",
+  "image_reason": "새 수정은 기존 Global Branching 권한 경계를 더 세밀하게 설명하지만 이미지 4종의 주장, 수치, 주요 절, 레이블, 제어 표면 커버리지를 바꾸지 않는다. 경로·대체 텍스트·배치·픽셀 규격과 의미 범위는 release gate에서 다시 검사한다.",
+  "remaining_uncertainty": [
+    "Palantir tenant에서 branch role, resource edit permission, proposal visibility와 merge execution 조합을 직접 재현하지 않았다.",
+    "연구 Evidence audit는 citation contract를 PASS했지만 외부 27개 출처가 metadata-only이고 verified_claims=0, quotes_verified=0이다.",
+    "독립 reviewer가 없는 passed_degraded self-review이므로 제품 효과나 운영 안전성을 독립 검증했다고 볼 수 없다.",
+    "비용·ROI·정확도·incident 감소·vendor lock-in과 production 성능은 검증 범위 밖이다."
+  ],
+  "release_validation": {
+    "status": "pass",
+    "quartz_plugins": "45 installed from lockfile",
+    "post_validator": "pass",
+    "route_validator": "pass",
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
+    "production_build": "39 inputs, 412 outputs",
+    "built_output_validator": "pass",
+    "git_diff_check": "pass",
+    "built_h1_count": 1,
+    "image_count": 4,
+    "image_dimensions": "1659x948 each",
+    "built_new_boundary": "pass",
+    "built_conclusion_boundary": "pass",
+    "concepts_before_table_and_write_evaluation": "pass"
+  }
+}
