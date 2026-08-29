@@ -279,7 +279,9 @@ Palantir AIP·Foundry를 하나의 운영 AI 루프로 읽을 때는 자동으�
 
 ## 자체 Agent 플랫폼에 적용하는 가장 작은 방법
 
-Palantir을 그대로 도입할지 결정하기 전에 현재 시스템의 책임 지도를 한 장으로 적어볼 수 있습니다.
+Palantir의 공식 [Delivering a use case](https://www.palantir.com/docs/foundry/getting-started/delivering-a-use-case)는 use case를 **특정 사용자 집단이 특정 결정을 더 잘 내리도록 돕기 위해 정해진 기간 동안 수행하는 작업**으로 설명합니다. [Use case lifecycle](https://www.palantir.com/docs/foundry/use-case-life-cycle/overview)도 `어떤 데이터 원천을 붙일까`나 `어떤 ML 기법을 쓸까`보다 누가 어떤 결정을 내리고 어떤 결과가 달라져야 하는지부터 정하라고 안내합니다. 데이터와 Ontology, 사용자 인터페이스는 그 결정을 돕고 실제 선택을 다시 데이터로 남기는 쪽으로 이어집니다.
+
+아래 일곱 제어 표면도 제품 기능을 세는 체크리스트로 볼 필요는 없습니다. **한 업무 결정이 데이터에서 실행과 결과 측정까지 제대로 통제되는지 확인하는 질문표**입니다. Palantir을 그대로 도입할지 결정하기 전에 현재 시스템의 책임 지도를 한 장으로 적어볼 수 있습니다.
 
 ```text
 1. Context authority
@@ -324,6 +326,8 @@ Palantir AIP를 기업용 챗봇이라고만 부르면 데이터에서 행동으
 
 ## 참고 자료
 
+- Palantir, [Delivering a use case](https://www.palantir.com/docs/foundry/getting-started/delivering-a-use-case)
+- Palantir, [Use case lifecycle](https://www.palantir.com/docs/foundry/use-case-life-cycle/overview)
 - Palantir, [Integrated platforms: AIP, Foundry, and Apollo](https://www.palantir.com/docs/foundry/architecture-center/platforms)
 - Palantir, [Data integration overview](https://www.palantir.com/docs/foundry/data-integration/overview)
 - Palantir, [The Ontology system](https://www.palantir.com/docs/foundry/architecture-center/ontology-system)

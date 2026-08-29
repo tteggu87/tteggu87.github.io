@@ -1,0 +1,133 @@
+{
+  "schema": "publication-editorial-review",
+  "version": 1,
+  "slug": "palantir-foundry-aip-operational-loop",
+  "reviewed_at": "2026-08-30T02:01:00+09:00",
+  "article": "content/notes/온톨로지/palantir-foundry-aip-operational-loop.md",
+  "status": "pass_pending_release_validation",
+  "trigger": {
+    "conditions": ["directly_related_research_materially_updated"],
+    "details": "직전 01:09 KST 공개 배포 이후 palantir-foundry-aip-use-cases-adoption-effects-20260830 연구 정본이 01:34 KST까지 완성·감사되었다. 새 정본은 Palantir 공식 Delivering a use case와 Use case lifecycle을 근거로 기술·데이터 원천보다 사용자 의사결정과 측정 가능한 outcome에서 시작하는 방법을 명시해, 최신 28번 글의 마지막 실무 적용 절을 더 정확하게 설명할 수 있다."
+  },
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/operations/editorial-style.md",
+    "content/operations/research-publishing-rules.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/sources/palantir-foundry-aip-real-world-use-cases-2026-08-30.md",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/README.md",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/state.json",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/outputs/01_full_report.md",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/outputs/evidence_audit.json",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/sources/bibliography.md",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/sources/sources.jsonl",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/triangulation.json",
+    "Palantir — Delivering a use case",
+    "Palantir — Use case lifecycle overview"
+  ],
+  "evidence_use": {
+    "reflected": [
+      "Palantir 공식 use-case 방법론이 특정 사용자 집단의 특정 의사결정과 측정 가능한 결과에서 출발한다는 정의",
+      "공식 lifecycle이 데이터·Ontology·사용자 interaction을 의사결정 지원과 결정 기록·결과 측정에 연결한다는 범위",
+      "기존 일곱 제어 표면을 제품 기능 목록이 아니라 한 업무 결정이 데이터에서 실행·결과 측정까지 통제되는지 묻는 질문표로 읽는 연결"
+    ],
+    "excluded": [
+      {
+        "material": "Panasonic Energy, Tampa General, SOMPO, Ursa Major, NHS, Airbus 등 고객·공공 사례의 효과 수치",
+        "reason": "현재 28번 글은 운영 제어 구조가 중심이고 사례 수치를 추가하면 별도의 case-driven 글 범위로 넓어진다. 다수 효과는 E1~E3 수준이며 통제된 인과 평가 E4가 확인되지 않았다."
+      },
+      {
+        "material": "SAUR·Rio Tinto·Nebraska Medicine 등 보조 Evidence Map의 고유 사례",
+        "reason": "감사 정본과 보조 Evidence Map의 고유 근거를 한 공개 글에서 함께 사용하려면 통합 report·source ledger·반증 검토·Evidence audit를 다시 닫아야 한다."
+      },
+      {
+        "material": "AIP Bootcamp 1~5일 prototype 주장",
+        "reason": "공급자 rapid-prototyping 설명이며 production rollout 기간이나 효과로 오해될 수 있고 현재 글의 중심 판단에 필요하지 않다."
+      },
+      {
+        "material": "제품 평균 효과·ROI·비용 우월성·인과 효과",
+        "reason": "새 연구도 외부 웹 출처 22개가 metadata-only이고 verified_claims·quotes_verified가 0이며 실제 tenant 실행과 독립 reviewer가 없다."
+      }
+    ]
+  },
+  "central_question": "Palantir Foundry·Ontology·AIP가 기업 AI의 판단을 실제 업무 변경으로 연결할 때 어떤 제어 표면이 필요하며, 각 표면의 PASS와 권한은 어디까지 보장하는가?",
+  "final_claim": "Palantir AIP·Foundry의 특징은 문맥 권위, 판단, 쓰기, 평가, 변경 통합, 복구·보존과 관측을 연결할 수 있는 구조에 있으며, 안전하고 유용한 운영 루프가 되려면 작성·승인·merge 권한과 복구·증거 책임을 조직이 별도로 설계하고 실제 운영 증거로 검증해야 한다.",
+  "edits": [
+    "자체 Agent 플랫폼에 적용하는 가장 작은 방법 절에 Palantir 공식 use-case 정의를 먼저 추가했다.",
+    "데이터 원천·ML 기법보다 사용자·의사결정·outcome을 먼저 고정한다는 공식 lifecycle을 기존 일곱 제어 표면과 연결했다.",
+    "일곱 제어 표면을 제품 기능 체크리스트가 아니라 한 업무 결정을 데이터에서 실행과 결과 측정까지 통제하는 질문표로 재설명했다.",
+    "참고 자료에 Delivering a use case와 Use case lifecycle 공식 문서 두 개를 추가했다.",
+    "제목·도입·비교표·수치·결론·이미지는 변경하지 않았다."
+  ],
+  "concept_dependency_check": {
+    "foundry_defined_before_use": "pass",
+    "ontology_defined_before_action_comparison": "pass",
+    "aip_defined_before_evaluation_and_write_comparison": "pass",
+    "apollo_defined_before_platform_map": "pass",
+    "control_surface_defined_before_seven_surface_framework": "pass",
+    "use_case_defined_before_practical_application": "pass",
+    "global_branching_defined_before_permission_boundary": "pass",
+    "tables_follow_explanatory_prose": "pass",
+    "conclusion_redefines_core_roles": "pass"
+  },
+  "column_quality_check": {
+    "central_question_clear": "pass",
+    "final_judgment_clear": "pass",
+    "sections_advance_argument": "pass",
+    "evidence_interpreted_in_place": "pass",
+    "single_concrete_example_carries_article": "pass",
+    "reasonable_counterconditions_present": "pass",
+    "list_and_table_use_structurally_justified": "pass",
+    "sentence_rhythm": "pass",
+    "generic_ai_phrasing": "pass",
+    "specific_closing_judgment": "pass"
+  },
+  "narrative_immersion": {
+    "mode": "not_needed",
+    "reason": "재고 재배정이라는 하나의 가상 사례가 도입부터 Ontology·Action·평가·권한·복구와 결론까지 이미 이어진다. 새 연구는 사실·방법론 근거 보강이며 Mystery Box·False Victory 같은 장치를 추가하면 중심 질문보다 연출이 앞설 수 있다."
+  },
+  "humanize_korean": {
+    "genre": "column",
+    "strength": "conservative",
+    "application": "manual_review_only",
+    "reason": "새 산문은 공식 정의와 기존 실무 체크리스트를 잇는 두 문단으로 한정했다. quick-rules 기준으로 번역투·기계적 병렬·과도한 접속사·AI 결산 문구를 수동 검사했고, 자동 재작성은 정의의 주장 강도를 바꿀 위험이 더 컸다.",
+    "change_rate_pct": 1.84,
+    "claim_regression": "none",
+    "self_check": "6/6 pass"
+  },
+  "conclusion_independent_reading": {
+    "topic": "pass",
+    "core_concepts_and_roles": "pass",
+    "problem": "pass",
+    "proposal_or_judgment": "pass",
+    "operation_or_application": "pass",
+    "rationale": "pass",
+    "meaning_and_limits": "pass"
+  },
+  "image_impact": "reuse",
+  "image_reason": "새 수정은 기존 실무 적용 절의 근거와 설명을 보강하지만 글의 중심 주장, 수치, 주요 절, 이미지 레이블과 일곱 제어 표면의 시각 커버리지를 바꾸지 않는다. 기존 네 PNG의 경로·대체 텍스트·배치·의미 범위를 release gate에서 다시 검사한다.",
+  "remaining_uncertainty": [
+    "Palantir의 use-case lifecycle은 공급자가 정의한 방법론이며 다른 접근보다 우월하다는 독립 비교 증거가 아니다.",
+    "새 사례 연구의 Evidence audit는 citation contract를 PASS했지만 외부 웹 출처 22개가 metadata-only이고 verified_claims=0, quotes_verified=0이다.",
+    "독립 reviewer와 실제 Palantir tenant 실행이 없고 제품 평균 효과·ROI·인과성은 검증하지 않았다.",
+    "고객 사례와 효과 수치는 현재 운영 루프 글의 범위를 넓히므로 의도적으로 반영하지 않았다."
+  ],
+  "release_validation": {
+    "status": "pass",
+    "quartz_plugins": "45 installed from lockfile",
+    "post_validator": "pass",
+    "route_validator": "pass",
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
+    "production_build": "39 inputs, 412 outputs",
+    "built_output_validator": "pass",
+    "git_diff_check": "pass",
+    "built_h1_count": 1,
+    "image_count": 4,
+    "image_dimensions": "1659x948 each",
+    "built_use_case_definition": "pass",
+    "built_official_links": "pass",
+    "concepts_before_tables_and_evaluation": "pass"
+  }
+}
