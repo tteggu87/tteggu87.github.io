@@ -22,13 +22,13 @@ tags:
 
 ## OpenCrab은 왜 만들어졌을까요
 
-OpenCrab 제작자의 출발점은 Palantir AIP였습니다. 공개 Threads 글에서 그는 2025년 여름 AIP를 업무에 쓰면서 온톨로지를 업무에 도입하는 방식이 강력하다고 느꼈지만, 실제로 다루는 과정은 쉽지 않았다고 적었습니다. 그때부터 혼자 쓸 온톨로지 도구를 만들기 시작했고, 초기의 `Langent`를 거쳐 OpenCrab으로 발전시켰다고 설명합니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
+OpenCrab 제작자의 출발점은 Palantir AIP였습니다. AIP(Artificial Intelligence Platform)는 LLM과 Agent가 Foundry의 데이터와 Ontology를 활용해 분석과 업무 흐름을 만들도록 잇는 AI 계층입니다. 공개 Threads 글에서 제작자는 2025년 여름 AIP를 업무에 쓰면서 온톨로지를 업무에 도입하는 방식이 강력하다고 느꼈지만, 실제로 다루는 과정은 쉽지 않았다고 적었습니다. 그때부터 혼자 쓸 온톨로지 도구를 만들기 시작했고, 초기의 `Langent`를 거쳐 OpenCrab으로 발전시켰다고 설명합니다. ([OpenCrab 제작자의 개발 배경](https://www.threads.com/@alex_ai_mcp/post/Dac3qUvma3Y))
 
 이 배경을 먼저 알고 나면 OpenCrab을 보는 질문도 달라집니다. “Foundry를 작게 복제했나?”보다 **AIP를 쓰며 경험한 운영 온톨로지의 장점을 개인과 작은 팀이 다룰 수 있는 부품으로 어떻게 다시 풀었나?**가 더 좋은 질문입니다.
 
 ## 잠깐, Foundry와 AIP는 같은 것일까요
 
-같은 것은 아닙니다. 아주 거칠게 나누면 Foundry는 기업의 데이터와 업무를 운영하는 플랫폼이고, Ontology는 그 안에서 현실의 업무 객체와 관계·행동을 공통 의미로 묶는 계층입니다. AIP는 LLM과 Agent가 그 Ontology와 데이터를 활용하도록 연결하는 AI 계층에 가깝습니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [AIP features](https://www.palantir.com/docs/foundry/aip/aip-features/))
+같은 것은 아닙니다. 아주 거칠게 나누면 Foundry는 기업의 데이터와 업무를 운영하는 플랫폼이고, Ontology는 그 안에서 현실의 업무 객체와 관계·행동을 공통 의미로 묶는 계층입니다. AIP는 앞서 말한 AI 계층으로, LLM과 Agent가 그 Ontology와 데이터를 실제 분석과 업무 흐름에서 활용하게 합니다. ([Palantir Ontology overview](https://www.palantir.com/docs/foundry/ontology/overview/), [AIP features](https://www.palantir.com/docs/foundry/aip/aip-features/))
 
 ```text
 Palantir Foundry
@@ -441,26 +441,13 @@ OpenCrab은 다음 조건에서 매력적입니다.
 
 ## 최종 판단
 
-OpenCrab은 팔란티어 Foundry를 오픈소스로 복제한 시스템이 아닙니다. Foundry가 보여 준 더 중요한 생각, 즉 **온톨로지가 데이터와 실제 의사결정·행동을 연결해야 한다는 생각**을 가져와 다른 환경에 맞게 재구성한 프로젝트입니다.
+문서와 로그를 Agent가 읽게 한다고 곧바로 운영 온톨로지가 되는 것은 아닙니다. 실제 의사결정으로 이어지려면 원문 근거와 모델의 해석을 구분하고, 어떤 결과를 관리하는지와 무엇을 조절할 수 있는지 밝히며, 누가 변경을 승인하고 실행할 수 있는지도 함께 다뤄야 합니다. Foundry는 이 책임을 Object·Link·Action·Function·Security가 연결된 운영 플랫폼 안에서 묶습니다. OpenCrab은 같은 문제를 전사 플랫폼이 아니라 더 작은 의미·근거·배포 부품으로 나눠 다룹니다.
 
-그 재구성의 중심에는 세 가지가 있습니다.
+OpenCrab의 중심 흐름은 문서와 로그에서 Evidence를 수집하고, 그 근거를 Claim·Concept·Outcome·Lever·Policy 같은 9-Space 역할로 연결한 뒤, 검사한 지식을 Pack으로 묶어 MCP를 통해 Agent에 제공하는 방식입니다. 이 구조에서 9-Space는 현업의 정확한 도메인 그래프를 대신하는 분류표가 아니라 자료를 읽는 공통 역할 문법입니다. Pack은 그래프와 함께 Evidence와 품질 정보를 옮기는 배포 단위이고, MCP는 여러 모델이 같은 의미 작업을 호출하게 하는 도구 계약입니다. 원문 관찰과 모델 해석을 분리하고, 관계 문법과 근거 경로를 모델 밖에 남긴다는 점이 OpenCrab을 단순 문서 검색보다 의사결정에 가까운 지식 구조로 만드는 이유입니다.
 
-```text
-9-Space
-→ Agent가 자료를 읽는 공통 의미 역할
+다만 이 판단은 본문에서 분석한 공개 OpenCrab 커밋 `d34352cec9d99c755c1e891f811911461a460280`과 인용한 공개 문서를 기준으로 합니다. 그 구현에는 Action schema·Workflow·Approval·ReBAC 같은 부품이 있지만 모든 쓰기가 하나의 강제된 실행 경계를 통과하지는 않으며, 여러 Pack의 ID·revision·Claim 충돌을 해결하는 연합 계약도 아직 확인되지 않았습니다. HybridQuery와 Lever simulation 역시 형식 Reasoner나 인과 효과 추정 모델이 아닙니다. 강한 트랜잭션·권한 집행·형식 판정·인과 검증이 필요한 업무라면 OpenCrab만으로 그 보장을 대신할 수 없습니다.
 
-Pack
-→ Evidence와 품질을 함께 옮기는 지식 제품
-
-MCP
-→ 여러 모델이 같은 지식을 조회·조작하는 도구 계약
-```
-
-현재 OpenCrab이 가장 잘하는 일은 전사 운영 시스템을 대체하는 것이 아닙니다. 문서와 로그에서 판단 가능한 그래프를 만들고, 그 지식을 모델 밖에 보관하며, Agent가 읽을 수 있는 형태로 배포하는 일입니다.
-
-팔란티어 온톨로지를 막 배우기 시작했다면 OpenCrab을 이렇게 읽어 보시면 좋습니다.
-
-> **Foundry는 운영 온톨로지가 어디까지 갈 수 있는지를 보여 주고, OpenCrab은 그 생각을 개인과 작은 팀이 어떤 최소 부품으로 실험할 수 있는지를 보여 줍니다.**
+그래서 첫 실험은 작게 잡는 편이 낫습니다. 실제 업무 하나를 골라 Foundry식으로 `Object·Link·Action·Function·Security`를 적고, 같은 장면을 OpenCrab의 `Evidence → Claim → Outcome → Lever → Policy`로 다시 풀어 보십시오. 두 모델을 나란히 놓았을 때 근거를 되짚고 승인 경계를 설명하는 데 이 경량 구조가 충분하다면 Pack과 MCP로 범위를 넓힐 수 있습니다. 반대로 실제 변경을 강제하는 운영 계약이 핵심이라면, 그 책임은 더 강한 플랫폼이나 별도의 결정론적 계층에 남겨 두는 것이 맞습니다.
 
 ## 함께 읽기
 
