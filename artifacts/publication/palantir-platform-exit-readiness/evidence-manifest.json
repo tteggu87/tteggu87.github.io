@@ -1,0 +1,52 @@
+{
+  "slug": "palantir-platform-exit-readiness",
+  "generated_at": "2026-08-30T07:20:37+09:00",
+  "status": "pass_degraded",
+  "research_bundle": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830",
+  "research_availability": "local_research_bundle",
+  "audited_scope": {
+    "sources_registered": 35,
+    "sources_cited": 32,
+    "claims_in_triangulation": 26,
+    "question_coverage": "4 answered / 1 uncertain",
+    "evidence_audit": "PASS",
+    "adversarial_review": "passed_degraded",
+    "independent_reviewer": false
+  },
+  "bound_artifacts": {
+    "final_report": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/outputs/01_full_report.md",
+      "sha256": "8a579ba819762de5b1aa88b68daeaad880f240b8e38506455e1c591132b31cbd"
+    },
+    "source_ledger": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/sources/sources.jsonl",
+      "sha256": "03a8d51c0fcc3fef6586f7b2178dea0a975deef32fc7602c67b1ecfb41b2d999"
+    },
+    "triangulation": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/triangulation.json",
+      "sha256": "7cefaf1499f9247a9db5003dde6943783dbd9927e91538bdb3446282c23fd546"
+    },
+    "question_coverage": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/question_coverage.json",
+      "sha256": "f25e5ffed8814cb1dd8ab5a903704889ce0c4b5d1d5b1121fa7fa46b4f3ea8ce"
+    },
+    "adversarial_review": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/adversarial-review-final.json",
+      "sha256": "ba63e7fcddff7a7387e4692ab804ef6061f66a983f431564dd3f7966a060da65"
+    },
+    "evidence_audit": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/outputs/evidence_audit.json",
+      "sha256": "7d20aa05d8a7f19bcb474cd7bf30bc10345831c6af02747108146a0955173065"
+    },
+    "research_contract": {
+      "path": "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/research_contract.json",
+      "sha256": "7c9eb4a7b76aad13c6486561dda8153b7d42fc957f5dc40ec7ec41a9a4a322a0"
+    }
+  },
+  "warnings": [
+    "외부 웹 출처는 metadata-only access이며 quote-level full-text snapshot 검증이 없다.",
+    "실제 Palantir tenant 실행과 exit drill을 수행하지 않았다.",
+    "source-independence, cross-industry counterevidence, blocked critical sources가 degraded review의 미해결 항목으로 남는다.",
+    "MHCLG의 post-exit running-cost 절감은 scope-normalized independent TCO audit가 아니다."
+  ]
+}

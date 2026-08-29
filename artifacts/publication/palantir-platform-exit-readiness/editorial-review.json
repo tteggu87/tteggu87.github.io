@@ -2,76 +2,86 @@
   "slug": "palantir-platform-exit-readiness",
   "profile": "longform-technical-column",
   "date": "2026-08-30",
-  "reviewed_at": "2026-08-30T05:23:07+09:00",
-  "prior_deployment_commit": "c5414decca5a7e5fd58ddceeb532685a77f9e598",
+  "reviewed_at": "2026-08-30T07:20:37+09:00",
+  "prior_deployment_commit": "5e1b514",
   "trigger": {
-    "types": ["latest_public_post_changed", "unfixed_concept_dependency_defect"],
-    "details": "검토 중 원격 main에 30번 'AI 플랫폼에서 실제로 빠져나올 수 있는가'가 새로 발행되어 최신 글이 29번에서 30번으로 바뀌었다. 새 글의 중심 논증과 결론은 충분했지만 핵심 요약에서 exit readiness, vendor lock-in, switching friction, exit capability, post-exit evidence를 정의 전에 사용했고 DLUHC·MHCLG·QA·TCO 등 일부 약어·전문용어도 첫 등장 때 풀리지 않아 조건 1과 5를 충족했다."
+    "types": [
+      "latest_public_post_changed_since_previous_run",
+      "directly_related_research_integrated_and_reaudited",
+      "unfixed_concept_provenance_dependency_defect"
+    ],
+    "details": "이전 자동 교정 시점 이후 최신 공개 글이 30번 '인공지능 플랫폼에서 실제로 빠져나올 수 있는가'로 바뀌었다. 이 글은 Homes for Ukraine의 longitudinal exit 사례와 결론 구조는 충분했지만 핵심 요약에서 switching friction·exit capability·exit readiness·post-exit evidence를 프로젝트 분석 축으로 사용하면서 그 분류가 Palantir 공식 모델이나 업계 표준이 아니라는 provenance를 뒤 절에서야 밝혔다. 동시에 03:39 post-audit supplement의 src_025~src_035가 공개 글 판단에 사용됐으나 기존 canonical Evidence audit는 24-source baseline에만 유효했다."
   },
   "central_question": "AI 플랫폼이 현재 큰 운영 가치를 만들더라도 조직이 나중에 공급자를 바꾸고 서비스를 이어갈 수 있는지를 어떤 실행 증거로 판단해야 하는가?",
-  "final_claim": "플랫폼 도입 가치는 switching friction과 별개이며, 실제 exit capability와 exit readiness는 데이터·업무 의미·권한·사용자·계약을 대체 환경으로 옮겨 서비스를 이어갈 수 있는지 작은 exit drill과 post-exit evidence로 따로 검증해야 한다.",
+  "final_claim": "도입 가치는 switching friction과 별개이며, exit readiness는 데이터·업무 의미·권한·사용자·계약을 대체 환경으로 옮겨 서비스를 이어갈 수 있는지를 작은 exit drill과 post-exit evidence로 별도 검증해야 한다.",
   "sources_reviewed": [
     "AGENTS.md",
     "content/operations/editorial-style.md",
     "content/operations/research-publishing-rules.md",
+    "publish-tteggu-blog skill",
+    "humanize-korean skill",
+    "deep-research skill",
     "content/notes/온톨로지/palantir-platform-exit-readiness.md",
     "wiki/_meta/index.md",
-    "wiki/_meta/log.md",
-    "wiki/sources/palantir-foundry-aip-real-world-use-cases-2026-08-30.md",
+    "wiki/_meta/log.md recent Palantir entries",
     "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/README.md",
     "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/state.json",
     "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/outputs/01_full_report.md",
     "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/outputs/evidence_audit.json",
-    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/sources/bibliography.md",
     "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/sources/sources.jsonl",
-    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/research-refinement-run-20260830-0339.json",
-    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/drafts/report-revision-20260830-0339.md",
-    "National Audit Office, Investigation into the Homes for Ukraine scheme",
-    "MHCLG, Homes for Ukraine system change survey",
-    "MHCLG Digital, From emergency to sustainability: creating Share Homes for Ukraine data"
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/sources/bibliography.md",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/triangulation.json",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/question_coverage.json",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830/artifacts/adversarial-review-final.json",
+    "research/palantir-foundry-aip-use-cases-adoption-effects-20260830 post-audit supplement originals 01:37 / 02:39 / 03:39"
   ],
+  "research_integration": {
+    "baseline_preserved": true,
+    "integrated_sources": 35,
+    "integrated_claims": 26,
+    "sources_cited": 32,
+    "question_coverage": "4 answered / 1 uncertain",
+    "adversarial_review": "passed_degraded",
+    "independent_reviewer": false,
+    "evidence_audit": "PASS",
+    "evidence_audit_sha256": "7d20aa05d8a7f19bcb474cd7bf30bc10345831c6af02747108146a0955173065",
+    "remaining_research_warnings": [
+      "외부 source는 metadata-only access",
+      "실제 Palantir tenant와 exit drill 미실행",
+      "AIP-specific outcome의 source independence 부족",
+      "제조·보험·민간 의료의 독립 counterevidence 부족",
+      "Homes for Ukraine post-exit 비용의 scope-normalized independent TCO 부재"
+    ]
+  },
   "evidence_use": {
     "reflected": [
-      "기존 Homes for Ukraine 시간축과 공개 수치·인과 한계는 변경하지 않았다.",
-      "NAO 원문과 보도 페이지에서 6개월 무상 제공, 빠른 초기 가동, 통상 시험 생략, 지방정부 사용 혼란, 2023년 migration 보류의 startup cost·일정·품질·safeguarding 경계를 다시 확인했다.",
-      "MHCLG 사용자 조사에서 Foundry에서 Share Homes for Ukraine Data로의 transition을 직접 확인했다.",
-      "MHCLG Digital 2026-04-09 회고에서 2024년 여름 자체 시스템 구축 시작, 약 3년치 운영 데이터 migration, 2025년 9월 Share 가동과 공급자 계약 종료, 연간 수백만 파운드 running cost 절감 보고와 phased migration·quality assurance·training 설명을 다시 확인했다.",
-      "새 사실을 더하지 않고 위 근거를 이해하는 데 필요한 exit readiness·switching friction·exit capability·post-exit evidence의 관계를 먼저 정의했다."
+      "Homes for Ukraine의 긴급 초기 가치, 전환 마찰, 실제 Foundry→Share migration, supplier exit와 post-exit 비용 보고를 하나의 lifecycle로 보는 기존 글의 판단을 유지했다.",
+      "35-source 통합 revision을 새 Evidence audit에 결속해 기존 24-source audit 이후 supplement가 발행 근거보다 최신이던 상태를 해소했다.",
+      "새 공개 사실이나 수치를 추가하지 않고 핵심 분석 프레임의 provenance만 첫 요약에서 명시했다."
     ],
     "excluded": [
       {
-        "material": "03:39 post-audit 연구 revision의 source 33~35를 포함한 35-source·26-claim 전체 범위",
-        "reason": "research-refinement record가 latest_scope_audit=NOT_RERUN이며 canonical Evidence audit는 24-source baseline에만 유효하다. 이번 수정에서는 post-audit revision에서 새 주장을 추가하지 않았고, 이미 공개된 exit 사례의 핵심 사실만 NAO·MHCLG 1차 자료에 직접 대조했다."
+        "material": "다른 산업 사례와 AIP-specific 고객 효과 수치",
+        "reason": "30번 글은 exit readiness를 한 longitudinal 사례로 설명하는 글이므로 범위를 넓히지 않았다."
       },
       {
-        "material": "Metropolitan Police, SAUR, Rio Tinto, Nebraska Medicine, UK Government QPIE 등 다른 사례·방법론",
-        "reason": "30번 글의 중심 질문은 한 longitudinal exit 사례로 switching friction과 실행 가능한 exit를 설명하는 것이다. 다른 사례를 추가하면 범위가 실사용 사례 전반으로 넓어져 29번 글과 중복된다."
-      },
-      {
-        "material": "Palantir 일반 비용 우위·열위, in-house 일반 우월성, 평균 migration 비용·기간",
-        "reason": "공개 자료에 동일 scope로 정규화한 TCO와 독립 비교가 없어 기존 claim ceiling을 유지했다."
+        "material": "Palantir 일반 비용 열위, in-house 일반 우월성, 평균 migration 비용·기간",
+        "reason": "정규화된 독립 TCO와 산업 간 비교 근거가 없어 기존 claim ceiling을 유지했다."
       }
     ]
   },
   "edits": [
-    "제목의 AI 약어를 '인공지능 플랫폼'으로 풀어 처음 보는 독자도 대상을 바로 이해하게 했다.",
-    "핵심 요약 안에서 exit readiness, vendor lock-in, switching friction, exit capability, post-exit evidence를 한 문장씩 관계가 드러나게 정의했다.",
-    "migration과 safeguarding를 첫 본문 등장 지점에서 데이터·업무 이전, 보호·안전으로 풀었다.",
-    "NAO·DLUHC·MHCLG·QA·TCO와 production을 첫 사용 지점에서 한국어 의미와 원문 전체 이름 또는 쉬운 뜻으로 보완했다.",
-    "exit capability와 exit readiness를 '실제 전환 능력'과 '그 능력을 실행할 준비 상태'로 구분해 중복 정의를 정리했다.",
-    "부분 병합 실패·merge·recovery·retention·revert를 한국어 설명과 함께 제시했다.",
-    "마지막 결론에서 exit readiness를 짧게 다시 정의하고 export·reconciliation·replacement 표현을 쉬운 말로 닫았다."
+    "핵심 요약에서 switching friction·exit capability·exit readiness·post-exit evidence를 서로 다른 판단 축으로 나누는 것이 Palantir 공식 모델이나 업계 표준 분류가 아니라 프로젝트 분석 프레임임을 즉시 밝혔다.",
+    "뒤 절의 중복 provenance 문장을 제거하고 실제 전환 준비 항목으로 이어지는 전환 문장으로 바꿨다.",
+    "본문 사실·수치·날짜·고유명사·인용·URL·표·결론의 판단은 변경하지 않았다."
   ],
   "concept_dependency_check": {
     "exit_readiness_defined_in_summary": "pass",
     "vendor_lock_in_defined_before_analysis": "pass",
-    "switching_friction_defined_before_detailed_section": "pass",
-    "exit_capability_defined_before_comparison_table": "pass",
-    "post_exit_evidence_defined_before_comparison_table": "pass",
-    "migration_and_safeguarding_explained_at_first_body_use": "pass",
-    "nao_dluhc_mhclg_expanded_before_reuse": "pass",
-    "qa_tco_production_explained_at_first_use": "pass",
-    "global_branching_limits_have_korean_explanation": "pass",
+    "switching_friction_defined_in_summary": "pass",
+    "exit_capability_defined_in_summary": "pass",
+    "post_exit_evidence_defined_in_summary": "pass",
+    "analysis_frame_provenance_disclosed_at_first_use": "pass",
     "comparison_table_after_core_axis_definitions": "pass",
     "conclusion_redefines_exit_readiness": "pass",
     "undefined_core_term_before_evaluation": "none_found"
@@ -91,31 +101,27 @@
   "narrative_immersion": {
     "mode": "not_needed",
     "opencrab_pack_used": false,
-    "reason": "글은 긴급 도입 → 전환 보류 → 자체 시스템 구축 → 실제 계약 종료라는 하나의 시간축을 이미 따라가며 질문과 긴장이 자연스럽게 전진한다. 별도 Mystery Box나 False Victory를 추가하면 실제 정부 기록보다 연출이 앞설 수 있어 적용하지 않았다."
+    "reason": "긴급 도입 → migration 보류 → 자체 시스템 구축 → 실제 계약 종료라는 한 개의 실제 시간축이 이미 충분한 질문·전환·회수를 만든다. 추가 Mystery Box나 False Victory는 근거보다 연출을 키울 위험이 있다."
   },
   "humanize_korean": {
     "genre": "column",
     "strength": "conservative",
-    "application": "구조를 재작성하지 않고 정의·번역투·약어 의존성만 수동 보수 검토했다. 별도 Fast Path 전체 재작성은 새 글의 기존 관점과 리듬을 불필요하게 흔들 수 있어 적용하지 않았다.",
-    "character_change_percent": 5.47,
+    "application": "새 산문을 확대하지 않고 provenance와 전환 문장만 수동 보수 검토했다.",
+    "character_change_percent": 0.968,
     "claim_regression": "none",
-    "urls_unchanged": true,
-    "numbers_unchanged": true,
-    "image_references_unchanged": true,
     "protected_facts_numbers_dates_names_acronyms_quotes_urls": "pass"
   },
   "conclusion_independent_reading": {
     "topic_and_background": "pass",
-    "core_concepts": "pass_after_exit_readiness_redefinition",
+    "core_concepts": "pass",
     "problem": "pass",
     "proposal_and_operation": "pass",
     "rationale": "pass",
     "meaning_and_limits": "pass",
-    "next_decision": "pass",
-    "small_next_action": "representative data and one workflow export/reconciliation/replacement path test"
+    "next_decision": "pass"
   },
   "image_impact": "reuse",
-  "image_reason": "이번 변경은 용어 정의와 개념 의존성 교정이다. 기존 Homes for Ukraine 수명주기, exit-readiness receipt, 4축 비교의 주장·수치·주요 절·시각 레이블은 바뀌지 않았다.",
+  "image_reason": "분석 프레임 provenance와 전환 문장만 바뀌었고 기존 Homes for Ukraine lifecycle, exit-readiness receipt, 비교 축과 이미지 레이블은 바뀌지 않았다.",
   "image_revalidation": {
     "count": 4,
     "dimensions": {
@@ -126,8 +132,7 @@
     },
     "paths_and_alt_text": "pass",
     "lead_first_content_placement": "pass",
-    "assets_changed_by_diff": false,
-    "prior_publication_visual_review": "PR #161 reported 4/4 visual review PASS; assets are byte-identical in this edit"
+    "assets_changed_by_diff": false
   },
   "verification": {
     "status": "release_gate_passed_pending_deployment",
@@ -139,15 +144,14 @@
     "production_build": "41 inputs, 428 outputs",
     "built_post_validator": "pass",
     "built_route_check": "pass",
-    "built_concept_order": "summary definitions precede switching-friction and exit-readiness sections; exit-capability definition precedes the four-axis comparison table; conclusion redefines exit readiness",
-    "built_content_regression": "H1=1; URLs, numbers and image references unchanged; all targeted definition phrases present",
+    "built_content_regression": "H1=1; analysis-frame provenance is rendered in the summary before detailed evaluation; URLs, numbers and image references unchanged",
     "git_diff_check": "pass",
     "live_page": "pending"
   },
   "remaining_uncertainty": [
-    "canonical research Evidence audit는 24-source baseline에만 유효하고 03:39 revision의 source 33~35를 포함한 35-source 범위는 통합 재감사되지 않았다.",
-    "기존 공개 글의 Homes for Ukraine 핵심 exit 사실은 NAO·MHCLG 1차 자료에서 직접 재확인했지만, 연구 번들의 canonical source ledger·triangulation·audit는 아직 이 범위를 흡수하지 않았다.",
-    "MHCLG의 연간 수백만 파운드 running-cost 절감은 같은 조직의 운영 회고이며 상세 TCO·scope normalization·독립 재검증이 없다.",
-    "Palantir tenant에서 실제 exit drill을 실행하지 않았으므로 exit readiness receipt는 검증된 표준 절차가 아니라 프로젝트 분석·설계 제안이다."
+    "외부 source는 metadata-only이므로 quote-level 원문 snapshot 검증이 없다.",
+    "실제 Palantir tenant에서 exit drill을 실행하지 않았다.",
+    "MHCLG의 post-exit running-cost 절감은 상세 TCO·scope normalization·독립 재검증이 없다.",
+    "제조·보험·민간 의료의 독립 실패·exit 사례는 여전히 부족하다."
   ]
 }
