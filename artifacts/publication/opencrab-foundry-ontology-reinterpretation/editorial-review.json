@@ -1,9 +1,10 @@
 {
   "slug": "opencrab-foundry-ontology-reinterpretation",
   "profile": "longform-technical-explainer",
-  "date": "2026-08-27",
+  "date": "2026-08-29",
+  "trigger": "latest article changed after the prior automation; AIP appeared before a standalone definition and the final conclusion did not independently restate the operating flow, rationale, and implementation limits",
   "editorial_thesis": "OpenCrab은 팔란티어 Foundry의 축소 복제본이 아니라, 운영 온톨로지 문제를 9-Space 의미 문법, Evidence 중심 Pack 공장, MCP 도구 표면으로 분해한 경량 재해석이다.",
-  "reader_problem": "Foundry를 막 배우는 독자는 OpenCrab을 작은 Foundry 또는 단순 GraphRAG로 오해하기 쉽다.",
+  "reader_problem": "Foundry를 막 배우는 독자는 OpenCrab을 작은 Foundry 또는 단순 GraphRAG로 오해하기 쉽고, AIP를 모르면 제작 배경부터 비교의 전제를 놓칠 수 있다.",
   "why_now": "LLM Agent가 조직 자료를 읽고 행동하려면 모델 파라미터 밖에서 의미, 근거, 권한과 변경 계약을 관리해야 한다.",
   "concrete_example": "베어링 진동 증가로 설비 점검 주기를 30일에서 14일로 바꾸는 명시적 가상 사례",
   "existing_approach": "Foundry의 Object, Property, Link, Action type, Function, Security가 결합된 운영 온톨로지",
@@ -34,22 +35,96 @@
     "foundry_model": "Palantir official documentation",
     "opencrab_architecture": "OpenCrab public repository at commit d34352cec9d99c755c1e891f811911461a460280",
     "implementation_limits": "source inspection and explicit inference from public code",
-    "creator_motivation": "not asserted because the public repository does not establish a direct implementation lineage"
+    "creator_motivation": "creator-authored Threads post linked in the article; treated as a creator account of motivation, not as implementation proof"
+  },
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/operations/editorial-style.md",
+    "content/operations/research-publishing-rules.md",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/sources/ontology-agent-series-08-opencrab-ontology-build-architecture.md",
+    "wiki/sources/ontology-agent-series-09-ontology-context-compiler-opencrab.md",
+    "wiki/concepts/evidence-pack-and-context-compilation.md",
+    "content/notes/온톨로지/opencrab-ontology-build-architecture.md",
+    "content/notes/온톨로지/ontology-context-compiler-opencrab.md",
+    "Palantir Ontology and AIP official documentation",
+    "OpenCrab public repository and the pinned commit cited by the article"
+  ],
+  "evidence_use": {
+    "reflected": [
+      "AIP를 첫 등장 지점에서 정의해 제작 배경과 Foundry 비교의 전제를 먼저 제공했다.",
+      "기존 본문의 9-Space·Evidence/Claim·Pack·MCP·Action/Approval/ReBAC 경계를 마지막 결론에 다시 조립했다.",
+      "최종 판단의 적용 범위를 공개 OpenCrab 고정 커밋과 본문 인용 문서로 한정했다.",
+      "강한 트랜잭션·권한 집행·형식 판정·인과 검증이 필요한 경우의 적용 한계를 결론에 명시했다."
+    ],
+    "excluded": [
+      {
+        "material": "2026-08-29 현재 OpenCrab main의 후속 구조 변화",
+        "reason": "이 글의 구현 분석 범위는 본문에 고정한 d34352cec9d99c755c1e891f811911461a460280 커밋이므로 최신 main의 기능을 섞지 않았다."
+      },
+      {
+        "material": "기존 GraphRAG·LLM Wiki 후속 연구 번들",
+        "reason": "최신 글의 중심 질문인 Foundry와 OpenCrab의 운영 온톨로지 재해석에 직접 필요한 새 근거가 아니어서 추가하지 않았다."
+      },
+      {
+        "material": "새 성능·비용·정확도 수치",
+        "reason": "동일 workload 비교가 없어 근거보다 강한 제품 우열 주장으로 확장하지 않았다."
+      }
+    ]
+  },
+  "concept_dependency_check": {
+    "aip_defined_at_first_use": "passed_after_edit",
+    "foundry_and_aip_separated_before_structural_comparison": "passed",
+    "9_space_roles_explained_before_detailed_comparison": "passed",
+    "comparison_tables_follow_prose_definitions": "passed"
+  },
+  "conclusion_independent_reading": {
+    "topic_and_background": "passed_after_edit",
+    "core_concepts": "passed_after_edit",
+    "proposal_and_operation": "passed_after_edit",
+    "rationale": "passed_after_edit",
+    "meaning_and_limits": "passed_after_edit",
+    "next_decision": "passed_after_edit"
+  },
+  "humanize_korean": {
+    "genre": "column",
+    "strength": "conservative",
+    "application": "manual rule review after structural edit",
+    "full_article_character_sequence_change_rate_percent": 10.7,
+    "claim_regression": "none",
+    "protected_facts_numbers_dates_names_acronyms_quotes_urls": "passed"
   },
   "regression": {
     "claim_strength": "passed",
     "citations": "passed",
     "numbers": "passed",
     "urls": "passed",
-    "visual_review": "passed"
+    "visual_review": "passed_reuse_revalidation"
   },
-  "image_impact": "full_regenerate_then_editable_vector_fallback",
+  "image_impact": "reuse",
   "image_review": {
-    "lead": "passed",
-    "figure_01": "passed",
-    "figure_02": "passed",
-    "figure_03": "passed",
-    "final_dimensions": "1600x900",
-    "source": "editable SVG rendered to PNG with macOS sips"
-  }
+    "lead": "passed_reuse_revalidation",
+    "figure_01": "passed_reuse_revalidation",
+    "figure_02": "passed_reuse_revalidation",
+    "figure_03": "passed_reuse_revalidation",
+    "final_dimensions": "1659x948",
+    "source": "existing published PNG set; assets are unchanged from HEAD, prior pixel review remains applicable, and paths, alt text, placement, dimensions, and semantic coverage were revalidated"
+  },
+  "verification": {
+    "quartz_plugins": 45,
+    "post_validator": "passed",
+    "route_check": "passed",
+    "typescript_prettier": "passed",
+    "tests": "122/122 passed",
+    "production_build": "38 inputs, 405 outputs",
+    "built_post_validator": "passed",
+    "built_route_check": "passed",
+    "images_unchanged_from_head": "passed"
+  },
+  "remaining_uncertainty": [
+    "The creator-motivation Threads post is externally linked but is not archived as a local source snapshot in this repository.",
+    "The article's implementation analysis is intentionally pinned to OpenCrab commit d34352cec9d99c755c1e891f811911461a460280; later repository changes are outside that implementation claim scope.",
+    "No same-workload performance, cost, or production-readiness benchmark between Foundry and OpenCrab is claimed."
+  ]
 }
