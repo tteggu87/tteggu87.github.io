@@ -1,0 +1,130 @@
+{
+  "task": "온톨로지 30번 글의 super_fantasy 기반 서사 편집",
+  "date": "2026-08-30",
+  "post": "content/notes/온톨로지/palantir-platform-exit-readiness.md",
+  "workspace": ".publication-worktrees/editorial-latest-20260830-1203",
+  "publication_status": "local_only_no_commit_push_or_deploy",
+  "baseline_sha256": "c4063095723da041b6d6b8c597ca09b06f55661c286c93773a73532f6eec774b",
+  "revised_sha256": "b61b2d4281c5830f6d226613852a47c306e7d3ff0f37f016e1a222a7e9c86b26",
+  "editorial_design": {
+    "editorial_thesis": "전환 준비는 계약 종료나 데이터 다운로드가 아니라 공급자 없이 업무를 이어갈 근거를 갖추는 일이다.",
+    "reader_problem": "데이터를 내려받을 수 있다는 이유로 실제 서비스도 옮길 수 있다고 믿기 쉽다.",
+    "why_now": "원문에 포함된 Homes for Ukraine의 도입부터 실제 전환과 사후 회고까지를 한 시간축으로 읽는다.",
+    "concrete_example": "Homes for Ukraine 공개 사례와 명시적으로 가정한 운영팀을 구분해 사용한다.",
+    "existing_approach": "벤더 락인을 나갈 수 있음 또는 없음으로 단순화한다.",
+    "new_perspective": "운영 가치, 전환 마찰, 실행 능력, 전환 후 증거를 분리한다.",
+    "value_mechanisms": [
+      "계약 종료와 실제 업무 인수의 빈칸을 찾는다",
+      "동일한 가상 운영팀을 도입과 준비 항목, 복구 경계, 예행연습에서 이어 쓴다"
+    ],
+    "cost_shift": "전환에는 데이터 의미, 권한, 상태 대조, 사용자 교육과 일회성 이전 비용이 필요하다.",
+    "failure_conditions": [
+      "읽기 중심의 단순 업무에는 통합 플랫폼보다 얇은 구성이 맞을 수 있다",
+      "총비용을 동일 조건으로 비교한 실험은 없다"
+    ],
+    "comparison_axes": [
+      "Workflow value",
+      "Switching friction",
+      "Exit capability",
+      "Post-exit evidence"
+    ],
+    "closing_judgment": "대표 데이터와 읽기 전용 workflow 하나를 외부에서 복원하고 원본과 대조한다."
+  },
+  "ontology_pack": {
+    "tool": "opencrab",
+    "title": "super_fantasy ontology pack",
+    "source_package_id": "8d1d73f2-f333-4e3e-ba9e-7e6a305adea9",
+    "source": "super_fantasy_ontology/nodes.json",
+    "document_id": "0a545f02-eaaf-42fe-be52-9e043696d573",
+    "evidence_chunks": [
+      "6bed352c-3ab1-4540-89e6-6f45d686069c",
+      "dd57ce2c-3568-4d85-938c-5e6cdea2047a",
+      "9e86bea0-a6b0-42f1-80b9-52e2d1a9eb51"
+    ],
+    "provenance_note": "세 번째 청크는 동일 source_package_id의 다른 접근 가능 사본(document a13b28e4-ce85-4773-b6be-be65424f4303)이다. 사본 중복을 독립적인 교차검증으로 계산하지 않았다.",
+    "application": [
+      {
+        "node": "fm_mystery_box",
+        "label": "Mystery Box",
+        "applied_to": "계약을 끝내도 다음 날 업무가 계속되는가라는 도입 질문과 숨은 업무 의존성의 단계적 설명"
+      },
+      {
+        "node": "fm_ticking_clock",
+        "label": "Ticking Clock",
+        "applied_to": "실제 긴급 도입과 서비스 연속성의 긴장을 강조하되 허구의 마감 시각이나 수치는 추가하지 않음"
+      },
+      {
+        "node": "fm_false_victory",
+        "label": "False Victory",
+        "applied_to": "export 완료와 서비스 전환, 전환 완료와 비용 우위 입증을 연속해서 구분함. 실제 전환 성공을 실패로 재서술하지 않음"
+      },
+      {
+        "node": "fm_heist_planning",
+        "label": "Heist & Planning",
+        "applied_to": "기존 준비 영수증과 전환 흐름, 예행연습을 실행 가능한 순서로 연결함"
+      }
+    ],
+    "scope": "서사와 편집 구조에만 적용. 판타지 설정, 허구의 실제 사건, 특정 작가의 문체 모방은 사용하지 않음."
+  },
+  "protected_structure_regression": {
+    "method": "CodexPro로 읽은 원문과 동일 SHA-256인 사본을 기준으로 정규식 추출 비교. 적용 후 CodexPro edit 반환 해시가 검증된 개정본 해시와 일치함.",
+    "frontmatter_unchanged": true,
+    "fenced_blocks_unchanged": 5,
+    "table_unchanged": true,
+    "external_source_urls_and_counts_unchanged": true,
+    "unique_external_sources": 5,
+    "wiki_link_targets_and_counts_unchanged": true,
+    "six_exit_drill_steps_unchanged": true,
+    "thin_baseline_conditions_unchanged": true,
+    "numeric_value_set_unchanged": true,
+    "cost_caution_callout_verbatim_preserved": true,
+    "framework_not_industry_standard_preserved": true,
+    "exit_drill_not_tenant_verified_preserved": true,
+    "government_reported_process_vs_proposed_process_distinguished": true
+  },
+  "humanize_review": {
+    "reference": ".codex/skills/humanize-korean/references/quick-rules.md",
+    "scope": "구조 편집 뒤 본문 문장에 보수적으로 적용. 코드, 표, 메타데이터, 출처, 숫자와 제한 조건은 보호함.",
+    "focus": [
+      "중복 영어 병기 완화",
+      "짧은 질문과 설명 문장의 리듬 교차",
+      "연구 진행 메타 서술 축소",
+      "연속 불릿을 원인과 작업 흐름의 산문으로 변환"
+    ],
+    "automated_humanize_grade": "not_assigned"
+  },
+  "image_impact": "reuse",
+  "image_review": {
+    "count": 4,
+    "paths_alt_text_and_order_unchanged": true,
+    "semantic_coverage": [
+      "전체 전환 수명주기",
+      "Homes for Ukraine의 도입과 이전 시간축",
+      "전환 준비 영수증",
+      "서로 대체할 수 없는 네 판단 축"
+    ],
+    "file_and_built_reference_checks": "passed",
+    "new_pixel_or_browser_visual_review": "not_performed; existing PNG assets were not edited"
+  },
+  "source_recheck": {
+    "sources": [
+      "National Audit Office report and summary PDF",
+      "MHCLG system change survey",
+      "MHCLG Digital retrospective dated 2026-04-09",
+      "Palantir Global Branching core concepts",
+      "Palantir June 2026 announcements"
+    ],
+    "nao_pdf_summary_page_visually_checked": "zero-based page 13",
+    "new_empirical_claims_added": false
+  },
+  "validation": {
+    "check_post_with_report_images_and_editorial_warnings": "passed",
+    "quartz_v5_route_check": "passed",
+    "prettier_target_write": "passed; unchanged",
+    "npm_run_check": "passed",
+    "npm_test": "122 passed, 0 failed",
+    "quartz_build": "passed; 42 Markdown inputs, 435 emitted files",
+    "check_post_with_built_output": "passed",
+    "quartz_v5_route_check_built": "passed"
+  }
+}
