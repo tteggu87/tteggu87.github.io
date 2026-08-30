@@ -12,16 +12,16 @@ tags:
 
 ![산업 온톨로지 표준을 용어, 지식조직, 속성 사전, 산업 의미 모델, 생애주기 통합, 상위 정렬의 서로 다른 책임으로 나눈 전체 지도](../../attachments/industrial-ontology-standards-responsibility-map/industrial-ontology-standards-responsibility-map-infographic.png)
 
-펌프 하나를 두 시스템에서 옮겼는데도 같은 펌프라고 확신하기 어려운 순간이 있습니다. 한쪽은 `Pump`, 다른 쪽은 `Pumping Equipment`라고 부르고, 정격 유량의 단위와 값 영역도 다릅니다. 정비 시스템의 `Inspection`은 작업을 뜻하지만 다른 시스템에서는 검사 기록 문서를 뜻할 수도 있습니다.
+펌프 하나를 옮겼을 뿐인데, 두 시스템이 정말 같은 펌프를 말하는지 확신할 수 없다면 어디서부터 고쳐야 할까요? 한쪽은 `Pump`, 다른 쪽은 `Pumping Equipment`라고 부릅니다. 정격 유량의 단위와 값 영역도 다르고, 정비 시스템의 `Inspection`은 작업을 뜻하지만 다른 시스템에서는 검사 기록 문서를 뜻할 수도 있습니다.
 
-이때 표준 목록을 검색하면 ISO 704, SKOS, IEC 61360, ISO 13584, ISO 23726, ISO 15926, ISO/IEC 21838 같은 이름이 한꺼번에 나옵니다. 모두 온톨로지와 가까워 보이지만 같은 문제의 대안은 아닙니다.
+답을 찾으려고 표준 목록을 펼치면 오히려 이름이 더 늘어납니다. ISO 704, SKOS, IEC 61360, ISO 13584, ISO 23726, ISO 15926, ISO/IEC 21838이 한꺼번에 등장합니다. 모두 온톨로지와 가까워 보이지만, 같은 문제를 두고 경쟁하는 대안은 아닙니다.
 
 > [!summary] 표준 이름보다 먼저 실패한 의미 계약을 찾습니다
 > **산업 온톨로지 표준은 초급에서 고급으로 올라가는 한 줄짜리 기술 스택이 아니라 서로 다른 상호운용 실패를 맡는 책임 지도에 가깝습니다.** 용어가 깨졌다면 용어를, 속성과 단위가 깨졌다면 사전을, 여러 도메인의 상위 범주가 반복 충돌할 때만 top-level ontology 정렬을 검토하는 식으로 필요한 최소 책임부터 고르는 편이 안전합니다.
 
 ## 표준을 한 줄로 쌓으면 첫 번째 문제가 생깁니다
 
-다음과 같은 그림은 기억하기는 쉽습니다.
+처음 보면 다음 순서가 그럴듯합니다. 기억하기도 쉽습니다.
 
 ```text
 ISO 704
@@ -32,7 +32,7 @@ ISO 704
 → BFO
 ```
 
-하지만 이것은 공식 표준이 정한 성숙도 사다리도, 필수 import 순서도 아닙니다. 각 표준군의 공식 범위를 나란히 놓으면 서로 다른 질문에 답한다는 점이 먼저 보입니다.
+문제는 이 그림이 너무 매끈하다는 데 있습니다. 이것은 공식 표준이 정한 성숙도 사다리도, 필수 import 순서도 아닙니다. 각 표준군의 공식 범위를 나란히 놓는 순간, 서로 다른 질문에 답한다는 점이 드러납니다.
 
 | 지금 깨진 것                          | 먼저 볼 책임             | 대표 표준·규격           |
 | ------------------------------------- | ------------------------ | ------------------------ |
@@ -45,15 +45,15 @@ ISO 704
 
 [ISO/IEC 21838-1](https://www.iso.org/standard/71954.html)은 domain-neutral top-level ontology가 갖춰야 할 요구조건을 다룹니다. 반면 [ISO 15926-1](https://www.iso.org/standard/29556.html)은 process plant의 생애주기 정보 통합을 대상으로 합니다. 같은 `ontology`라는 단어 주변에 있어도 질문의 크기와 책임이 다릅니다.
 
-따라서 선택 순서는 `어느 표준이 더 상위인가`보다 **어느 의미 계약이 실제로 깨졌는가**에서 시작해야 합니다.
+그래서 선택의 출발점은 `어느 표준이 더 상위인가`가 아닙니다. **어느 의미 계약이 실제로 깨졌는가**를 먼저 찾아야 합니다.
 
 ## 같은 펌프를 두고도 여섯 종류의 실패가 생깁니다
 
-가정해 보겠습니다. 한 제조 조직이 공급사 카탈로그, 설비 관리 시스템, 정비 시스템과 공정 데이터 플랫폼에 흩어진 펌프 정보를 하나로 연결하려 합니다.
+펌프 사례를 조금 더 밀어붙여 보겠습니다. 한 제조 조직이 공급사 카탈로그, 설비 관리 시스템, 정비 시스템과 공정 데이터 플랫폼에 흩어진 펌프 정보를 하나로 연결하려 합니다.
 
 첫 번째 시스템은 장비 이름을 `pump`라고 저장합니다. 두 번째는 한국어 `펌프`와 약어를 씁니다. 세 번째는 `rated flow`를 값만 저장하고 단위를 별도 필드에 둡니다. 네 번째는 펌프의 설치·운전·정비 이력을 장기간 연결해야 합니다.
 
-이 문제들을 하나의 OWL 파일로 곧장 해결하려 하면 서로 다른 책임이 섞입니다.
+겉으로는 모두 `펌프 데이터 통합` 문제처럼 보입니다. 하지만 하나의 OWL 파일로 곧장 해결하려 하면 서로 다른 책임이 한데 섞입니다.
 
 ![같은 펌프를 둘러싼 용어 불일치, 속성·단위 충돌, 산업 공통 의미, 생애주기 통합, 상위 범주 정렬 문제를 서로 다른 책임으로 분리한 지도](../../attachments/industrial-ontology-standards-responsibility-map/industrial-ontology-standards-responsibility-map-figure-01.png)
 
@@ -85,7 +85,7 @@ ISO 704를 쓴다고 RDF나 OWL ontology가 만들어지는 것은 아닙니다.
 
 ## ISO 25964와 SKOS는 시소러스 운영과 웹 표현을 연결합니다
 
-용어가 정리됐다고 여러 vocabulary 사이의 관계가 자동으로 생기지는 않습니다. [ISO 25964-2](https://www.iso.org/standard/53658.html)는 서로 다른 thesaurus와 vocabulary 사이의 interoperability와 mapping을 다룹니다.
+용어를 정리했다고 문제가 끝나지는 않습니다. 이제 서로 다른 vocabulary를 어떻게 연결할지가 남습니다. [ISO 25964-2](https://www.iso.org/standard/53658.html)는 서로 다른 thesaurus와 vocabulary 사이의 interoperability와 mapping을 다룹니다.
 
 [W3C SKOS](https://www.w3.org/TR/skos-reference/)는 `Concept`, `ConceptScheme`, `prefLabel`, `altLabel`, `broader`, `narrower`, `related`와 mapping property를 RDF/Web에서 표현하는 Recommendation입니다.
 
@@ -106,7 +106,7 @@ ex:pump
 
 ## IEC 61360과 PLIB는 이름보다 property 계약을 다룹니다
 
-두 시스템이 모두 `펌프`라고 부른다고 해도 다음 단계에서 다시 충돌할 수 있습니다.
+이름을 `펌프`로 맞췄다고 안심하기는 이릅니다. 다음 단계에서 다시 충돌할 수 있습니다.
 
 ```text
 rated flow = <value>
@@ -140,7 +140,7 @@ Property dictionary는 산업 전반에서 재사용할 수 있어도 여전히 
 
 ## IDO의 upper ontology와 ISO/IEC 21838의 TLO는 같은 말이 아닙니다
 
-`upper ontology`라는 단어는 특히 혼동하기 쉽습니다.
+여기서 가장 헷갈리기 쉬운 표현이 `upper ontology`입니다. 이름이 비슷하다고 같은 층을 뜻하지는 않습니다.
 
 ISO/TC 184/SC 4의 ISO 23726 Ontology-based interoperability 계열은 Industrial Data Ontology(IDO)를 foundation으로 둡니다. [ISO/FDIS 23726-3](https://www.iso.org/standard/87560.html)은 IDO를 산업 데이터와 정보, vocabulary, asset model과 reference data library에 사용할 OWL ontology로 설명합니다.
 
@@ -211,7 +211,7 @@ ISO 15926 = 모든 산업 ontology의 기본값
 
 ## 최소 충분 표준을 고르는 네 단계
 
-여러 자료를 함께 놓으면 표준 선택을 다음 네 단계로 줄일 수 있습니다.
+이제 흩어진 표준 이름을 실제 선택 절차로 바꿔 보겠습니다. 여러 자료를 함께 놓으면 네 단계로 줄일 수 있습니다.
 
 ### 1. 실패를 재현합니다
 
@@ -243,7 +243,7 @@ IDO나 TLO를 추가하려면 `표준을 더 많이 썼다`가 아니라 다음�
 
 표준을 도입한 뒤에는 의존성을 제거하는 시험도 필요합니다. Optional alignment를 떼었을 때 domain ontology가 독립적으로 동작하는지, 외부 환경으로 term·property·mapping을 옮길 수 있는지 확인합니다.
 
-이 네 단계를 합치면 선택 기준이 `표준의 권위`에서 **실패를 고치는 최소 책임과 그 책임의 검증 가능성**으로 바뀝니다.
+네 단계를 거치고 나면 질문이 달라집니다. `어느 표준이 더 권위 있는가`가 아니라 **실패를 고치는 최소 책임은 무엇이며, 그 책임을 검증할 수 있는가**를 묻게 됩니다.
 
 ## 표준을 썼다고 이식성이 생기는 것은 아닙니다
 
@@ -262,7 +262,7 @@ standard ontology 사용
 
 표준을 사용하더라도 조직에는 profile, extension, mapping, version, provenance, validation과 ownership이 남습니다. 이번에 확인한 [ISO/IEC 21838-1](https://www.iso.org/standard/71954.html)의 공개 범위만으로는 조직의 local profile·mapping·version·promotion 운영이 자동으로 정해지지 않습니다.
 
-따라서 semantic asset의 exit drill은 파일을 저장하는 데서 멈추면 부족합니다.
+여기서 한 번 더 함정이 생깁니다. 표준 식별자를 썼고 RDF나 OWL로 export했다고 해서 의미까지 옮겨졌다고 볼 수는 없습니다. semantic asset의 exit drill이 파일 저장에서 멈추면 부족한 이유입니다.
 
 ![표준 선택 뒤에도 provenance, version, mapping, validation, ownership과 외부 재생이 남으며 export 성공과 semantic portability가 같은 것이 아님을 보여주는 exit drill](../../attachments/industrial-ontology-standards-responsibility-map/industrial-ontology-standards-responsibility-map-figure-03.png)
 
@@ -324,13 +324,13 @@ ontology_registry:
 
 ## 마지막에 남길 질문은 하나입니다
 
-산업 온톨로지 표준을 보면 표준 번호와 이름이 먼저 눈에 들어옵니다. 하지만 실제 설계에서 필요한 순서는 반대입니다.
+산업 온톨로지 표준을 펼치면 표준 번호와 이름부터 눈에 들어옵니다. 설계는 그 반대 순서로 해야 합니다.
 
-먼저 펌프 하나와 질문 하나를 고르십시오. 이름이 깨졌는지, property가 깨졌는지, lifecycle 정보가 끊겼는지, 여러 domain의 상위 category가 충돌했는지 확인합니다. 그 실패를 해결하는 가장 얇은 책임부터 붙이고, 다음 표준은 이전 층에서 해결하지 못한 의무가 있을 때만 추가합니다.
+처음의 펌프 하나로 돌아가 보겠습니다. 이름이 깨졌는지, property가 깨졌는지, lifecycle 정보가 끊겼는지, 여러 domain의 상위 category가 충돌했는지 먼저 확인합니다. 그 실패를 해결하는 가장 얇은 책임부터 붙입니다. 다음 표준은 이전 층에서 해결하지 못한 의무가 남았을 때만 추가합니다.
 
-그다음에는 한 번 더 묻습니다. **이 표준과 mapping을 다른 환경으로 가져가도 같은 질문에 같은 의미로 답할 수 있을까요?**
+마지막에는 처음보다 더 까다로운 질문이 남습니다. **이 표준과 mapping을 다른 환경으로 가져가도 같은 질문에 같은 의미로 답할 수 있을까요?**
 
-그 질문까지 통과해야 표준 목록이 실제 상호운용 설계로 바뀝니다.
+여기까지 통과해야 표준 목록이 실제 상호운용 설계가 됩니다.
 
 ## 함께 읽기
 
