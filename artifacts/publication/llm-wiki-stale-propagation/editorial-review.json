@@ -1,0 +1,148 @@
+{
+  "slug": "llm-wiki-stale-propagation",
+  "profile": "longform-technical-explainer",
+  "date": "2026-08-30",
+  "reviewed_at": "2026-08-30T12:03:00+09:00",
+  "base_commit": "56996cd986bc8328e46fb24fc5244e410f13272b",
+  "trigger": {
+    "types": ["latest_published_post_changed", "directly_related_research_material_update"],
+    "details": "직전 실행 뒤 LLM Wiki stale propagation 글이 새 4번 공개 글로 발행됐다. 동시에 11:15 KST에 EA-Graph·MEMOREPAIR post-audit supplement가 추가되어 기존 10:41 Evidence audit 범위를 넘어섰다. 발행 근거로 사용하기 전에 private research를 source 36·claim 37로 다시 통합하고 same-run degraded review 117/117, deterministic fixtures 70/70, Evidence audit PASS_DEGRADED, manifest hash 검사를 닫았다."
+  },
+  "central_question": "원문 revision이 바뀌었을 때 LLM Wiki는 어떤 파생 page를 최신 답변에서 보류하고, 어떤 순서로 다시 current 상태로 돌려야 하는가?",
+  "final_claim": "Dependency receipt는 선택적 영향 계산을 가능하게 하지만 정밀한 selective propagation일수록 누락 dependency에 민감하다. 영향 page는 repair보다 먼저 최신 답변 후보에서 격리하고, 대체 근거와 새 revision을 검증한 뒤에만 다시 승격해야 하며, 작은 Wiki에서는 file-level hash와 full review가 더 적절할 수 있다.",
+  "sources_reviewed": [
+    "AGENTS.md",
+    "content/operations/editorial-style.md",
+    "content/operations/research-publishing-rules.md",
+    "publish-tteggu-blog skill",
+    "humanize-korean skill",
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/sources/llm-wiki-stale-propagation-2026-08-06.md",
+    "wiki/analyses/next-blog-topic-llm-wiki-stale-propagation-2026-08-06.md",
+    "research/llm-wiki-stale-propagation-20260806/README.md",
+    "research/llm-wiki-stale-propagation-20260806/state.json",
+    "research/llm-wiki-stale-propagation-20260806/artifacts/drafts/report-revision-20260830-1041.md",
+    "research/llm-wiki-stale-propagation-20260806/outputs/15_artifact_anchored_granularity_and_barrier_first_cascade_repair_supplement.md",
+    "research/llm-wiki-stale-propagation-20260806/sources/sources-integrated-20260830-1041.jsonl",
+    "research/llm-wiki-stale-propagation-20260806/sources/bibliography-integrated-20260830-1041.md",
+    "research/llm-wiki-stale-propagation-20260806/sources/sources-supplement-20260830-1115.jsonl",
+    "research/llm-wiki-stale-propagation-20260806/artifacts/triangulation-supplement-20260830-1115.json",
+    "research/llm-wiki-stale-propagation-20260806/sources/evidence-notes/artifact-anchored-granularity-and-cascade-repair-20260830-1115.md",
+    "EA-Graph arXiv abstract verified 2026-08-30",
+    "MEMOREPAIR arXiv abstract verified 2026-08-30"
+  ],
+  "research_reintegration": {
+    "status": "PASS_DEGRADED",
+    "report": "research/llm-wiki-stale-propagation-20260806/artifacts/drafts/report-revision-20260830-1203.md",
+    "sources": 36,
+    "cited_sources": 36,
+    "claims": 37,
+    "orphan_sources": 0,
+    "fixtures": "70/70 PASS after rerun",
+    "same_run_adversarial_review": "117/117 passed_degraded",
+    "manifest": "artifacts/evidence-manifest-integrated-20260830-1203.json",
+    "manifest_hash_check": "pass",
+    "research_integration_gate": "closed_degraded",
+    "publication_evidence_gate": "open",
+    "publication_gate_note": "독립 reviewer, external full-text snapshot/section hash, real-corpus granularity·repair comparison은 여전히 미완료이므로 인접 preprint 수치를 성능 기대값으로 일반화하지 않는다."
+  },
+  "evidence_use": {
+    "reflected": [
+      "EA-Graph를 file-level refresh가 세부 artifact 영향 범위보다 과도하게 넓어질 수 있다는 bounded adjacent evidence로만 사용했다.",
+      "MEMOREPAIR의 withdraw-before-repair contract를 영향 page를 repair보다 먼저 최신 답변 후보에서 격리하는 수명주기 경계로 사용했다.",
+      "EA-Graph의 unprovable 구분을 stale이 곧 disproven을 뜻하지 않는다는 설명에만 사용하고 표준 taxonomy로 승격하지 않았다.",
+      "MEMOREPAIR의 provenance completeness 민감도를 selective dependency graph를 사용할수록 clean rebuild·표본 audit·보수적 fallback이 더 중요해진다는 반대 근거로 사용했다."
+    ],
+    "excluded": [
+      {
+        "material": "EA-Graph의 약 5.1x file-level over-flag 수치",
+        "reason": "generated code repository의 artifact/sub-path 실험이며 자연어 Wiki의 review 비용 절감률로 이전할 수 없어 공개 글에는 수치를 싣지 않았다."
+      },
+      {
+        "material": "MEMOREPAIR의 0% invalidated-memory exposure, normalized repair cost, 1% edge-drop leak 수치",
+        "reason": "agentic-memory 실험이며 complete influence provenance와 구현 validation suite에 의존한다. 공개 글에서는 방향과 failure boundary만 반영했다."
+      },
+      {
+        "material": "segment-level dependency가 file-level보다 보편적으로 우월하다는 주장",
+        "reason": "작은 Wiki에서는 file-level full review가 더 단순하고 감사 가능할 수 있다는 기존 반론을 유지했다."
+      }
+    ]
+  },
+  "edits": [
+    "핵심 요약에 영향 page를 repair 전에 최신 답변 후보에서 먼저 제외하고 검증된 revision만 다시 승격한다는 순서를 추가했다.",
+    "file-level source hash 기준선 뒤에 EA-Graph의 bounded granularity 근거와 적용 한계를 한 문단으로 추가했다.",
+    "hidden dependency 절에서 MEMOREPAIR의 barrier-first를 쉬운 말로 정의하고 영향 식별 → 격리 → repair → 검증 → 재승격 순서를 설명했다.",
+    "stale과 disproven을 분리하고, replacement evidence가 없을 때 unprovable을 조건부 상태로 이해하는 경계를 추가했다.",
+    "오늘 추가할 최소 계약을 3개 질문에서 4개 질문으로 보강해 review·repair 전 최신 답변 제외 여부를 검사하도록 했다.",
+    "최종 판단에서 영향 범위 계산 뒤 격리와 dependency completeness 감사를 회수했다.",
+    "참고 자료에 EA-Graph와 MEMOREPAIR 원문 링크를 추가했다."
+  ],
+  "concept_dependency_check": {
+    "dependency_receipt_defined_before_detailed_use": "pass",
+    "page_dependency_explained_before_cascade": "pass",
+    "freshness_first_summary_use_explained_as_latest_state": "pass",
+    "barrier_first_defined_in_plain_korean_at_first_use": "pass",
+    "unprovable_defined_in_plain_korean_at_first_use": "pass",
+    "dependency_completeness_defined_in_plain_korean_at_first_use": "pass",
+    "new_evidence_after_file_level_baseline_definition": "pass",
+    "undefined_new_core_term_before_evaluation": "none_found"
+  },
+  "column_quality_check": {
+    "single_central_question": "pass",
+    "concrete_hypothetical_hook": "pass",
+    "author_judgment_and_evidence_separated": "pass",
+    "sections_advance_argument": "pass",
+    "new_evidence_interpretation_colocated": "pass",
+    "report_like_listing": "acceptable_no_structure_rewrite_needed",
+    "reasonable_counterconditions_visible": "pass",
+    "sentence_rhythm": "pass_manual_conservative_review",
+    "specific_closing_judgment": "pass"
+  },
+  "narrative_immersion": {
+    "mode": "not_needed",
+    "reason": "글은 이미 정책 원문 한 문장 변경이라는 가상 장면에서 시작해 direct consumer, downstream synthesis, hidden dependency, promotion race, answer freshness로 질문이 단계적으로 확장된다. 추가 Mystery Box나 False Victory는 근거 보강보다 연출을 키울 가능성이 높아 적용하지 않았다."
+  },
+  "humanize_korean": {
+    "genre": "column",
+    "strength": "conservative",
+    "application": "manual conservative review after structural and evidence edits; no standalone rewrite adopted",
+    "character_change_percent": 6.45,
+    "claim_regression": "none",
+    "protected_existing_numbers_dates_names_acronyms_quotes_urls": "pass",
+    "added_urls": ["https://arxiv.org/abs/2608.04278", "https://arxiv.org/abs/2605.07242"]
+  },
+  "conclusion_independent_reading": {
+    "topic_and_background": "pass",
+    "core_concepts": "pass",
+    "problem": "pass",
+    "operation_sequence": "pass_after_withdraw_before_repair_edit",
+    "rationale": "pass",
+    "meaning_and_limits": "pass",
+    "next_decision": "pass"
+  },
+  "image_impact": "reuse",
+  "image_reason": "기존 source-change → dependency receipt → downstream review → promotion → query freshness 시각 범위와 수치·레이블은 바뀌지 않았다. 새 내용은 기존 selective invalidation·latest exclusion 경계의 설명을 보강하며 별도 시각 주장이나 새 수치를 추가하지 않는다.",
+  "verification": {
+    "status": "release_gate_passed_pending_deployment",
+    "post_validator": "pass",
+    "route_check": "pass",
+    "typescript_prettier": "pass",
+    "tests": "122/122 pass",
+    "production_build": "42 inputs, 435 outputs",
+    "built_post_validator": "pass",
+    "built_route_check": "pass",
+    "image_reuse_revalidation": "pass; four existing PNGs unchanged, each 1659x948",
+    "git_diff_check": "pass",
+    "live_page": "pending",
+    "quartz_plugins": "45 installed",
+    "built_content_check": "new evidence boundaries render in intended order; title present; H1=1; img tags=4"
+  },
+  "remaining_uncertainty": [
+    "EA-Graph와 MEMOREPAIR는 arXiv preprint이며 Markdown LLM Wiki를 직접 평가하지 않는다.",
+    "src_035·src_036의 local full-text snapshot과 section hash가 없어 publication evidence gate는 open 상태다.",
+    "file-, segment-, artifact-level invalidation을 같은 실제 Wiki corpus와 review budget으로 비교하지 않았다.",
+    "barrier-first repair가 실제 stale-answer rate, repair 비용 또는 semantic correctness를 개선하는지 이 프로젝트에서 재현하지 않았다.",
+    "정밀한 selective propagation의 안전성은 dependency completeness에 크게 의존한다."
+  ]
+}
