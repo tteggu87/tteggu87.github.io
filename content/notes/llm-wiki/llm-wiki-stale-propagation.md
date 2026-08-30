@@ -17,7 +17,7 @@ tags:
 3번 글에서는 `source → candidate → canonical`의 권위 경계와 source hash가 바뀌면 canonical을 조용히 덮어쓰지 않는 규칙을 만들었습니다. 실제 운영에서는 그 다음 질문이 남습니다. `source rev2`가 생겼다는 사실을 안 뒤, `canonical A`만 다시 보면 되는지, A를 바탕으로 쓴 `analysis B`와 `guide C`까지 보류해야 하는지 판단할 근거가 필요합니다.
 
 > [!summary] 핵심 결론
-> 원문 변경 감지는 시작점일 뿐입니다. **어떤 source·구간·page revision을 실제로 소비했는지 남긴 dependency receipt와 page dependency가 있어야 재검토 범위를 좁힐 수 있습니다.** 그리고 영향 페이지를 찾는 일, 새 revision을 승인하는 일, 실제 답변이 최신 근거만 사용하는 일은 서로 다른 freshness 계약으로 다뤄야 합니다.
+> 원문 변경 감지는 시작점일 뿐입니다. **어떤 source·구간·page revision을 실제로 소비했는지 남긴 dependency receipt와 page dependency가 있어야 재검토 범위를 좁힐 수 있습니다.** 영향 페이지를 찾으면 고치기 전에 최신 답변 후보에서 먼저 제외하고, 검증된 새 revision만 다시 올려야 합니다. 영향 범위 계산, 수리와 재검토, 승격, 실제 답변의 freshness(최신성)는 서로 다른 계약입니다.
 
 ## Source hash는 “바뀌었다”까지만 알려 줍니다
 
@@ -48,6 +48,8 @@ source hash 변경
 ```
 
 작은 Wiki라면 파일 단위 source hash만으로 충분할 수 있습니다. 변경된 파일을 소유한 모든 페이지를 다시 검토하는 쪽이 dependency registry를 관리하는 것보다 싸다면 굳이 더 복잡하게 만들 이유가 없습니다. 정확한 dependency receipt는 **전체 재검토 비용이나 false positive가 실제로 문제가 될 때** 추가할 계층입니다.
+
+이 판단과 같은 방향을 보여 주는 인접 연구도 있습니다. 코딩 에이전트가 이전 검증 근거를 기억하는 방식을 다룬 [EA-Graph](https://arxiv.org/abs/2608.04278)는 실험용으로 만든 코드 저장소에서 파일 전체를 의심 대상으로 잡는 방식이, 파일 안에서 실제로 사용한 세부 항목만 추적하는 방식보다 훨씬 넓은 검토 집합을 만들 수 있음을 보고합니다. 다만 코드의 세부 항목과 자연어 문서의 의미 구간은 같은 단위가 아니므로, 이 결과를 LLM Wiki의 성능 수치로 옮기지는 않습니다. 여기서는 **더 작은 dependency 단위는 파일 전체 재검토가 실제 비용을 만들 때만 정당화된다**는 설계 근거로만 사용합니다.
 
 ## Query receipt와 dependency receipt는 역할이 다릅니다
 
@@ -173,6 +175,12 @@ Selective re-review는 dependency registry가 충분히 완전하다는 전제�
 + clean rebuild 또는 전체 샘플 audit
 + 변경 범위가 넓은 source의 보수적 review
 ```
+
+**탐지와 repair의 순서도 중요합니다.** Agentic memory를 다룬 [MEMOREPAIR](https://arxiv.org/abs/2605.07242)는 원문에서 파생된 결과물이 영향을 받았다고 판단되면, 수리하기 전에 먼저 사용 경로에서 빼고 수리한 새 결과물을 검증한 뒤 다시 공개하는 **barrier-first**, 즉 ‘수리보다 격리를 먼저 하는’ 계약을 제안합니다. Markdown Wiki를 직접 평가한 연구는 아니므로 실험 수치를 여기로 옮길 수는 없습니다. 다만 stale 후보를 찾고도 repair가 끝날 때까지 최신 지식처럼 계속 노출하는 수명주기 구멍을 피해야 한다는 인접 근거로는 유용합니다. 이 글의 보수적인 순서는 `영향 식별 → 최신 답변 후보에서 제외 → repair → 검증 → 다시 승격`입니다.
+
+대체 근거를 확보하지 못했다고 기존 주장이 곧바로 거짓이 되는 것도 아닙니다. EA-Graph는 필요한 근거가 바뀌었지만 새 근거를 사용할 수 없을 때 `unprovable`, 즉 **현재 근거로는 다시 입증할 수 없는 상태**를 따로 둡니다. 이 이름을 LLM Wiki의 표준 상태로 채택하자는 뜻은 아닙니다. 여기서는 **stale은 현재 자격을 다시 확인해야 한다는 뜻이지, 자동으로 틀렸다는 뜻은 아니다**라는 경계만 가져옵니다. 과거 revision을 보존하더라도 최신 답변에는 쓰지 않을 수 있습니다.
+
+이처럼 selective cascade를 정밀하게 만들수록 누락 dependency는 더 위험해집니다. MEMOREPAIR도 어떤 결과물이 무엇에서 파생됐는지를 나타내는 provenance 관계를 일부 누락한 실험에서 stale 파생물이 격리 범위 밖에 남는 현상을 보고합니다. 따라서 세밀한 dependency graph 자체를 안전성의 증거로 보지 말고 clean rebuild·표본 audit·보수적 fallback으로 **dependency completeness, 즉 실제 의존 관계가 빠짐없이 기록됐는지를 계속 검사**해야 합니다.
 
 Ontology나 graph neighborhood를 이용해 “이 page도 혹시 영향을 받았는가?”를 찾는 방법도 review-priority 신호로는 유용할 수 있습니다. [WikiMonitor-Onto](https://www.jaai.net/vol4/JAAI-V4N3-66.pdf)는 61개 AI 강의 문서에서 만든 642-node·487-edge graph와 62-concept gold set을 이용해 간접 stale 후보 탐지를 시험했지만, 한 도메인·한 annotator·합성 stale seed라는 범위가 있습니다. 따라서 이런 확률적 구조 신호가 exact dependency를 대신해 canonical을 자동 무효화하는 권한을 가져서는 안 됩니다. 발견 신호와 정본 자격 판정을 분리하면 false positive를 검토 큐로 흡수할 수 있습니다.
 
@@ -308,18 +316,19 @@ built_from:
 ```text
 1. 이 page가 바뀐 구간을 실제로 사용했는가?
 2. 이 page revision을 소비한 downstream page가 있는가?
-3. review가 끝난 순간에도 source/page head가 그대로였는가?
+3. 영향받은 page를 review·repair 전에 최신 답변 후보에서 뺐는가?
+4. review가 끝난 순간에도 source/page head가 그대로였는가?
 ```
 
-이 세 질문에 답할 수 있으면 `stale`은 막연한 “오래된 문서” 표시에서 **재검토 범위를 계산하는 운영 상태**로 바뀝니다.
+이 네 질문에 답할 수 있으면 `stale`은 막연한 “오래된 문서” 표시에서 **재검토 범위와 최신 답변 자격을 함께 관리하는 운영 상태**로 바뀝니다.
 
 ## 최종 판단
 
 LLM Wiki의 첫 어려움은 모델이 만든 문장을 어디에 쓸지 정하는 것입니다. 3번 글의 source·candidate·canonical·receipt가 그 권위 경계를 만들었습니다. 두 번째 어려움은 이미 승인한 지식을 어떻게 계속 믿을지 정하는 일입니다.
 
-Source hash는 원문이 바뀌었다는 사실을 잘 알려 줍니다. 하지만 selective re-review를 하려면 어떤 source revision과 구간, 어떤 upstream page revision이 현재 canonical에 실제로 들어갔는지 남겨야 합니다. 직접 소비 page의 재검토가 끝난 뒤에도 downstream synthesis는 별도로 확인해야 하고, reviewer가 승인하는 순간에는 expected revision이 여전히 current인지 다시 확인해야 합니다. 그 뒤 query도 stale·conflict 상태를 다시 끌어오지 않아야 합니다.
+Source hash는 원문이 바뀌었다는 사실을 잘 알려 줍니다. 하지만 selective re-review를 하려면 어떤 source revision과 구간, 어떤 upstream page revision이 현재 canonical에 실제로 들어갔는지 남겨야 합니다. 영향 범위를 찾은 뒤에는 stale page를 repair보다 먼저 최신 답변 후보에서 빼고, 새 근거가 없다면 억지로 current라고 판단하지 않아야 합니다. 직접 소비 page의 재검토가 끝난 뒤에도 downstream synthesis는 별도로 확인해야 하고, reviewer가 승인하는 순간에는 expected revision이 여전히 current인지 다시 확인해야 합니다. 그 뒤 query도 stale·conflict 상태를 다시 끌어오지 않아야 합니다.
 
-따라서 stale propagation을 하나의 자동 invalidation 알고리즘으로 보는 것보다 **변경 감지, 영향 범위, review, promotion, answer freshness를 연결하는 다섯 책임**으로 보는 편이 정확합니다. 작은 Wiki에서는 file-level hash와 full review로 시작해도 됩니다. 그 방식이 실제로 너무 많은 재검토를 만들거나 downstream 누락을 반복할 때에만 dependency receipt와 typed propagation을 추가하는 것이 안전합니다.
+따라서 stale propagation을 하나의 자동 invalidation 알고리즘으로 보는 것보다 **변경 감지, 영향 범위와 격리, repair·review, promotion, answer freshness를 연결하는 다섯 책임**으로 보는 편이 정확합니다. 작은 Wiki에서는 file-level hash와 full review로 시작해도 됩니다. 그 방식이 실제로 너무 많은 재검토를 만들거나 downstream 누락을 반복할 때에만 dependency receipt와 typed propagation을 추가하는 것이 안전합니다. 정밀한 selective propagation을 택했다면, dependency graph를 만드는 일만큼 누락 관계를 계속 감사하는 일도 운영 계약에 포함해야 합니다.
 
 ## 함께 읽기
 
@@ -342,3 +351,5 @@ Source hash는 원문이 바뀌었다는 사실을 잘 알려 줍니다. 하지�
 - Hanxiang Chao et al., [STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?](https://arxiv.org/abs/2605.06527)
 - Haofei Sun, Lin He, [When Memory Updates but Behavior Does Not](https://arxiv.org/abs/2608.01619)
 - Vikas Reddy, Sumanth Challaram, [Don't Ask the LLM to Track Freshness](https://arxiv.org/abs/2606.01435)
+- Hwai-Jung Hsu, Cheng-Jan Chi, Hanna Everett, [EA-Graph: Artifact-Anchored Verification Memory for Coding Agents under Upstream Drift](https://arxiv.org/abs/2608.04278)
+- Yang Zhao, Chengxiao Dai, Mengying Kou, Yue Xiu, [MEMOREPAIR: Barrier-First Cascade Repair in Agentic Memory](https://arxiv.org/abs/2605.07242)
