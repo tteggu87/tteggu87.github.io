@@ -1,0 +1,81 @@
+{
+  "slug": "llm-wiki-answer-freshness",
+  "shared_visual_system": "16:9 기술 해설 도판. 따뜻한 아이보리 배경, 차콜 텍스트, 청록·주황·남색 포인트, 얇은 선과 revision 문서 아이콘, 넓은 안전 여백과 모바일 가독성. 제품 로고와 성능 차트는 사용하지 않는다.",
+  "images": [
+    {
+      "id": "infographic",
+      "role": "글 전체 read-side freshness 지도",
+      "sections": [
+        "write side와 read side",
+        "admission",
+        "assembly",
+        "premise·draft audit",
+        "answer receipt",
+        "release recheck"
+      ],
+      "dominant_message": "최신 canonical page가 있어도 read-side 여섯 책임을 거쳐야 current answer 후보가 된다.",
+      "exact_labels": [
+        "최신 페이지 ≠ 최신 답변",
+        "후보 검색",
+        "자격 검사",
+        "버전 조립",
+        "전제·초안 감사",
+        "답변 영수증",
+        "배포 직전 재확인"
+      ],
+      "must_not_invent": ["정확도", "개선률", "성능 점수", "자동 안전 보증", "제품 로고"],
+      "alt": "최신 canonical page가 있어도 candidate retrieval, validity admission, version-aware assembly, premise와 draft 검사, answer receipt와 release-time revision 재검증을 거쳐야 current answer가 되는 전체 지도"
+    },
+    {
+      "id": "figure-01",
+      "role": "relevance와 current validity 분리",
+      "sections": ["관련도와 현재 자격", "current·historical query"],
+      "dominant_message": "관련 후보를 찾는 일과 current query에서 사용할 revision을 허용하는 일은 다르다.",
+      "exact_labels": [
+        "관련 후보",
+        "현재 질문",
+        "과거 질문",
+        "현재 자격",
+        "현재 revision",
+        "시점 revision"
+      ],
+      "must_not_invent": ["relevance 점수", "확률", "순위 수치", "특정 모델 성능"],
+      "alt": "의미적으로 가까운 superseded revision과 current revision이 함께 검색될 때 current query와 historical query가 서로 다른 admission 규칙을 사용하는 구조"
+    },
+    {
+      "id": "figure-02",
+      "role": "current retrieval 이후 세 failure surface",
+      "sections": ["STALE", "StateAuditor", "assembly"],
+      "dominant_message": "현재 근거가 검색돼도 mixed revision, stale premise, implicit draft dependency에서 낡은 답이 다시 생길 수 있다.",
+      "exact_labels": [
+        "현재 근거",
+        "혼합 revision",
+        "낡은 질문 전제",
+        "암묵 의존",
+        "실패 가능 지점",
+        "낡은 답"
+      ],
+      "must_not_invent": ["발생 확률", "인과 효과 크기", "모델별 순위", "자동 탐지 정확도"],
+      "alt": "현재 evidence가 retrieval된 뒤에도 mixed revision assembly, stale query premise, implicit draft dependency에서 오래된 행동이 다시 만들어질 수 있는 세 failure surface"
+    },
+    {
+      "id": "figure-03",
+      "role": "answer receipt와 release-time revision recheck",
+      "sections": ["answer receipt", "finalization race", "release gate"],
+      "dominant_message": "답변이 실제 사용한 revision을 receipt에 남기고 release 직전에 current head와 다시 비교한다.",
+      "exact_labels": [
+        "답변 영수증",
+        "질문 시점",
+        "허용 revision",
+        "조립 revision",
+        "초안 의존",
+        "배포 직전 head 비교",
+        "배포",
+        "재검사",
+        "과거 시점 표시"
+      ],
+      "must_not_invent": ["안전 인증", "latency", "false positive", "정확도", "임의 revision 번호"],
+      "alt": "answer receipt가 사용 revision과 query intent를 기록하고 답변을 내보내기 직전 current head를 다시 비교해 release, recheck 또는 historical as-of로 분기하는 설계"
+    }
+  ]
+}
