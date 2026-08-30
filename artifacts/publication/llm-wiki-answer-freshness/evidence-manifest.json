@@ -1,0 +1,42 @@
+{
+  "status": "READY_WITH_SCOPED_CLAIMS",
+  "created_at": "2026-08-30T16:13:00+09:00",
+  "article": "content/notes/llm-wiki/llm-wiki-answer-freshness.md",
+  "primary_research": {
+    "bundle": "research/llm-wiki-answer-behavior-freshness-20260830",
+    "latest_report": "artifacts/drafts/report-revision-20260830-1552.md",
+    "latest_report_sha256": "5dd256fb993881d367a4d977abaf6e9caede19db155c56a24ac08411f81f53c8",
+    "base_sources": "sources/sources.jsonl",
+    "base_sources_sha256": "ad73c368c6c58c573911c5d22f2933d6c1434cc2991eeb7507745937968649d1",
+    "base_source_count": 12,
+    "post_state_supplement_sources": "sources/sources-supplement-20260830-1552.jsonl",
+    "post_state_supplement_sources_sha256": "28675822213a576b7687f812ffd4ca16d8e69ffbb24e8c8755f32498050ee8f5",
+    "supplement_source": "SafeCommit",
+    "answer_freshness_fixture": "13/13 PASS deterministic synthetic contract",
+    "action_release_fixture": "6/6 PASS deterministic synthetic contract",
+    "internal_status": "closed_degraded_initial_bundle plus post-state supplement; no independent reviewer/audit closure"
+  },
+  "supporting_research": {
+    "bundle": "research/llm-wiki-stale-propagation-20260806",
+    "report": "artifacts/drafts/report-revision-20260830-1203.md",
+    "report_sha256": "b5aa43ed2b52d60d3e73c1c28ca1f634b344eccae0307189495e2074a8924a72",
+    "sources": "sources/sources-integrated-20260830-1203.jsonl",
+    "sources_sha256": "041543f50aab60f2e9b19793944780e6be3f28333eee11c0389d03a546d55e97",
+    "registered_sources": 36,
+    "claims": 37,
+    "fixtures": "70/70 PASS deterministic synthetic contracts",
+    "evidence_audit": "outputs/evidence-audit-integrated-20260830-1203.json",
+    "evidence_audit_sha256": "a4bfc7ee8d0f16544eeabd2aa3164f8fd354857d3b38e806a4664f2f43dcffb5",
+    "evidence_audit_status": "PASS_DEGRADED"
+  },
+  "cross_check": [
+    "4번 공개 글의 write-side source/page invalidation, review와 promotion 경계를 read-side answer freshness와 분리했다.",
+    "STALE·StateAuditor·deterministic freshness 연구는 current evidence와 current behavior/assembly 사이의 별도 failure surface 근거로만 사용했다.",
+    "StateMem·EvoWiki는 explicit state evolution/supersession의 인접 근거로만 사용했다.",
+    "When Retrieval Hurts Code Completion과 Temporal Validity의 수치는 각 제한된 software-history benchmark 범위에서만 사용했다.",
+    "Explicit State Elicitation은 state label 자기보고만으로 policy correctness가 닫히지 않는 반대 근거로 사용했다.",
+    "SafeCommit은 current answer/plan과 side-effect commit gate를 분리하는 최신 보강 경계로만 사용했다."
+  ],
+  "claim_ceiling": "No claim of real LLM stale-answer reduction, implicit-dependency extraction accuracy, production safety, latency, cost, distributed race correctness, or universal superiority. Project fixtures are L1-like deterministic contract checks only.",
+  "publication_gate_interpretation": "Research-internal gate status and degraded review do not independently block the blog under the user's publication rule. Claims were narrowed to source-verifiable facts, benchmark-bounded author-reported results, synthetic contract behavior, and explicitly labeled project proposals."
+}

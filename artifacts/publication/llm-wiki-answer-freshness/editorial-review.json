@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "article": "content/notes/llm-wiki/llm-wiki-answer-freshness.md",
+  "editorial_thesis": "Current canonical page는 current answer의 충분조건이 아니며, answer freshness는 retrieval 이후의 admission·assembly·premise/draft audit·receipt·release recheck까지 분리해야 한다.",
+  "reader_problem": "Wiki page는 최신인데 Agent가 과거 signature나 superseded policy를 다시 답하는 상황",
+  "concrete_example": "호출 방식이 바뀐 내부 helper를 현재 canonical page로 수정한 뒤에도 stale snippet·mixed context·old premise 때문에 낡은 답이 나올 수 있는 명시적 가상 상황",
+  "existing_approach": "page freshness 또는 relevance ranking만 확인",
+  "new_perspective": "answer freshness를 read-side transaction으로 분리",
+  "cost_shift": "revision metadata, admission rule, answer receipt, release-time recheck와 필요 시 premise/draft audit의 운영 비용이 추가된다.",
+  "failure_conditions": [
+    "current/historical intent를 구분할 수 없는 경우",
+    "revision identity와 supersession metadata가 없는 경우",
+    "implicit dependency audit이 거짓 확신만 만드는 경우",
+    "작은 corpus에서 live-source lookup이나 full review가 더 단순한 경우"
+  ],
+  "closing_judgment": "관련도와 현재 사용 자격을 한 점수로 합치지 않고 current/historical query 분리, validity admission, answer receipt와 release recheck부터 시작한다.",
+  "novelty_vs_post_4": "4번은 write-side source/page invalidation과 promotion freshness가 중심이고, 5번은 current page 이후 query·assembly·behavior·release freshness가 중심이다.",
+  "regression_checks": {
+    "title_number": "PASS series 5",
+    "hook_before_summary": "PASS",
+    "single_summary": "PASS",
+    "claim_strength": "PASS",
+    "benchmark_limits_near_numbers": "PASS",
+    "project_fixture_labeled_synthetic": "PASS",
+    "safecommit_labeled_post-state_supplement_and_adjacent": "PASS",
+    "internal_claim_tokens_absent": "PASS",
+    "related_wikilinks": "PASS",
+    "meta_narration": "PASS via editorial validator",
+    "image_impact": "full_regenerate"
+  }
+}

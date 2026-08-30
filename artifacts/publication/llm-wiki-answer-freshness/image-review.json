@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "generation": {
+    "primary": "codex-imagegen",
+    "manifest": "artifacts/publication/llm-wiki-answer-freshness/image-prompts.jsonl",
+    "prompt_validation": "4/4 PASS",
+    "initial_generation": "4 raster PNG present after manifest runner/resume behavior",
+    "targeted_regeneration": [
+      "figure-02: label clarified from 낡은 전제 to 낡은 질문 전제",
+      "figure-03: gate clarified from 현재 head 비교 to 배포 직전 head 비교"
+    ],
+    "native_imagegen_fallback": false,
+    "svg_fallback": false
+  },
+  "pixel_review": {
+    "infographic": "PASS",
+    "figure_01": "PASS",
+    "figure_02": "PASS_AFTER_ONE_TARGETED_REGENERATION",
+    "figure_03": "PASS_AFTER_ONE_TARGETED_REGENERATION",
+    "unsupported_numbers_or_performance_claims": false,
+    "arrow_and_group_semantics": "PASS",
+    "label_readability": "PASS",
+    "cropping_overlap": "PASS",
+    "cross_image_roles_distinct": true
+  },
+  "final_paths": [
+    "content/attachments/llm-wiki-answer-freshness/llm-wiki-answer-freshness-infographic.png",
+    "content/attachments/llm-wiki-answer-freshness/llm-wiki-answer-freshness-figure-01.png",
+    "content/attachments/llm-wiki-answer-freshness/llm-wiki-answer-freshness-figure-02.png",
+    "content/attachments/llm-wiki-answer-freshness/llm-wiki-answer-freshness-figure-03.png"
+  ]
+}

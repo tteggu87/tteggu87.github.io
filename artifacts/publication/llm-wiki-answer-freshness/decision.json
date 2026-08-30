@@ -1,0 +1,18 @@
+{
+  "status": "publish",
+  "as_of": "2026-08-30T15:53:00+09:00",
+  "slug": "llm-wiki-answer-freshness",
+  "primary_bundle": "research/llm-wiki-answer-behavior-freshness-20260830",
+  "supporting_bundle": "research/llm-wiki-stale-propagation-20260806",
+  "existing_public_article": "content/notes/llm-wiki/llm-wiki-stale-propagation.md",
+  "overlap": [
+    "4번 글은 source/page freshness, dependency receipt, downstream invalidation, repair/review와 promotion precondition을 다룬다.",
+    "5번 글은 current canonical이 존재한 뒤 retrieval admission, version-aware assembly, stale-premise와 draft dependency, answer receipt, release-time recheck를 다룬다."
+  ],
+  "new_question": "Canonical page가 current인데도 query·draft·answer가 stale할 수 있는 이유와 이를 read-side contract로 어떻게 분리할 것인가?",
+  "new_frame": "answer freshness를 page attribute가 아니라 candidate retrieval → validity admission → version-aware assembly → premise/draft audit → answer receipt → release-time revision recheck의 read transaction으로 본다.",
+  "new_connection": "4번의 write-side dependency/promotion contract와 최신 agent-memory·software-agent 연구를 연결해 current page와 current answer 사이의 책임 경계를 독립시킨다.",
+  "claim_ceiling": "외부 연구는 각 benchmark 범위에서만 인용한다. 프로젝트 13/13 및 action-release 6/6은 synthetic contract fixture이며 LLM accuracy, stale-answer reduction, production safety, latency 또는 real-corpus 성능으로 해석하지 않는다.",
+  "publication_gate_interpretation": "연구 내부 publication gate와 degraded self-review는 블로그 절대 차단 조건으로 사용하지 않는다. 확인 가능한 출처와 명시적 claim ceiling으로 주장 범위를 축소해 발행한다.",
+  "result": "publish"
+}
