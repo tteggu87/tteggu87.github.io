@@ -43,13 +43,13 @@ tags:
 ≠ upper category가 충돌함
 ```
 
-**첫째, 실패를 결과로 재현합니다.** 이름 충돌인지, property·unit 충돌인지, object와 process의 구분 실패인지, 장기 이력 연결 실패인지 나눕니다. `데이터가 안 맞는다`처럼 뭉뚱그리면 어떤 표준을 붙여도 효과를 검증할 수 없습니다.
+**어디서 의미가 깨졌습니까?** 이름 충돌인지, property·unit 충돌인지, object와 process의 구분 실패인지, 장기 이력 연결 실패인지 결과부터 나눕니다. `데이터가 안 맞는다`처럼 뭉뚱그리면 어떤 표준을 붙여도 효과를 검증할 수 없습니다.
 
-**둘째, 가장 얇은 기준선으로 고칩니다.** 이름과 동의어 문제라면 용어집이나 가벼운 vocabulary가 먼저일 수 있습니다. Property와 단위 문제라면 명시적인 property registry가 필요합니다. 한 시스템의 JSON Schema나 관계형 모델로 충분히 닫히는 문제에 native graph와 top-level ontology까지 한꺼번에 더할 이유는 없습니다.
+그다음에는 **가장 얇은 기준선으로 어디까지 고칠 수 있는지** 봅니다. 이름과 동의어 문제라면 용어집이나 가벼운 vocabulary가 먼저일 수 있습니다. Property와 단위 문제라면 명시적인 property registry가 필요합니다. 한 시스템의 JSON Schema나 관계형 모델로 충분히 닫히는 문제에 native graph와 top-level ontology까지 한꺼번에 더할 이유는 없습니다.
 
-**셋째, 다음 책임이 새 의무를 해결하는지 확인합니다.** 산업 데이터 foundation이나 상위 정렬 계층을 추가했다면 표준을 더 많이 썼다는 사실이 아니라 중복 mapping이 재사용되는지, 이전에 충돌하던 상위 category를 일관되게 판정하는지, cross-domain competency query가 통과하는지, 변경 영향을 더 잘 찾는지를 봅니다. 이번 연구에서는 동일 industrial corpus로 비용·정확도 비교 실험을 실행하지 않았으므로 개선 수치를 주장하지 않습니다.
+여기까지 고쳤는데도 실패가 남는다면 질문이 바뀝니다. **더 강한 책임은 무엇을 새로 해결합니까?** 산업 데이터 foundation이나 상위 정렬 계층을 추가했다면 표준을 더 많이 썼다는 사실이 아니라 중복 mapping이 재사용되는지, 이전에 충돌하던 상위 category를 일관되게 판정하는지, cross-domain competency query가 통과하는지, 변경 영향을 더 잘 찾는지를 봅니다. 이번 연구에서는 동일 industrial corpus로 비용·정확도 비교 실험을 실행하지 않았으므로 개선 수치를 주장하지 않습니다.
 
-**넷째, 외부 환경에서 다시 재생합니다.** 선택한 term·property·mapping을 다른 실행 환경으로 옮긴 뒤 같은 질문을 다시 던집니다. 파일이 열리는지만 보지 않고 같은 펌프, 같은 수치, 같은 작업과 같은 이력을 복원하는지 확인합니다. 이 단계가 30번 글의 exit readiness를 의미 계층에서 이어 받습니다.
+마지막 검사는 도입이 아니라 이탈입니다. **밖으로 옮겨도 같은 업무가 재생됩니까?** 선택한 term·property·mapping을 다른 실행 환경으로 옮긴 뒤 같은 질문을 다시 던집니다. 파일이 열리는지만 보지 않고 같은 펌프, 같은 수치, 같은 작업과 같은 이력을 복원하는지 확인합니다. 이 단계가 30번 글의 exit readiness를 의미 계층에서 이어 받습니다.
 
 이 네 질문을 통과한 뒤에야 표준 이름을 펼칩니다. 이름과 동의어만 맞추면 되는 조직에 top-level ontology까지 도입하는 것은 과할 수 있습니다. 반대로 여러 팀이 `Process`, `Role`, `Quality`, `Information`을 서로 다르게 모델링해 mapping을 매번 다시 만든다면 단순 용어집만으로는 부족합니다.
 
@@ -152,7 +152,7 @@ ISO/IEC 21838-1
 
 이 조사에서는 IDO와 BFO·DOLCE·TUpper 사이의 formal mapping을 구현하거나 reasoner로 검증하지 않았습니다. 어느 쪽이 더 낫다거나 완전히 호환된다고 말하지 않습니다.
 
-TLO의 가치는 `가장 높은 단계`라서 생기지 않습니다. 설비 ontology, 정비 ontology, 조직 ontology가 `Object`, `Process`, `Role`, `Quality`, `Information`을 서로 다르게 해석해 point-to-point mapping을 계속 다시 만들 때 상위 정렬의 재사용 가치가 커집니다. 반대로 한 팀이 관리하는 단일 domain이고 cross-domain query가 거의 없다면 아직 필요하지 않을 수 있습니다.
+TLO의 가치는 `가장 높은 단계`라서 생기지 않습니다. 같은 펌프를 다루는 설비 ontology, 정비 ontology, 조직 ontology가 `Object`, `Process`, `Role`, `Quality`, `Information`을 서로 다르게 해석해 point-to-point mapping을 계속 다시 만들 때 상위 정렬의 재사용 가치가 커집니다. 반대로 한 팀이 관리하는 단일 domain이고 cross-domain query가 거의 없다면 아직 필요하지 않을 수 있습니다.
 
 ```text
 단일 domain ontology
@@ -167,13 +167,13 @@ TLO의 가치는 `가장 높은 단계`라서 생기지 않습니다. 설비 ont
 
 ## 오래된 표준이라는 인상도 판단을 흐립니다
 
-[ISO 15926-1](https://www.iso.org/standard/29556.html)의 중심 범위는 process plant lifecycle information integration입니다. 일반 기업 ontology의 보편 baseline이라기보다 프로세스 산업에서 engineering·construction·operation·maintenance 정보를 장기간 공유하는 문제에 맞춰 읽어야 합니다.
+[ISO 15926-1](https://www.iso.org/standard/29556.html)의 중심 범위는 process plant lifecycle information integration입니다. 처음의 펌프에서 설치·운전·정비 이력을 장기간 이어야 하는 문제가 핵심이라면 이 책임이 가까워집니다. 일반 기업 ontology의 보편 baseline이라기보다 프로세스 산업에서 engineering·construction·operation·maintenance 정보를 장기간 공유하는 문제에 맞춰 읽어야 합니다.
 
 그리고 이 표준군은 끝난 legacy도 아닙니다. [ISO 15926-100:2026 Vocabulary](https://www.iso.org/standard/89678.html)는 2026년 6월 출판됐고, [ISO/AWI 15926-2 Edition 2](https://www.iso.org/standard/93280.html)는 새 data-model 작업으로 진행 중입니다. [ISO/TS 15926-4:2024](https://www.iso.org/standard/81270.html)는 current core reference data이며 revision 흐름이 있고, [ISO/AWI 15926-200](https://www.iso.org/standard/93512.html)은 RDFS implementation을 다루는 개발 중 작업입니다.
 
 질문은 `오래됐는가`가 아닙니다. **내 문제가 process-plant lifecycle integration인가**입니다.
 
-여기까지 각 표준의 책임을 나눴다면 마지막에는 처음의 네 번째 질문으로 돌아가야 합니다. **표준으로 정리한 의미가 조직 밖에서도 같은 업무로 재생되는가?**
+여기까지 각 표준의 책임을 나눴다면 처음에 남겨 둔 마지막 질문으로 돌아가야 합니다. **표준으로 정리한 의미가 조직 밖에서도 같은 업무로 재생되는가?**
 
 ## 표준을 썼는데도 의미는 남겨질 수 있습니다
 
