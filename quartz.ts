@@ -1,5 +1,6 @@
 import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/config-loader"
 import { ConditionalRender, Flex } from "./quartz/components"
+import { h } from "preact"
 import HomeHero from "./quartz/components/HomeHero"
 import ArticleDescription from "./quartz/components/ArticleDescription"
 import HomeFeatured from "./quartz/components/HomeFeatured"
@@ -17,6 +18,47 @@ configureRecentNotes({
 })
 const config = await loadQuartzConfig()
 config.plugins.transformers.push(FirstImageSocialImage())
+// Keep GA4 configured in YAML; load Umami once across Quartz SPA navigation.
+config.plugins.transformers.push({
+  name: "UmamiAnalytics",
+  externalResources: () => ({
+    additionalHead: [
+      h("script", {
+        defer: true,
+        src: "https://cloud.umami.is/script.js",
+        "data-website-id": "994174e0-bb3f-4de6-ba32-f78f5dbd2fa3",
+        "data-domains": "tteggu87.github.io",
+        "data-do-not-track": "true",
+        "data-auto-pageview": "false",
+        "data-persist": "true",
+      }),
+    ],
+    js: [
+      {
+        loadTime: "afterDOMReady",
+        contentType: "inline",
+        script: `(() => {
+          let lastUrl;
+          const track = () => {
+            if (!window.umami || lastUrl === location.href) return;
+            const previousUrl = lastUrl;
+            lastUrl = location.href;
+            window.umami.track((props) => ({
+              ...props,
+              url: location.href,
+              title: document.title,
+              referrer: previousUrl || props.referrer,
+            }));
+          };
+          document.addEventListener("nav", track);
+          document.querySelector('script[data-website-id="994174e0-bb3f-4de6-ba32-f78f5dbd2fa3"]')
+            ?.addEventListener("load", track, { once: true });
+          track();
+        })();`,
+      },
+    ],
+  }),
+})
 
 // Tag pages are useful as reader-facing filters, but most are too thin to be
 // standalone search landing pages. Keep emitting them while excluding them
