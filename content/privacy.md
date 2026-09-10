@@ -19,6 +19,10 @@ tteggu의 지식창고(이하 “사이트”)는 방문 통계 확인, 콘텐�
 
 사이트는 Google Analytics 4를 사용해 익명화·집계된 방문 통계를 확인합니다. Google이 파트너 사이트의 정보를 처리하는 방식은 [Google의 파트너 사이트 또는 앱 사용 시 데이터 처리 안내](https://policies.google.com/technologies/partner-sites?hl=ko)에서 확인할 수 있습니다. 방문자는 [Google Analytics 차단 브라우저 부가기능](https://tools.google.com/dlpage/gaoptout?hl=ko)을 사용할 수 있습니다.
 
+### Umami
+
+사이트는 Umami Cloud를 함께 사용해 방문 수, 페이지별 조회와 유입 경로를 확인합니다. Umami는 쿠키 없이 동작하며, 이 사이트에서는 브라우저의 Do Not Track 설정을 존중하도록 구성했습니다. 무료 Hobby 플랜의 통계는 미국 지역에 저장되며 보관 기간은 6개월입니다. 자세한 내용은 [Umami 개인정보처리방침](https://umami.is/privacy)을 확인해 주세요.
+
 ### Google AdSense
 
 Google AdSense 광고가 승인되어 게재되는 경우 Google과 광고 파트너는 쿠키를 이용해 광고를 제공하거나 측정할 수 있습니다. 맞춤 광고 설정은 [Google 광고 설정](https://adssettings.google.com/)에서 관리할 수 있습니다.
@@ -39,4 +43,4 @@ Google AdSense 광고가 승인되어 게재되는 경우 Google과 광고 파�
 
 개인정보 처리에 관한 문의는 `tteggu@gmail.com`으로 보내 주세요. 서비스 구성이나 관련 정책이 바뀌면 이 페이지를 수정하고 시행일을 갱신합니다.
 
-시행일: 2026년 8월 4일
+시행일: 2026년 9월 10일
