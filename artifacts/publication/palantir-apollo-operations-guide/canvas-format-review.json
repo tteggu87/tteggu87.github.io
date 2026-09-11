@@ -1,0 +1,52 @@
+{
+  "status": "pass",
+  "reason": "check_post requires 16:9 within 2%; native generator produced 3:2",
+  "operation": "background-only canvas padding; no source illustration pixel altered",
+  "images": [
+    {
+      "id": "I01",
+      "original_sha256": "5ca2f0a55187ce833c23bb95dd1d2c52e2ee08bb81b726209f956edf977dab8a",
+      "final_sha256": "c9749dd2b5f3a89b9c1285caf651e5f5b9761c667c9624f14ba6652c25fe95c8",
+      "crop": false,
+      "rescale": false,
+      "original_pixel_identity": true,
+      "canvas": [1824, 1026],
+      "offset": [144, 1],
+      "background_rgba": [253, 253, 247, 255]
+    },
+    {
+      "id": "I02",
+      "original_sha256": "56d5e0b6e8512a9439a4891eb6a0e3b9f9d8c2a28f6b270d0e90c8ac04979021",
+      "final_sha256": "b5d83361e17c738953a28e9c1420300b60ea44e7d0fbb2ac3199effb55724f8a",
+      "crop": false,
+      "rescale": false,
+      "original_pixel_identity": true,
+      "canvas": [1824, 1026],
+      "offset": [144, 1],
+      "background_rgba": [253, 253, 245, 255]
+    },
+    {
+      "id": "I03",
+      "original_sha256": "ecdd101508766abdd6906f578a333d9db547998059d79150a51c738b21311dee",
+      "final_sha256": "c280fec4ada30f88f6966c8a675e9c95f49d12cdeefb3b02f76f43bef693c994",
+      "crop": false,
+      "rescale": false,
+      "original_pixel_identity": true,
+      "canvas": [1824, 1026],
+      "offset": [144, 1],
+      "background_rgba": [253, 251, 240, 255]
+    },
+    {
+      "id": "I04",
+      "original_sha256": "72af69d969b9595e2d251a146eeb9ca74ad9c00f1e8f299c5cb1d4f414bc5015",
+      "final_sha256": "bf125f322fe7139fd4c078ee740f413c0460be62992d30be72bd36e64d829fb3",
+      "crop": false,
+      "rescale": false,
+      "original_pixel_identity": true,
+      "canvas": [1824, 1026],
+      "offset": [144, 1],
+      "background_rgba": [251, 241, 226, 255]
+    }
+  ],
+  "pixel_review": "canvas-pixel-review.md: PASS; secondary labels may need zoom"
+}

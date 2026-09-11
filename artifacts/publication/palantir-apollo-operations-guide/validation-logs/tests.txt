@@ -1,0 +1,202 @@
+
+> @jackyzha0/quartz@5.0.0 test
+> tsx --test
+
+▶ symlinkOrCopySync
+  ✔ creates a symlink on success (1.406334ms)
+  ✔ silently succeeds when link already exists (EEXIST) (1.062125ms)
+  ✔ re-throws non-EPERM errors (0.625625ms)
+  ✔ falls back to junction on Windows EPERM (0.772708ms)
+  ✔ falls back to copy when both symlink and junction fail on Windows (1.324792ms)
+  ✔ does not fall back on EPERM when not on Windows (0.539167ms)
+✔ symlinkOrCopySync (6.198542ms)
+▶ symlinkOrCopy
+  ✔ creates a symlink on success (3.800583ms)
+  ✔ silently succeeds when link already exists (EEXIST) (1.613833ms)
+  ✔ falls back to copy when both symlink and junction fail on Windows (5.072458ms)
+  ✔ does not fall back on EPERM when not on Windows (0.581208ms)
+✔ symlinkOrCopy (11.219583ms)
+Warning: Skipping circular transclusion: pageA -> pageA
+Warning: Skipping circular transclusion: self -> self
+▶ renderTranscludes
+  ✔ resolves a single page transclusion (0.668958ms)
+  ✔ allows the same page to be embedded twice as siblings (0.101667ms)
+  ✔ allows different sections of the same page to be embedded (0.138958ms)
+  ✔ detects actual circular transclusion (A -> B -> A) (0.524666ms)
+  ✔ self-referencing transclusion is blocked (0.080875ms)
+✔ renderTranscludes (1.933792ms)
+▶ pageResources
+  ✔ uses baseDir prefix for resource paths in production mode (0.135167ms)
+  ✔ omits subpath prefix when baseDir is empty (serve mode) (0.054875ms)
+  ✔ contentIndex path reflects baseDir (0.075166ms)
+✔ pageResources (0.351209ms)
+▶ showPopover on cache-hit with hash
+  ✔ does not reference any lexical popoverInner from an outer scope (1.00625ms)
+  ✔ skips scroll when hash is empty (0.074042ms)
+  ✔ skips scroll when heading is not found (0.0525ms)
+  ✔ decodes percent-encoded fragments when building the selector (0.049208ms)
+✔ showPopover on cache-hit with hash (1.592166ms)
+▶ buggy showPopover (lexical-capture pattern) regression guard
+  ✔ accessing a capture-before-declaration variable throws ReferenceError (TDZ simulation) (0.238166ms)
+  ✔ same pattern does NOT throw when hash is empty (explains why first link without fragment works) (0.091458ms)
+✔ buggy showPopover (lexical-capture pattern) regression guard (0.388666ms)
+▶ search encoder
+  ▶ English text
+    ✔ should tokenize simple English words (0.960791ms)
+    ✔ should handle multiple spaces (0.056292ms)
+    ✔ should handle tabs and newlines (0.043959ms)
+    ✔ should lowercase all text (0.04575ms)
+  ✔ English text (1.415083ms)
+  ▶ CJK text
+    ✔ should tokenize Japanese Hiragana character by character (0.121333ms)
+    ✔ should tokenize Japanese Katakana character by character (0.04325ms)
+    ✔ should tokenize Japanese Kanji character by character (0.035917ms)
+    ✔ should tokenize Korean Hangul character by character (0.046833ms)
+    ✔ should tokenize Chinese characters character by character (0.048292ms)
+    ✔ should handle mixed Hiragana/Katakana/Kanji (0.063958ms)
+  ✔ CJK text (0.488375ms)
+  ▶ Mixed CJK and English
+    ✔ should handle Japanese with English words (0.067542ms)
+    ✔ should handle English with Japanese words (0.040375ms)
+    ✔ should handle complex mixed content (0.035625ms)
+    ✔ should handle mixed Korean and English (0.028625ms)
+    ✔ should handle mixed Chinese and English (0.026041ms)
+  ✔ Mixed CJK and English (0.278875ms)
+  ▶ Edge cases
+    ✔ should handle empty string (0.053083ms)
+    ✔ should handle only whitespace (0.022334ms)
+    ✔ should handle single character (0.021ms)
+    ✔ should handle single CJK character (0.021708ms)
+    ✔ should handle CJK with trailing whitespace (0.021708ms)
+    ✔ should handle English with trailing whitespace (0.021458ms)
+  ✔ Edge cases (0.212792ms)
+✔ search encoder (2.6405ms)
+▶ built-in layout conditions
+  ✔ index and not-index are complementary (0.401833ms)
+✔ built-in layout conditions (0.753666ms)
+✔ resolves an existing local post image to its public absolute URL (2.204083ms)
+✔ ignores unsupported, remote, missing, and non-public images (0.915208ms)
+✔ uses the first eligible image and preserves an explicit social image (1.111958ms)
+▶ FileTrie
+  ▶ constructor
+    ✔ should create an empty trie (1.007875ms)
+    ✔ should set displayName from data title (0.097084ms)
+    ✔ should be able to set displayName (0.074417ms)
+  ✔ constructor (1.458291ms)
+  ▶ add
+    ✔ should add a file at root level (0.125958ms)
+    ✔ should handle index files (0.084334ms)
+    ✔ should add nested files (0.140916ms)
+    ✔ last-insert-wins on folder-note collision (matches emitter semantics) (0.151042ms)
+    ✔ last-insert-wins on root-level index collision (0.084833ms)
+    ✔ collision does not affect sibling files in the same folder (0.070208ms)
+  ✔ add (0.818708ms)
+  ▶ filter
+    ✔ should filter nodes based on condition (0.106375ms)
+  ✔ filter (0.132542ms)
+  ▶ map
+    ✔ should apply function to all nodes (0.080084ms)
+    ✔ map over folders should work (0.077584ms)
+  ✔ map (0.191666ms)
+  ▶ entries
+    ✔ should return all entries (0.155417ms)
+  ✔ entries (0.174083ms)
+  ▶ fromEntries
+    ✔ nested (0.08275ms)
+  ✔ fromEntries (0.099666ms)
+  ▶ findNode
+    ✔ should find root node with empty path (0.071542ms)
+    ✔ should find node at first level (0.052375ms)
+    ✔ should find nested node (0.053083ms)
+    ✔ should return undefined for non-existent path (0.048ms)
+    ✔ should return undefined for partial path (0.035125ms)
+  ✔ findNode (0.3045ms)
+  ▶ getFolderPaths
+    ✔ should return all folder paths (0.073917ms)
+  ✔ getFolderPaths (0.092958ms)
+  ▶ sort
+    ✔ should sort nodes according to sort function (6.939458ms)
+  ✔ sort (6.976792ms)
+  ▶ pathToNode
+    ✔ should return root node for empty path (0.221166ms)
+    ✔ should return root node for index path (0.051167ms)
+    ✔ should return path to first level node (0.052584ms)
+    ✔ should return path to nested node (0.056333ms)
+    ✔ should return undefined for non-existent path (0.035166ms)
+    ✔ should return file data for intermediate folders (0.053334ms)
+    ✔ should return path for partial path (0.060041ms)
+  ✔ pathToNode (0.708833ms)
+✔ FileTrie (11.30475ms)
+✔ notes sort by their leading publication number newest first (1.253083ms)
+✔ unnumbered notes fall back to modified date newest first (0.092041ms)
+✔ other folder pages keep date-first sorting (0.059375ms)
+▶ typeguards
+  ✔ isSimpleSlug (0.517334ms)
+  ✔ isRelativeURL (0.103834ms)
+  ✔ isAbsoluteURL (0.073584ms)
+  ✔ isFullSlug (0.055375ms)
+  ✔ isFilePath (0.040625ms)
+✔ typeguards (1.198417ms)
+▶ transforms
+  ✔ simplifySlug (0.120667ms)
+  ✔ slugifyFilePath (0.262833ms)
+  ✔ slugifyFilePath + simplifySlug end-to-end canonicalization (0.049167ms)
+  ✔ transformInternalLink (0.415958ms)
+  ✔ pathToRoot (0.102ms)
+  ✔ joinSegments (0.067583ms)
+✔ transforms (1.136292ms)
+▶ link strategies
+  ▶ absolute
+    ✔ from a/b/c (0.186417ms)
+    ✔ from a/b/index (0.056292ms)
+    ✔ from index (0.049333ms)
+  ✔ absolute (0.337625ms)
+  ▶ shortest
+    ✔ from a/b/c (0.160625ms)
+    ✔ from a/b/index (0.057542ms)
+    ✔ from index (0.048584ms)
+  ✔ shortest (0.309667ms)
+  ▶ relative
+    ✔ from a/b/c (0.076875ms)
+    ✔ from a/b/index (0.037791ms)
+    ✔ from index (0.028916ms)
+  ✔ relative (0.178625ms)
+✔ link strategies (0.902084ms)
+▶ resolveRelative
+  ✔ from index (0.040125ms)
+  ✔ from nested page (0.032166ms)
+  ✔ with index paths (0.03225ms)
+  ✔ with simple slugs (0.031292ms)
+✔ resolveRelative (0.171625ms)
+✔ folder listings hide tags and release the tag track (0.609958ms)
+✔ phone article typography keeps natural spacing at the denser baseline (0.17525ms)
+▶ detectSlugCollisions
+  ✔ returns empty array when there are no collisions (1.008375ms)
+  ✔ returns empty array for empty input (0.045875ms)
+  ✔ detects a two-file collision with winner = last file (0.066041ms)
+  ✔ detects a three-file collision with all files listed, winner = last (0.050333ms)
+  ✔ detects multiple separate collisions (0.12ms)
+  ✔ ignores entries without a slug (0.056166ms)
+  ✔ winner annotation matches fileTrie last-insert-wins semantics (0.038541ms)
+✔ detectSlugCollisions (1.830791ms)
+▶ formatCollisionWarning
+  ✔ returns empty string for empty input (0.101ms)
+  ✔ formats single collision with winner and shadowed markers (0.136458ms)
+  ✔ formats multiple collisions with count in header (0.076542ms)
+  ✔ output mentions Folder Notes convention as a common cause (0.055959ms)
+  ✔ falls back to filePath when relativePath is missing (0.048333ms)
+✔ formatCollisionWarning (0.526708ms)
+✔ interactive iframe host CSS uses a centered border-box contract (0.620625ms)
+✔ published Markdown iframes use the shared class and do not duplicate width or border geometry (7.988875ms)
+✔ responsive layout media queries use non-overlapping boundary ranges (0.149875ms)
+✔ auto-sizing visualization documents keep their own viewport scroll-free (2.380542ms)
+ℹ tests 122
+ℹ suites 32
+ℹ pass 122
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 367.049459
+
+STDERR:

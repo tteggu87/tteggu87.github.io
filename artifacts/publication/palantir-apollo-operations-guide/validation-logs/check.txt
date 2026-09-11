@@ -1,0 +1,8 @@
+
+> @jackyzha0/quartz@5.0.0 check
+> tsc --noEmit && npx prettier . --check
+
+Checking formatting...
+All matched files use Prettier code style!
+
+STDERR:

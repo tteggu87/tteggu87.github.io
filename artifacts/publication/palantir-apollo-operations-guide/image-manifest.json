@@ -1,0 +1,40 @@
+{
+  "images": [
+    {
+      "id": "I01",
+      "path": "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-infographic.png",
+      "sha256": "c9749dd2b5f3a89b9c1285caf651e5f5b9761c667c9624f14ba6652c25fe95c8",
+      "bytes": 1270967,
+      "width": 1824,
+      "height": 1026,
+      "format": "PNG"
+    },
+    {
+      "id": "I02",
+      "path": "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-figure-01.png",
+      "sha256": "b5d83361e17c738953a28e9c1420300b60ea44e7d0fbb2ac3199effb55724f8a",
+      "bytes": 1433778,
+      "width": 1824,
+      "height": 1026,
+      "format": "PNG"
+    },
+    {
+      "id": "I03",
+      "path": "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-figure-02.png",
+      "sha256": "c280fec4ada30f88f6966c8a675e9c95f49d12cdeefb3b02f76f43bef693c994",
+      "bytes": 1849264,
+      "width": 1824,
+      "height": 1026,
+      "format": "PNG"
+    },
+    {
+      "id": "I04",
+      "path": "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-figure-03.png",
+      "sha256": "bf125f322fe7139fd4c078ee740f413c0460be62992d30be72bd36e64d829fb3",
+      "bytes": 1725504,
+      "width": 1824,
+      "height": 1026,
+      "format": "PNG"
+    }
+  ]
+}
