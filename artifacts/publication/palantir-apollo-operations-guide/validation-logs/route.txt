@@ -1,0 +1,7 @@
+FULL_SLUG=notes/온톨로지/palantir-apollo-operations-guide
+ROUTE=/notes/온톨로지/palantir-apollo-operations-guide
+OUTPUT=/Users/hoyasung007hotmail.com/Documents/Playground/quartz-garden/_workspace/apollo-operations-report-20260911/public/notes/온톨로지/palantir-apollo-operations-guide.html
+PREVIEW_URL=http://localhost:8080/notes/온톨로지/palantir-apollo-operations-guide
+LIVE_URL=https://tteggu87.github.io/notes/%EC%98%A8%ED%86%A8%EB%A1%9C%EC%A7%80/palantir-apollo-operations-guide
+
+STDERR:

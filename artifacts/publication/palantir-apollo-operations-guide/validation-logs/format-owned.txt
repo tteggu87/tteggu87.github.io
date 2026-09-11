@@ -1,0 +1,32 @@
+.ai-bridge/agent-status.md 9ms (unchanged)
+.ai-bridge/canvas-pixel-review.md 4ms
+.ai-bridge/codex-status.md 1ms (unchanged)
+.ai-bridge/current-plan.md 10ms (unchanged)
+.ai-bridge/decisions.md 0ms (unchanged)
+.ai-bridge/final-pixel-review.md 1ms (unchanged)
+.ai-bridge/image-I01-result.md 1ms (unchanged)
+.ai-bridge/image-I01-retake-result.md 0ms (unchanged)
+.ai-bridge/image-I02-native-result.md 0ms (unchanged)
+.ai-bridge/image-I02-retake-result.md 0ms (unchanged)
+.ai-bridge/image-I03-native-result.md 0ms (unchanged)
+.ai-bridge/image-I04-native-result.md 0ms (unchanged)
+.ai-bridge/open-questions.md 0ms (unchanged)
+.ai-bridge/README.md 1ms (unchanged)
+.ai-bridge/review-I01-I02.md 1ms (unchanged)
+.ai-bridge/review-I03-I04.md 1ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/bundle-validation.json 10ms
+artifacts/publication/palantir-apollo-operations-guide/canvas-format-review.json 1ms
+artifacts/publication/palantir-apollo-operations-guide/canvas-pixel-review.md 1ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/editorial-review.json 2ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-coverage.md 6ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-I01-review.md 3ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-I02-integrity.json 0ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-manifest-before-canvas.json 1ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-manifest.json 1ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-prompts.md 9ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/image-set-review.md 8ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/local-wiki-sync.json 1ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/review-I01-I02.md 6ms (unchanged)
+artifacts/publication/palantir-apollo-operations-guide/review-I03-I04.md 6ms (unchanged)
+
+STDERR:

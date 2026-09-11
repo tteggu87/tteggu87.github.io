@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "copied_or_identical": [
+    "research/palantir-apollo-operations-20260911/source-original.md",
+    "research/palantir-apollo-operations-20260911/README.md",
+    "content/notes/온톨로지/palantir-apollo-operations-guide.md",
+    "wiki/sources/palantir-apollo-operations-report-2026-09-11.md",
+    "wiki/analyses/palantir-apollo-operations-2026-09-11.md",
+    "wiki/playbooks/palantir-apollo-adoption-validation.md",
+    "wiki/_meta/ingest_reports/apollo-operations-20260911.md",
+    "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-infographic.png",
+    "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-figure-03.png",
+    "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-figure-02.png",
+    "content/attachments/palantir-apollo-operations-guide/palantir-apollo-operations-guide-figure-01.png",
+    "artifacts/publication/palantir-apollo-operations-guide/image-prompts.md",
+    "artifacts/publication/palantir-apollo-operations-guide/image-I01-review.md",
+    "artifacts/publication/palantir-apollo-operations-guide/image-coverage.md",
+    "artifacts/publication/palantir-apollo-operations-guide/review-I01-I02.md",
+    "artifacts/publication/palantir-apollo-operations-guide/review-I03-I04.md",
+    "artifacts/publication/palantir-apollo-operations-guide/image-set-review.md",
+    "artifacts/publication/palantir-apollo-operations-guide/editorial-review.json",
+    "artifacts/publication/palantir-apollo-operations-guide/bundle-validation.json",
+    "artifacts/publication/palantir-apollo-operations-guide/image-I02-integrity.json",
+    "artifacts/publication/palantir-apollo-operations-guide/image-manifest.json"
+  ],
+  "preserved_existing_local_meta": true,
+  "wiki_lint": "Lint results\n- Broken links: 0\n- Orphan pages: 0\n- Missing frontmatter: 0\n\n",
+  "scope": "only owned new files, additive local index/log; no commit/reset/stash in dirty root",
+  "initial_wiki_lint": "Lint results\n- Broken links: 1\n- Orphan pages: 0\n- Missing frontmatter: 0\n\nBroken links:\n- wiki/analyses/palantir-apollo-operations-2026-09-11.md -> (../../content/notes/온톨로지/palantir-apollo-operating-change.md)\n\n",
+  "resolution": "Owned analysis links the previously published article by its live URL; the stale local checkout was not reset or modified."
+}

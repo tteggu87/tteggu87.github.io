@@ -1,0 +1,6 @@
+{
+  "buffer_exists": true,
+  "target_exists": false,
+  "integrity": "fail",
+  "error": "OSError: Truncated File Read"
+}

@@ -1,0 +1,87 @@
+{
+  "status": "ready_for_pr",
+  "article_sha256": "1ccf355616b1e34b7a16a65c303e2eb18ea8ad556ac3a056c5de4b3c3cb82c40",
+  "source_sha256": "ba4d4aa6852d37d94b24f671b3f8d5cdf07a53511b40b6cbac812eff1684471f",
+  "checks": [
+    {
+      "name": "bundle-and-wiki",
+      "command": [
+        "python3",
+        "/Users/hoyasung007hotmail.com/Documents/Playground/quartz-garden/_workspace/apollo-operations-report-20260911/artifacts/publication/palantir-apollo-operations-guide/bundle_audit.py",
+        "audit"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07,
+      "log": "validation-logs/bundle-and-wiki.txt"
+    },
+    {
+      "name": "format-owned",
+      "command": [
+        "npx",
+        "prettier",
+        "--write",
+        ".ai-bridge",
+        "/Users/hoyasung007hotmail.com/Documents/Playground/quartz-garden/_workspace/apollo-operations-report-20260911/artifacts/publication/palantir-apollo-operations-guide"
+      ],
+      "exit_code": 0,
+      "seconds": 0.47,
+      "log": "validation-logs/format-owned.txt"
+    },
+    {
+      "name": "check",
+      "command": ["npm", "run", "check"],
+      "exit_code": 0,
+      "seconds": 6.64,
+      "log": "validation-logs/check.txt"
+    },
+    {
+      "name": "tests",
+      "command": ["npm", "test"],
+      "exit_code": 0,
+      "seconds": 0.61,
+      "log": "validation-logs/tests.txt"
+    },
+    {
+      "name": "build",
+      "command": ["npx", "quartz", "build"],
+      "exit_code": 0,
+      "seconds": 6.11,
+      "log": "validation-logs/build.txt"
+    },
+    {
+      "name": "post",
+      "command": [
+        "python3",
+        "/Users/hoyasung007hotmail.com/.codex/skills/publish-tteggu-blog/scripts/check_post.py",
+        ".",
+        "content/notes/온톨로지/palantir-apollo-operations-guide.md",
+        "--require-report-images",
+        "--editorial-warnings",
+        "--built-output",
+        "public"
+      ],
+      "exit_code": 0,
+      "seconds": 0.15,
+      "log": "validation-logs/post.txt"
+    },
+    {
+      "name": "route",
+      "command": [
+        "npx",
+        "tsx",
+        "/Users/hoyasung007hotmail.com/.codex/skills/publish-tteggu-blog/scripts/check_quartz_v5_route.ts",
+        ".",
+        "content/notes/온톨로지/palantir-apollo-operations-guide.md",
+        "--check-built"
+      ],
+      "exit_code": 0,
+      "seconds": 0.38,
+      "log": "validation-logs/route.txt"
+    }
+  ],
+  "local_wiki": "0 broken links, 0 orphans, 0 missing frontmatter; original reindex/lint verified",
+  "image_gate": "4 native diagrams; unchanged illustration pixels padded to16:9; semantic and final-canvas pixel reviews PASS",
+  "known_dependency_audit": "npm ci reported9 existing vulnerabilities:1low,1moderate,7high. No dependency or lockfile changes; not a vulnerability-free claim.",
+  "publication": "not yet pushed or deployed",
+  "scope": "new research bundle, six derived wiki files, article37, four PNGs, selected audit records, one raw-source formatting exception"
+}

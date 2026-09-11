@@ -1,3 +1,6 @@
 public
 node_modules
 .quartz-cache
+
+# Preserve the uploaded research source byte-for-byte.
+research/palantir-apollo-operations-20260911/source-original.md
