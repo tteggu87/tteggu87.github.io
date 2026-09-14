@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "profile": "기술 해설형 리포트; humanize-korean conservative",
+  "editorial_thesis": "판단 구조의 변경도 이유·영향·합의·검증·복구·학습의 관리 대상이다.",
+  "reader_tension": "불량 기준 한 줄을 바꿔도 승인·출하·예외 책임이 달라진다.",
+  "why_now": "에이전트의 병렬 변경을 통합하는 작업에서 같은 운영 질문을 발견한다.",
+  "value_mechanisms": [
+    "실험의 영향 격리",
+    "현업의 책임 합의",
+    "장애 중 판단 보호",
+    "다음 판단에 근거 인계"
+  ],
+  "cost_shift": "현업 리허설·승인·관측·복구·기록 유지 비용",
+  "boundary_conditions": "노트의 넓은 release 정의와 공식 Product Release 범위 차이 인접 명시; 가상 사례·PR 작성자 보고·비교 해석 구분",
+  "claim_origins": {
+    "judgment_structure_and_cases": "user-supplied chapter 13",
+    "Hub_Spoke_Health_Release": "official product docs",
+    "factory_approval_expiry_incident": "explicit hypothetical extension",
+    "PR_tests": "historical author-reported",
+    "cross_tool_mapping": "interpretation, no measured outcome"
+  },
+  "image_impact": "full_regenerate",
+  "humanize": {
+    "sections": 13,
+    "max_characters": 1513,
+    "additional_rewrites": 0,
+    "reason": "구조 편집 완료 후 D/A/I/G/H/F/B/C/E 순으로 읽음. 단언 강화 없이 유지할 문장만 남아 불필요한 재윤문 생략.",
+    "protected": "frontmatter, citations, tables, fixed identifiers excluded",
+    "self_check": "6/6"
+  },
+  "re0": "13 sections to 9; product-channel detail and repetition removed; one continuous factory example; Paperthin and DocTology condensed",
+  "cold_read": {
+    "verdict": "minor-gaps; all five reader questions answered; no blocker",
+    "entity": "fixed with short definition",
+    "release": "review suggestion to weaken definition declined in favor of explicit user steering; note attribution and adjacent official gap retained"
+  },
+  "ssotize": {
+    "mode": "read-only",
+    "scope": ["article 34", "article 37", "existing local Apollo evidence wiki", "chapter13"],
+    "two_pass_terms": ["release/판단 구조/롤백", "Product Release/원자적/업무 복구/케이스"],
+    "verdict": "same narrow official definition retained; chapter13 separately attributed; no cross-repo consolidation required"
+  },
+  "sip_skipped": {
+    "mandela": "no new metric or executed experiment claimed",
+    "detool": "concrete comparison of named tools, no stack-agnostic implementation claim"
+  },
+  "wiki_read_path": [
+    "wiki/_meta/index.md",
+    "wiki/_meta/log.md",
+    "wiki/sources/palantir-apollo-operating-environments-evidence-2026-09-09.md",
+    "wiki/analyses/palantir-apollo-operating-environments-presentation-2026-09-09.md",
+    "wiki/sources/palantir-apollo-operations-report-2026-09-11.md",
+    "wiki/analyses/palantir-apollo-operations-2026-09-11.md",
+    "wiki/playbooks/palantir-apollo-adoption-validation.md"
+  ],
+  "content_sha256": "abbbc48d5017e791e09cc58fef7b9788be50c6a16cef29b9df1834c22f8baf10"
+}
