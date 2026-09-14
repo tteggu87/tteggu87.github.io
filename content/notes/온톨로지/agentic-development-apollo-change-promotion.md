@@ -15,7 +15,7 @@ tags:
   - DocTology
 ---
 
-![Apollo가 새 버전을 검증·승격하고 환경별 조건을 확인해 적용·관찰하는 핵심 흐름](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-infographic-v5.png)
+![Apollo의 릴리스 등록·검증과 승격·환경별 조건 확인·적용과 관찰, 각 판단 근거와 Hub·Spoke의 작업·상태 보고 순환](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-infographic-v6.png)
 
 개발팀이 버그를 고쳤고 테스트도 통과했습니다. 그런데 운영팀은 왜 모든 현장에 바로 배포하지 않을까요?
 
