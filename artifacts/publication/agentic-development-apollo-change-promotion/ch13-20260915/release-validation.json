@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "plugin_install": 45,
+  "check": "types and prettier passed",
+  "tests": {
+    "passed": 122,
+    "failed": 0
+  },
+  "build": "Quartz v5 passed",
+  "post_validator": "passed with four images and built output",
+  "route": "verified",
+  "diff_check": "passed after replacing Markdown trailing spaces with paragraphs",
+  "responsive": {
+    "browser": "Codex in-app browser via CUA",
+    "widths": [390, 834, 1440],
+    "horizontal_overflow": false,
+    "h1": 1,
+    "images_loaded": "4/4",
+    "graph_present": true,
+    "visual": "mobile intro and table, tablet body, desktop figure reviewed"
+  },
+  "numbering": {
+    "title": "38. 에이전틱 개발에서 다시 만난 아폴로",
+    "unchanged": true,
+    "global_helper": "existing category index titles and cross-category numbering are unsupported by helper; no new post number assigned"
+  },
+  "input_sha256": "abbbc48d5017e791e09cc58fef7b9788be50c6a16cef29b9df1834c22f8baf10"
+}

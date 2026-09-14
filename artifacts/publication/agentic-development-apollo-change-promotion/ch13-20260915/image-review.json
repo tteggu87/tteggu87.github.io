@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "method": "opened actual four final pixel images",
+  "generation": "codex-imagegen: 4/4 recovered; native imagegen one targeted correction for I03 opacity",
+  "asset_roles": [
+    "full argument and judgment release",
+    "case and environment rehearsal",
+    "software versus judgment protection",
+    "PR and retained reasoning"
+  ],
+  "images": [
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-infographic-ch13.png",
+      "size": [1659, 948],
+      "mode": "RGB",
+      "sha256": "7e4f060ecf52d248b6a0743465e96fa24cc12b1ad897625c5e7e8ef5a4e517dd",
+      "visual_review": "passed: labels, direction, scope, crop, readable dominant hierarchy",
+      "correction": 0
+    },
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-figure-01-ch13.png",
+      "size": [1659, 948],
+      "mode": "RGB",
+      "sha256": "d82c3e42691266ae60980bc88edb66f9b4c526697c95160919970c082bddbeac",
+      "visual_review": "passed: labels, direction, scope, crop, readable dominant hierarchy",
+      "correction": 0
+    },
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-figure-02-ch13.png",
+      "size": [1672, 941],
+      "mode": "RGB",
+      "sha256": "66c934f5d42d4e57d0af93633587591321fc5ba8a7459605ac6dc443b78744f8",
+      "visual_review": "passed: labels, direction, scope, crop, readable dominant hierarchy",
+      "correction": 1
+    },
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-figure-03-ch13.png",
+      "size": [1659, 948],
+      "mode": "RGB",
+      "sha256": "d07dabce1a1b1783767883b9f099ec8a426dd40226eae7945e1bc44381d000de",
+      "visual_review": "passed: labels, direction, scope, crop, readable dominant hierarchy",
+      "correction": 0
+    }
+  ]
+}

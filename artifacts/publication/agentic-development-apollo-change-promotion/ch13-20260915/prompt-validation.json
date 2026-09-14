@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "line": 1,
+      "id": "I01",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": [
+        {
+          "code": "W-TEXT-MIXLANG",
+          "msg": "한 따옴표 문자열 안 KO+EN 혼합: \"노트의 release\" — 언어별로 분리."
+        }
+      ]
+    },
+    {
+      "line": 2,
+      "id": "I02",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "line": 3,
+      "id": "I03",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": [
+        {
+          "code": "W-TEXT-MIXLANG",
+          "msg": "한 따옴표 문자열 안 KO+EN 혼합: \"Apollo의 소프트웨어 운영\" — 언어별로 분리."
+        }
+      ]
+    },
+    {
+      "line": 4,
+      "id": "I04",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": [
+        {
+          "code": "W-TEXT-MIXLANG",
+          "msg": "한 따옴표 문자열 안 KO+EN 혼합: \"가재코드 PR\" — 언어별로 분리."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "pass": 4,
+    "fail": 0
+  }
+}

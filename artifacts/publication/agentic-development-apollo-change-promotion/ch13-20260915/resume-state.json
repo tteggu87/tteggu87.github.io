@@ -1,0 +1,18 @@
+{
+  "status": "running",
+  "input_sha256": "abbbc48d5017e791e09cc58fef7b9788be50c6a16cef29b9df1834c22f8baf10",
+  "evidence_gate": {
+    "status": "passed",
+    "source": "source-integrity.json",
+    "priority": "chapter13 with short official gap"
+  },
+  "article_image_gate": {
+    "status": "passed",
+    "editorial": "editorial-review.json",
+    "images": "image-review.json"
+  },
+  "publication_deployment_gate": {
+    "status": "pending"
+  },
+  "next": "responsive preview, PR, merge and matching deployment"
+}

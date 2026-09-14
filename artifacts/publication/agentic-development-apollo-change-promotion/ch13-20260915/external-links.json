@@ -1,0 +1,121 @@
+[
+  {
+    "url": "https://github.com/LilMGenius/paperthin/blob/6f706e30b5ec55e87598bf3b59164c9d9d96222f/skills/coil/re0-loop/SKILL.md",
+    "resolved": "https://raw.githubusercontent.com/LilMGenius/paperthin/6f706e30b5ec55e87598bf3b59164c9d9d96222f/skills/coil/re0-loop/SKILL.md",
+    "status": 200,
+    "bytes": 2316
+  },
+  {
+    "url": "https://github.com/LilMGenius/paperthin/blob/6f706e30b5ec55e87598bf3b59164c9d9d96222f/skills/depth/re0-git/SKILL.md",
+    "resolved": "https://raw.githubusercontent.com/LilMGenius/paperthin/6f706e30b5ec55e87598bf3b59164c9d9d96222f/skills/depth/re0-git/SKILL.md",
+    "status": 200,
+    "bytes": 4150
+  },
+  {
+    "url": "https://github.com/Yeachan-Heo/gajae-code",
+    "resolved": "https://github.com/Yeachan-Heo/gajae-code",
+    "status": 200,
+    "bytes": 519330
+  },
+  {
+    "url": "https://github.com/Yeachan-Heo/gajae-code/blob/9da99cdd708ce3b97d64111d8eefc98a7e0921ee/CONTRIBUTING.md",
+    "resolved": "https://raw.githubusercontent.com/Yeachan-Heo/gajae-code/9da99cdd708ce3b97d64111d8eefc98a7e0921ee/CONTRIBUTING.md",
+    "status": 200,
+    "bytes": 12533
+  },
+  {
+    "url": "https://github.com/Yeachan-Heo/gajae-code/pull/5556",
+    "resolved": "https://github.com/Yeachan-Heo/gajae-code/pull/5556",
+    "status": 200,
+    "bytes": 319506
+  },
+  {
+    "url": "https://github.com/Yeachan-Heo/gajae-code/pull/5566",
+    "resolved": "https://github.com/Yeachan-Heo/gajae-code/pull/5566",
+    "status": 200,
+    "bytes": 417006
+  },
+  {
+    "url": "https://github.com/tteggu87/DocTology/blob/main/.agents/skills/repo-docs-intelligence-bootstrap/SKILL.md",
+    "resolved": "https://raw.githubusercontent.com/tteggu87/DocTology/main/.agents/skills/repo-docs-intelligence-bootstrap/SKILL.md",
+    "status": 200,
+    "bytes": 39966
+  },
+  {
+    "url": "https://github.com/tteggu87/tteggu87.github.io/blob/main/research/agentic-development-apollo-ch13-20260915/README.md",
+    "status": "pending_publication",
+    "local_exists": true
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/core/ci-publish-setup",
+    "resolved": "https://www.palantir.com/docs/apollo/core/ci-publish-setup",
+    "status": 200,
+    "bytes": 342729
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/core/how-apollo-works",
+    "resolved": "https://www.palantir.com/docs/apollo/core/how-apollo-works",
+    "status": 200,
+    "bytes": 307802
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/core/overview",
+    "resolved": "https://www.palantir.com/docs/apollo/core/overview",
+    "status": 200,
+    "bytes": 302972
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/core/plans-and-constraints",
+    "resolved": "https://www.palantir.com/docs/apollo/core/plans-and-constraints",
+    "status": 200,
+    "bytes": 350986
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/core/products-releases-versions",
+    "resolved": "https://www.palantir.com/docs/apollo/core/products-releases-versions",
+    "status": 200,
+    "bytes": 314721
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/core/release-channels",
+    "resolved": "https://www.palantir.com/docs/apollo/core/release-channels",
+    "status": 200,
+    "bytes": 311121
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/managing-release-channels/configure-promotion-pipeline",
+    "resolved": "https://www.palantir.com/docs/apollo/managing-release-channels/configure-promotion-pipeline",
+    "status": 200,
+    "bytes": 336562
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/managing-release-channels/manual-promotion",
+    "resolved": "https://www.palantir.com/docs/apollo/managing-release-channels/manual-promotion",
+    "status": 200,
+    "bytes": 326309
+  },
+  {
+    "url": "https://www.palantir.com/docs/apollo/recalling-releases/overview",
+    "resolved": "https://www.palantir.com/docs/apollo/recalling-releases/overview",
+    "status": 200,
+    "bytes": 297383
+  },
+  {
+    "url": "https://www.palantir.com/docs/foundry/action-types/overview",
+    "resolved": "https://www.palantir.com/docs/foundry/action-types/overview",
+    "status": 200,
+    "bytes": 431090
+  },
+  {
+    "url": "https://www.palantir.com/docs/foundry/ontology/overview",
+    "resolved": "https://www.palantir.com/docs/foundry/ontology/overview",
+    "status": 200,
+    "bytes": 437680
+  },
+  {
+    "url": "https://www.palantir.com/docs/foundry/platform-overview/overview",
+    "resolved": "https://www.palantir.com/docs/foundry/platform-overview/overview",
+    "status": 200,
+    "bytes": 332762
+  }
+]
