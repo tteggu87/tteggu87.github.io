@@ -15,7 +15,7 @@ tags:
   - DocTology
 ---
 
-![업무 판단을 다루는 Foundry와 소프트웨어 변경을 다루는 Apollo를 연결하고 검증된 변경의 승격이라는 관점에서 에이전틱 개발을 바라보는 전체 지도](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-infographic-v3.png)
+![업무 판단을 다루는 Foundry와 소프트웨어 변경을 다루는 Apollo를 연결하고 검증된 변경의 승격이라는 관점에서 에이전틱 개발을 바라보는 전체 지도](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-infographic-v4.png)
 
 에이전트가 숫자 하나를 고쳤고 테스트도 통과했습니다. 이제 실제 출하 기준을 바꿔도 될까요?
 
@@ -36,6 +36,10 @@ CI가 빌드와 자동 테스트로 배포할 결과물을 준비한다면, Apol
 
 점검 가능 시간을 기다리는 상태와 실행 도중 오류가 난 상태도 대응이 달라야 합니다. 이 차이를 알아야 운영자가 기다릴지, 수정할지, 회수할지를 판단할 수 있습니다.
 
+![CI의 결과물 준비와 Apollo의 조건부 적용을 구분하고 Product·Release·Entity·Environment를 품질검사 서비스와 공장 설치본으로 풀이한 그림](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-02-v4.png)
+
+_그림 2. Apollo는 무엇을 어디에 적용할지 관리합니다_
+
 ## 2. Foundry에서 이어지는 철학: 데이터를 읽은 뒤 현실에서 무엇을 바꿀 것인가
 
 팔란티어 Foundry는 흩어진 데이터를 연결하고 가공해 분석과 업무 애플리케이션에 사용하는 플랫폼입니다. 그 안의 Ontology는 데이터에 실제 업무의 대상을 연결합니다. 공장, 제품, 주문 같은 객체와 그 관계를 표현하고, 객체에 수행할 수 있는 동작도 함께 다룹니다. [Foundry 개요](https://www.palantir.com/docs/foundry/platform-overview/overview), [Ontology 개요](https://www.palantir.com/docs/foundry/ontology/overview)
@@ -45,6 +49,8 @@ CI가 빌드와 자동 테스트로 배포할 결과물을 준비한다면, Apol
 현실의 업무를 바꾸는 시스템에는 두 종류의 변경이 생깁니다. 오늘 어느 제품을 출하할지 결정하는 변경이 있고, 내일부터 출하 판단에 사용할 프로그램이나 설정을 바꾸는 변경이 있습니다. 앞의 변경이 정확해도 뒤의 변경을 잘못 적용하면 다음 판단부터 달라질 수 있습니다.
 
 ![Foundry의 데이터·업무 객체·허용된 행동과 Apollo의 릴리스·적용 조건·실행 환경을 서로 다른 책임으로 구분한 도식](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-figure-01-v3.png)
+
+_그림 3. 업무의 행동과 소프트웨어 변경은 서로 다른 책임입니다._
 
 | 같은 현장에서 묻는 질문                             | 설명의 중심                                 | 품질검사 가상 사례                                     |
 | --------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------ |
@@ -73,6 +79,10 @@ Plan은 현장에서 수행할 구체적인 작업입니다. Constraints는 그 
 
 실행 중인 버전과 설정, 생존·준비 상태 같은 Reported State가 Hub로 돌아옵니다. 현재 문서는 Apollo를 단일 목표 버전으로 무조건 수렴시키는 구조로 설명하지 않습니다. 설정된 조건을 만족하는 Plan을 제안하는 구조로 설명합니다. [상태 보고와 실행](https://www.palantir.com/docs/apollo/core/how-apollo-works)
 
+![Hub가 릴리스·채널·설정과 보고 상태로 Plan을 제안하고 제약 통과 시 Spoke가 실행하며 결과를 보고하는 순환](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-04-v4.png)
+
+_그림 4. 중앙의 판단은 현장 보고와 함께 돌아갑니다_
+
 ## 4. 개발 후보부터 최종 승격까지: 통과해야 할 문은 두 개입니다
 
 승격은 한 번의 승인 버튼으로 끝나는 사건처럼 보이기 쉽습니다. Apollo를 이해할 때는 두 질문을 나눠야 합니다. **다음 채널에 이 릴리스를 올려도 되는가? 그리고 이 환경에 지금 적용해도 되는가?**
@@ -80,6 +90,10 @@ Plan은 현장에서 수행할 구체적인 작업입니다. Constraints는 그 
 ### 기본 채널은 필수 승인 사다리가 아닙니다
 
 Apollo에는 `DEV`, `RELEASE_CANDIDATE`, `RELEASE`라는 기본 채널이 있습니다. 이 이름만 보고 ‘개발 → 검증 → 운영’의 필수 승인 사다리로 읽으면 틀립니다. 기본 채널에는 버전 형식에 따라 릴리스가 자동 분류됩니다. 정식 Release 형식이면 세 기본 채널에 모두 들어가고, Release Candidate 형식이면 앞의 두 채널에 들어갑니다. 다른 버전 형식은 `DEV`에 들어갑니다. [기본 채널의 자동 분류](https://www.palantir.com/docs/apollo/core/release-channels)
+
+![정식·후보·기타 버전이 각각 어떤 기본 채널에 들어가는지와 사용자 정의 채널 승격이 별도라는 구분](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-05-v4.png)
+
+_그림 5. 기본 채널은 승인 순서가 아니라 버전 분류입니다_
 
 검증을 거쳐 순차적으로 넘길 경로는 승격 파이프라인으로 설정합니다. 공식 문서상 자동 승격 단계의 대상 채널은 기본 세 채널이 아닌 사용자 정의 채널입니다. 따라서 다음은 `TESTED`와 `PRODUCTION`이라는 사용자 정의 채널을 만든 **설명용 구성**입니다. 제품이 강제하는 채널 이름이 아닙니다. [승격 파이프라인 설정](https://www.palantir.com/docs/apollo/managing-release-channels/configure-promotion-pipeline)
 
@@ -106,9 +120,15 @@ DEV  ── 검증 조건 ──→  TESTED  ── 다음 조건 ──→  PRO
 
 ![기본 채널의 버전 분류와 사용자 정의 채널로의 검증 승격을 분리하고 최종 채널 뒤에도 환경별 조건 확인과 실행·관찰이 남는다는 흐름도](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-figure-02-v3.png)
 
+_그림 6. 채널 승격을 마친 뒤에도 환경별 적용 조건이 남습니다._
+
 품질검사 사례라면 시험 대상에서 새 버전이 정상 동작하는지 먼저 살피고, 조건을 만족한 버전을 더 넓은 대상이 구독하는 채널로 넘길 수 있습니다. 생산 중인 A공장은 점검 시간을 기다리고, 점검 가능한 B공장은 먼저 적용할 수도 있습니다. 둘의 버전이 잠시 다르다는 사실만으로 잘못된 배포라고 단정할 수 없습니다.
 
 프로세스가 살아 있다는 신호와 서비스의 건강 상태(Health)는 다릅니다. 관찰 항목에도 한계가 있습니다. Health를 제공하지 않는 Entity의 승격 평가는 생존 상태와 시간에 의존하며, 그 Health 평가로 실패를 판정할 수 없습니다. 실행 중이라는 사실이 업무 결과의 정확성을 증명하지 않는다는 뜻입니다. `3%`를 실제 정책으로 써도 되는지는 여전히 별도 판단입니다. [Health가 없는 경우의 평가 한계](https://www.palantir.com/docs/apollo/managing-release-channels/configure-promotion-pipeline)
+
+![Timed·Canary·수동 승격의 근거, Health 부재의 평가 한계, 환경 조건에 따라 다른 적용 시점을 비교한 그림](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-07-v4.png)
+
+_그림 7. 승격은 어떤 근거를 보고 판단할까요?_
 
 ## 5. 가재코드의 PR에서 같은 질문을 만납니다
 
@@ -126,6 +146,10 @@ DEV  ── 검증 조건 ──→  TESTED  ── 다음 조건 ──→  PRO
 
 Apollo와의 접점은 `dev`라는 이름보다 **검증이 유효한 대상을 정하고, 통합·릴리스의 경계를 따로 둔다**는 점에 있습니다. 다만 Git 브랜치는 코드 revision을 가리키고, Apollo 환경은 실제 실행 상태와 제약을 다룹니다. `main` 병합이 현장 배포 완료를 뜻하지는 않습니다.
 
+![가재코드의 작업 브랜치·PR·dev·main 흐름과 base·head·변경 식별값에 묶인 승인 및 저위험 자기승인 경로](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-08-v4.png)
+
+_그림 8. 가재코드는 승인과 검토 대상을 함께 묶습니다_
+
 ## 6. Paperthin은 다음 반복으로 무엇을 넘길지 묻습니다
 
 계산 로직은 `3%`인데 승인 화면에는 여전히 `2%`가 보인다고 해보겠습니다. 개발자는 화면을 수정할 수 있습니다. 그런데 다음 에이전트가 같은 종류의 변경을 맡았을 때도 이 불일치를 발견할 수 있을까요?
@@ -136,7 +160,13 @@ Apollo와의 접점은 `dev`라는 이름보다 **검증이 유효한 대상을 
 
 Apollo는 어느 릴리스를 다음 채널로 넘길지 다룹니다. Paperthin은 어떤 구현과 교훈을 다음 반복에 가져갈지 다룹니다. 서로 다른 대상이지만, 만들었다는 사실만으로 다음 단계에 남길 자격을 주지 않는다는 관점으로 비교할 수 있습니다. Paperthin이 Apollo의 배포 제어 기능을 갖췄다는 뜻은 아닙니다.
 
+![계산 로직 3%와 승인 화면 2% 불일치에서 실제 사용 검증과 교훈 기록을 거쳐 다음 검증 기준을 만드는 Paperthin 반복](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-09-v4.png)
+
+_그림 9. 실패한 구현에서 다음 검증 기준을 남깁니다_
+
 ![Apollo는 릴리스, 가재코드는 PR의 코드 변경, Paperthin은 검증된 구현과 교훈을 다음 단계로 넘긴다는 차이와 근거에 따른 승격이라는 공통 원리를 비교한 그림](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-figure-03-v3.png)
+
+_그림 10. 각 시스템은 서로 다른 대상을 검증해 다음 단계로 넘깁니다._
 
 | 비교 축                 | Apollo                         | 가재코드의 기여 흐름         | Paperthin의 반복                         |
 | ----------------------- | ------------------------------ | ---------------------------- | ---------------------------------------- |
@@ -155,6 +185,10 @@ Apollo는 어느 릴리스를 다음 채널로 넘길지 다룹니다. Paperthin
 
 기록을 구조화했다고 그 내용이 자동으로 참이 되지는 않습니다. 구현이 달라지면 검증과 승인의 유효성을 다시 확인해야 하고, 실행 결과가 달라지면 현재 상태도 고쳐야 합니다.
 
+![결정·구현·검증·배포를 별도 상태로 나누고 변경 객체에 구현 버전·근거·승인 범위·적용 결과를 연결하는 설계 제안](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-11-v4.png)
+
+_그림 11. 결정·구현·검증·배포는 서로 다른 상태입니다_
+
 ## 8. 다음 PR에서는 관문보다 질문부터 늘려 보세요
 
 단계를 추가하면 검토 대기, 테스트 유지와 관찰 비용도 생깁니다. 영향이 작고 쉽게 되돌릴 수 있는 실험에 복잡한 승인 절차를 모두 적용할 필요는 없습니다. 브랜치가 하나 늘었다는 사실보다 그 경계에서 어떤 새로운 근거를 확인하는지가 중요합니다.
@@ -167,6 +201,10 @@ Apollo는 어느 릴리스를 다음 채널로 넘길지 다룹니다. Paperthin
 - 어느 revision을 무엇으로 확인했고, 무엇은 아직 모르는가?
 - 누가 어떤 조건에서 통합·릴리스·현장 적용을 허용하는가?
 - 문제가 생기면 무엇을 되돌리고, 어떤 업무 결과는 따로 재검토하는가?
+
+![불량률 기준을 코드에서 복원하는 일과 이미 내린 출하 판단 재검토의 차이 및 다음 PR에 남길 이유·검증·승인·복구 질문](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-visual-12-v4.png)
+
+_그림 12. 코드를 되돌려도 이미 내린 판단은 남습니다_
 
 다음 사람이 이 기록만 읽고 변경을 넘겨도 될지 판단할 수 있다면, 승격의 경계가 구체적으로 드러납니다. 에이전트에게 작업을 더 맡기기 전에 먼저 정할 것은 그 결과를 어디까지 믿고 사용할지입니다.
 
