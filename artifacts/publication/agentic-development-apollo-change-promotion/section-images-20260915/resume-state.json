@@ -1,0 +1,10 @@
+{
+  "status": "running",
+  "evidence_gate": {
+    "status": "passed",
+    "basis": "existing article sources plus linked re0-git and DocTology contracts"
+  },
+  "article_image_gate": { "status": "passed", "new_images": 3, "existing_images_revalidated": 4 },
+  "publication_deployment_gate": { "status": "pending" },
+  "next": "commit, PR, merge, exact-SHA deployment, live verification"
+}

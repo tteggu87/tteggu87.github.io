@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "image_impact": "partial_regenerate (additive)",
+  "generation": "codex-imagegen 3/3, PARALLEL=auto",
+  "existing_report_set": "4/4 reopened and revalidated; paths, labels, meaning, and opacity remain valid",
+  "new_images": [
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-pr-judgment-package.png",
+      "sha256": "536f6508a5f4c30537710c4ce6a800abbe5b6f4b06957936799cc6d07d079ca9",
+      "size": [1659, 948],
+      "review": "Problem-to-evidence flow, remaining e2e and open questions, author-reported boundary are legible and directionally correct"
+    },
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-re0-git-handoff.png",
+      "sha256": "e101db14aedb18beb02ac7e8e90127bf1423eed1a67fa9a695438f947dc11da4",
+      "size": [1660, 948],
+      "review": "change/log/style reading flows to durable message facts while code tree remains invariant"
+    },
+    {
+      "file": "content/attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-doctology-authority.png",
+      "sha256": "ce3245085aed333c51ffb44ac5b5f659f3dbf5cbd9937970f2e0f486276734ce",
+      "size": [1659, 948],
+      "review": "authority layers and decision/implementation/verification/current-validity separation are accurate and readable"
+    }
+  ],
+  "visual_gate": {
+    "semantic_match": true,
+    "relationship_direction": true,
+    "exact_korean_labels": true,
+    "mobile_hierarchy": true,
+    "cropping_or_overlap": false,
+    "opaque_background": true,
+    "distinct_roles": true,
+    "targeted_regenerations": 0
+  },
+  "editorial_regression": {
+    "prose_changed": false,
+    "claims_changed": false,
+    "citations_changed": false,
+    "urls_changed": false,
+    "humanize_korean": "not applicable: no prose changed"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "line": 1,
+      "id": "C6-PR-JUDGMENT-001",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "line": 2,
+      "id": "C6-RE0-GIT-001",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "line": 3,
+      "id": "C6-DOCTOLOGY-001",
+      "ok": true,
+      "format": "A",
+      "tier": 1,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "pass": 3,
+    "fail": 0
+  }
+}

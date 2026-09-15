@@ -142,6 +142,8 @@ Apollo의 Health는 대상이 제공하는 건강 상태 평가 신호입니다.
 
 두 PR의 테스트 결과는 작성자의 보고이며 이 글에서 재실행한 결과는 아닙니다. 다만 무엇을 확인했고 무엇이 남았는지를 분리해 적는 방식은 검토에 재사용할 수 있습니다. 남은 E2E를 보고 적용을 보류하거나 허용 범위를 좁힐 수도 있습니다.
 
+![문제·발견 이유·수정·검증·대조 확인과 미완료 검증을 묶어 다음 단계 판단으로 넘기는 PR 판단 패키지](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-pr-judgment-package.png)
+
 이런 PR을 저는 **판단 패키지**로 읽습니다. 변경 이유와 구현, 받아들일 근거와 미확인 사항을 함께 묶은 제안입니다. 필요 이유·영향·책임을 남기는 변경 케이스와 같은 역할입니다. 패키지가 있다는 사실 자체는 승인 완료를 뜻하지 않습니다. 누가 어떤 범위로 받아들였고 실제 적용은 어떻게 끝났는지까지 이어져야 합니다.
 
 ## 8. Paperthin과 DocTology는 다음 판단에 기록을 넘깁니다
@@ -152,7 +154,11 @@ Paperthin은 에이전트 작업과 반복 개선을 돕는 스킬 모음입니�
 
 [`re0-git`](https://github.com/LilMGenius/paperthin/blob/6f706e30b5ec55e87598bf3b59164c9d9d96222f/skills/depth/re0-git/SKILL.md)은 코드 트리를 유지하면서 커밋 메시지를 인계에 도움이 되도록 정리합니다. 앞의 검사기 사례라면 “PDF 오탐을 막기 위해 바이너리를 제외했고, 실제 텍스트 탐지는 유지했다”는 이유와 경계를 남길 수 있습니다. 이는 집필용 예시이며 실제 커밋의 인용은 아닙니다. 메시지는 검증 결과로 이어지는 단서이지 정확성의 증명서는 아닙니다.
 
+![완료된 커밋의 변경과 주변 로그를 읽고 변경 이유·수정한 동작·유지할 경계만 남기며 코드 트리는 유지하는 커밋 메시지 인계 구조](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-re0-git-handoff.png)
+
 제가 만든 DocTology의 [Repo Docs 계약](https://github.com/tteggu87/DocTology/blob/main/.agents/skills/repo-docs-intelligence-bootstrap/SKILL.md)은 결정 상태와 구현 상태, 현재 기준 자료와 파생 기록을 구분합니다. 바꾸기로 했지만 구현하지 않았을 수 있고, 과거에 검증한 구현이 지금은 달라졌을 수도 있기 때문입니다. 현재 동작은 코드·등록점·테스트에서 확인하고, 결정 이유와 과거 근거는 각자의 기록으로 따라갑니다.
+
+![코드·현재 문서·운영 계약·계획과 검증·파생 위키·검색 색인의 권위 순서와 결정·구현·검증·현재 유효성을 구분한 문서 구조](../../attachments/agentic-development-apollo-change-promotion/agentic-development-apollo-change-promotion-doctology-authority.png)
 
 공장 사례에 대입하면 당시 예외를 승인한 이유는 역사로 남기면서, 현재도 예외 액션이 열려 있는지는 현재 상태로 확인하는 것입니다. PR에서도 예전 승인이 새 수정까지 검토했다는 뜻은 아닙니다. 승인·검증을 해당 구현과 적용 범위에 연결해야 합니다.
 
