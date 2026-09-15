@@ -1,0 +1,51 @@
+{
+  "image_impact": "partial_regenerate (additive)",
+  "existing_report_set": "reuse and revalidate",
+  "new_images": [
+    {
+      "id": "I05",
+      "section": "7. PR",
+      "dominant_message": "PR bundles the claim and evidence needed for promotion",
+      "facts": [
+        "Problem",
+        "Why it appeared only now",
+        "Fix",
+        "Verification",
+        "Red control",
+        "Needs e2e",
+        "Open questions"
+      ],
+      "boundary": "PR test results are author-reported",
+      "alt": "문제·발견 이유·수정·검증·대조 확인과 미완료 검증을 묶어 다음 단계 판단으로 넘기는 PR 판단 패키지"
+    },
+    {
+      "id": "I06",
+      "section": "8. re0-git",
+      "dominant_message": "rewrite the message while preserving the tree",
+      "facts": [
+        "read actual change",
+        "sample nearby log style",
+        "keep durable handoff facts",
+        "tree unchanged"
+      ],
+      "boundary": "message is a clue, not correctness proof",
+      "alt": "완료된 커밋의 변경과 주변 로그를 읽고 변경 이유·수정한 동작·유지할 경계만 남기며 코드 트리는 유지하는 커밋 메시지 인계 구조"
+    },
+    {
+      "id": "I07",
+      "section": "8. DocTology",
+      "dominant_message": "separate decision history from current truth",
+      "facts": [
+        "code/entrypoints/tests",
+        "current docs/accepted decisions",
+        "operating contracts",
+        "plans/evidence/reviews",
+        "derived wiki",
+        "search index",
+        "decision implemented verified current distinct"
+      ],
+      "boundary": "lower layers do not override current truth",
+      "alt": "코드·현재 문서·운영 계약·계획과 검증·파생 위키·검색 색인의 권위 순서와 결정·구현·검증·현재 유효성을 구분한 문서 구조"
+    }
+  ]
+}

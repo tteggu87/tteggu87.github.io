@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "plugin_install": 45,
+  "check": "TypeScript and Prettier passed",
+  "tests": { "passed": 122, "failed": 0 },
+  "build": "Quartz v5 emitted 562 files",
+  "post_validator": "passed with required report images and built output",
+  "route": "verified",
+  "browser_qa": {
+    "widths": [390, 834],
+    "h1": 1,
+    "total_article_images_loaded": "7/7",
+    "new_images_mobile_width": "approximately 358px each",
+    "horizontal_overflow": false
+  },
+  "configuration_changed": false
+}
